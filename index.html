@@ -9,8 +9,7 @@
     <style>
         :root {
             --ku-green: #006633;
-            --ku-green-hover: #004d26;
-            --ku-green-light: rgba(0, 102, 51, 0.1);
+            --alert-red: #dc2626; /* สีแดงสำหรับประกาศ */
             --bg-gray: #f1f5f9;
             --text-main: #1e293b;
         }
@@ -26,7 +25,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* --- Header Section (Clean Style) --- */
+        /* --- Header Section --- */
         .header-card {
             background: #ffffff;
             display: flex;
@@ -35,7 +34,7 @@
             border-radius: 4px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             margin-bottom: 10px;
-            border-top: 6px solid var(--ku-green); /* ย้ายเส้นมาไว้ด้านบนเพื่อความสมดุล */
+            border-top: 6px solid var(--ku-green);
         }
 
         .logo-box {
@@ -50,20 +49,28 @@
         .header-text h2 { font-size: 0.95rem; color: #64748b; font-weight: 400; margin-bottom: 5px; }
         .header-text h1 { font-size: 2.2rem; color: var(--ku-green); font-weight: 700; line-height: 1.1; }
 
-        /* --- Announcement Bar --- */
+        /* --- Announcement Bar (Red Style) --- */
         .announcement-bar {
-            background: #fff;
-            border-left: 6px solid var(--ku-green);
-            padding: 12px 30px;
+            background: #fef2f2; /* พื้นหลังแดงอ่อน */
+            border-left: 6px solid var(--alert-red);
+            padding: 15px 30px;
             margin-bottom: 40px;
             border-radius: 0 0 4px 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
         }
-        .announcement-bar .status { color: var(--ku-green); font-weight: 600; font-size: 0.95rem; }
-        .announcement-bar .author { font-size: 0.8rem; color: #94a3b8; }
+        .announcement-bar .status { 
+            color: var(--alert-red); 
+            font-weight: 700; 
+            font-size: 1.1rem; 
+            display: block;
+            margin-bottom: 4px;
+        }
+        .announcement-bar .author { 
+            font-size: 0.85rem; 
+            color: #7f1d1d; 
+            opacity: 0.8;
+            display: block;
+        }
 
         /* --- Grid Layout --- */
         .grid-portal {
@@ -99,22 +106,16 @@
             font-size: 3rem; 
             color: var(--ku-green); 
             margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        
-        .portal-card:hover .icon-box {
-            transform: scale(1.1);
         }
 
         .portal-card h3 { font-size: 1.2rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px; }
         .portal-card p { font-size: 0.9rem; color: #64748b; font-weight: 400; line-height: 1.4; }
 
-        /* --- Unified NEW Tag --- */
         .tag-new {
             position: absolute; top: 12px; right: 12px;
             background: var(--ku-green);
             color: white; padding: 2px 10px; border-radius: 2px;
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+            font-size: 0.7rem; font-weight: 700;
         }
 
         footer { margin-top: 80px; text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 40px; }
@@ -123,7 +124,7 @@
             .header-card { flex-direction: column; text-align: center; padding: 25px; }
             .logo-box { margin-right: 0; margin-bottom: 20px; }
             .header-text h1 { font-size: 1.8rem; }
-            .announcement-bar { flex-direction: column; text-align: center; gap: 10px; }
+            .announcement-bar { text-align: center; }
         }
     </style>
 </head>
@@ -141,7 +142,7 @@
     </header>
 
     <div class="announcement-bar">
-        <span class="status"><i class="fas fa-info-circle"></i> ระบบอยู่ระหว่างทดสอบ</span>
+        <span class="status"><i class="fas fa-exclamation-circle"></i> ระบบอยู่ระหว่างทดสอบ</span>
         <span class="author">ผู้ประกาศ: นายเมธี | 3 เม.ย. 69 02:34 น.</span>
     </div>
 
