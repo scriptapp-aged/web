@@ -11,6 +11,7 @@
             --ku-green: #006633;
             --ku-gold: #b29d6c;
             --bg-gray: #f1f5f9;
+            --text-dark: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', sans-serif; }
@@ -18,82 +19,103 @@
         body {
             background-color: var(--bg-gray);
             padding: 60px 20px;
-            color: #1e293b;
-            line-height: 1.6;
+            color: var(--text-dark);
         }
 
-        .container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .container { max-width: 1300px; margin: 0 auto; text-align: center; }
 
-        /* Header */
+        /* Header Section */
         .title-section { margin-bottom: 60px; }
         .title-section h1 { color: var(--ku-green); font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
-        .title-section p { color: #64748b; font-size: 1.1rem; }
         .hr-line { width: 100px; height: 5px; background: var(--ku-green); margin: 20px auto; border-radius: 2px; }
-
-        /* การจัดวาง Grid ระบบลำดับชั้น */
-        .row {
+        
+        /* Section Subtitle */
+        .section-label { 
+            font-size: 1.5rem; 
+            color: var(--ku-green); 
+            font-weight: 600; 
+            margin: 40px 0 25px; 
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 15px;
+        }
+        .section-label::before, .section-label::after {
+            content: ''; width: 50px; height: 1px; background: #cbd5e1;
         }
 
-        /* Card ดีไซน์ - เน้นความเรียบหรู ขอบเหลี่ยมตามสไตล์ที่ชอบ */
+        /* Layout Grid */
+        .committee-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: nowrap; /* แถวเดียวกันบน Desktop */
+        }
+
+        /* Card Design */
         .member-card {
             background: #fff;
-            width: 280px;
-            padding: 35px 25px;
+            flex: 1;
+            max-width: 280px;
+            padding: 30px 15px;
             border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border-top: 5px solid var(--ku-green);
             transition: all 0.3s ease;
         }
 
         .member-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 102, 51, 0.12);
+            box-shadow: 0 12px 25px rgba(0, 102, 51, 0.1);
         }
 
         .image-box {
-            width: 140px;
-            height: 140px;
+            width: 110px;
+            height: 110px;
             background: #f8fafc;
-            margin: 0 auto 25px;
+            margin: 0 auto 20px;
             border: 1px solid #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #cbd5e1;
-            font-size: 3.5rem;
-            border-radius: 4px; /* ปรับเป็นสี่เหลี่ยมตามตราสัญลักษณ์ */
+            font-size: 2.5rem;
+            border-radius: 4px;
         }
 
         .member-card h3 { 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             color: var(--ku-green); 
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 600;
         }
 
         .member-card .position {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--ku-gold);
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
-        /* ตกแต่งแถวที่ 2 (คนเดียว) ให้ดูเด่นขึ้นเล็กน้อย */
-        .row-single .member-card {
+        /* Middle Row (President) */
+        .row-middle .member-card {
             border-top-color: var(--ku-gold);
-            width: 320px;
+            max-width: 320px;
         }
 
-        /* ปุ่มย้อนกลับ */
+        /* Bottom Row (Grid 3x2 for 6 people) */
+        .committee-grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .btn-back {
             display: inline-flex;
             align-items: center;
-            margin-top: 40px;
+            margin-top: 60px;
             padding: 12px 30px;
             background: var(--ku-green);
             color: #fff;
@@ -102,12 +124,18 @@
             font-weight: 500;
             transition: 0.3s;
         }
-        .btn-back i { margin-right: 10px; }
-        .btn-back:hover { background: #004d26; box-shadow: 0 5px 15px rgba(0, 102, 51, 0.3); }
+        .btn-back:hover { background: #004d26; }
 
-        @media (max-width: 768px) {
-            .member-card { width: 100%; max-width: 300px; }
-            .row-single .member-card { width: 100%; max-width: 300px; }
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .committee-row { flex-wrap: wrap; }
+            .committee-grid-bottom { grid-template-columns: repeat(2, 1fr); }
+            .member-card { flex: none; width: 250px; }
+        }
+
+        @media (max-width: 600px) {
+            .committee-grid-bottom { grid-template-columns: 1fr; }
+            .member-card { width: 100%; }
         }
     </style>
 </head>
@@ -115,13 +143,12 @@
 
 <div class="container">
     <div class="title-section">
-        <p>คณะศึกษาศาสตร์และพัฒนศาสตร์</p>
-        <h1>คณะกรรมการฟาร์ม</h1>
+        <p>คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์</p>
+        <h1>คณะกรรมการฟาร์ม 2569</h1>
         <div class="hr-line"></div>
-        <p>ปีการศึกษา 2569</p>
     </div>
 
-    <div class="row">
+    <div class="committee-row">
         <div class="member-card">
             <div class="image-box"><i class="fas fa-user"></i></div>
             <h3>ชื่อ-นามสกุล</h3>
@@ -134,7 +161,7 @@
         </div>
     </div>
 
-    <div class="row row-single">
+    <div class="committee-row row-middle">
         <div class="member-card">
             <div class="image-box"><i class="fas fa-user"></i></div>
             <h3>นายเมธี ใจสุขดี</h3>
@@ -142,7 +169,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="committee-row">
         <div class="member-card">
             <div class="image-box"><i class="fas fa-user"></i></div>
             <h3>ชื่อ-นามสกุล</h3>
@@ -163,6 +190,16 @@
             <h3>ชื่อ-นามสกุล</h3>
             <div class="position">ฝ่ายกิจกรรม</div>
         </div>
+    </div>
+
+    <div class="section-label">กรรมการ</div>
+    <div class="committee-grid-bottom">
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
+        <div class="member-card"><div class="image-box"><i class="fas fa-user"></i></div><h3>ชื่อ-นามสกุล</h3><div class="position">กรรมการ</div></div>
     </div>
 
     <a href="#" class="btn-back"><i class="fas fa-arrow-left"></i> ย้อนกลับหน้าหลัก</a>
