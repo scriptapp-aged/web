@@ -10,94 +10,91 @@
         :root {
             --ku-green: #006633;
             --ku-gold: #b29d6c;
-            --bg-gray: #f8fafc;
+            --bg-gray: #f1f5f9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', sans-serif; }
 
         body {
             background-color: var(--bg-gray);
-            padding: 40px 20px;
+            padding: 60px 20px;
             color: #1e293b;
+            line-height: 1.6;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; text-align: center; }
 
         /* Header */
-        .title-section { margin-bottom: 50px; }
-        .title-section h1 { color: var(--ku-green); font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+        .title-section { margin-bottom: 60px; }
+        .title-section h1 { color: var(--ku-green); font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
         .title-section p { color: #64748b; font-size: 1.1rem; }
-        .hr-line { width: 80px; height: 4px; background: var(--ku-gold); margin: 20px auto; border-radius: 2px; }
+        .hr-line { width: 100px; height: 5px; background: var(--ku-green); margin: 20px auto; border-radius: 2px; }
 
-        /* Grid Layout สำหรับ 7 คน */
-        .committee-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+        /* การจัดวาง Grid ระบบลำดับชั้น */
+        .row {
+            display: flex;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
-        /* การจัดวางพิเศษ: ประธาน (คนแรก) ให้อยู่ตรงกลางแถวบน */
-        .committee-item:first-child {
-            grid-column: 1 / -1;
-            max-width: 350px;
-            margin: 0 auto 20px;
-        }
-
-        /* Card ดีไซน์ */
+        /* Card ดีไซน์ - เน้นความเรียบหรู ขอบเหลี่ยมตามสไตล์ที่ชอบ */
         .member-card {
             background: #fff;
-            padding: 30px;
-            border-radius: 8px;
+            width: 280px;
+            padding: 35px 25px;
+            border-radius: 4px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-bottom: 4px solid #e2e8f0;
+            border-top: 5px solid var(--ku-green);
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .member-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--ku-green);
-            box-shadow: 0 15px 30px rgba(0, 102, 51, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 102, 51, 0.12);
         }
 
-        .image-circle {
-            width: 150px;
-            height: 150px;
-            background: #f1f5f9;
-            margin: 0 auto 20px;
-            border-radius: 50%; /* รูปวงกลมดูซอฟต์และเป็นมิตร */
-            overflow: hidden;
-            border: 4px solid #fff;
-            box-shadow: 0 0 0 2px var(--ku-green);
+        .image-box {
+            width: 140px;
+            height: 140px;
+            background: #f8fafc;
+            margin: 0 auto 25px;
+            border: 1px solid #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #cbd5e1;
-            font-size: 4rem;
+            font-size: 3.5rem;
+            border-radius: 4px; /* ปรับเป็นสี่เหลี่ยมตามตราสัญลักษณ์ */
         }
 
-        .image-circle img { width: 100%; height: 100%; object-fit: cover; }
-
-        .member-card h3 { font-size: 1.25rem; color: var(--ku-green); margin-bottom: 5px; }
-        .member-card .position {
-            font-size: 0.9rem;
-            color: var(--ku-gold);
+        .member-card h3 { 
+            font-size: 1.2rem; 
+            color: var(--ku-green); 
+            margin-bottom: 8px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
         }
-        
-        .social-links { display: flex; justify-content: center; gap: 15px; }
-        .social-links a { color: #cbd5e1; transition: 0.3s; font-size: 1.1rem; }
-        .social-links a:hover { color: var(--ku-green); }
+
+        .member-card .position {
+            font-size: 0.95rem;
+            color: var(--ku-gold);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ตกแต่งแถวที่ 2 (คนเดียว) ให้ดูเด่นขึ้นเล็กน้อย */
+        .row-single .member-card {
+            border-top-color: var(--ku-gold);
+            width: 320px;
+        }
 
         /* ปุ่มย้อนกลับ */
         .btn-back {
-            display: inline-block;
-            margin-top: 50px;
-            padding: 10px 25px;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 40px;
+            padding: 12px 30px;
             background: var(--ku-green);
             color: #fff;
             text-decoration: none;
@@ -105,11 +102,12 @@
             font-weight: 500;
             transition: 0.3s;
         }
-        .btn-back:hover { background: var(--ku-green-hover); box-shadow: 0 4px 12px rgba(0, 102, 51, 0.3); }
+        .btn-back i { margin-right: 10px; }
+        .btn-back:hover { background: #004d26; box-shadow: 0 5px 15px rgba(0, 102, 51, 0.3); }
 
-        @media (max-width: 600px) {
-            .committee-grid { grid-template-columns: 1fr; }
-            .committee-item:first-child { grid-column: auto; }
+        @media (max-width: 768px) {
+            .member-card { width: 100%; max-width: 300px; }
+            .row-single .member-card { width: 100%; max-width: 300px; }
         }
     </style>
 </head>
@@ -118,94 +116,52 @@
 <div class="container">
     <div class="title-section">
         <p>คณะศึกษาศาสตร์และพัฒนศาสตร์</p>
-        <h1>คณะกรรมการฟาร์ม 2569</h1>
+        <h1>คณะกรรมการฟาร์ม</h1>
         <div class="hr-line"></div>
-        <p>ขับเคลื่อนเกษตรกรรมและนวัตกรรมเพื่อการศึกษา</p>
+        <p>ปีการศึกษา 2569</p>
     </div>
 
-    <div class="committee-grid">
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>นายเมธี ใจสุขดี</h3>
-                <div class="position">ประธานชุมนุม</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+    <div class="row">
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">ที่ปรึกษาชุมนุม</div>
         </div>
-
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">รองประธานชุมนุม</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">ที่ปรึกษาชุมนุม</div>
         </div>
+    </div>
 
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">เลขานุการ</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+    <div class="row row-single">
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>นายเมธี ใจสุขดี</h3>
+            <div class="position">ประธานชุมนุม</div>
         </div>
+    </div>
 
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">เหรัญญิก</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+    <div class="row">
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">รองประธานชุมนุม</div>
         </div>
-
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">ฝ่ายวิชาการ</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">เลขานุการ</div>
         </div>
-
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">ฝ่ายกิจกรรม</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">เหรัญญิก</div>
         </div>
-
-        <div class="committee-item">
-            <div class="member-card">
-                <div class="image-circle"><i class="fas fa-user"></i></div>
-                <h3>ชื่อ-นามสกุล</h3>
-                <div class="position">ฝ่ายประชาสัมพันธ์</div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
+        <div class="member-card">
+            <div class="image-box"><i class="fas fa-user"></i></div>
+            <h3>ชื่อ-นามสกุล</h3>
+            <div class="position">ฝ่ายกิจกรรม</div>
         </div>
     </div>
 
