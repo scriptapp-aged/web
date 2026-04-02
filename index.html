@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ชุมนุมฟาร์มนิสิต 2569 | KU KPS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>ชุมนุมฟาร์มนิสิต 2569 | KU KPS Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
+            /* สีเกษตร (KU Colors) */
             --ku-green: #006633;
-            --ku-light-green: #e8f5e9;
-            --bg-gray: #f4f7f6;
-            --text-dark: #333;
-            --card-white: #ffffff;
+            --ku-green-dark: #004d26;
+            --ku-green-light: #00ff80;
+            --ku-gold: #b29d6c;
+            
+            /* สีกลุ่มงาน */
+            --color-hr: #3b82f6; /* ฟ้า */
+            --color-farm: #22c55e; /* เขียว */
+            --color-money: #eab308; /* ทอง/เหลือง */
+            --color-it: #ef4444; /* แดง */
+            
+            /* สีพื้นหลังและตัวอักษร */
+            --bg-gray: #f0f2f5;
+            --text-dark: #1f2937;
+            --glass: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -26,23 +39,25 @@
             background-color: var(--bg-gray);
             color: var(--text-dark);
             padding: 20px;
+            /* เพิ่ม Background Gradient เบาๆ ด้านหลัง */
+            background-image: radial-gradient(circle at top right, rgba(0, 102, 51, 0.05) 0%, transparent 70%);
         }
 
-        .container {
+        .main-container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Header Section */
-        .header-card {
-            background: var(--card-white);
+        /* Header Section (เรียบง่าย เป็นทางการ) */
+        .header-section {
             display: flex;
             align-items: center;
-            padding: 20px;
-            border-radius: 4px; /* ขอบเหลี่ยมตามต้องการ */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            border-left: 10px solid var(--ku-green);
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px; /* ขอบเหลี่ยมตามต้องการ */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-bottom: 5px solid var(--ku-green);
         }
 
         .logo-box {
@@ -55,8 +70,9 @@
             align-items: center;
             margin-right: 25px;
             flex-shrink: 0;
-            /* ตราสัญลักษณ์รูปสี่เหลี่ยม */
+            /* ตราสัญลักษณ์สี่เหลี่ยมขอบมนเล็กน้อย */
             border-radius: 4px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
         }
 
         .logo-box img {
@@ -64,168 +80,209 @@
             height: auto;
         }
 
-        .header-text h1 {
-            font-size: 1.8rem;
-            color: var(--ku-green);
-            line-height: 1.2;
-        }
-
-        .header-text p {
-            font-size: 1rem;
+        .header-text h2 {
+            font-size: 1.1rem;
             color: #666;
-            margin-top: 5px;
+            font-weight: 400;
         }
 
-        /* Grid System */
-        .grid-menu {
+        .header-text h1 {
+            font-size: 2rem;
+            color: var(--ku-green);
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 5px 0;
+        }
+
+        .academic-year {
+            display: inline-block;
+            background: var(--ku-gold);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        /* Menu Grid (อลังการกว่าเดิม) */
+        .grid-portal {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
-        .menu-item {
-            background: var(--card-white);
-            display: flex;
-            align-items: center;
-            padding: 25px 20px;
-            text-decoration: none;
+        /* การ์ดปุ่มสารสนเทศ v3.0 (Neo-Glass) */
+        .portal-card {
+            background: #ffffff;
+            padding: 40px 25px;
+            border-radius: 8px; /* ขอบเหลี่ยม */
             color: var(--text-dark);
-            border-radius: 4px; /* ขอบเหลี่ยม */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid #eee;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-color: var(--ku-green);
-        }
-
-        /* ปุ่มสีเขียวเด่น (ปุ่มแรก) */
-        .menu-item.active {
-            background-color: var(--ku-green);
-            color: white;
-            border-color: var(--ku-green);
-        }
-
-        .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            background: var(--ku-light-green);
-            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(0,0,0,0.05);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            margin-right: 15px;
-            font-size: 1.5rem;
-            color: var(--ku-green);
+            text-align: center;
         }
 
-        .active .icon-wrapper {
-            background: rgba(255,255,255,0.2);
+        /* เอฟเฟกต์สีขอบและแสงเรือง */
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--ku-green); /* สีเริ่มต้น */
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect */
+        .portal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        .portal-card i {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            display: block;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .portal-card:hover i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .portal-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .portal-card p {
+            font-size: 0.9rem;
+            color: rgba(0,0,0,0.6);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* Badges/Status */
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ef4444; /* สีแดงแจ้งเตือน */
             color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .menu-text h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
+        /* ตกแต่งสีแต่ละกลุ่มงาน (Glow + Micro-interactions) */
+        
+        /* กลุ่มฟาร์ม (สีเขียว) */
+        .farm i { color: var(--color-farm); }
+        .farm::before { background: var(--color-farm); }
+        .farm:hover { border-color: rgba(34, 197, 94, 0.4); box-shadow: 0 15px 35px rgba(34, 197, 94, 0.15); }
+        .farm:hover i { text-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
+
+        /* กลุ่มงานบุคคล (สีฟ้า) */
+        .hr i { color: var(--color-hr); }
+        .hr::before { background: var(--color-hr); }
+        .hr:hover { border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15); }
+        .hr:hover i { text-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+
+        /* กลุ่มงานการเงิน/รายงาน (สีทอง) */
+        .money i { color: var(--color-money); }
+        .money::before { background: var(--color-money); }
+        .money:hover { border-color: rgba(234, 179, 8, 0.4); box-shadow: 0 15px 35px rgba(234, 179, 8, 0.15); }
+        .money:hover i { text-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
+
+        /* กลุ่มงาน IT/สนับสนุน (สีแดง) */
+        .it i { color: var(--color-it); }
+        .it::before { background: var(--color-it); }
+        .it:hover { border-color: rgba(239, 68, 68, 0.4); box-shadow: 0 15px 35px rgba(239, 68, 68, 0.15); }
+        .it:hover i { text-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
 
         /* Footer */
         .footer {
             margin-top: 50px;
-            padding: 20px;
+            padding: 20px 0;
             text-align: center;
             font-size: 0.85rem;
             color: #999;
             border-top: 1px solid #ddd;
         }
 
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-text h1 { font-size: 1.6rem; }
+        }
+
         @media (max-width: 768px) {
-            .header-card { flex-direction: column; text-align: center; }
-            .logo-box { margin-right: 0; margin-bottom: 15px; }
-            .header-text h1 { font-size: 1.5rem; }
+            .header-section { flex-direction: column; text-align: center; }
+            .logo-box { margin-right: 0; margin-bottom: 20px; }
+            .header-text h1 { font-size: 1.4rem; }
+            .academic-year { margin-left: 0; margin-top: 5px; }
+            .grid-portal { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header class="header-card">
+<div class="main-container">
+    <header class="header-section">
         <div class="logo-box">
             <img src="https://via.placeholder.com/80?text=LOGO" alt="Logo">
         </div>
         <div class="header-text">
-            <h1>ชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</h1>
-            <p>คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</p>
+            <h2>คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</h2>
+            <h1>ชุมนุมฟาร์มนิสิต <span class="academic-year">ปีการศึกษา 2569</span></h1>
         </div>
     </header>
 
-    <div class="grid-menu">
-        <a href="#" class="menu-item active">
-            <div class="icon-wrapper"><i class="fas fa-tractor"></i></div>
-            <div class="menu-text"><h3>ระบบจัดการฟาร์ม</h3></div>
+    <div class="grid-portal">
+        <a href="#" class="portal-card farm">
+            <div class="badge">2 งานรอ</div>
+            <i class="fas fa-tractor"></i>
+            <h3>ระบบจัดการฟาร์ม</h3>
+            <p>บันทึกผลผลิต วางแผนเพาะปลูก และติดตามสถานะแปลง</p>
         </a>
 
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-users-viewfinder"></i></div>
-            <div class="menu-text"><h3>ทะเบียนสมาชิก</h3></div>
+        <a href="#" class="portal-card hr">
+            <i class="fas fa-users-cog"></i>
+            <h3>ทะเบียนสมาชิก</h3>
+            <p>จัดการข้อมูลนิสิต ประวัติการเข้าร่วม และสถานะสมาชิก</p>
         </a>
 
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-calendar-days"></i></div>
-            <div class="menu-text"><h3>ตารางกิจกรรม</h3></div>
+        <a href="#" class="portal-card money">
+            <div class="badge">มีรายงานใหม่</div>
+            <i class="fas fa-file-invoice-dollar"></i>
+            <h3>สรุปรายงาน</h3>
+            <p>รายงานผลการดำเนินงาน งบประมาณ และยอดขายผลผลิต</p>
         </a>
 
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-file-chart-pie"></i></div>
-            <div class="menu-text"><h3>สรุปรายงาน</h3></div>
+        <a href="#" class="portal-card farm">
+            <i class="fas fa-calendar-check"></i>
+            <h3>ปฏิทินกิจกรรม</h3>
+            <p>ตรวจสอบตารางลงพื้นที่ ประชุม และวันสำคัญของชุมนุม</p>
         </a>
 
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-book"></i></div>
-            <div class="menu-text"><h3>คลังความรู้</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-seedling"></i></div>
-            <div class="menu-text"><h3>โครงการวิจัย</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-clipboard-check"></i></div>
-            <div class="menu-text"><h3>จัดซื้อวัสดุ</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-cow"></i></div>
-            <div class="menu-text"><h3>ปศุสัตว์</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-cloud-sun-rain"></i></div>
-            <div class="menu-text"><h3>ชลประทานและอากาศ</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-map-location-dot"></i></div>
-            <div class="menu-text"><h3>แผนที่แปลงเกษตร</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-building"></i></div>
-            <div class="menu-text"><h3>อาคารและอุปกรณ์</h3></div>
-        </a>
-
-        <a href="#" class="menu-item">
-            <div class="icon-wrapper"><i class="fas fa-headset"></i></div>
-            <div class="menu-text"><h3>ติดต่อฝ่ายสนับสนุน</h3></div>
+        <a href="#" class="portal-card it">
+            <i class="fas fa-headset"></i>
+            <h3>ติดต่อฝ่ายไอที</h3>
+            <p>แจ้งปัญหาการใช้งานระบบ และช่วยเหลือทางเทคนิค</p>
         </a>
     </div>
 
     <footer class="footer">
-        © 2026 Faculty of Education and Development Sciences, KU KPS. All rights reserved.
+        © 2026 Faculty of Education and Development Sciences | KU KPS. All rights reserved.
     </footer>
 </div>
 
