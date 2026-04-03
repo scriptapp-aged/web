@@ -9,109 +9,128 @@
     <style>
         :root {
             --ku-green: #006633;
-            --alert-red: #cc0000;
-            --bg-gray: #f4f7f4;
-            --text-dark: #2c3e50;
+            --ku-green-light: #008f4c;
+            --alert-red: #ef4444;
+            --bg-body: #f8fafc;
+            --text-dark: #1e293b;
+            --border-color: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', sans-serif; }
 
         body {
-            background-color: var(--bg-gray);
-            color: var(--text-dark);
+            background-color: var(--bg-body);
+            background-image: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
             padding: 40px 20px;
-            line-height: 1.6;
+            color: var(--text-dark);
         }
 
         .container { max-width: 1100px; margin: 0 auto; }
 
-        /* --- Header: เรียบหรู ขอบคม --- */
+        /* --- Header: เน้นความคมชัดและมีมิติ --- */
         .header-card {
             background: #ffffff;
             display: flex;
             align-items: center;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-left: 8px solid var(--ku-green);
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            border-top: 6px solid var(--ku-green); /* เส้นหนาด้านบนดูเป็นระบบใหม่ */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             margin-bottom: 0;
+            position: relative;
         }
 
         .logo-box {
-            width: 90px; height: 90px;
-            border: 1px solid #eee;
-            margin-right: 25px;
+            width: 100px; height: 100px;
+            background: #fff;
+            border: 1.5px solid #eee;
+            margin-right: 30px;
             display: flex; justify-content: center; align-items: center;
             flex-shrink: 0;
+            /* สี่เหลี่ยมขอบคม */
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
         }
 
-        .header-text h2 { font-size: 0.9rem; color: #7f8c8d; font-weight: 400; }
-        .header-text h1 { font-size: 2rem; color: var(--ku-green); font-weight: 700; }
+        .header-text h2 { font-size: 0.95rem; color: #64748b; font-weight: 400; letter-spacing: 0.5px; }
+        .header-text h1 { font-size: 2.2rem; color: var(--ku-green); font-weight: 700; margin-top: 5px; }
 
-        /* --- Announcement: แถบแดงใต้หัวข้อ --- */
+        /* --- Announcement: แถบแจ้งเตือนบรรทัดใหม่ --- */
         .announcement-bar {
-            background: #fff5f5;
-            border: 1px solid #feb2b2;
+            background: #fff;
+            border: 1px solid var(--border-color);
             border-top: none;
-            padding: 12px 30px;
-            margin-bottom: 40px;
+            padding: 15px 35px;
+            margin-bottom: 45px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02);
         }
-        .announcement-bar .status { color: var(--alert-red); font-weight: 600; font-size: 0.95rem; display: block; }
-        .announcement-bar .author { font-size: 0.8rem; color: #a0aec0; display: block; }
+        .announcement-bar .status { color: var(--alert-red); font-weight: 700; font-size: 1rem; display: block; margin-bottom: 2px; }
+        .announcement-bar .author { font-size: 0.85rem; color: #94a3b8; display: block; }
 
         /* --- Grid Layout --- */
         .grid-portal {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
-        /* --- Menu Cards: เน้นความสะอาดตา --- */
+        /* --- Portal Cards: ขอบคมแต่มีมิติ Hover --- */
         .portal-card {
             background: #ffffff;
-            padding: 30px;
+            padding: 35px 25px;
             text-decoration: none;
             color: inherit;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s ease;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
 
         .portal-card:hover {
+            transform: translateY(-5px);
             border-color: var(--ku-green);
-            background: #fafafa;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
+
+        /* เส้นขอบล่างที่จะปรากฏเมื่อ Hover */
+        .portal-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 0; height: 4px;
+            background: var(--ku-green);
+            transition: width 0.3s ease;
+        }
+        .portal-card:hover::after { width: 100%; }
 
         .icon-box {
-            width: 60px; height: 60px;
-            background: #f0f4f0;
+            font-size: 2.8rem;
             color: var(--ku-green);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem;
-            margin-right: 20px;
-            flex-shrink: 0;
+            margin-bottom: 20px;
+            transition: 0.3s;
         }
+        .portal-card:hover .icon-box { transform: scale(1.1); color: var(--ku-green-light); }
 
-        .card-content h3 { font-size: 1.1rem; font-weight: 600; color: #1a202c; margin-bottom: 4px; }
-        .card-content p { font-size: 0.85rem; color: #718096; }
+        .portal-card h3 { font-size: 1.2rem; font-weight: 600; color: #0f172a; margin-bottom: 10px; }
+        .portal-card p { font-size: 0.9rem; color: #64748b; font-weight: 400; }
 
-        /* Tag NEW: เรียบๆ แต่เด่น */
+        /* Tag NEW: สี่เหลี่ยมสีเขียวเข้ม */
         .tag-new {
-            position: absolute; top: 0; right: 0;
+            position: absolute; top: 15px; right: 15px;
             background: var(--ku-green);
-            color: white; padding: 2px 8px;
+            color: white; padding: 3px 12px;
             font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        footer { margin-top: 60px; text-align: center; color: #a0aec0; font-size: 0.8rem; }
+        footer { margin-top: 80px; text-align: center; color: #94a3b8; font-size: 0.85rem; padding-bottom: 40px; }
 
         @media (max-width: 768px) {
-            .header-card { flex-direction: column; text-align: center; }
-            .logo-box { margin-right: 0; margin-bottom: 15px; }
-            .announcement-bar { text-align: center; }
+            .header-card { flex-direction: column; text-align: center; padding: 30px; }
+            .logo-box { margin-right: 0; margin-bottom: 20px; }
+            .header-text h1 { font-size: 1.8rem; }
+            .announcement-bar { text-align: center; padding: 15px; }
         }
     </style>
 </head>
@@ -120,74 +139,62 @@
 <div class="container">
     <header class="header-card">
         <div class="logo-box">
-            <img src="https://via.placeholder.com/70?text=KU" alt="Logo">
+            <img src="https://via.placeholder.com/80?text=KU" alt="Logo">
         </div>
         <div class="header-text">
-            <h2>คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</h2>
+            <h2>FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES</h2>
             <h1>ชุมนุมฟาร์มนิสิต</h1>
         </div>
     </header>
 
     <div class="announcement-bar">
-        <span class="status"><i class="fas fa-info-circle"></i> ระบบอยู่ระหว่างทดสอบ</span>
+        <span class="status"><i class="fas fa-bullhorn"></i> ระบบอยู่ระหว่างทดสอบ</span>
         <span class="author">ผู้ประกาศ: นายเมธี | 3 เม.ย. 69 02:34 น.</span>
     </div>
 
     <div class="grid-portal">
         
         <a href="pepel.html" class="portal-card">
-            <div class="icon-box"><i class="fas fa-users"></i></div>
-            <div class="card-content">
-                <h3>คณะกรรมการฟาร์ม</h3>
-                <p>ปีการศึกษา 2569</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-users-rectangle"></i></div>
+            <h3>คณะกรรมการฟาร์ม</h3>
+            <p>โครงสร้างคณะกรรมการ ปีการศึกษา 2569</p>
         </a>
 
         <a href="room.html" class="portal-card">
-            <div class="icon-box"><i class="fas fa-door-open"></i></div>
-            <div class="card-content">
-                <h3>ระบบจองห้องประชุม</h3>
-                <p>จองใช้งานห้องประชุมชุมนุม</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-building-circle-check"></i></div>
+            <h3>ระบบจองห้องประชุม</h3>
+            <p>จองใช้งานห้องประชุมและพื้นที่ส่วนกลาง</p>
         </a>
 
         <a href="schedule.html" class="portal-card">
-            <div class="icon-box"><i class="fas fa-calendar-alt"></i></div>
-            <div class="card-content">
-                <h3>ตารางจองห้องประชุม</h3>
-                <p>ตรวจสอบสถานะห้องว่าง</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-list-check"></i></div>
+            <h3>ตารางจองห้องประชุม</h3>
+            <p>ตรวจสอบตารางเวลาแบบ Real-time</p>
         </a>
 
         <a href="#" class="portal-card">
-            <div class="icon-box"><i class="fas fa-file-alt"></i></div>
-            <div class="card-content">
-                <h3>ตรวจสอบหลักสูตร</h3>
-                <p>ปรับปรุง พ.ศ. 2564</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-file-invoice"></i></div>
+            <h3>ตรวจสอบหลักสูตร</h3>
+            <p>หลักสูตรปรับปรุง พ.ศ. 2564</p>
         </a>
 
         <a href="#" class="portal-card">
             <div class="tag-new">NEW</div>
-            <div class="icon-box"><i class="fas fa-graduation-cap"></i></div>
-            <div class="card-content">
-                <h3>ตรวจสอบหลักสูตร</h3>
-                <p>ปรับปรุง พ.ศ. 2569</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-user-graduate"></i></div>
+            <h3>ตรวจสอบหลักสูตร</h3>
+            <p>หลักสูตรปรับปรุง พ.ศ. 2569</p>
         </a>
 
         <a href="#" class="portal-card">
-            <div class="icon-box"><i class="fas fa-project-diagram"></i></div>
-            <div class="card-content">
-                <h3>โครงการชุมนุม</h3>
-                <p>ปีการศึกษา 2569</p>
-            </div>
+            <div class="icon-box"><i class="fas fa-leaf"></i></div>
+            <h3>โครงการชุมนุม</h3>
+            <p>กิจกรรมและโครงการ ประจำปีการศึกษา 2569</p>
         </a>
 
     </div>
 
     <footer>
-        © 2026 Faculty of Education and Development Sciences | Kasetsart University
+        © 2026 Faculty of Education and Development Sciences | Kasetsart University KPS
     </footer>
 </div>
 
