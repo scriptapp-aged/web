@@ -19,16 +19,16 @@
 
         body {
             background-color: #fcfdfc;
-            /* ลายตารางจางๆ แบบสมุดจดบันทึกนักวิจัย */
             background-image: radial-gradient(#e5e7eb 0.5px, transparent 0.5px);
             background-size: 20px 20px;
             padding: 80px 20px;
             color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; text-align: center; }
 
-        /* --- Header Section (ใหม่: แบบ Minimalist Bold) --- */
+        /* Header Section */
         .title-section { 
             text-align: left; 
             margin-bottom: 80px; 
@@ -36,80 +36,90 @@
             padding-left: 30px;
         }
         .title-section p { font-size: 1.1rem; color: #6b7280; font-weight: 300; }
-        .title-section h1 { font-size: 3.5rem; font-weight: 800; color: var(--ku-green); line-height: 1; margin-top: 10px; }
+        .title-section h1 { font-size: 3rem; font-weight: 800; color: var(--ku-green); line-height: 1.2; margin-top: 10px; }
 
-        /* --- Layout Grid --- */
+        /* --- การจัดการแถว --- */
         .committee-row {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap; /* ปล่อยให้พันแถวได้ถ้าจอแคบเกินไป */
         }
 
-        /* --- ปรับโฉม Card ใหม่ (Layered Design) --- */
+        /* --- แถว 4 คน บังคับให้อยู่แนวเดียวกันบน Desktop --- */
+        .committee-row-4 {
+            flex-wrap: nowrap; 
+        }
+
+        /* --- ปรับปรุง Card ดีไซน์ (Compact Size) --- */
         .member-card {
             background: var(--soft-white);
-            flex: 1;
-            min-width: 280px;
-            max-width: 300px;
+            flex: 1; /* ให้ทุกลูกขยายเท่ากัน */
+            /* คุมความกว้างไม่ให้ใหญ่เกินไปตามที่ต้องการ */
+            max-width: 260px; 
             border: 1px solid var(--border-light);
             position: relative;
             transition: all 0.4s ease;
-            padding-bottom: 25px;
+            padding-bottom: 20px;
+            text-align: left;
         }
 
-        /* ตกแต่งมุมการ์ดให้ดูเหมือนงานเทคนิค */
+        /* ตกแต่งมุมการ์ด */
         .member-card::before {
             content: ''; position: absolute; top: -1px; right: -1px;
-            width: 30px; height: 30px;
+            width: 25px; height: 25px;
             background: linear-gradient(135deg, transparent 50%, var(--ku-green) 50%);
         }
 
         .member-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 20px 20px 0px rgba(0, 102, 51, 0.05); /* เงาแบบ Offset */
+            transform: translateY(-8px);
+            box-shadow: 15px 15px 0px rgba(0, 102, 51, 0.05); /* เงาแบบ Offset */
             border-color: var(--ku-green);
         }
 
-        /* --- ส่วนรูปภาพ: เน้นพื้นที่ว่าง ไม่ให้หัวขาดแน่นอน --- */
+        /* --- ส่วนรูปภาพ: คุมความสูงไม่ให้ใหญ่เกินไป --- */
         .image-box {
             width: 100%;
-            height: 280px;
+            height: 220px; /* กำหนดความสูงรูปภาพตายตัว ปรับขนาดนี้ได้ตามต้องการ */
             background: #f9fafb;
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* ให้รูปวางบนฐาน */
+            align-items: flex-end; 
             overflow: hidden;
-            padding: 20px;
+            padding: 15px;
             border-bottom: 1px solid var(--border-light);
         }
 
         .image-box img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* มั่นใจว่าเห็นครบทั้งตัว/หัว ไม่โดนตัด */
+            object-fit: contain; /* เห็นครบทั้งตัว/หัว ไม่โดนตัดแน่นอน */
             transition: transform 0.5s ease;
         }
 
         .member-card:hover .image-box img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         /* --- ส่วนข้อมูล --- */
-        .card-content { padding: 25px 20px 10px; text-align: left; }
-        .member-card h3 { font-size: 1.3rem; font-weight: 600; color: var(--ku-green); }
+        .card-content { padding: 20px 15px 10px; }
+        .member-card h3 { font-size: 1.15rem; font-weight: 600; color: var(--ku-green); line-height: 1.3; }
         .member-card .position { 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             color: var(--ku-gold); 
             font-weight: 600;
             margin-top: 5px;
             display: block;
         }
 
-        /* แถบสีระบุแถว (เช่น ประธาน) */
-        .row-middle .member-card { border-top: 8px solid var(--ku-gold); }
+        /* ปรับแต่งแถวกลาง (ประธาน) */
+        .row-middle .member-card {
+            border-top: 6px solid var(--ku-gold);
+            max-width: 300px; /* ขยายการ์ดประธานให้เด่นขึ้นนิดหน่อย */
+        }
         .row-middle .member-card::before { background: linear-gradient(135deg, transparent 50%, var(--ku-gold) 50%); }
+        .row-middle .member-card .image-box { height: 260px; }
 
         /* แถบ Label กรรมการ */
         .section-label {
@@ -117,15 +127,15 @@
             font-weight: 800;
             color: #d1d5db;
             text-align: left;
-            margin: 40px 0;
+            margin: 50px 0;
             text-transform: uppercase;
             letter-spacing: 5px;
         }
 
         .grid-bottom {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
         }
 
         .btn-back {
@@ -141,9 +151,22 @@
         }
         .btn-back:hover { background: var(--ku-green); }
 
+        /* --- Responsive --- */
+        @media (max-width: 1200px) {
+            .container { padding: 0 10px; }
+            .committee-row-4 {
+                flex-wrap: wrap; /* ปล่อยให้พันแถวถ้าจอไม่กว้างพอสำหรับ 4 ใบ */
+                justify-content: center;
+            }
+            .member-card { flex: none; width: 250px; }
+        }
+
         @media (max-width: 768px) {
             .title-section h1 { font-size: 2.5rem; }
-            .member-card { max-width: 100%; }
+            .member-card { width: 100%; max-width: 300px; }
+            .image-box { height: 180px; }
+            .row-middle .member-card { width: 100%; max-width: 300px; }
+            .row-middle .member-card .image-box { height: 200px; }
         }
     </style>
 </head>
@@ -157,14 +180,14 @@
 
     <div class="committee-row">
         <div class="member-card">
-            <div class="image-box"><img src="12.jpg" alt=""></div>
+            <div class="image-box"><img src="https://via.placeholder.com/300x300?text=Advisor+1" alt=""></div>
             <div class="card-content">
                 <h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3>
                 <span class="position">อาจารย์ที่ปรึกษาชุมนุม</span>
             </div>
         </div>
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Advisor+2" alt=""></div>
+            <div class="image-box"><img src="web.jpg" alt=""></div>
             <div class="card-content">
                 <h3>อ.ดร.อรวรรณ บุญทัน</h3>
                 <span class="position">อาจารย์ที่ปรึกษาชุมนุม</span>
@@ -174,7 +197,7 @@
 
     <div class="committee-row row-middle">
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=President" alt=""></div>
+            <div class="image-box"><img src="https://via.placeholder.com/300x350?text=President" alt=""></div>
             <div class="card-content">
                 <h3>นายศุภเสกย์ นิลเทพา</h3>
                 <span class="position">ประธานชุมนุม</span>
@@ -182,21 +205,21 @@
         </div>
     </div>
 
-    <div class="committee-row">
+    <div class="committee-row committee-row-4">
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Member" alt=""></div>
+            <div class="image-box"><img src="https://via.placeholder.com/300x300?text=Member" alt=""></div>
             <div class="card-content"><h3>นายกนกพล แซ่แต้</h3><span class="position">รองประธานชุมนุมคนที่ 1</span></div>
         </div>
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Member" alt=""></div>
+            <div class="image-box"><img src="https://via.placeholder.com/300x300?text=Member" alt=""></div>
             <div class="card-content"><h3>นายธีระพล สมพงษ์</h3><span class="position">รองประธานชุมนุมคนที่ 2</span></div>
         </div>
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Member" alt=""></div>
+            <div class="image-box"><img src="https://via.placeholder.com/300x300?text=Member" alt=""></div>
             <div class="card-content"><h3>นางสาวทรายขวัญ วาปีโท</h3><span class="position">เลขานุการ</span></div>
         </div>
         <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Member" alt=""></div>
+            <div class="image-box"><img src="IMG_1699.JPG" alt=""></div>
             <div class="card-content"><h3>นายเมธี ใจสุขดี</h3><span class="position">เหรัญญิก</span></div>
         </div>
     </div>
@@ -204,30 +227,12 @@
     <div class="section-label">Committee</div>
     
     <div class="grid-bottom">
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
-        <div class="member-card">
-            <div class="image-box"><img src="https://via.placeholder.com/300x400?text=Staff" alt=""></div>
-            <div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div>
-        </div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
+        <div class="member-card"><div class="image-box"><img src="https://via.placeholder.com/300x300?text=Staff" alt=""></div><div class="card-content"><h3>ชื่อ-นามสกุล</h3><span class="position">กรรมการ</span></div></div>
     </div>
 
     <div style="text-align: left;">
