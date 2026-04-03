@@ -3,234 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบสารสนเทศชุมนุมฟาร์มนิสิต | KU KPS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>KU KPS - Farm Student Club Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Palette ใหม่: เขียวเกษตรแบบสว่างขึ้นและดูแพง */
-            --ku-green: #006633;
-            --ku-green-accent: #008f4c;
-            --alert-red: #ef4444;
-            --bg-body: #f8fafc;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 102, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --primary: #006633;
+            --primary-light: #00ff88;
+            --glass: rgba(255, 255, 255, 0.8);
+            --glass-dark: rgba(255, 255, 255, 0.4);
+            --text-main: #0f172a;
+            --accent-red: #ff4d4d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', sans-serif; }
 
         body {
-            background-color: var(--bg-body);
+            background: #f0f2f5;
+            /* Mesh Gradient Background - ทันสมัยที่สุดตอนนี้ */
             background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 102, 51, 0.03) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(0, 102, 51, 0.02) 0px, transparent 50%);
-            padding: 40px 20px;
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        .container { max-width: 1140px; margin: 0 auto; }
-
-        /* --- Header Section (Modern Minimal) --- */
-        .header-card {
-            background: #ffffff;
+                radial-gradient(at 0% 0%, rgba(0, 102, 51, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(178, 157, 108, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 255, 136, 0.05) 0px, transparent 50%);
+            min-height: 100vh;
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 40px;
-            border-radius: 12px; /* ขอบมนที่ดูทันสมัยขึ้น */
-            box-shadow: var(--card-shadow);
-            margin-bottom: 12px;
-            position: relative;
-            overflow: hidden;
+            padding: 20px;
         }
 
-        /* เพิ่มเส้นสีเขียวด้านข้างให้ดูเป็น Signature */
-        .header-card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 8px;
-            background: linear-gradient(to bottom, var(--ku-green), var(--ku-green-accent));
-        }
-
-        .logo-box {
-            width: 110px; height: 110px;
-            background: #fff;
-            border: 1.5px solid #f1f5f9;
-            display: flex; justify-content: center; align-items: center;
-            margin-right: 35px; flex-shrink: 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo-box img { max-width: 80%; height: auto; }
-
-        .header-text h2 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .header-text h1 { font-size: 2.4rem; color: var(--ku-green); font-weight: 800; letter-spacing: -0.5px; }
-
-        /* --- Announcement Bar (Refined Alert) --- */
-        .announcement-bar {
-            background: #fff;
-            border-radius: 0 0 12px 12px;
-            padding: 18px 40px;
-            margin-bottom: 50px;
-            box-shadow: var(--card-shadow);
-            border-top: 1px solid #fee2e2;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .announcement-icon {
-            background: #fef2f2;
-            color: var(--alert-red);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.1rem;
-        }
-
-        .announcement-content .status { color: var(--alert-red); font-weight: 700; font-size: 1rem; display: block; }
-        .announcement-content .author { font-size: 0.8rem; color: var(--text-muted); }
-
-        /* --- Grid Layout --- */
-        .grid-portal {
+        .container {
+            width: 100%;
+            max-width: 1200px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(4, 1fr); /* 4 Columns Bento Style */
+            grid-template-rows: auto auto auto;
+            gap: 20px;
         }
 
-        /* --- Modern Portal Cards --- */
-        .portal-card {
-            background: #ffffff;
-            padding: 45px 30px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: inherit;
+        /* --- Bento Header (Wide) --- */
+        .header-box {
+            grid-column: span 4;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid white;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(241, 245, 249, 0.8);
-            position: relative;
-            box-shadow: var(--card-shadow);
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
-        .portal-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--card-hover-shadow);
-            border-color: rgba(0, 102, 51, 0.1);
-        }
+        .header-info h1 { font-size: 2.8rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
+        .header-info p { font-size: 1rem; color: #64748b; font-weight: 400; }
 
-        /* ไอคอนแบบมีมิติ */
-        .icon-wrapper {
+        .logo-wrapper {
             width: 80px; height: 80px;
-            background: #f0fdf4;
+            background: white;
             border-radius: 20px;
             display: flex; justify-content: center; align-items: center;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        .portal-card:hover .icon-wrapper {
-            background: var(--ku-green);
-            transform: rotate(-5deg);
+        /* --- Announcement (Alert Floating) --- */
+        .alert-box {
+            grid-column: span 4;
+            background: rgba(255, 77, 77, 0.05);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            padding: 15px 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .alert-box b { color: var(--accent-red); font-size: 0.95rem; }
+        .alert-box span { font-size: 0.8rem; color: #94a3b8; }
+
+        /* --- Portal Cards (Bento Items) --- */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid white;
+            border-radius: 30px;
+            padding: 30px;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        .icon-box { font-size: 2.2rem; color: var(--ku-green); transition: 0.3s; }
-        .portal-card:hover .icon-box { color: #ffffff; }
+        /* Hover Effect: Glow & Lift */
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: white;
+            box-shadow: 0 30px 60px rgba(0, 102, 51, 0.12);
+            border-color: var(--primary-light);
+        }
 
-        .portal-card h3 { font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; letter-spacing: -0.2px; }
-        .portal-card p { font-size: 0.95rem; color: var(--text-muted); font-weight: 400; }
+        .card-icon {
+            width: 60px; height: 60px;
+            background: #f1fdf4;
+            border-radius: 18px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; color: var(--primary);
+            margin-bottom: 20px;
+            transition: 0.5s;
+        }
+        .card:hover .card-icon { background: var(--primary); color: white; transform: rotate(-10deg); }
 
-        /* Modern Tag NEW */
+        .card h3 { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .card p { font-size: 0.9rem; color: #64748b; line-height: 1.4; }
+
+        /* --- Specific Bento Sizes --- */
+        .card.large { grid-column: span 2; grid-row: span 1; flex-direction: row; align-items: center; text-align: left; }
+        .card.large .card-icon { margin-bottom: 0; margin-right: 25px; width: 80px; height: 80px; font-size: 2rem; }
+
         .tag-new {
-            position: absolute; top: 15px; right: 15px;
-            background: linear-gradient(45deg, var(--ku-green), var(--ku-green-accent));
-            color: white; padding: 4px 14px; border-radius: 50px;
-            font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0, 102, 51, 0.2);
+            background: var(--primary); color: white;
+            padding: 4px 12px; border-radius: 50px;
+            font-size: 0.65rem; font-weight: 800;
+            position: absolute; top: 20px; right: 20px;
         }
 
-        footer { margin-top: 100px; text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 40px; border-top: 1px solid #e2e8f0; }
+        /* --- Footer --- */
+        .footer { grid-column: span 4; text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 20px; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-card { flex-direction: column; text-align: center; padding: 30px 20px; }
-            .logo-box { margin-right: 0; margin-bottom: 25px; width: 90px; height: 90px; }
-            .header-text h1 { font-size: 1.8rem; }
-            .announcement-bar { padding: 15px 25px; }
-            .grid-portal { grid-template-columns: 1fr; }
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: repeat(2, 1fr); }
+            .header-box, .alert-box, .footer { grid-column: span 2; }
+            .card.large { grid-column: span 2; }
+        }
+
+        @media (max-width: 600px) {
+            .container { grid-template-columns: 1fr; }
+            .header-box, .alert-box, .card, .footer { grid-column: span 1; }
+            .header-box { flex-direction: column; text-align: center; gap: 20px; }
+            .header-info h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header class="header-card">
-        <div class="logo-box">
-            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/f/f3/Kasetsart_University_Logo.svg/1200px-Kasetsart_University_Logo.svg.png" alt="Logo KU">
-        </div>
-        <div class="header-text">
-            <h2>FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES</h2>
+    <header class="header-box">
+        <div class="header-info">
+            <p>FACULTY OF EDUCATION & DEVELOPMENT SCIENCES</p>
             <h1>ชุมนุมฟาร์มนิสิต</h1>
+        </div>
+        <div class="logo-wrapper">
+            <img src="https://via.placeholder.com/60?text=KU" alt="Logo">
         </div>
     </header>
 
-    <div class="announcement-bar">
-        <div class="announcement-icon">
-            <i class="fas fa-satellite-dish"></i>
-        </div>
-        <div class="announcement-content">
-            <span class="status">ระบบอยู่ระหว่างทดสอบ (BETA TEST)</span>
-            <span class="author">ประกาศโดย: นายเมธี | 3 เม.ย. 69 02:34 น.</span>
-        </div>
+    <div class="alert-box">
+        <b><i class="fas fa-microchip"></i> ระบบอยู่ระหว่างทดสอบ (BETA V.2.6)</b>
+        <span>ประกาศโดย: นายเมธี | 3 เม.ย. 69 02:34 น.</span>
     </div>
 
-    <div class="grid-portal">
-        <a href="pepel.html" class="portal-card">
-            <div class="icon-wrapper"><i class="fas fa-users icon-box"></i></div>
+    <a href="pepel.html" class="card large">
+        <div class="card-icon"><i class="fas fa-users-gear"></i></div>
+        <div>
             <h3>คณะกรรมการฟาร์ม</h3>
-            <p>ปีการศึกษา 2569</p>
-        </a>
+            <p>โครงสร้างทีมบริหารงานชุมนุม ปีการศึกษา 2569</p>
+        </div>
+    </a>
 
-        <a href="room.html" class="portal-card">
-            <div class="icon-wrapper"><i class="fas fa-door-open icon-box"></i></div>
-            <h3>ระบบจองห้องประชุม</h3>
-            <p>จองใช้งานพื้นที่ประชุมและกิจกรรม</p>
-        </a>
+    <a href="room.html" class="card">
+        <div class="card-icon"><i class="fas fa-door-open"></i></div>
+        <h3>จองห้องประชุม</h3>
+        <p>ระบบจองอัจฉริยะ 24 ชม.</p>
+    </a>
 
-        <a href="schedule.html" class="portal-card">
-            <div class="icon-wrapper"><i class="fas fa-calendar-check icon-box"></i></div>
-            <h3>ตารางการใช้งาน</h3>
-            <p>ตรวจสอบสถานะห้องว่างแบบ Real-time</p>
-        </a>
+    <a href="schedule.html" class="card">
+        <div class="card-icon"><i class="fas fa-calendar-day"></i></div>
+        <h3>ตารางการใช้งาน</h3>
+        <p>เช็คห้องว่างแบบ Live</p>
+    </a>
 
-        <a href="#" class="portal-card">
-            <div class="icon-wrapper"><i class="fas fa-clipboard-list icon-box"></i></div>
-            <h3>ตรวจสอบหลักสูตร</h3>
-            <p>แผนการเรียนฉบับปรับปรุง พ.ศ. 2564</p>
-        </a>
+    <a href="#" class="card">
+        <div class="card-icon"><i class="fas fa-file-shield"></i></div>
+        <h3>หลักสูตร พ.ศ. 2564</h3>
+        <p>ตรวจสอบเกณฑ์การเรียน</p>
+    </a>
 
-        <a href="#" class="portal-card">
-            <div class="tag-new">NEW</div>
-            <div class="icon-wrapper"><i class="fas fa-user-graduate icon-box"></i></div>
-            <h3>ตรวจสอบหลักสูตร</h3>
-            <p>แผนการเรียนฉบับปรับปรุง พ.ศ. 2569</p>
-        </a>
+    <a href="#" class="card">
+        <div class="tag-new">LATEST</div>
+        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>หลักสูตร พ.ศ. 2569</h3>
+        <p>ตรวจสอบเกณฑ์เวอร์ชันใหม่</p>
+    </a>
 
-        <a href="#" class="portal-card">
-            <div class="icon-wrapper"><i class="fas fa-seedling icon-box"></i></div>
+    <a href="#" class="card large">
+        <div class="card-icon"><i class="fas fa-leaf"></i></div>
+        <div>
             <h3>โครงการชุมนุม</h3>
-            <p>รวบรวมแผนงานประจำปี 2569</p>
-        </a>
-    </div>
+            <p>ติดตามกิจกรรมและแผนการดำเนินงานทั้งหมดของฟาร์มนิสิต</p>
+        </div>
+    </a>
 
-    <footer>
-        © 2026 Faculty of Education and Development Sciences | Kasetsart University Kamphaeng Saen Campus
+    <footer class="footer">
+        © 2026 KU KPS | Kasetsart University Kamphaeng Saen Campus
     </footer>
 </div>
 
