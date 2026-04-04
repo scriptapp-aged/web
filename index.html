@@ -13,11 +13,13 @@
             --ku-green: #006633;
             --status-green: #2ecc71;
             --info-yellow: #fff9db;
+            --text-gray: #666;
+            --border-light: #eeeeee;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
-        body { display: flex; min-height: 100vh; background-color: var(--main-bg); }
+        body { display: flex; min-height: 100vh; background-color: var(--main-bg); overflow-x: hidden; }
 
         /* --- Sidebar (ซ้าย) --- */
         .sidebar {
@@ -26,6 +28,9 @@
             color: #ffffff;
             padding: 40px 30px;
             flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
         }
 
         .brand-name { font-size: 1.8rem; font-weight: 500; line-height: 1.2; margin-bottom: 60px; }
@@ -46,26 +51,40 @@
         /* --- Main Content (ขวา) --- */
         .main-content { flex-grow: 1; padding: 40px 60px; position: relative; }
 
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
-        .page-title { font-size: 1.6rem; font-weight: 600; color: #333; }
+        /* ส่วนหัวข้อใหม่: ชุมนุมฟาร์มนิสิต */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
 
-        /* แถบสถานะระบบ */
+        .club-name {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--ku-green);
+            margin-bottom: 10px;
+        }
+
         .system-status {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 20px;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-light);
             border-radius: 30px;
             font-size: 0.85rem;
-            color: #666;
+            color: var(--text-gray);
+            background: #fff;
         }
         .dot { width: 10px; height: 10px; background-color: var(--status-green); border-radius: 50%; }
 
-        /* --- Grid บริการ --- */
+        .service-title { font-size: 1.6rem; font-weight: 600; color: #333; margin-bottom: 30px; }
+
+        /* --- Grid บริการ (Die-cut Style) --- */
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 60px;
         }
@@ -74,14 +93,14 @@
             text-align: center;
             text-decoration: none;
             color: #333;
-            transition: transform 0.3s ease;
+            transition: 0.3s;
         }
         .service-card:hover { transform: translateY(-10px); }
 
         .img-container {
             width: 100%;
-            height: 300px;
-            margin-bottom: 20px;
+            height: 320px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
@@ -89,14 +108,14 @@
         .img-container img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* ให้รูปแสดงครบเหมือนในแบบ */
+            object-fit: contain;
         }
 
         .service-card h3 { 
             font-size: 1.3rem; 
             font-weight: 500; 
             text-decoration: underline; 
-            margin-bottom: 15px; 
+            margin-bottom: 12px; 
         }
 
         /* แถบ Beta */
@@ -105,45 +124,64 @@
             align-items: center;
             gap: 8px;
             background: #f8f9fa;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 6px 18px;
+            border-radius: 25px;
             font-size: 0.8rem;
             color: #888;
-            border: 1px solid #eee;
+            border: 1px solid var(--border-light);
         }
         .beta-label { background: #fff3bf; color: #f08c00; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
 
-        /* --- แถบคำแนะนำ (สีเหลือง) --- */
+        /* --- แถบแจ้งเตือน (สีเหลือง) --- */
         .info-bar {
             background-color: var(--info-yellow);
-            padding: 15px;
+            padding: 18px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #85701d;
-            border-radius: 4px;
-            margin-bottom: 50px;
+            border-radius: 6px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* --- ส่วนล่างสุด: ความคิดเห็น --- */
-        .feedback-section { border-top: 1px solid #eee; padding-top: 30px; }
-        .feedback-header { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
-        .feedback-text { font-size: 0.9rem; color: #666; margin-left: 35px; }
+        /* --- ส่วนท้าย --- */
+        .feedback-section { border-top: 1px solid var(--border-light); padding-top: 35px; }
+        .feedback-header { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+        .feedback-text { font-size: 0.95rem; color: var(--text-gray); margin-left: 38px; }
 
-        /* ปุ่มเขียน (ลอยตัว) */
-        .fab-edit {
-            position: absolute; bottom: 40px; right: 40px;
-            width: 55px; height: 55px;
-            background: #f1f3f5;
-            border-radius: 50%;
+        /* ปุ่ม Search & Edit */
+        .top-search {
+            width: 40px; height: 40px;
+            background: #444; color: #fff;
+            border-radius: 6px;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            color: #495057; font-size: 1.2rem;
             cursor: pointer;
         }
 
+        .fab-edit {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 60px; height: 60px;
+            background: #f1f3f5;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: #495057; font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .fab-edit:hover { background: #e9ecef; transform: scale(1.1); }
+
         @media (max-width: 1024px) {
-            .service-grid { grid-template-columns: repeat(2, 1fr); }
-            .sidebar { width: 220px; }
+            .sidebar { width: 240px; padding: 30px 20px; }
+            .main-content { padding: 30px 40px; }
+            .club-name { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 20px; }
+            .brand-name { margin-bottom: 20px; }
+            .service-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -154,40 +192,46 @@
             AG-ED<br>KU.KPS.
         </div>
         <ul class="nav-menu">
-            <li class="nav-item active"><a href="#">Home</a></li>
-            <li class="nav-item"><a href="#"><i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i> บริการห้องประชุม</a></li>
+            <li class="nav-item active"><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="#"><i class="fas fa-chevron-down"></i> บริการห้องประชุม</a></li>
         </ul>
     </aside>
 
     <main class="main-content">
-        <div class="top-bar">
-            <h1 class="page-title">บริการ | Service</h1>
-            <div class="system-status">
-                <span class="dot"></span> ระบบพร้อมใช้งาน
+        <div class="header-top">
+            <div>
+                <h1 class="club-name">ชุมนุมฟาร์มนิสิต</h1>
+                <h2 class="service-title">บริการ | Service</h2>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="system-status">
+                    <span class="dot"></span> ระบบพร้อมใช้งาน
+                </div>
+                <div class="top-search"><i class="fas fa-search"></i></div>
             </div>
         </div>
 
         <div class="service-grid">
-            <div class="service-card">
+            <a href="room.html" class="service-card">
                 <div class="img-container">
-                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="Student 1">
                 </div>
                 <h3>จองห้องประชุม</h3>
                 <div class="beta-tag">
                     <span class="beta-label">BETA</span> <i class="fas fa-satellite-dish"></i> เปิดระบบทดสอบ
                 </div>
-            </div>
+            </a>
 
-            <a href="#" class="service-card">
+            <a href="schedule.html" class="service-card">
                 <div class="img-container">
-                    <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="Student 2">
                 </div>
                 <h3>ตารางการจองห้อง</h3>
             </a>
 
             <a href="#" class="service-card">
                 <div class="img-container">
-                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="Student 3">
                 </div>
                 <h3>แจ้งปัญหาการใช้งาน</h3>
             </a>
