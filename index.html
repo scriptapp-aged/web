@@ -11,7 +11,7 @@
             --primary-neon: #00ff88;
             --ku-green: #006633;
             --text-dark: #0f172a;
-            --feedback-blue: #1e3a8a; /* สีน้ำเงินเข้มตามรูปภาพ */
+            --feedback-blue: #1e3a8a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -227,7 +227,7 @@
             font-weight: 300;
         }
 
-        /* --- ✨ New Feedback Section Styles --- */
+        /* --- ✨ Feedback Section --- */
         .feedback-section {
             max-width: 1250px;
             margin: 40px auto 100px;
@@ -294,6 +294,9 @@
             text-decoration: none;
             width: fit-content;
             transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
             box-shadow: 0 10px 25px rgba(30, 58, 138, 0.15);
         }
 
@@ -303,11 +306,71 @@
             background: #1e40af;
         }
 
-        .feedback-btn i {
-            font-size: 1.2rem;
-            background: rgba(255,255,255,0.2);
-            padding: 8px;
-            border-radius: 10px;
+        /* --- 🎨 Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8);
+            transition: 0.3s;
+        }
+
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        .modal-title { margin-bottom: 25px; font-weight: 600; color: var(--text-dark); }
+
+        .modal-options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option-card {
+            padding: 20px;
+            border: 2px solid #f1f5f9;
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            text-align: left;
+        }
+
+        .option-card:hover {
+            border-color: var(--ku-green);
+            background: rgba(0, 102, 51, 0.02);
+            transform: translateX(10px);
+        }
+
+        .option-card i {
+            font-size: 1.4rem;
+            color: var(--ku-green);
+        }
+
+        .close-modal {
+            margin-top: 25px;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
         }
 
         @media (max-width: 1024px) {
@@ -396,12 +459,46 @@
             
             <div class="feedback-divider"></div>
 
-            <a href="YOUR_LINK_HERE" class="feedback-btn">
+            <button class="feedback-btn" onclick="openModal()">
                 <i class="fa-solid fa-file-pen"></i>
                 แบบฟอร์มแสดงความคิดเห็น
-            </a>
+            </button>
         </div>
     </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 class="modal-title">เลือกหัวข้อที่ต้องการเสนอแนะ</h3>
+            <div class="modal-options">
+                <a href="LINK_FORM_COMMITTEE" class="option-card">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <div>
+                        <strong>การทำงานของคณะกรรมการ</strong>
+                        <p style="font-size: 0.8rem; color: #64748b;">ติชมการดำเนินงานของทีมคณะกรรมการฟาร์ม</p>
+                    </div>
+                </a>
+
+                <a href="LINK_FORM_SYSTEM" class="option-card">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    <div>
+                        <strong>การใช้งานระบบเว็บไซต์</strong>
+                        <p style="font-size: 0.8rem; color: #64748b;">แจ้งปัญหาการใช้งานหรือเสนอแนะฟีเจอร์ใหม่</p>
+                    </div>
+                </a>
+            </div>
+            <div class="close-modal" onclick="closeModal()">ยกเลิก</div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+    </script>
 
 </body>
 </html>
