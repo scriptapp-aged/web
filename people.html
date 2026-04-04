@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บริการ | Service - KU KPS Farm Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --ku-green: #006633;
+            --ku-gold: #b29d6c;
+            --text-dark: #1e293b;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
+
+        body {
+            background-color: #f1f5f9;
+            /* Mesh Gradient Background (ทันสมัยที่สุดตอนนี้) */
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(0, 102, 51, 0.08) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(178, 157, 108, 0.05) 0px, transparent 50%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* --- ✨ Top Navigation (Glass) --- */
+        .top-nav {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border: 1px solid var(--glass-border);
+            z-index: 100;
+        }
+
+        .brand-logo { color: var(--ku-green); font-size: 1.1rem; font-weight: 600; }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: #555; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--ku-green); }
+
+        /* --- Cinematic Title (No Ribbons) --- */
+        .cinematic-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .animated-title {
+            font-size: 4.5rem; /* ใหญ่แต่โปร่ง */
+            font-weight: 600;
+            letter-spacing: -2px;
+            /* Text Gradient (ขาวไปทอง) */
+            background: linear-gradient(to bottom, #fff 30%, #b29d6c 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .faculty-tag {
+            color: #fff;
+            background-color: var(--ku-green);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 200;
+        }
+
+        /* --- Service Grid (Glass Bento) --- */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 50px;
+        }
+
+        /* Bento Item with Glassmorphism */
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            padding: 40px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+        }
+
+        /* Hover Effect: Glow & Lift */
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: #fff;
+            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.1);
+        }
+
+        /* Icon Container */
+        .card-icon {
+            width: 50px; height: 50px;
+            background: #f0fdf4;
+            border-radius: 15px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; color: var(--ku-green);
+            margin-bottom: 20px;
+            transition: 0.4s;
+        }
+        .service-card:hover .card-icon { background: var(--ku-green); color: white; transform: rotate(-10deg); }
+
+        .service-card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; color: #0f172a; }
+        .service-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+
+        /* Modern Die-cut: ก้าวออกมาจากขอบ */
+        .die-cut-container {
+            position: absolute;
+            bottom: -20px; right: -20px;
+            width: 150px; height: 150px;
+            opacity: 0.2; /* เริ่มต้นจางๆ */
+            transition: 0.5s ease;
+        }
+        .die-cut-container img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* Hover: รูปสีเข้มขึ้นและยกตัว */
+        .service-card:hover .die-cut-container { opacity: 1; transform: translate(-10px, -10px); }
+
+        /* แถบ Beta ใหม่ */
+        .beta-label {
+            background: #fffbeb; color: #f08c00;
+            padding: 3px 10px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 600;
+            position: absolute; top: 20px; right: 20px;
+        }
+
+        /* --- Info Bar & Status (Modern Stack) --- */
+        .status-wrapper {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 20px;
+        }
+        .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; position: relative; }
+        .status-dot::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: #22c55e; border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+
+        .info-bar {
+            background-color: #fffbeb;
+            border: 1px solid #fef3c7;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #92400e;
+            border-radius: 4px;
+            width: 100%; max-width: 1200px;
+        }
+
+        @media (max-width: 900px) {
+            .service-grid { grid-template-columns: 1fr; }
+            .animated-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="brand-logo">KU KPS Farm Club Portal</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#"><i class="fas fa-search"></i></a></li>
+        </ul>
+    </nav>
+
+    <header class="cinematic-header">
+        <p class="faculty-tag">Faculty of Education and Development Sciences</p>
+        <h1 class="animated-title">ชุมนุมฟาร์มนิสิต</h1>
+        <p style="margin-top: 10px; opacity: 0.6; font-weight: 200; letter-spacing: 1px; color: #666; font-size: 0.8rem;">
+            KASETSART UNIVERSITY KAMPHAENG SAEN CAMPUS
+        </p>
+    </header>
+
+    <div class="service-grid">
+        
+        <a href="room.html" class="service-card">
+            <span class="beta-label"><i class="fas fa-satellite-dish"></i> BETA</span>
+            <div class="card-icon"><i class="fas fa-door-open"></i></div>
+            <div>
+                <h3>จองห้องประชุม</h3>
+                <p>จองใช้พื้นที่ประชุมและกิจกรรม 24 ชม.</p>
+            </div>
+            <div class="die-cut-container">
+                <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="Student 1">
+            </div>
+        </a>
+
+        <a href="schedule.html" class="service-card">
+            <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+            <div>
+                <h3>ตารางการจองห้อง</h3>
+                <p>ตรวจสอบสถานะห้องว่างแบบ Real-time</p>
+            </div>
+            <div class="die-cut-container">
+                <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="Student 2">
+            </div>
+        </a>
+
+        <a href="#" class="service-card">
+            <div class="card-icon"><i class="fas fa-wrench"></i></div>
+            <div>
+                <h3>แจ้งปัญหาการใช้งาน</h3>
+                <p>แจ้งซ่อมและรายงานปัญหาเชิงเทคนิค</p>
+            </div>
+            <div class="die-cut-container">
+                <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="Student 3">
+            </div>
+        </a>
+
+    </div>
+
+    <div class="status-wrapper">
+        <div class="status-dot"></div>
+        <span style="font-size: 0.85rem; font-weight: 500; color: #166534;">ระบบออนไลน์ (V.2026)</span>
+    </div>
+
+    <div class="info-bar">
+        เพื่อความสะดวกในการใช้งาน โปรดเปิดผ่านบราวเซอร์ iPad หรือ คอมพิวเตอร์ส่วนบุคคล
+    </div>
+
+</body>
+</html>
