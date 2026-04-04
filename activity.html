@@ -5,149 +5,171 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>โครงการชุมนุมฟาร์มนิสิต 2569</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Outfit:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
-        .font-eng { font-family: 'Outfit', sans-serif; }
+        body { 
+            font-family: 'Mali', cursive; 
+            background-color: #ffffff; 
+            color: #4b5563;
+        }
         
-        /* New Header Design */
-        .hero-title {
-            background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Main Card Style */
+        /* สไตล์การ์ดหน้าหลัก (ตามรูป Screenshot) */
         .main-card {
-            background: white; border-radius: 40px;
-            border: 1px solid #f1f5f9; padding: 45px;
-            text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            background: white; 
+            border-radius: 35px;
+            border: 2px solid #f3f4f6; 
+            padding: 40px;
+            text-align: center; 
+            transition: all 0.4s ease;
         }
-        .main-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1); border-color: #10b981; }
+        .main-card:hover { 
+            transform: translateY(-8px); 
+            border-color: #10b981;
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.1);
+        }
 
-        .logo-box { transition: all 0.5s ease; }
-        .main-card:hover .logo-box { transform: scale(1.1) rotate(2deg); }
+        .logo-box { transition: 0.5s ease; }
+        .main-card:hover .logo-box { transform: scale(1.1); }
 
+        /* ปุ่มแสดงรายละเอียด */
         .btn-black {
-            background-color: #121926; color: white;
-            padding: 18px 30px; border-radius: 20px;
-            width: 100%; font-weight: 500; font-size: 1.1rem;
-            transition: all 0.3s;
+            background-color: #1a1c23; 
+            color: white;
+            padding: 16px 30px; 
+            border-radius: 18px;
+            width: 100%; 
+            font-weight: 600;
+            transition: 0.3s;
         }
-        .btn-black:hover { background-color: #10b981; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
+        .btn-black:hover { background-color: #10b981; }
 
-        /* Wide Modal Layout */
+        /* Modal แนวนอนขนาดยาว */
         .modal {
-            display: none; position: fixed; z-index: 100;
+            display: none; 
+            position: fixed; 
+            z-index: 100;
             left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: white; margin: 5vh auto; border-radius: 45px;
-            max-width: 1100px; width: 95%; display: flex; flex-direction: row;
-            overflow: hidden; animation: zoomIn 0.4s both; max-height: 90vh;
+            background: white; 
+            margin: 5vh auto; 
+            border-radius: 40px;
+            max-width: 1050px; 
+            width: 95%; 
+            display: flex; 
+            flex-direction: row;
+            overflow: hidden; 
+            animation: zoomIn 0.3s both;
+            max-height: 85vh;
         }
 
         .sdg-slot {
-            width: 100%; aspect-ratio: 1; border: 1.5px dashed #cbd5e1;
-            border-radius: 12px; display: flex; align-items: center;
-            justify-content: center; font-size: 9px; color: #94a3b8; background: #fff;
+            width: 100%; aspect-ratio: 1; 
+            border: 2px solid #f3f4f6;
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            font-size: 10px; 
+            color: #94a3b8;
         }
 
-        footer { border-top: 1px solid #f1f5f9; }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body class="py-12 px-6">
+<body class="py-12">
 
-    <header class="max-w-6xl mx-auto text-center mb-24 animate__animated animate__fadeIn">
-        <p class="font-eng text-emerald-600 font-bold tracking-[0.4em] text-xs mb-4 uppercase">Academic Year 2026</p>
-        <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-            โครงการ <span class="hero-title italic">ชุมนุมฟาร์มนิสิต</span>
+    <header class="max-w-4xl mx-auto text-center mb-16 animate__animated animate__fadeInUp">
+        <h1 class="text-3xl md:text-5xl font-bold text-slate-800">
+            โครงการชุมนุมฟาร์มนิสิต <span class="text-emerald-500 text-2xl md:text-4xl block md:inline">ปีการศึกษา 2569</span>
         </h1>
-        <div class="w-16 h-1.5 bg-emerald-500 mx-auto mt-8 rounded-full"></div>
+        <div class="h-1 w-20 bg-emerald-400 mx-auto mt-4 rounded-full"></div>
     </header>
 
-    <main class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
-            <div class="logo-box mb-10 h-32 flex items-center justify-center">
-                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+EDS" class="max-h-full object-contain">
+    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+        
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="logo-box mb-8 h-28 flex items-center justify-center">
+                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+EDS" class="max-h-full">
             </div>
-            <h2 class="text-xl font-bold mb-12 text-slate-700">โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
+            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
             <button onclick="openModal('modal1')" class="btn-black">แสดงรายละเอียด</button>
         </div>
 
-        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
-            <div class="logo-box mb-10 h-32 flex items-center justify-center">
-                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+ZERO+WASTE" class="max-h-full object-contain">
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+            <div class="logo-box mb-8 h-28 flex items-center justify-center">
+                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+ZERO+WASTE" class="max-h-full">
             </div>
-            <h2 class="text-xl font-bold mb-12 text-slate-700">โครงการนวัตกรรมขยะสู่ปุ๋ย</h2>
+            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการจัดการนวัตกรรมขยะอินทรีย์ฯ</h2>
             <button onclick="openModal('modal2')" class="btn-black">แสดงรายละเอียด</button>
         </div>
 
-        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
-            <div class="logo-box mb-10 h-32 flex items-center justify-center">
-                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+SUFFICIENCY" class="max-h-full object-contain">
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="logo-box mb-8 h-28 flex items-center justify-center">
+                <img src="https://via.placeholder.com/350x120/ffffff/10b981?text=LOGO+SUFFICIENCY" class="max-h-full">
             </div>
-            <h2 class="text-xl font-bold mb-12 text-slate-700 font-light">โครงการเกษตรพอเพียงสู่โรงเรียน</h2>
+            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการเกษตรพอเพียงสู่โรงเรียน</h2>
             <button onclick="openModal('modal3')" class="btn-black">แสดงรายละเอียด</button>
         </div>
+
     </main>
+
+    <footer class="mt-24 py-10 text-center border-t border-slate-100 mx-10">
+        <p class="text-slate-400 text-sm mb-1">จัดทำโดย</p>
+        <p class="text-2xl font-bold text-slate-800">ชุมนุมฟาร์มนิสิต</p>
+    </footer>
 
     <div id="modal1" class="modal"><div class="modal-content" id="c1"></div></div>
     <div id="modal2" class="modal"><div class="modal-content" id="c2"></div></div>
     <div id="modal3" class="modal"><div class="modal-content" id="c3"></div></div>
 
-    <footer class="max-w-4xl mx-auto mt-32 py-12 text-center animate__animated animate__fadeIn">
-        <p class="text-slate-400 font-light text-sm tracking-widest uppercase">จัดทำโดย</p>
-        <p class="text-slate-900 font-bold text-lg mt-2 tracking-wide">ชุมนุมฟาร์มนิสิต</p>
-    </footer>
-
     <script>
-        const projectData = [
-            { id: 'modal1', title: 'โครงการเกษตรน้องใหม่หัวใจ EDS', org: 'ชุมนุมฟาร์มนิสิต', date: 'สิงหาคม 2569', budget: '25,000 บาท', target: 'นิสิตใหม่', amount: '150 คน', obj: ['ปูพื้นฐานเกษตร EDS', 'สร้างผู้นำรุ่นใหม่', 'เน้นการเรียนรู้จริง', 'สร้างเครือข่ายนิสิต'] },
-            { id: 'modal2', title: 'โครงการจัดการนวัตกรรมขยะอินทรีย์ฯ', org: 'ชุมนุมฟาร์มนิสิต', date: 'กันยายน 2569', budget: '45,000 บาท', target: 'นิสิตและบุคลากร', amount: '80 คน', obj: ['จัดการขยะในฟาร์ม', 'แปรรูปสู่ปุ๋ยคุณภาพ', 'นวัตกรรม Zero Waste', 'ลดต้นทุนการผลิต'] },
-            { id: 'modal3', title: 'โครงการเกษตรพอเพียงสู่โรงเรียน', org: 'ชุมนุมฟาร์มนิสิต', date: 'พฤศจิกายน 2569', budget: '30,000 บาท', target: 'โรงเรียนในพื้นที่', amount: '100 คน', obj: ['สอนหลักความพอเพียง', 'สร้างแหล่งอาหารรโรงเรียน', 'นิสิตฝึกงานอาสา', 'เชื่อมสัมพันธ์ชุมชน'] }
+        // ข้อมูลโครงการ
+        const projects = [
+            { id: 'modal1', title: 'โครงการเกษตรน้องใหม่หัวใจ EDS', obj: ['เข้าใจพื้นฐาน EDS', 'สร้างทักษะผู้นำ', 'เรียนรู้ลงมือทำจริง', 'สร้างความสัมพันธ์'] },
+            { id: 'modal2', title: 'โครงการจัดการนวัตกรรมขยะอินทรีย์ฯ', obj: ['จัดการขยะในฟาร์ม', 'ผลิตปุ๋ยคุณภาพสูง', 'นวัตกรรม Zero Waste', 'ลดปริมาณขยะส่วนเกิน'] },
+            { id: 'modal3', title: 'โครงการเกษตรพอเพียงสู่โรงเรียน', obj: ['ถ่ายทอดความพอเพียง', 'สร้างแปลงผักโรงเรียน', 'นิสิตได้ฝึกอาสา', 'สัมพันธ์มหาวิทยาลัย-ชุมชน'] }
         ];
 
-        projectData.forEach((p, index) => {
-            document.getElementById(`c${index+1}`).innerHTML = `
-                <div class="p-12 md:w-1/2 border-r border-slate-100 overflow-y-auto">
-                    <h3 class="text-2xl font-bold text-emerald-600 mb-8 pb-4 border-b">${p.title}</h3>
-                    <div class="space-y-5 text-sm">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><p class="text-slate-400 font-bold text-[10px] uppercase mb-1">องค์กรนิสิต</p><p class="text-slate-800 font-medium">${p.org}</p></div>
-                            <div><p class="text-slate-400 font-bold text-[10px] uppercase mb-1">งบประมาณ</p><p class="text-emerald-600 font-bold">${p.budget}</p></div>
-                        </div>
-                        <div><p class="text-slate-400 font-bold text-[10px] uppercase mb-1">กำหนดการ</p><p class="text-slate-800">${p.date}</p></div>
-                        <div class="bg-slate-50 p-6 rounded-3xl">
-                            <p class="text-slate-400 font-bold text-[10px] uppercase mb-3 text-emerald-700">วัตถุประสงค์ของโครงการ</p>
-                            <ul class="list-decimal pl-5 space-y-2 text-slate-600 font-light">
+        // สร้างเนื้อหาข้างใน Popup
+        projects.forEach((p, i) => {
+            document.getElementById(`c${i+1}`).innerHTML = `
+                <div class="p-10 md:w-1/2 border-r border-slate-50 overflow-y-auto">
+                    <h3 class="text-2xl font-bold text-emerald-600 mb-6 border-b-2 border-emerald-50 pb-2">${p.title}</h3>
+                    <div class="space-y-4 text-sm">
+                        <p><strong>ชื่อองค์กรนิสิต:</strong> ชุมนุมฟาร์มนิสิต</p>
+                        <p><strong>กำหนดการ:</strong> ปีการศึกษา 2569</p>
+                        <div class="bg-emerald-50 p-5 rounded-3xl">
+                            <p class="font-bold mb-3 text-emerald-800">วัตถุประสงค์ของโครงการ</p>
+                            <ul class="list-decimal pl-5 space-y-1.5 text-slate-600">
                                 ${p.obj.map(item => `<li>${item}</li>`).join('')}
                             </ul>
                         </div>
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
-                            <div><p class="text-slate-400 font-bold text-[10px] uppercase mb-1">กลุ่มเป้าหมาย</p><p class="text-slate-800">${p.target}</p></div>
-                            <div><p class="text-slate-400 font-bold text-[10px] uppercase mb-1">จำนวนผู้ร่วม</p><p class="text-slate-800 font-bold">${p.amount}</p></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <p><strong>กลุ่มเป้าหมาย:</strong> นิสิต/นักเรียน</p>
+                            <p><strong>จำนวน:</strong> 100+ ท่าน</p>
+                            <p class="col-span-2"><strong>งบประมาณดำเนินการ:</strong> ตามโครงการ</p>
                         </div>
                     </div>
                 </div>
-                <div class="p-12 md:w-1/2 bg-slate-50/40 flex flex-col justify-between">
+                <div class="p-10 md:w-1/2 bg-slate-50/50 flex flex-col justify-between">
                     <div>
-                        <p class="text-slate-400 font-bold text-[10px] uppercase mb-5 tracking-widest">อัตลักษณ์นิสิต (IDKU)</p>
-                        <div class="space-y-3 mb-10">
-                            <div class="bg-white p-3.5 rounded-2xl border border-emerald-100 text-sm text-emerald-600 font-bold">✅ I = สำนึกดี (Integrity)</div>
-                            <div class="bg-white p-3.5 rounded-2xl border border-emerald-100 text-sm text-emerald-600 font-bold">✅ D = มุ่งมั่น (Determination)</div>
-                            <div class="bg-white p-3.5 rounded-2xl border border-emerald-100 text-sm text-emerald-600 font-bold">✅ K = สร้างสรรค์ (Knowledge Creation)</div>
-                            <div class="bg-white p-3.5 rounded-2xl border border-emerald-100 text-sm text-emerald-600 font-bold">✅ U = สามัคคี (Unity)</div>
+                        <p class="font-bold text-slate-800 mb-4 text-sm">ลักษณะบรรลุเป้าหมายตามอัตลักษณ์ (IDKU)</p>
+                        <div class="space-y-2 mb-8">
+                            <p class="text-emerald-600 font-bold bg-white p-3 rounded-2xl border border-emerald-100">✅ I = สำนึกดี (Integrity)</p>
+                            <p class="text-emerald-600 font-bold bg-white p-3 rounded-2xl border border-emerald-100">✅ D = มุ่งมั่น (Determination)</p>
+                            <p class="text-emerald-600 font-bold bg-white p-3 rounded-2xl border border-emerald-100">✅ K = สร้างสรรค์ (Knowledge Creation)</p>
+                            <p class="text-emerald-600 font-bold bg-white p-3 rounded-2xl border border-emerald-100">✅ U = สามัคคี (Unity)</p>
                         </div>
-                        <p class="text-slate-400 font-bold text-[10px] uppercase mb-5 tracking-widest">การพัฒนาอย่างยั่งยืน (SDGs)</p>
+                        <p class="font-bold text-slate-800 mb-4 text-sm">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</p>
                         <div class="grid grid-cols-5 gap-2">
-                            ${Array(10).fill(0).map(() => `<div class="sdg-slot">SDG</div>`).join('')}
+                            ${Array(10).fill('<div class="sdg-slot">SDG</div>').join('')}
                         </div>
                     </div>
-                    <button onclick="closeModal('${p.id}')" class="mt-12 w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-red-500 transition-all">ปิดหน้าต่าง</button>
+                    <button onclick="closeModal('${p.id}')" class="mt-8 bg-slate-800 text-white py-3 rounded-2xl font-bold hover:bg-red-500 transition-all">ปิดหน้านี้</button>
                 </div>
             `;
         });
@@ -156,6 +178,5 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
         window.onclick = function(e) { if (e.target.className === 'modal') { closeModal(e.target.id); } }
     </script>
-
 </body>
 </html>
