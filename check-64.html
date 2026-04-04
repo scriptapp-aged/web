@@ -4,71 +4,122 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ระบบตรวจสอบการเรียนตามหลักสูตร - เกษตรและสิ่งแวดล้อมศึกษา</title>
-<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+/* ===== CSS Reset & Global Style ===== */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --green:#1b6b35;--green-light:#2d9b50;--green-pale:#e8f5ec;--green-mid:#c2e8cc;
-  --gold:#e8a020;--gold-light:#fdecc8;
-  --sky:#1976d2;--sky-light:#e3f0fd;
-  --coral:#e05c3a;--coral-light:#fdeae4;
-  --bg:#f4f9f6;--white:#fff;--text:#1a2e1e;--muted:#5a7a62;--border:#c8e0cf;
-  --radius:14px;--radius-sm:8px;
-  --font:'Prompt', sans-serif;
-  --font-title:'Mitr', sans-serif;
+  --green:#1b6b35;/* สีเขียวหลัก */
+  --green-light:#2d9b50;
+  --green-pale:#e8f5ec;
+  --green-mid:#c2e8cc;
+  --gold:#e8a020;
+  --sky:#1976d2;
+  --coral:#e05c3a;
+  --bg:#f4f9f6;
+  --white:#fff;
+  --text:#1a2e1e;
+  --muted:#5a7a62;
+  --border:#c8e0cf;
+  --shadow:0 4px 6px rgba(0,0,0,0.07);
+  --radius-lg:16px;
+  --radius-md:10px;
+  --radius-sm:8px;
+  --font-mali:'Mali', cursive;/* ฟอนต์ Mali */
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+body{font-family:var(--font-mali);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
 
-/* ===== AUTH (คงเดิม) ===== */
+/* ===== AUTH STYLES (คงโครงสร้างเดิม แต่ปรับฟอนต์) ===== */
 .auth-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
   background:linear-gradient(135deg,#e8f5ec 0%,#c2e8cc 40%,#fdecc8 100%);}
 .auth-card{background:var(--white);border-radius:24px;padding:2.5rem;width:100%;max-width:420px;
-  box-shadow:0 8px 40px rgba(27,107,53,0.13);border:2px solid var(--green-mid);}
+  box-shadow:0 8px 40px rgba(27,107,53,0.13);border:2px solid var(--border);}
 .auth-logo{text-align:center;margin-bottom:1.75rem;}
-.auth-title{font-family:var(--font-title);font-size:20px;font-weight:500;color:var(--green);}
-.field{margin-bottom:1rem;}
+.auth-title{font-size:20px;font-weight:700;color:var(--green);margin-bottom:5px;}
+.auth-sub{font-size:13px;color:var(--muted);}
+.field{margin-bottom:1.2rem;}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--green);margin-bottom:6px;}
-.field input,.field select{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
-  font-family:var(--font);font-size:14px;outline:none;}
-.btn-primary{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);
-  font-family:var(--font-title);font-size:15px;cursor:pointer;transition:.2s;}
+.field input,.field select{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-family:var(--font-mali);font-size:14px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-auth{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);
+  font-family:var(--font-mali);font-size:16px;font-weight:700;cursor:pointer;transition:.2s;}
+.btn-auth:hover{opacity:.9;transform:translateY(-1px);}
 
-/* ===== MAIN LAYOUT (ขยายขนาด) ===== */
+/* ===== MAIN LAYOUT STYLES ===== */
 .main-wrap{min-height:100vh;display:flex;flex-direction:column;}
-.topbar{background:var(--green);padding:1rem 5%;display:flex;align-items:center;gap:14px;color:#fff;position:sticky;top:0;z-index:100;}
-.container-full{max-width:1300px;margin:0 auto;width:100%;}
+.container-full{max-width:1400px;margin:0 auto;width:100%;padding:1rem;}
 
-/* ===== SUMMARY CARDS ===== */
-.summary-section{padding:1.25rem 5%;display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
-.sum-card{background:var(--white);border-radius:var(--radius);padding:1.2rem;border:2px solid var(--border);text-align:center;}
-.sum-card .val{font-size:28px;font-weight:700;color:var(--green);}
+/* Top Header */
+.topbar{padding:1.5rem 1rem;text-align:center;}
+.header-box{background:var(--green);border-radius:var(--radius-lg);padding:1.5rem;color:#fff;}
+.topbar-title .t1{font-size:18px;font-weight:700;letter-spacing:0.5px;}
+.topbar-title .t2{font-size:12px;opacity:0.8;margin-top:2px;}
 
-/* ===== GROUP CARDS (ปรับให้แสดงผลเลย ไม่ต้องซ่อน) ===== */
-.group-wrap{margin-bottom:1.5rem;}
-.group-card{background:var(--white);border-radius:var(--radius);border:2px solid var(--border);overflow:hidden;}
-.group-header{padding:1.2rem 1.5rem;background:var(--green-pale);border-bottom:2px solid var(--green-mid);display:flex;justify-content:space-between;align-items:center;}
-.group-title{font-family:var(--font-title);font-size:17px;font-weight:500;color:var(--green);}
-.group-body{display:block; padding-bottom: 10px;} /* สั่งให้แสดงตลอด */
+/* User Card */
+.user-card{background:#fff;border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.user-info-flex{display:flex;align-items:center;gap:15px;}
+.user-avatar{width:50px;height:50px;border-radius:50%;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:bold;font-size:20px;border:1px solid var(--border);}
+.btn-logout{background:none;border:1px solid #ddd;color:#333;padding:8px 16px;border-radius:20px;font-family:var(--font-mali);cursor:pointer;font-size:12px;transition:0.2s;}
+.btn-logout:hover{background:#f5f5f5;border-color:#ccc;}
 
-/* ===== TABLE STRUCTURE (เพิ่มหัวตาราง) ===== */
-.table-header{display:grid;grid-template-columns:40px 110px 1fr 80px 110px 120px;padding:10px 1.5rem;background:#f8faf9;font-weight:bold;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);}
-.course-row{display:grid;grid-template-columns:40px 110px 1fr 80px 110px 120px;gap:10px;padding:12px 1.5rem;border-bottom:1px solid var(--border);align-items:center;}
-.course-row:hover{background:#fafffe;}
+/* Summary Section (NEW) */
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:1.5rem;}
+.sum-box{background:var(--white);border-radius:var(--radius-md);padding:1.5rem 1rem;text-align:center;box-shadow:var(--shadow);}
+.sum-box .val{font-size:36px;font-weight:700;color:var(--green);line-height:1;}
+.sum-box .lbl{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600;}
+.sum-box.remaining .val{color:var(--coral);}
+.sum-box.gpa .val{color:var(--sky);}
+
+/* Progress */
+.prog-card{background:var(--white);border-radius:var(--radius-md);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem;}
+.prog-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600;}
+.prog-bar{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:5px;background:var(--green);width:0;transition:width 0.5s;}
+
+/* Tabs */
+.tabs-wrap{display:flex;gap:10px;margin-bottom:1.5rem;justify-content:center;}
+.tab-btn{background:var(--white);border:1px solid #ddd;padding:10px 20px;border-radius:20px;font-family:var(--font-mali);cursor:pointer;font-size:13px;transition:0.2s;}
+.tab-btn:hover{background:var(--green-pale);}
+.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* Group & Table */
+.curriculum-body{display:grid;gap:1.5rem;}
+.group-card{background:var(--white);border-radius:var(--radius-md);box-shadow:var(--shadow);padding:1.5rem;}
+.group-header{margin-bottom:1.5rem;border-left:4px solid var(--green);padding-left:15px;}
+.group-title{font-size:16px;font-weight:700;}
+.group-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+
+.sub-group-header{padding:10px 1.5rem; background:#f8faf9; border-top:1px solid var(--border); border-bottom:1px solid var(--border); font-size:13px; font-weight:700; color:var(--green); display:flex; justify-content:space-between; align-items:center;}
+
+/* Table Structure */
+.table-responsive{overflow-x:auto;}
+.curriculum-table{width:100%;border-collapse:collapse;min-width:900px;}
+.curriculum-table th, .curriculum-table td{padding:12px 1rem;border-bottom:1px solid var(--border);font-size:13px;}
+.curriculum-table th{background:#fafafa;font-weight:bold;text-align:left;color:var(--muted);}
+.curriculum-table td{vertical-align:middle;}
+.curriculum-table th.center, .curriculum-table td.center{text-align:center;}
 
 /* Checkbox & Inputs */
 .check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .check-box.done{background:var(--green);border-color:var(--green);}
-.term-input{width:90px;padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font);font-size:12px;text-align:center;}
-.grade-select{padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font);font-size:13px;font-weight:bold;}
+.term-input{width:90px;padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font-mali);font-size:12px;text-align:center;}
+.grade-select{padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font-mali);font-size:13px;font-weight:bold;}
 
-/* Profile */
-.pane{display:none; padding: 2rem 5%;}
+/* Action Buttons (add/remove) */
+.btn-free-add{background:var(--green); color:#fff; border:none; padding:8px 16px; border-radius:20px; font-family:var(--font-mali); font-size:12px; cursor:pointer; margin: 15px;}
+.remove-btn{border:none; background:none; color:red; cursor:pointer; font-size:18px; margin-left:10px;}
+
+/* Profile Pane */
+.pane{display:none;}
 .pane.active{display:block;}
+.profile-card{background:var(--white); border-radius:var(--radius-md); box-shadow:var(--shadow); padding:2rem; max-width:600px; margin:2rem auto;}
+.profile-card table {width:100%; border-collapse: collapse;}
+.profile-card th {text-align: left; color: var(--muted); padding: 10px 0; width: 150px;}
+.profile-card td {padding: 10px 0;}
 
 @media(max-width:900px){
-  .table-header{display:none;}
-  .course-row{grid-template-columns:1fr 1fr; gap:5px;}
-  .course-name{grid-column: span 2; font-weight:bold;}
+  .summary-row{grid-template-columns:1fr;gap:10px;}
 }
 </style>
 </head>
@@ -76,16 +127,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 <div id="app"></div>
 
 <script>
-// --- ข้อมูลวิชา (คงเดิมจากโค้ดที่คุณให้มา) ---
+// --- ข้อมูลวิชา (คงเดิม) ---
 const GROUPS=[
-  {id:'g1',label:'หมวดวิชาศึกษาทั่วไป',minCredit:30,icon:'🌿',color:'#6366f1',sub:[
+  {id:'g1',label:'หมวดศึกษาทั่วไป',minCredit:30,sub:[
     {id:'g1_1',label:'1.1 กลุ่มสาระอยู่ดีมีสุข',minCredit:6,canAdd:true,courses:[]},
     {id:'g1_2',label:'1.2 กลุ่มสาระศาสตร์แห่งผู้ประกอบการ',minCredit:3,canAdd:true,courses:[]},
     {id:'g1_3',label:'1.3 กลุ่มสาระภาษากับการสื่อสาร',minCredit:13,canAdd:true,courses:[]},
     {id:'g1_4',label:'1.4 กลุ่มสาระพลเมืองไทยและพลเมืองโลก',minCredit:5,canAdd:true,courses:[]},
     {id:'g1_5',label:'1.5 กลุ่มสาระสุนทรียศาสตร์',minCredit:3,canAdd:true,courses:[]},
   ]},
-  {id:'g2',label:'วิชาเฉพาะบังคับ',minCredit:79,icon:'🌾',color:'#1b6b35',sub:[
+  {id:'g2',label:'วิชาเฉพาะบังคับ',minCredit:79,sub:[
     {id:'g2_1',label:'2.1.1 กลุ่มวิชาวิทยาศาสตร์ (21 น.)',minCredit:21,canAdd:false,courses:[
       {code:'01403111-60',name:'เคมีทั่วไป',credit:4},
       {code:'01403112-65',name:'ปฏิบัติการเคมีทั่วไป',credit:1},
@@ -127,17 +178,18 @@ const GROUPS=[
       {code:'02036281-66',name:'โรคพืชวิทยาเบื้องต้น',credit:3},
     ]}
   ]},
-  {id:'g3',label:'วิชาเฉพาะเลือก',minCredit:21,icon:'🔬',color:'#0d9488',sub:[
+  {id:'g3',label:'วิชาเฉพาะเลือก',minCredit:21,sub:[
     {id:'g3_1',label:'2.2.1 วิชาเลือกสาขา (6 น.)',minCredit:6,canAdd:true,courses:[]},
     {id:'g3_2',label:'2.2.2 กลุ่มวิทยาศาสตร์เกษตร (15 น.)',minCredit:15,canAdd:true,courses:[]},
   ]},
-  {id:'g4',label:'วิชาเสรี',minCredit:6,icon:'✨',color:'#7c3aed',sub:[
+  {id:'g4',label:'วิชาเสรี',minCredit:6,sub:[
     {id:'g4_1',label:'3. วิชาเสรี (6 น.)',minCredit:6,canAdd:true,courses:[]},
   ]},
 ];
 
-const USERS_KEY='ase64_users';
-const DATA_KEY='ase64_data';
+const TOTAL_NEEDED_CREDITS = 136;
+const USERS_KEY='ase64_users_v2';
+const DATA_KEY='ase64_data_v2';
 const GRADES=['A','B+','B','C+','C','D+','D','F','W'];
 const GRADE_POINTS={'A':4,'B+':3.5,'B':3,'C+':2.5,'C':2,'D+':1.5,'D':1,'F':0,'W':null};
 
@@ -147,7 +199,7 @@ let freeData={};
 
 const app=document.getElementById('app');
 
-// --- Storage Functions (คงเดิม) ---
+// --- Storage Functions ---
 async function getUsers(){ try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}')}catch(e){return {}} }
 async function saveUsers(u){ localStorage.setItem(USERS_KEY,JSON.stringify(u)); }
 async function loadStudentData(sid){
@@ -156,19 +208,19 @@ async function loadStudentData(sid){
 }
 async function saveStudentData(sid){ localStorage.setItem(DATA_KEY+':'+sid, JSON.stringify({grades, free:freeData})); }
 
-// --- Logic (ปรับให้รองรับช่อง Term) ---
+// --- Logic (gpa/credits) ---
 function calcGPA(){
   let totalPoints=0, totalCredits=0;
   GROUPS.forEach(g=>g.sub.forEach(sub=>{
     sub.courses.forEach(c=>{
       const d = grades[c.code];
-      if(d && d.grade && d.grade!=='W'){
+      if(d && d.grade && GRADE_POINTS[d.grade] !== null){
         totalPoints += (GRADE_POINTS[d.grade]*c.credit); totalCredits += c.credit;
       }
     });
-    if(sub.canAdd && freeData[sub.id]){
+    if(freeData[sub.id]){
       freeData[sub.id].forEach(fc=>{
-        if(fc.grade && fc.grade!=='W'){
+        if(fc.grade && GRADE_POINTS[fc.grade] !== null){
           totalPoints += (GRADE_POINTS[fc.grade]*fc.credit); totalCredits += fc.credit;
         }
       });
@@ -181,136 +233,182 @@ function calcPassedCredits(){
   let total=0;
   GROUPS.forEach(g=>g.sub.forEach(sub=>{
     sub.courses.forEach(c=>{ if(grades[c.code] && !['F','W',''].includes(grades[c.code].grade)) total+=c.credit; });
-    if(sub.canAdd && freeData[sub.id]){
+    if(freeData[sub.id]){
       freeData[sub.id].forEach(fc=>{ if(!['F','W',''].includes(fc.grade)) total+=fc.credit; });
     }
   }));
   return total;
 }
 
-// --- Render (หน้าจอหลัก) ---
+// --- Render Main Layout ---
 function renderMain(){
   const passed=calcPassedCredits();
-  const gpa=calcGPA();
+  const remaining = TOTAL_NEEDED_CREDITS - passed;
+  const pct=Math.round((passed/TOTAL_NEEDED_CREDITS)*100);
   const ini=currentUser.fname[0]+currentUser.lname[0];
 
   app.innerHTML=`
   <div class="main-wrap">
     <div class="topbar">
-      <div style="flex:1">
-        <div style="font-weight:bold; font-size:17px;">ระบบตรวจสอบการเรียนตามหลักสูตร</div>
-        <div style="font-size:12px; opacity:0.8;">เกษตรและสิ่งแวดล้อมศึกษา (64)</div>
+      <div class="header-box">
+        <div class="topbar-title">
+          <div class="t1">ระบบตรวจสอบการเรียนตามหลักสูตร</div>
+          <div class="t1">วท.บ. (เกษตรและสิ่งแวดล้อมศึกษา)</div>
+          <div class="t2">หลักสูตรปรับปรุง พ.ศ. 2564 — มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+        </div>
       </div>
-      <div style="text-align:right; font-size:13px;">
-        <b>${currentUser.fname} ${currentUser.lname}</b><br>${currentUser.sid}
-      </div>
-      <button onclick="location.reload()" style="background:rgba(255,255,255,0.2); border:none; color:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">ออก</button>
     </div>
 
     <div class="container-full">
-      <div class="summary-section">
-        <div class="sum-card"><div class="val" id="s-passed">${passed}</div><div class="lbl">หน่วยกิตที่ผ่าน</div></div>
-        <div class="sum-card"><div class="val" id="s-gpa">${gpa.toFixed(2)}</div><div class="lbl">GPAX</div></div>
-        <div class="sum-card"><div class="val" id="s-status" style="font-size:20px; padding:6px 0;">กำลังศึกษา</div><div class="lbl">สถานะ</div></div>
-        <div class="sum-card"><div class="val">136</div><div class="lbl">หน่วยกิตทั้งหมด</div></div>
+      <div class="user-card">
+        <div class="user-info-flex">
+          <div class="user-avatar">${ini}</div>
+          <div>
+            <div style="font-weight:bold; font-size:16px; color:var(--green);">${currentUser.fname} ${currentUser.lname}</div>
+            <div style="font-size:12px; color:var(--muted);">รหัสนิสิต: ${currentUser.sid}</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
       </div>
 
-      <div class="tabs-wrap" style="padding:0 5%; margin-bottom:1rem;">
-        <button class="btn-primary" onclick="switchTab('curriculum')" style="margin-right:10px;">ตรวจสอบหลักสูตร</button>
-        <button class="btn-primary" style="background:var(--muted)" onclick="switchTab('profile')">ข้อมูลส่วนตัว</button>
+      <div class="summary-row">
+        <div class="sum-box"><div class="val">${passed}</div><div class="lbl">หน่วยกิตผ่านแล้ว</div></div>
+        <div class="sum-box remaining"><div class="val">${remaining > 0 ? remaining : 0}</div><div class="lbl">หน่วยกิตคงเหลือ</div></div>
+        <div class="sum-box gpa"><div class="val">${calcGPA().toFixed(2)}</div><div class="lbl">เกรดเฉลี่ยสะสม</div></div>
       </div>
 
-      <div id="pane-curriculum" class="pane active"></div>
-      <div id="pane-profile" class="pane"></div>
+      <div class="prog-card">
+        <div class="prog-label">
+          <span>ความก้าวหน้าตลอดหลักสูตร (${TOTAL_NEEDED_CREDITS} หน่วยกิต)</span>
+          <span>${pct}%</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </div>
+
+      <div class="tabs-wrap">
+        <button class="tab-btn active" id="tab-curr" onclick="switchPane('curriculum')">หมวดตรวจสอบหลักสูตร</button>
+        <button class="tab-btn" id="tab-profile" onclick="switchPane('profile')">ข้อมูลส่วนตัว</button>
+      </div>
+
+      <div id="pane-curriculum" class="curriculum-body active"></div>
+      <div id="pane-profile" class="curriculum-body pane"></div>
     </div>
   </div>`;
   renderCurriculum();
+  renderProfile();
 }
 
+// --- Render Curriculum Table ---
 function renderCurriculum(){
   const pane=document.getElementById('pane-curriculum');
   let html='';
   GROUPS.forEach(g=>{
     html+=`
-    <div class="group-wrap">
-      <div class="group-card">
-        <div class="group-header">
-          <div class="group-title">${g.icon} ${g.label} (ต้องการ ${g.minCredit} น.)</div>
-        </div>
-        <div class="group-body">
-          ${g.sub.map(sub=>`
-            <div style="padding:10px 1.5rem; background:#f0f7f2; font-weight:bold; font-size:14px; border-bottom:1px solid var(--border)">${sub.label}</div>
-            <div class="table-header">
-              <div>ผ่าน</div><div>รหัสวิชา</div><div>ชื่อวิชา</div><div>หน่วยกิต</div><div>ปี/เทอม</div><div>เกรด</div>
-            </div>
-            ${sub.courses.map(c=>{
-              const saved = grades[c.code] || {grade:'', term:''};
-              const isDone = saved.grade && !['F','W'].includes(saved.grade);
-              return `
-              <div class="course-row">
-                <div class="check-box ${isDone?'done':''}" onclick="quickToggle('${c.code}')">
-                  ${isDone?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>':''}
-                </div>
-                <div style="font-family:monospace; font-weight:bold;">${c.code}</div>
-                <div class="course-name">${c.name}</div>
-                <div style="text-align:center">${c.credit}</div>
-                <div><input type="text" class="term-input" placeholder="เช่น 1/66" value="${saved.term}" onchange="updateData('${c.code}', 'term', this.value)"></div>
-                <div>
-                  <select class="grade-select" onchange="updateData('${c.code}', 'grade', this.value)">
-                    <option value="">-</option>
-                    ${GRADES.map(grade=>`<option value="${grade}" ${saved.grade===grade?'selected':''}>${grade}</option>`).join('')}
-                  </select>
-                </div>
-              </div>`;
-            }).join('')}
-            
-            ${sub.canAdd ? `
-              <div id="free-${sub.id}">
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-title">${g.label}</div>
+        <div class="group-meta">ต้องการ ${g.minCredit} หน่วยกิต</div>
+      </div>
+      <div class="table-responsive">
+        <table class="curriculum-table">
+          <thead>
+            <tr>
+              <th>ผ่าน</th>
+              <th>รหัสวิชา</th>
+              <th>ชื่อวิชา</th>
+              <th class="center">หน่วยกิต</th>
+              <th class="center">เทอม/ปีที่เรียน</th>
+              <th class="center">เกรด</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${g.sub.map(sub=>`
+              <tr class="sub-group-header">
+                <td colspan="6">${sub.label} (ต้องการ ${sub.minCredit} น.)</td>
+              </tr>
+              ${sub.courses.map(c=>{
+                const saved = grades[c.code] || {grade:'', term:''};
+                const isDone = saved.grade && !['F','W'].includes(saved.grade);
+                return `
+                <tr>
+                  <td>
+                    <div class="check-box ${isDone?'done':''}" onclick="toggleDone('${c.code}')">
+                      ${isDone?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>':''}
+                    </div>
+                  </td>
+                  <td style="font-family:monospace;">${c.code}</td>
+                  <td>${c.name}</td>
+                  <td class="center">${c.credit}</td>
+                  <td class="center"><input type="text" class="term-input" placeholder="เช่น 1/66" value="${saved.term}" onchange="updateRow('${c.code}', 'term', this.value)"></td>
+                  <td class="center">
+                    <select class="grade-select" onchange="updateRow('${c.code}', 'grade', this.value)">
+                      <option value="">-</option>
+                      ${GRADES.map(grade=>`<option value="${grade}" ${saved.grade===grade?'selected':''}>${grade}</option>`).join('')}
+                    </select>
+                  </td>
+                </tr>`;
+              }).join('')}
+              
+              ${sub.canAdd ? `
                 ${(freeData[sub.id]||[]).map((fc, idx)=>`
-                  <div class="course-row" style="background:#fffcf5">
-                    <div class="check-box ${fc.grade && !['F','W'].includes(fc.grade)?'done':''}"></div>
-                    <div><input type="text" class="term-input" style="width:100%" value="${fc.code}" onchange="updateFree('${sub.id}', ${idx}, 'code', this.value)"></div>
-                    <div><input type="text" class="term-input" style="width:100%; text-align:left;" value="${fc.name}" onchange="updateFree('${sub.id}', ${idx}, 'name', this.value)"></div>
-                    <div style="text-align:center">${fc.credit}</div>
-                    <div><input type="text" class="term-input" value="${fc.term||''}" onchange="updateFree('${sub.id}', ${idx}, 'term', this.value)"></div>
-                    <div>
-                      <select class="grade-select" onchange="updateFree('${sub.id}', ${idx}, 'grade', this.value)">
+                  <tr style="background:#fffcf8">
+                    <td><div class="check-box ${fc.grade && !['F','W'].includes(fc.grade)?'done':''}"></div></td>
+                    <td><input type="text" class="term-input" style="width:100%" value="${fc.code}" placeholder="รหัสวิชา" onchange="updateFreeRow('${sub.id}', ${idx}, 'code', this.value)"></td>
+                    <td><input type="text" class="term-input" style="width:100%; text-align:left;" value="${fc.name}" placeholder="ชื่อวิชาเสรี/เลือก" onchange="updateFreeRow('${sub.id}', ${idx}, 'name', this.value)"></td>
+                    <td class="center"><input type="number" class="term-input" style="width:60px" value="${fc.credit}" onchange="updateFreeRow('${sub.id}', ${idx}, 'credit', this.value)"></td>
+                    <td class="center"><input type="text" class="term-input" placeholder="1/66" value="${fc.term||''}" onchange="updateFreeRow('${sub.id}', ${idx}, 'term', this.value)"></td>
+                    <td class="center">
+                      <select class="grade-select" onchange="updateFreeRow('${sub.id}', ${idx}, 'grade', this.value)">
                         <option value="">-</option>
                         ${GRADES.map(grade=>`<option value="${grade}" ${fc.grade===grade?'selected':''}>${grade}</option>`).join('')}
                       </select>
-                      <button onclick="removeFree('${sub.id}', ${idx})" style="border:none; background:none; color:red; cursor:pointer; font-weight:bold; margin-left:5px;">×</button>
+                      <button onclick="removeFreeRow('${sub.id}', ${idx})" class="remove-btn">×</button>
                     </div>
-                  </div>
+                  </td>
                 `).join('')}
-                <div style="padding: 10px 1.5rem;"><button class="btn-primary" style="padding:5px 15px; font-size:12px;" onclick="addFreeRow('${sub.id}')">+ เพิ่มวิชา</button></div>
-              </div>
-            ` : ''}
-          `).join('')}
-        </div>
+                <tr><td colspan="6"><button class="btn-free-add" onclick="addFreeRow('${sub.id}')">+ เพิ่มวิชา</button></td></tr>
+              ` : ''}
+            `).join('')}
+          </tbody>
+        </table>
       </div>
     </div>`;
   });
   pane.innerHTML=html;
 }
 
-// --- Interaction Functions ---
-async function updateData(code, field, val){
+// --- Render Profile Pane ---
+function renderProfile(){
+  const p = document.getElementById('pane-profile');
+  p.innerHTML = `<div class="profile-card">
+    <div style="font-weight:bold; color:var(--green); font-size:18px; margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px;">ข้อมูลนิสิต</div>
+    <table>
+      <tr><th>ชื่อ-นามสกุล</th><td>: ${currentUser.fname} ${currentUser.lname}</td></tr>
+      <tr><th>รหัสนิสิต</th><td>: ${currentUser.sid}</td></tr>
+      <tr><th>หลักสูตร</th><td>: วิทยาศาสตรบัณฑิต (เกษตรและสิ่งแวดล้อมศึกษา)</td></tr>
+      <tr><th>คณะ</th><td>: คณะศึกษาศาสตร์และพัฒนศาสตร์</td></tr>
+      <tr><th>เบอร์โทรศัพท์</th><td>: ${currentUser.phone}</td></tr>
+    </table>
+  </div>`;
+}
+
+// --- Action Functions ---
+async function updateRow(code, field, val){
   if(!grades[code]) grades[code] = {grade:'', term:''};
   grades[code][field] = val;
   await saveStudentData(currentUser.sid);
-  updateSummaryUI();
+  renderMain(); // refresh summarize
 }
 
-async function quickToggle(code){
+async function toggleDone(code){
   if(!grades[code] || grades[code].grade === '') {
     if(!grades[code]) grades[code] = {grade:'A', term:''};
     else grades[code].grade = 'A';
   } else {
-    grades[code].grade = '';
+    grades[code].grade = ''; // reset
   }
   await saveStudentData(currentUser.sid);
-  renderCurriculum();
-  updateSummaryUI();
+  renderMain();
 }
 
 function addFreeRow(subId){
@@ -319,86 +417,78 @@ function addFreeRow(subId){
   renderCurriculum();
 }
 
-async function updateFree(subId, idx, field, val){
-  freeData[subId][idx][field] = val;
+async function updateFreeRow(subId, idx, field, val){
+  freeData[subId][idx][field] = (field==='credit') ? parseInt(val)||0 : val;
   await saveStudentData(currentUser.sid);
-  updateSummaryUI();
+  renderMain();
 }
 
-async function removeFree(subId, idx){
+async function removeFreeRow(subId, idx){
   freeData[subId].splice(idx,1);
   await saveStudentData(currentUser.sid);
-  renderCurriculum();
-  updateSummaryUI();
+  renderMain();
 }
 
-function updateSummaryUI(){
-  document.getElementById('s-passed').textContent = calcPassedCredits();
-  document.getElementById('s-gpa').textContent = calcGPA().toFixed(2);
+function switchPane(id){
+  // Tab active
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id==='curriculum'?'tab-curr':'tab-profile').classList.add('active');
+  // Pane visible
+  document.getElementById('pane-curriculum').style.display = (id==='curriculum'?'block':'none');
+  document.getElementById('pane-profile').style.display = (id==='profile'?'block':'none');
 }
 
-// --- Auth & Profile (คงเดิม) ---
+function logout(){ location.reload(); }
+
+// --- Auth Rendering (คงโครงสร้างเดิม) ---
 function renderLogin(){
   app.innerHTML = `<div class="auth-bg"><div class="auth-card">
-    <div class="auth-logo"><div class="auth-title">เข้าสู่ระบบตรวจสอบการเรียน</div></div>
-    <div class="field"><label>รหัสนิสิต</label><input id="l-id" placeholder="6510450000"/></div>
+    <div class="auth-logo"><div class="auth-title">เข้าสู่ระบบตรวจสอบการเรียน</div><div class="auth-sub">(เกษตรและสิ่งแวดล้อมศึกษา)</div></div>
+    <div class="field"><label>รหัสนิสิต</label><input id="l-id" placeholder="ตัวเลข 10 หลัก"/></div>
     <div class="field"><label>เบอร์โทรศัพท์ (Password)</label><input id="l-pw" type="password" placeholder="เบอร์โทร"/></div>
-    <button class="btn-primary" onclick="doLogin()">เข้าสู่ระบบ</button>
-    <div style="text-align:center; margin-top:1rem; font-size:13px; color:var(--muted);">ยังไม่มีบัญชี? <button onclick="renderRegister()" style="background:none; border:none; color:var(--green); font-weight:bold; cursor:pointer;">สมัครสมาชิก</button></div>
+    <button class="btn-auth" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div style="text-align:center; margin-top:1.5rem; font-size:13px;">ยังไม่มีบัญชี? <button onclick="renderRegister()" style="background:none; border:none; color:var(--green); font-weight:bold; cursor:pointer; font-family:var(--font-mali);">สมัครสมาชิก</button></div>
   </div></div>`;
 }
 
 async function doLogin(){
-  const sid=document.getElementById('l-id').value;
-  const pw=document.getElementById('l-pw').value;
+  const sid=document.getElementById('l-id').value.trim();
+  const pw=document.getElementById('l-pw').value.trim();
+  if(!sid || !pw){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
   const users=await getUsers();
   if(users[sid] && users[sid].phone === pw){
     currentUser = {...users[sid], sid};
     const d = await loadStudentData(sid);
     grades = d.grades; freeData = d.free;
     renderMain();
-  } else { alert('ข้อมูลไม่ถูกต้อง'); }
+  } else { alert('รหัสนิสิตหรือเบอร์โทรไม่ถูกต้อง'); }
 }
 
 function renderRegister(){
   app.innerHTML = `<div class="auth-bg"><div class="auth-card">
-    <div class="auth-title">สมัครสมาชิก</div>
-    <div class="field"><label>ชื่อ</label><input id="r-fn"/></div>
-    <div class="field"><label>นามสกุล</label><input id="r-ln"/></div>
-    <div class="field"><label>รหัสนิสิต</label><input id="r-id"/></div>
-    <div class="field"><label>เบอร์โทรศัพท์</label><input id="r-pw"/></div>
-    <button class="btn-primary" onclick="doRegister()">ยืนยันสมัครสมาชิก</button>
+    <div class="auth-title" style="text-align:center;">สมัครสมาชิก</div>
+    <div class="row2"><div class="field"><label>ชื่อ</label><input id="r-fn"/></div><div class="field"><label>นามสกุล</label><input id="r-ln"/></div></div>
+    <div class="field"><label>รหัสนิสิต</label><input id="r-id" placeholder="ตัวเลข 10 หลัก"/></div>
+    <div class="field"><label>เบอร์โทรศัพท์ (เป็น Password)</label><input id="r-pw"/></div>
+    <button class="btn-auth" onclick="doRegister()">สมัครสมาชิก</button>
+    <div style="text-align:center; margin-top:1.5rem; font-size:13px;"><button onclick="renderLogin()" style="background:none; border:none; color:var(--green); font-weight:bold; cursor:pointer; font-family:var(--font-mali);">กลับหน้าล็อกอิน</button></div>
   </div></div>`;
 }
 
 async function doRegister(){
-  const fn=document.getElementById('r-fn').value;
-  const ln=document.getElementById('r-ln').value;
-  const sid=document.getElementById('r-id').value;
-  const pw=document.getElementById('r-pw').value;
+  const fn=document.getElementById('r-fn').value.trim();
+  const ln=document.getElementById('r-ln').value.trim();
+  const sid=document.getElementById('r-id').value.trim();
+  const pw=document.getElementById('r-pw').value.trim();
+  if(!fn || !ln || !sid || !pw){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
   const users=await getUsers();
+  if(users[sid]){ alert('รหัสนิสิตนี้สมัครไปแล้ว'); return; }
   users[sid] = {fname:fn, lname:ln, phone:pw};
   await saveUsers(users);
   alert('สมัครสำเร็จ'); renderLogin();
 }
 
-function switchTab(id){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pane-'+id).classList.add('active');
-  if(id==='profile') renderProfile();
-}
-
-function renderProfile(){
-  const p = document.getElementById('pane-profile');
-  p.innerHTML = `<div class="sum-card" style="max-width:500px; margin:0 auto; text-align:left;">
-    <h3>ข้อมูลส่วนตัว</h3><hr style="margin:10px 0;">
-    <p><b>ชื่อ-นามสกุล:</b> ${currentUser.fname} ${currentUser.lname}</p>
-    <p><b>รหัสนิสิต:</b> ${currentUser.sid}</p>
-    <p><b>สาขา:</b> เกษตรและสิ่งแวดล้อมศึกษา</p>
-    <p><b>เบอร์โทรศัพท์:</b> ${currentUser.phone}</p>
-  </div>`;
-}
-
+// Start
 renderLogin();
 </script>
 </body>
