@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบตรวจสอบการเรียนตามหลักสูตร - อยู่ระหว่างการพัฒนา</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>ระบบตรวจสอบการเรียนตามหลักสูตร - กำลังพัฒนา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -14,170 +14,204 @@
 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: #ffffff; /* พื้นหลังขาวล้วน */
-            color: #1e293b;
-            min-height: 100vh;
+            background-color: #ffffff; /* พื้นหลังขาวล้วนตามต้องการ */
+            color: #334155;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
 
-        .main-wrapper {
+        /* --- Modern Layout Container --- */
+        .modern-wrapper {
             width: 100%;
             max-width: 900px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr; /* แบ่งซ้าย-ขวา */
+            gap: 50px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05); /* เงาบางๆ ให้ดูลอย */
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        /* --- Left Side: System Info --- */
+        .left-content h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+
+        .left-content .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .left-content .system-label {
+            display: inline-block;
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .left-content h2 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #1A2B48;
+            margin-bottom: 5px;
+        }
+
+        .left-content .curriculum-info {
+            font-size: 1rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* --- Right Side: Modern Countdown --- */
+        .right-content .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             text-align: center;
         }
 
-        /* หัวข้อหลัก: ขยายใหญ่ขึ้นตามคำขอ */
-        h1 {
-            font-size: 4rem; /* ขยายใหญ่มาก */
+        .countdown-grid .time-box {
+            background: #f8fafc;
+            padding: 15px 10px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .countdown-grid .time-num {
+            display: block;
+            font-size: 2rem;
             font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 30px;
-            letter-spacing: -2px;
-        }
-
-        /* ส่วนข้อมูลระบบ: ย้ายมาไว้ข้างบนนับถอยหลัง */
-        .system-info-block {
-            margin-bottom: 50px;
-        }
-
-        .system-title {
-            font-size: 2.2rem;
-            font-weight: 500;
-            color: #1e293b;
-            margin-bottom: 10px;
-        }
-
-        .curriculum-date-info {
-            font-size: 1.5rem;
-            color: #475569;
-            line-height: 1.6;
-        }
-
-        /* นับถอยหลังแบบมี : คั่น และขยายใหญ่ */
-        .countdown-frame {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 60px;
-        }
-
-        .time-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .time-digit {
-            font-size: 6rem; /* ตัวเลขใหญ่มากเด่นชัด */
-            font-weight: 600;
-            color: #2563eb;
+            color: #D4AF37; /* สีทองอ่อนๆ ดูพรีเมียม */
             line-height: 1;
         }
 
-        .separator {
-            font-size: 5rem;
-            font-weight: 600;
-            color: #cbd5e1;
-            padding-bottom: 30px; /* ปรับระดับเครื่องหมาย : */
-        }
-
-        .label-text {
-            font-size: 1.2rem;
+        .countdown-grid .time-label {
+            font-size: 0.75rem;
             color: #94a3b8;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        /* ส่วนล่างสุด: ประกาศสำหรับนิสิตปัจจุบัน */
-        .portal-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .portal-message {
-            font-size: 1.4rem;
-            color: #475569;
-            margin-bottom: 25px;
-        }
-
-        .btn-legacy-system {
-            display: inline-block;
-            background-color: #1e293b;
-            color: #ffffff;
-            padding: 18px 50px;
-            border-radius: 12px;
+        .legacy-link {
+            display: block;
+            margin-top: 25px;
+            color: #64748b;
             text-decoration: none;
-            font-size: 1.4rem;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .legacy-link:hover {
+            color: #1e293b;
+        }
+
+        /* --- Footer Section --- */
+        .bottom-bar {
+            grid-column: 1 / -1; /* ครอบคลุมทั้งสองฝั่ง */
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+
+        .btn-modern {
+            display: inline-block;
+            background-color: #1A2B48;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
             transition: all 0.2s ease;
+            box-shadow: 0 5px 15px rgba(26, 43, 72, 0.1);
         }
 
-        .btn-legacy-system:hover {
-            background-color: #334155;
-            transform: scale(1.03);
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(26, 43, 72, 0.15);
         }
 
-        /* ปรับแต่งสำหรับหน้าจอมือถือ */
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .time-digit { font-size: 4rem; }
-            .separator { font-size: 3.5rem; }
-            .system-title { font-size: 1.8rem; }
-            .curriculum-date-info { font-size: 1.2rem; }
+            .modern-wrapper {
+                grid-template-columns: 1fr;
+                padding: 40px;
+                gap: 30px;
+                text-align: center;
+            }
+            .left-content h1 { font-size: 2rem; }
+            .right-content .time-num { font-size: 1.5rem; }
+            .countdown-grid { gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-<div class="main-wrapper">
-    <h1>เรากำลังพัฒนา</h1>
-
-    <div class="system-info-block">
-        <p class="system-title">ระบบตรวจสอบการเรียนตามหลักสูตร</p>
-        <p class="curriculum-date-info">
-            - หลักสูตรปรับปรุง พ.ศ. 2569 - <br>
-            เปิดระบบวันที่ 20 เมษายน 2569 เวลา 01:00 น.
+<div class="modern-wrapper">
+    <div class="left-content">
+        <h1>เราจะกลับมา</h1>
+        <p class="subtitle">เรากำลังพัฒนาสิ่งที่ดีกว่า</p>
+        
+        <div class="system-label">● อยู่ระหว่างการพัฒนา</div>
+        <h2>ระบบตรวจสอบการเรียนตามหลักสูตร</h2>
+        <p class="curriculum-info">
+            หลักสูตรปรับปรุง พ.ศ. 2564<br>
+            เปิดให้บริการวันที่ 20 เมษายน 2569 เวลา 01:00 น.
         </p>
     </div>
 
-    <div class="countdown-frame">
-        <div class="time-box">
-            <span class="time-digit" id="days">00</span>
-            <span class="label-text">วัน</span>
+    <div class="right-content">
+        <div class="countdown-grid">
+            <div class="time-box">
+                <span class="time-num" id="days">00</span>
+                <span class="time-label">วัน</span>
+            </div>
+            <div class="time-box">
+                <span class="time-num" id="hours">00</span>
+                <span class="time-label">ชม.</span>
+            </div>
+            <div class="time-box">
+                <span class="time-num" id="minutes">00</span>
+                <span class="time-label">นาที</span>
+            </div>
+            <div class="time-box">
+                <span class="time-num" id="seconds">00</span>
+                <span class="time-label">วิ</span>
+            </div>
         </div>
-        <div class="separator">:</div>
-        <div class="time-box">
-            <span class="time-digit" id="hours">00</span>
-            <span class="label-text">ชม.</span>
-        </div>
-        <div class="separator">:</div>
-        <div class="time-box">
-            <span class="time-digit" id="minutes">00</span>
-            <span class="label-text">นาที</span>
-        </div>
-        <div class="separator">:</div>
-        <div class="time-box">
-            <span class="time-digit" id="seconds">00</span>
-            <span class="label-text">วิ</span>
-        </div>
+        <a href="#" class="legacy-link">← เข้าสู่ระบบเก่า (มคอ. 2564) สำหรับนิสิตปัจจุบัน</a>
     </div>
 
-    <div class="portal-section">
-        <p class="portal-message">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
-        <a href="ใส่_URL_ของระบบเก่าที่นี่" class="btn-legacy-system">เข้าสู่ระบบ (มคอ. 2564)</a>
+    <div class="bottom-bar">
+        <p class="curriculum-info" style="margin-bottom: 15px;">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
+        <a href="#" class="btn-modern">เข้าสู่ระบบเก่า (มคอ. 2564)</a>
     </div>
 </div>
 
 <script>
-    // ตั้งค่าเป้าหมาย: 20 เมษายน 2569 เวลา 01:00 น.
-    const target = new Date(2026, 3, 20, 1, 0, 0).getTime();
+    // เป้าหมาย 20 เมษายน 2569 เวลา 01:00 น.
+    const targetDate = new Date("April 20, 2026 01:00:00").getTime();
 
-    function updateCountdown() {
+    function updateTimer() {
         const now = new Date().getTime();
-        const diff = target - now;
+        const diff = targetDate - now;
 
         if (diff > 0) {
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -190,12 +224,12 @@
             document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
             document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
         } else {
-            document.querySelector(".countdown-frame").innerHTML = "<h2>เปิดให้บริการแล้ว</h2>";
+            document.querySelector(".countdown-grid").innerHTML = "<h3>ระบบพร้อมใช้งานแล้ว</h3>";
         }
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    setInterval(updateTimer, 1000);
+    updateTimer(); // เรียกใช้งานทันทีเมื่อโหลดหน้าเว็บ
 </script>
 
 </body>
