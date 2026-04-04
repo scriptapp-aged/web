@@ -3,98 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ชวนมาจอย! ชุมนุมฟาร์มนิสิต 2569</title>
+    <title>โครงการชุมนุมฟาร์มนิสิต 2569</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            background-color: #f0fdf4; /* เขียวมิ้นต์อ่อนๆ สบายตา */
-            color: #374151;
-        }
-        .font-cute { font-family: 'Fredoka', sans-serif; }
-
-        /* กรอบแบบนุ่มมน (Soft & Round) */
-        .cute-card {
-            background: #ffffff;
-            border-radius: 3rem;
-            border: 8px solid #ffffff;
-            box-shadow: 20px 20px 60px #d1d5db, -20px -20px 60px #ffffff;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .cute-card:hover {
-            transform: scale(1.03) rotate(1deg);
-            box-shadow: 0 30px 50px rgba(16, 185, 129, 0.2);
-        }
-
-        /* ปุ่มแบบมนกลมดึ๋งๆ */
-        .btn-bouncy {
-            background: #10b981;
-            color: white;
-            border-radius: 2rem;
-            box-shadow: 0 10px 0 #059669;
-            transition: all 0.1s;
-        }
-        .btn-bouncy:active {
-            transform: translateY(4px);
-            box-shadow: 0 5px 0 #059669;
-        }
-
-        .icon-bg {
-            width: 80px; height: 80px;
-            background: #ecfdf5;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem;
+        body { font-family: 'Kanit', sans-serif; background-color: #fcfcfc; color: #334155; }
+        
+        /* กรอบโลโก้แนวนอนขนาดยาว */
+        .logo-banner {
+            width: 100%;
+            height: 80px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 1.5rem;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            overflow: hidden;
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #f1f5f9;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: #10b981;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2.5rem;
+            border-radius: 24px;
+            max-width: 600px;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body class="py-16 px-6">
 
-    <header class="max-w-4xl mx-auto text-center mb-20">
-        <h1 class="text-4xl md:text-5xl font-bold text-emerald-600 mb-4 font-cute">Hi! Farm Friends 2026</h1>
-        <p class="text-xl text-slate-500 font-light">มาสร้างฟาร์มในฝันกับ 3 โครงการสุดคิ้วท์กันเถอะ 🌱</p>
+    <header class="max-w-5xl mx-auto text-center mb-16">
+        <h1 class="text-3xl md:text-4xl font-semibold text-slate-800 mb-4">ประชาสัมพันธ์โครงการชุมนุมฟาร์มนิสิต</h1>
+        <p class="text-slate-500 font-light italic text-lg">ปีการศึกษา 2569 | Student Farm Projects</p>
     </header>
 
-    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        <div class="cute-card p-10 flex flex-col items-center text-center">
-            <div class="icon-bg animate-bounce">🐣</div>
-            <h2 class="text-2xl font-bold mb-4 text-emerald-700 leading-tight">เกษตรน้องใหม่<br>หัวใจ EDS</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed">ปูพื้นฐานการเกษตรฉบับเข้าใจง่าย สำหรับเพื่อนใหม่ใจรักฟาร์ม</p>
-            <button class="btn-bouncy px-8 py-3 w-full font-bold">จอยเลย!</button>
+        <div class="project-card p-8 flex flex-col">
+            <div class="logo-banner">
+                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+เกษตรน้องใหม่หัวใจ+EDS" alt="Logo EDS" class="w-full h-full object-contain">
+            </div>
+            <h2 class="text-xl font-semibold text-slate-800 mb-4">เกษตรน้องใหม่หัวใจ EDS</h2>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
+                ปูพื้นฐานการเกษตรสมัยใหม่ด้วยแนวคิด EDS พัฒนาทักษะผู้นำ...
+            </p>
+            <button onclick="openModal('modal1')" class="mt-auto w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-emerald-600 transition-colors">
+                แสดงรายละเอียด
+            </button>
         </div>
 
-        <div class="cute-card p-10 flex flex-col items-center text-center border-4 border-emerald-100">
-            <div class="icon-bg" style="animation: pulse 2s infinite;">♻️</div>
-            <h2 class="text-xl font-bold mb-4 text-emerald-700 leading-tight italic">Zero Waste & Fertilizer Innovation Hub</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed italic">เปลี่ยนขยะเป็นปุ๋ยคุณภาพสูง เพื่อฟาร์มที่ยั่งยืนและรักษ์โลก</p>
-            <button class="btn-primary bg-slate-800 text-white px-8 py-3 w-full rounded-full font-bold hover:bg-emerald-500 transition-all">ไปที่ Hub</button>
+        <div class="project-card p-8 flex flex-col border-t-4 border-t-emerald-500">
+            <div class="logo-banner">
+                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+ZERO+WASTE+HUB" alt="Logo Zero Waste" class="w-full h-full object-contain">
+            </div>
+            <h2 class="text-xl font-semibold text-slate-800 mb-4 leading-snug">จัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง</h2>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
+                Zero Waste & Organic Fertilizer Innovation Hub เพื่อฟาร์มที่ยั่งยืน...
+            </p>
+            <button onclick="openModal('modal2')" class="mt-auto w-full bg-emerald-600 text-white py-3 rounded-xl font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-100">
+                แสดงรายละเอียด
+            </button>
         </div>
 
-        <div class="cute-card p-10 flex flex-col items-center text-center">
-            <div class="icon-bg">📚</div>
-            <h2 class="text-xl font-bold mb-4 text-emerald-700 leading-tight">พอเพียงสู่โรงเรียน</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed">ส่งต่อความรู้เศรษฐกิจพอเพียง พัฒนาแปลงผักให้น้องๆ ในโรงเรียน</p>
-            <button class="btn-bouncy px-8 py-3 w-full font-bold bg-amber-400 shadow-[0_10px_0_#d97706] hover:bg-amber-500">สมัครเลยจ้า</button>
+        <div class="project-card p-8 flex flex-col">
+            <div class="logo-banner">
+                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+ECONOMY+SCHOOL" alt="Logo Sufficiency" class="w-full h-full object-contain">
+            </div>
+            <h2 class="text-xl font-semibold text-slate-800 mb-4">ถ่ายทอดความรู้เศรษฐกิจพอเพียงสู่โรงเรียน</h2>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
+                ส่งต่อองค์ความรู้ตามหลักปรัชญาเศรษฐกิจพอเพียงสู่เยาวชน...
+            </p>
+            <button onclick="openModal('modal3')" class="mt-auto w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-emerald-600 transition-colors">
+                แสดงรายละเอียด
+            </button>
         </div>
 
     </main>
 
-    <div class="max-w-2xl mx-auto mt-24 p-10 bg-white rounded-[3rem] shadow-xl border-4 border-dashed border-emerald-200 flex flex-col md:flex-row items-center justify-between">
-        <div class="text-center md:text-left mb-6 md:mb-0">
-            <h3 class="text-2xl font-bold text-slate-800 font-cute italic">Registration</h3>
-            <p class="text-slate-400">สแกนตรงนี้เพื่อเจอกันนะ!</p>
-        </div>
-        <div class="bg-emerald-50 p-4 rounded-3xl">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=SF2026-CUTE" alt="QR" class="w-24 h-24">
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('modal1')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
+            <h3 class="text-2xl font-semibold text-emerald-600 mb-4">เกษตรน้องใหม่หัวใจ EDS</h3>
+            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
+                <p><strong>รายละเอียด:</strong> โครงการมุ่งเน้นให้นิสิตใหม่มีความเข้าใจพื้นฐานด้านการเกษตรแบบยั่งยืน โดยใช้หลักการ EDS (Education for Sustainable Development)</p>
+                <p><strong>วัตถุประสงค์:</strong> เพื่อสร้างเครือข่ายนิสิตเกษตรที่มีใจรักในงานบริการและพัฒนาชุมชน</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Workshop การปลูกพืชพื้นฐาน</li>
+                    <li>การใช้เทคโนโลยีจัดการฟาร์มเบื้องต้น</li>
+                    <li>กิจกรรมสัมพันธ์สร้างผู้นำรุ่นใหม่</li>
+                </ul>
+            </div>
+            <button onclick="closeModal('modal1')" class="mt-8 w-full border border-slate-200 py-3 rounded-xl hover:bg-slate-50 transition-colors">ปิดหน้าต่าง</button>
         </div>
     </div>
 
-    <footer class="mt-20 text-center text-emerald-300 font-cute uppercase tracking-widest text-sm">
-        Made with love • Student Farm Club 2026
-    </footer>
+    <div id="modal2" class="modal">
+        <div class="modal-content border-t-8 border-emerald-500">
+            <button onclick="closeModal('modal2')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
+            <h3 class="text-2xl font-semibold text-emerald-600 mb-4 leading-tight">Zero Waste & Organic Fertilizer Hub</h3>
+            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
+                <p><strong>รายละเอียด:</strong> การจัดการขยะอินทรีย์ภายในมหาวิทยาลัยและแปลงฟาร์ม เพื่อแปรรูปเป็นปุ๋ยหมักคุณภาพสูง</p>
+                <p><strong>จุดเด่น:</strong> เรียนรู้กระบวนการผลิตปุ๋ยมาตรฐานสากลด้วยระบบนวัตกรรมย่อยสลายที่รวดเร็ว</p>
+                <p>นิสิตจะได้สัมผัสการบริหารจัดการขยะแบบครบวงจร ตั้งแต่ต้นน้ำถึงปลายน้ำ</p>
+            </div>
+            <button onclick="closeModal('modal2')" class="mt-8 w-full bg-emerald-600 text-white py-3 rounded-xl font-medium">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('modal3')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
+            <h3 class="text-2xl font-semibold text-emerald-600 mb-4">เศรษฐกิจพอเพียงสู่โรงเรียน</h3>
+            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
+                <p><strong>รายละเอียด:</strong> กิจกรรมออกค่ายเพื่อถ่ายทอดองค์ความรู้การเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียงให้กับนักเรียนในพื้นที่ใกล้เคียง</p>
+                <p><strong>กิจกรรมหลัก:</strong> พานิสิตลงพื้นที่จัดทำแปลงผักโรงเรียน และสอนน้องๆ ทำระบบน้ำเบื้องต้น</p>
+            </div>
+            <button onclick="closeModal('modal3')" class="mt-8 w-full border border-slate-200 py-3 rounded-xl">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) { document.getElementById(id).style.display = "block"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        window.onclick = function(event) { if (event.target.className === 'modal') { event.target.style.display = "none"; } }
+    </script>
 
 </body>
 </html>
