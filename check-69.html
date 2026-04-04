@@ -4,83 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบตรวจสอบการเรียนตามหลักสูตร</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
+            overflow: hidden;
         }
-        .container {
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             width: 90%;
-            border-top: 8px solid #2c3e50;
         }
+
         h1 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-            font-size: 2rem;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .status-badge {
-            display: inline-block;
-            background: #fff3cd;
-            color: #856404;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-        .main-text {
-            font-size: 1.25rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        .highlight {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        .footer-info {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            border: 1px solid #dee2e6;
-        }
-        .date-time {
+
+        .subtitle {
             font-size: 1.2rem;
-            color: #2c3e50;
-            margin-top: 0.5rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .info {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .highlight {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        /* Countdown Style */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 80px;
+        }
+
+        .time-num {
             display: block;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .opening-date {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="card">
     <h1>เราจะกลับมา</h1>
-    <div class="status-badge">🚧 อยู่ระหว่างการพัฒนา</div>
+    <p class="subtitle">ระบบตรวจสอบการเรียนตามหลักสูตร - หลักสูตรปรับปรุง พ.ศ. 2564</p>
     
-    <div class="main-text">
-        <strong>ระบบตรวจสอบการเรียนตามหลักสูตร</strong><br>
-        หลักสูตรปรับปรุง พ.ศ. 2564
+    <p class="info">อยู่ระหว่างการพัฒนา</p>
+    
+    <div id="countdown">
+        <div class="time-box">
+            <span class="time-num" id="days">00</span>
+            <span class="time-label">วัน</span>
+        </div>
+        <div class="time-box">
+            <span class="time-num" id="hours">00</span>
+            <span class="time-label">ชม.</span>
+        </div>
+        <div class="time-box">
+            <span class="time-num" id="minutes">00</span>
+            <span class="time-label">นาที</span>
+        </div>
+        <div class="time-box">
+            <span class="time-num" id="seconds">00</span>
+            <span class="time-label">วิ</span>
+        </div>
     </div>
 
-    <div class="footer-info">
-        เปิดระบบวันที่
-        <span class="date-time">20 เมษายน 2569 | เวลา 01:00 น.</span>
+    <div class="opening-date">
+        กำหนดเปิดระบบ: 20 เมษายน 2569 เวลา 01:00 น.
     </div>
 </div>
+
+<script>
+    // ตั้งค่าวันที่เปิดระบบ (Year, Month Index (0-11), Day, Hour, Minute, Second)
+    // เดือนเมษายน คือ Index 3
+    const targetDate = new Date(2026, 3, 20, 1, 0, 0).getTime();
+
+    const countdownTimer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        // คำนวณ วัน ชม. นาที วินาที
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // แสดงผล
+        document.getElementById("days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+        // เมื่อถึงเวลาที่กำหนด
+        if (distance < 0) {
+            clearInterval(countdownTimer);
+            document.querySelector(".card").innerHTML = "<h1>ระบบพร้อมใช้งานแล้ว</h1><p>กรุณารีเฟรชหน้าจอ</p>";
+        }
+    }, 1000);
+</script>
 
 </body>
 </html>
