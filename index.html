@@ -11,87 +11,92 @@
             --primary: #006633;
             --gold: #b29d6c;
             --gold-light: #f9d976;
-            --glass: rgba(255, 255, 255, 0.85);
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
         body {
-            background: #f8fafc;
+            background: #f1f5f9;
             min-height: 100vh;
             overflow-x: hidden;
-            /* แอนิเมชันสีพื้นหลังเคลื่อนไหว */
-            background: linear-gradient(-45deg, #f8fafc, #e2e8f0, #f0fdf4, #fffbeb);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: radial-gradient(circle at 50% -20%, #e8f5e9 0%, #f1f5f9 100%);
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- Header Section (อลังการ & แอนิเมชัน) --- */
-        .hero-header {
-            width: 100%;
-            padding: 80px 20px;
+        /* --- ✨ ส่วนหัวข้ออลังการ (The Mega Header) --- */
+        .hero-section {
+            padding: 100px 20px 60px;
             text-align: center;
             position: relative;
         }
 
-        .header-content {
+        /* เอฟเฟกต์รัศมีเรืองแสงด้านหลังหัวข้อ */
+        .header-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px; height: 150px;
+            background: radial-gradient(circle, rgba(0, 102, 51, 0.15) 0%, transparent 70%);
+            filter: blur(40px);
+            animation: pulseGlow 4s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* แถบป้ายชื่อชุมนุม (The Emblem) */
+        .emblem-container {
             display: inline-block;
             position: relative;
-            animation: floatHeader 4s ease-in-out infinite;
+            z-index: 10;
+            padding: 20px 80px;
+            /* พื้นหลังไล่เฉดเขียวเข้มแบบพรีเมียม */
+            background: linear-gradient(135deg, #004d26 0%, #006633 50%, #004d26 100%);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--gold);
+            transform: perspective(1000px) rotateX(5deg);
+            animation: floating 3s ease-in-out infinite;
         }
 
-        @keyframes floatHeader {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes floating {
+            0%, 100% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
         }
 
+        /* ตัวอักษรสีทอง Shimmer */
         .animated-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2rem, 5vw, 3.8rem);
             font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 5px;
-            position: relative;
-            /* แสงวิ่งผ่านตัวอักษรทอง */
-            background: linear-gradient(120deg, var(--gold) 20%, var(--gold-light) 40%, #fff 50%, var(--gold-light) 60%, var(--gold) 80%);
+            margin-bottom: 0;
+            background: linear-gradient(to bottom, #f9d976 20%, #b29d6c 50%, #f9d976 80%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: shineText 4s linear infinite;
-            filter: drop-shadow(0 10px 15px rgba(0, 102, 51, 0.15));
+            animation: shineText 5s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            letter-spacing: 2px;
         }
 
         @keyframes shineText {
             to { background-position: 200% center; }
         }
 
-        .faculty-tag {
-            background: var(--primary);
-            color: #fff;
-            padding: 6px 25px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
+        .faculty-subtitle {
+            color: var(--gold-light);
+            font-size: 0.85rem;
             text-transform: uppercase;
-            font-weight: 200;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(0, 102, 51, 0.2);
-            animation: pulseTag 2.5s infinite;
+            letter-spacing: 4px;
+            font-weight: 300;
+            margin-top: 10px;
+            opacity: 0.9;
         }
 
-        @keyframes pulseTag {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- Service Portal --- */
+        /* --- ส่วนบริการ (Grid) --- */
         .main-portal {
             max-width: 1200px;
             margin: 0 auto;
@@ -101,103 +106,94 @@
             gap: 30px;
         }
 
-        /* Card ดีไซน์กระจก (Glassmorphism) */
         .service-card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 40px;
-            padding: 40px 30px;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 40px 20px;
             text-decoration: none;
             color: #334155;
             text-align: center;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            border: 1px solid #edf2f7;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
         }
 
         .service-card:hover {
-            transform: translateY(-20px) scale(1.03);
-            background: #ffffff;
+            transform: translateY(-15px);
             box-shadow: 0 30px 60px rgba(0, 102, 51, 0.1);
             border-color: var(--primary);
         }
 
         .img-box {
-            height: 300px;
+            height: 280px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
             margin-bottom: 25px;
-            transition: 0.5s;
         }
 
         .img-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1));
-            transition: 0.5s ease;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+            transition: 0.5s;
         }
 
         .service-card:hover .img-box img {
-            transform: scale(1.1) rotate(2deg);
-            filter: drop-shadow(0 30px 50px rgba(0, 102, 51, 0.25));
+            transform: scale(1.1);
+            filter: drop-shadow(0 25px 40px rgba(0, 102, 51, 0.2));
         }
 
         .service-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--primary);
             text-decoration: underline;
+            color: var(--primary);
         }
 
-        /* แถบแจ้งเตือนล่างการ์ด */
-        .beta-notice {
-            position: absolute; top: 20px; right: 20px;
-            background: #fff3bf; color: #f08c00;
-            padding: 4px 12px; border-radius: 10px;
-            font-size: 0.7rem; font-weight: 600;
-        }
-
-        /* --- Footer Info --- */
+        /* แถบแจ้งเตือนด้านล่าง */
         .info-bar {
             grid-column: span 3;
-            background: #fffbeb;
+            background: #fff9db;
+            color: #85701d;
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 0.9rem;
-            color: #92400e;
             text-align: center;
-            border: 1px solid #fef3c7;
+            margin-top: 30px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 900px) {
             .main-portal { grid-template-columns: 1fr; }
             .info-bar { grid-column: span 1; }
+            .emblem-container { padding: 15px 30px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-header">
-        <div class="header-content">
-            <span class="faculty-tag">Faculty of Education and Development Sciences</span>
+    <header class="hero-section">
+        <div class="header-glow"></div>
+        
+        <div class="emblem-container">
             <h1 class="animated-title">ชุมนุมฟาร์มนิสิต</h1>
-            <p style="color: #64748b; font-weight: 300; letter-spacing: 2px;">KASETSART UNIVERSITY KAMPHAENG SAEN</p>
+            <div class="faculty-subtitle">FACULTY OF EDUCATION & DEV. SCIENCES</div>
         </div>
+        
+        <p style="margin-top: 30px; color: #64748b; font-size: 0.9rem; font-weight: 300;">
+            KASETSART UNIVERSITY KAMPHAENG SAEN
+        </p>
     </header>
 
     <div class="main-portal">
         <a href="#" class="service-card">
-            <span class="beta-notice">BETA</span>
             <div class="img-box">
                 <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="Student 1">
             </div>
             <h3>จองห้องประชุม</h3>
-            <p>ระบบจองห้องประชุมอัจฉริยะ</p>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">ระบบเปิดให้ทดสอบเบต้า</p>
         </a>
 
         <a href="#" class="service-card">
@@ -205,7 +201,6 @@
                 <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="Student 2">
             </div>
             <h3>ตารางการจองห้อง</h3>
-            <p>เช็คสถานะห้องว่างแบบ Live</p>
         </a>
 
         <a href="#" class="service-card">
@@ -213,11 +208,10 @@
                 <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="Student 3">
             </div>
             <h3>แจ้งปัญหาการใช้งาน</h3>
-            <p>รายงานปัญหาและข้อเสนอแนะ</p>
         </a>
 
         <div class="info-bar">
-            <i class="fas fa-info-circle"></i> โปรดใช้งานผ่าน iPad หรือ คอมพิวเตอร์เพื่อแสดงผลที่สมบูรณ์ที่สุด
+            <i class="fas fa-info-circle"></i> โปรดใช้งานผ่าน iPad หรือ คอมพิวเตอร์เพื่อความสะดวกสูงสุด
         </div>
     </div>
 
