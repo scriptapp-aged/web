@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบตรวจสอบการเรียนตามหลักสูตร</title>
+    <title>ระบบตรวจสอบการเรียนตามหลักสูตร - อยู่ระหว่างการพัฒนา</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,168 +14,168 @@
 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: #ffffff; /* พื้นหลังขาวล้วนตามต้องการ */
+            background-color: #ffffff; /* พื้นหลังขาวล้วน */
             color: #1e293b;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
-        .wrapper {
+        .main-wrapper {
             width: 100%;
             max-width: 900px;
             text-align: center;
-            padding: 40px 20px;
         }
 
+        /* หัวข้อหลัก: ขยายใหญ่ขึ้นตามคำขอ */
         h1 {
-            font-size: 3.5rem; /* ขยายใหญ่ขึ้น */
+            font-size: 4rem; /* ขยายใหญ่มาก */
             font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .status-text {
-            font-size: 1.5rem;
-            color: #64748b;
+            color: #1e293b;
             margin-bottom: 30px;
+            letter-spacing: -2px;
         }
 
-        /* ย้ายข้อมูลระบบมาไว้ด้านบนนับถอยหลัง */
-        .system-info {
-            margin-bottom: 40px;
+        /* ส่วนข้อมูลระบบ: ย้ายมาไว้ข้างบนนับถอยหลัง */
+        .system-info-block {
+            margin-bottom: 50px;
         }
 
-        .system-name {
-            font-size: 1.8rem;
+        .system-title {
+            font-size: 2.2rem;
             font-weight: 500;
             color: #1e293b;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
-        .curriculum-date {
-            font-size: 1.3rem;
+        .curriculum-date-info {
+            font-size: 1.5rem;
             color: #475569;
+            line-height: 1.6;
         }
 
-        /* นับถอยหลังแบบมี : คั่น */
-        .countdown-container {
+        /* นับถอยหลังแบบมี : คั่น และขยายใหญ่ */
+        .countdown-frame {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
-        .time-group {
+        .time-box {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .digit {
-            font-size: 5rem; /* ตัวเลขใหญ่เด่น */
+        .time-digit {
+            font-size: 6rem; /* ตัวเลขใหญ่มากเด่นชัด */
             font-weight: 600;
             color: #2563eb;
             line-height: 1;
         }
 
         .separator {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 600;
             color: #cbd5e1;
-            padding-bottom: 25px; /* ปรับระดับเครื่องหมาย : */
+            padding-bottom: 30px; /* ปรับระดับเครื่องหมาย : */
         }
 
-        .label {
-            font-size: 1.1rem;
+        .label-text {
+            font-size: 1.2rem;
             color: #94a3b8;
             margin-top: 10px;
         }
 
-        /* ส่วนล่าง: ปุ่มสำหรับนิสิตปัจจุบัน */
-        .student-portal {
-            margin-top: 20px;
+        /* ส่วนล่างสุด: ประกาศสำหรับนิสิตปัจจุบัน */
+        .portal-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #f1f5f9;
         }
 
-        .portal-msg {
-            font-size: 1.3rem;
+        .portal-message {
+            font-size: 1.4rem;
             color: #475569;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        .btn-old-system {
+        .btn-legacy-system {
             display: inline-block;
             background-color: #1e293b;
             color: #ffffff;
-            padding: 16px 45px;
+            padding: 18px 50px;
             border-radius: 12px;
             text-decoration: none;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             transition: all 0.2s ease;
         }
 
-        .btn-old-system:hover {
+        .btn-legacy-system:hover {
             background-color: #334155;
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
+        /* ปรับแต่งสำหรับหน้าจอมือถือ */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .digit { font-size: 3rem; }
-            .separator { font-size: 2.5rem; }
-            .system-name { font-size: 1.4rem; }
+            h1 { font-size: 3rem; }
+            .time-digit { font-size: 4rem; }
+            .separator { font-size: 3.5rem; }
+            .system-title { font-size: 1.8rem; }
+            .curriculum-date-info { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <h1>เราจะกลับมา</h1>
-    <p class="status-text">เรากำลังพัฒนา</p>
+<div class="main-wrapper">
+    <h1>เรากำลังพัฒนา</h1>
 
-    <div class="system-info">
-        <p class="system-name">ระบบตรวจสอบการเรียนตามหลักสูตร</p>
-        <p class="curriculum-date">
+    <div class="system-info-block">
+        <p class="system-title">ระบบตรวจสอบการเรียนตามหลักสูตร</p>
+        <p class="curriculum-date-info">
             - หลักสูตรปรับปรุง พ.ศ. 2569 - <br>
             เปิดระบบวันที่ 20 เมษายน 2569 เวลา 01:00 น.
         </p>
     </div>
 
-    <div class="countdown-container">
-        <div class="time-group">
-            <span class="digit" id="days">00</span>
-            <span class="label">วัน</span>
+    <div class="countdown-frame">
+        <div class="time-box">
+            <span class="time-digit" id="days">00</span>
+            <span class="label-text">วัน</span>
         </div>
         <div class="separator">:</div>
-        <div class="time-group">
-            <span class="digit" id="hours">00</span>
-            <span class="label">ชม.</span>
+        <div class="time-box">
+            <span class="time-digit" id="hours">00</span>
+            <span class="label-text">ชม.</span>
         </div>
         <div class="separator">:</div>
-        <div class="time-group">
-            <span class="digit" id="minutes">00</span>
-            <span class="label">นาที</span>
+        <div class="time-box">
+            <span class="time-digit" id="minutes">00</span>
+            <span class="label-text">นาที</span>
         </div>
         <div class="separator">:</div>
-        <div class="time-group">
-            <span class="digit" id="seconds">00</span>
-            <span class="label">วิ</span>
+        <div class="time-box">
+            <span class="time-digit" id="seconds">00</span>
+            <span class="label-text">วิ</span>
         </div>
     </div>
 
-    <div class="student-portal">
-        <p class="portal-msg">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
-        <a href="#" class="btn-old-system">เข้าสู่ระบบ (มคอ. 2564)</a>
+    <div class="portal-section">
+        <p class="portal-message">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
+        <a href="ใส่_URL_ของระบบเก่าที่นี่" class="btn-legacy-system">เข้าสู่ระบบ (มคอ. 2564)</a>
     </div>
 </div>
 
 <script>
-    // เป้าหมาย 20 เมษายน 2569 เวลา 01:00 น.
+    // ตั้งค่าเป้าหมาย: 20 เมษายน 2569 เวลา 01:00 น.
     const target = new Date(2026, 3, 20, 1, 0, 0).getTime();
 
-    function update() {
+    function updateCountdown() {
         const now = new Date().getTime();
         const diff = target - now;
 
@@ -190,12 +190,12 @@
             document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
             document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
         } else {
-            document.querySelector(".countdown-container").innerHTML = "<h2>เปิดให้บริการแล้ว</h2>";
+            document.querySelector(".countdown-frame").innerHTML = "<h2>เปิดให้บริการแล้ว</h2>";
         }
     }
 
-    setInterval(update, 1000);
-    update();
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 </script>
 
 </body>
