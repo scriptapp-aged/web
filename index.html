@@ -11,7 +11,6 @@
             --primary-neon: #00ff88;
             --ku-green: #006633;
             --text-dark: #0f172a;
-            --glass-dark: rgba(15, 23, 42, 0.8);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -40,52 +39,12 @@
             100% { transform: translate(100%, 50%) scale(1.5); }
         }
 
-        /* --- 🛰️ Floating Status Bar (ย้ายมาไว้ข้างบน) --- */
-        .top-status {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            background: var(--glass-dark);
-            backdrop-filter: blur(20px);
-            padding: 10px 25px;
-            border-radius: 100px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #fff;
-            font-size: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
-            animation: fadeInRight 1s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .status-dot { width: 8px; height: 8px; background: var(--primary-neon); border-radius: 50%; position: relative; }
-        .status-dot::after {
-            content: '';
-            position: absolute;
-            width: 100%; height: 100%;
-            background: var(--primary-neon);
-            border-radius: 50%;
-            animation: ring 2s infinite;
-        }
-
-        @keyframes ring {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
-        }
-
         /* --- Header Section --- */
         .hero-header {
-            padding: 140px 20px 80px;
+            padding: 160px 20px 100px; /* เพิ่มระยะบนให้ดูโปร่งขึ้นเมื่อไม่มี Status Bar */
             text-align: center;
             position: relative;
-            animation: fadeInUp 1s cubic-bezier(0.2, 1, 0.2, 1);
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         @keyframes fadeInUp {
@@ -97,30 +56,30 @@
             position: absolute;
             top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px; height: 450px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.2) 0%, transparent 70%);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
             filter: blur(100px);
             z-index: 0;
-            animation: breathing 4s ease-in-out infinite;
+            animation: breathing 5s ease-in-out infinite;
         }
 
         @keyframes breathing {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
         }
 
         .main-title {
-            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            font-size: clamp(3.5rem, 10vw, 6.8rem);
             font-weight: 700;
             letter-spacing: -4px;
             line-height: 0.9;
             color: var(--text-dark);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             background: linear-gradient(90deg, #0f172a, #006633, #0f172a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: textFlow 8s linear infinite;
+            animation: textFlow 10s linear infinite;
         }
 
         @keyframes textFlow {
@@ -129,26 +88,26 @@
 
         .subtitle-pill {
             display: inline-block;
-            background: rgba(241, 245, 249, 0.8);
+            background: rgba(241, 245, 249, 0.6);
             backdrop-filter: blur(10px);
-            padding: 10px 28px;
+            padding: 12px 32px;
             border-radius: 100px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--ku-green);
             letter-spacing: 2px;
             border: 1px solid rgba(226, 232, 240, 0.8);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         /* --- Service Portal Cards --- */
         .main-portal {
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
-            padding: 40px 20px 100px;
+            padding: 0 20px 150px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 50px;
+            gap: 60px;
         }
 
         .card {
@@ -157,45 +116,45 @@
             color: inherit;
             position: relative;
             opacity: 0;
-            animation: cardReveal 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+            animation: cardReveal 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
         }
 
-        .card:nth-child(1) { animation-delay: 0.2s; }
-        .card:nth-child(2) { animation-delay: 0.4s; }
-        .card:nth-child(3) { animation-delay: 0.6s; }
+        .card:nth-child(1) { animation-delay: 0.3s; }
+        .card:nth-child(2) { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 0.7s; }
 
         @keyframes cardReveal {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .card:hover { transform: translateY(-25px); }
+        .card:hover { transform: translateY(-30px); }
 
         .image-wrapper {
             width: 100%;
-            height: 380px;
+            height: 400px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             position: relative;
         }
 
         .image-wrapper::before {
             content: '';
             position: absolute;
-            width: 250px; height: 100px;
-            background: rgba(0, 255, 136, 0.15);
+            width: 280px; height: 110px;
+            background: rgba(0, 255, 136, 0.1);
             filter: blur(60px);
             border-radius: 50%;
-            bottom: 30px;
+            bottom: 40px;
             z-index: -1;
-            transition: 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+            transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         .card:hover .image-wrapper::before { 
-            background: rgba(0, 255, 136, 0.4); 
-            transform: scale(1.5);
+            background: rgba(0, 255, 136, 0.3); 
+            transform: scale(1.6);
             filter: blur(40px);
         }
 
@@ -203,41 +162,42 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            filter: grayscale(100%) opacity(0.6) brightness(1.1);
+            filter: grayscale(100%) opacity(0.5) brightness(1.1);
             transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         .card:hover img {
-            filter: grayscale(0%) opacity(1) drop-shadow(0 30px 60px rgba(0,0,0,0.12));
-            transform: scale(1.08) translateY(-10px);
+            filter: grayscale(0%) opacity(1) drop-shadow(0 40px 60px rgba(0,0,0,0.15));
+            transform: scale(1.08) translateY(-15px);
         }
 
         .card h3 {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 600;
             color: var(--text-dark);
             position: relative;
             display: inline-block;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
-        .card:hover h3 { color: var(--ku-green); letter-spacing: 1px; }
+        .card:hover h3 { color: var(--ku-green); letter-spacing: 1.5px; }
 
         .card h3::after {
             content: '';
             position: absolute;
-            bottom: -8px; left: 0;
-            width: 0; height: 3px;
+            bottom: -10px; left: 0;
+            width: 0; height: 4px;
             background: linear-gradient(90deg, var(--primary-neon), var(--ku-green));
-            transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            transition: 0.6s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         .card:hover h3::after { width: 100%; }
 
         @media (max-width: 1024px) {
-            .main-portal { grid-template-columns: 1fr; gap: 80px; }
-            .top-status { top: 20px; right: 20px; padding: 8px 15px; font-size: 0.7rem; }
-            .main-title { font-size: 4rem; }
+            .main-portal { grid-template-columns: 1fr; gap: 100px; }
+            .hero-header { padding-top: 100px; }
+            .main-title { font-size: 4.5rem; }
+            .image-wrapper { height: 320px; }
         }
     </style>
 </head>
@@ -246,18 +206,11 @@
     <div class="bg-blob"></div>
     <div class="header-glow"></div>
 
-    <div class="top-status">
-        <div class="status-dot"></div>
-        <span style="font-weight: 500; letter-spacing: 1px;">SYSTEM ONLINE</span>
-        <div style="width: 1px; height: 15px; background: rgba(255,255,255,0.2);"></div>
-        <span style="opacity: 0.7; font-weight: 300;">Kasetsart University</span>
-    </div>
-
     <header class="hero-header">
         <div class="title-container">
-            <div class="subtitle-pill">DIGITAL PORTAL 2.6</div>
+            <div class="subtitle-pill">DIGITAL PLATFORM 2026</div>
             <h1 class="main-title">ชุมนุมฟาร์มนิสิต</h1>
-            <p style="color: #64748b; font-weight: 300; letter-spacing: 3px; font-size: 1rem; opacity: 0.8;">
+            <p style="color: #64748b; font-weight: 300; letter-spacing: 4px; font-size: 1rem; opacity: 0.7;">
                 FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
             </p>
         </div>
@@ -266,26 +219,26 @@
     <div class="main-portal">
         <a href="people.html" class="card">
             <div class="image-wrapper">
-                <img src="090.png" alt="Student 1">
+                <img src="090.png" alt="Committee">
             </div>
             <h3>คณะกรรมการฟาร์ม</h3>
-            <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px; font-weight: 300;">ปีการศึกษา 2569</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Team Excellence 2569</p>
         </a>
 
         <a href="room.html" class="card">
             <div class="image-wrapper">
-                <img src="091.png" alt="Student 2">
+                <img src="091.png" alt="Reservation">
             </div>
             <h3>จองห้องประชุม</h3>
-            <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px; font-weight: 300;">Smart Room Reservation</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Smart Space Booking</p>
         </a>
 
         <a href="project.html" class="card">
             <div class="image-wrapper">
-                <img src="092.png" alt="Student 3">
+                <img src="092.png" alt="Projects">
             </div>
             <h3>โครงการชุมนุม</h3>
-            <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px; font-weight: 300;">ปีการศึกษา 2569</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Future Farm Initiatives</p>
         </a>
     </div>
 
