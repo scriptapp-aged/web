@@ -3,219 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บริการ | Service - ชุมนุมฟาร์มนิสิต</title>
+    <title>KU KPS - ชุมนุมฟาร์มนิสิต</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --ku-green: #006633;
             --ku-gold: #b29d6c;
-            --status-green: #2ecc71;
-            --info-yellow: #fff9db;
-            --text-dark: #333333;
+            --glass-white: rgba(255, 255, 255, 0.9);
+            --text-main: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
-        body { background-color: #ffffff; min-height: 100vh; color: var(--text-dark); }
+        body { background-color: #f8fafc; color: var(--text-main); overflow-x: hidden; }
 
-        /* --- Navigation Bar ด้านบน (แทนที่ Sidebar) --- */
+        /* --- Floating Navigation --- */
         .top-nav {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 60px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        .brand-logo { color: #fff; font-size: 1.4rem; font-weight: 600; line-height: 1.1; }
-        .brand-logo span { font-size: 0.8rem; font-weight: 200; color: var(--ku-gold); letter-spacing: 1px; }
+        .brand-logo { color: var(--ku-green); font-size: 1.2rem; font-weight: 600; line-height: 1.1; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.95rem; font-weight: 400; transition: 0.3s; opacity: 0.7; }
+        .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--ku-green); }
 
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 1rem; transition: 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-
-        /* --- Hero Banner (ขยายเต็มหน้าจอ) --- */
-        .hero-banner {
-            background: linear-gradient(135deg, #004d26 0%, #006633 50%, #004d26 100%);
-            padding: 120px 40px 80px; /* เพิ่ม Padding บนเพื่อหลบ Nav */
-            text-align: center;
+        /* --- Cinematic Hero Section --- */
+        .hero-section {
+            height: 65vh;
+            background: linear-gradient(135deg, #004d26 0%, #006633 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            border-bottom: 8px solid var(--ku-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+            color: #fff;
             overflow: hidden;
+            border-bottom-left-radius: 100px; /* เพิ่มความโค้งมนให้ดูแพง */
+            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.1);
         }
 
-        .hero-banner::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+        /* เอฟเฟกต์รัศมีทองจางๆ */
+        .hero-section::before {
+            content: ''; position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(178, 157, 108, 0.15) 0%, transparent 70%);
+            top: -200px; right: -100px;
         }
-
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .club-title {
-            font-size: 4.5rem;
+            font-size: 5rem;
             font-weight: 600;
-            color: transparent;
-            background: linear-gradient(to bottom, #f9d976 0%, #b29d6c 50%, #f9d976 100%);
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff 40%, #b29d6c 100%);
             -webkit-background-clip: text;
             background-clip: text;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            color: transparent;
             margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .faculty-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
             letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .faculty-subtitle {
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 200;
-            letter-spacing: 4px;
             text-transform: uppercase;
-            position: relative;
-            z-index: 1;
-            opacity: 0.8;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* --- Content Area (กว้างขึ้น) --- */
-        .content-body { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+        /* --- Service Body --- */
+        .content-body { max-width: 1200px; margin: -80px auto 0; padding: 0 40px 80px; position: relative; z-index: 10; }
 
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
-        .page-title { font-size: 1.8rem; font-weight: 600; }
-
-        .system-status {
-            display: flex; align-items: center; gap: 10px; padding: 10px 25px;
-            border: 1px solid #eee; border-radius: 4px; font-size: 0.9rem; color: #666;
-            background: #fafafa;
+        .service-container {
+            background: #fff;
+            border-radius: 40px;
+            padding: 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            border: 1px solid #f1f5f9;
         }
-        .dot { width: 10px; height: 10px; background-color: var(--status-green); border-radius: 50%; box-shadow: 0 0 8px var(--status-green); }
 
-        /* --- Service Grid --- */
-        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; }
+        .status-pill {
+            display: flex; align-items: center; gap: 8px; background: #f0fdf4;
+            color: #166534; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 500;
+        }
+        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
         
-        .service-card { 
-            text-align: center; 
-            text-decoration: none; 
-            color: inherit; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            padding: 20px;
-            border-radius: 12px;
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+
+        /* --- Die-cut Grid --- */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+        .card { text-align: center; text-decoration: none; color: inherit; transition: 0.4s ease; }
+        .card:hover { transform: translateY(-15px); }
+
+        .img-wrap { height: 320px; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 25px; position: relative; }
+        .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); }
+
+        .card h3 { font-size: 1.4rem; font-weight: 600; color: #0f172a; margin-bottom: 12px; border-bottom: 2px solid transparent; display: inline-block; transition: 0.3s; }
+        .card:hover h3 { border-bottom: 2px solid var(--ku-green); color: var(--ku-green); }
+
+        /* --- Info Bar (Modern Minimal) --- */
+        .info-strip {
+            background: #fffbeb;
+            color: #92400e;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 60px;
+            border: 1px solid #fef3c7;
+            text-align: center;
         }
-        
-        .service-card:hover { transform: translateY(-15px); background: #fcfcfc; }
 
-        .img-container { width: 100%; height: 300px; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 20px; }
-        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); }
-
-        .service-card h3 { font-size: 1.4rem; font-weight: 500; text-decoration: underline; margin-bottom: 12px; }
-
-        .beta-tag {
-            display: inline-flex; align-items: center; gap: 8px; background: #fff;
-            padding: 6px 16px; border-radius: 30px; font-size: 0.8rem; color: #888; border: 1px solid #eee;
-        }
-        .beta-label { background: #fff3bf; color: #f08c00; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
-
-        /* --- Info Bar --- */
-        .info-bar { background-color: var(--info-yellow); padding: 20px; text-align: center; font-size: 1rem; color: #85701d; border-radius: 4px; margin-bottom: 60px; border: 1px solid rgba(0,0,0,0.05); }
-
-        /* --- Footer --- */
-        .feedback-section { border-top: 1px solid #eee; padding-top: 40px; }
-        .feedback-header { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
-        .feedback-text { font-size: 0.95rem; color: #888; margin-left: 40px; }
-
-        .fab-edit { position: fixed; bottom: 40px; right: 40px; width: 60px; height: 60px; background: #fff; border: 1px solid #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); color: #444; cursor: pointer; transition: 0.3s; }
-        .fab-edit:hover { transform: scale(1.1); background: var(--ku-green); color: #fff; }
+        .footer-note { margin-top: 60px; padding-top: 30px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 15px; color: #94a3b8; font-size: 0.9rem; }
 
         @media (max-width: 1024px) {
-            .service-grid { grid-template-columns: repeat(2, 1fr); }
-            .club-title { font-size: 3rem; }
-            .top-nav { padding: 20px; }
-        }
-
-        @media (max-width: 768px) {
-            .service-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* ซ่อนเมนูบนมือถือ */
+            .grid { grid-template-columns: 1fr; gap: 80px; }
+            .club-title { font-size: 3.5rem; }
+            .hero-section { border-bottom-left-radius: 50px; }
         }
     </style>
 </head>
 <body>
 
     <nav class="top-nav">
-        <div class="brand-logo">
-            AG-ED KU.KPS.<br>
-            <span>SMART FARMING</span>
-        </div>
+        <div class="brand-logo">AG-ED KU.KPS.</div>
         <ul class="nav-links">
             <li><a href="#" class="active">หน้าหลัก</a></li>
             <li><a href="#">จองห้องประชุม</a></li>
-            <li><a href="#">ติดต่อเรา</a></li>
+            <li><a href="#">แจ้งปัญหา</a></li>
             <li><a href="#"><i class="fas fa-search"></i></a></li>
         </ul>
     </nav>
 
-    <main>
-        <section class="hero-banner">
-            <p class="faculty-subtitle">Faculty of Education and Development Sciences</p>
-            <h1 class="club-title">ชุมนุมฟาร์มนิสิต</h1>
-            <p style="color: rgba(255,255,255,0.7); font-weight: 200; letter-spacing: 2px;">Kasetsart University Kamphaeng Saen Campus</p>
-        </section>
+    <header class="hero-section">
+        <div class="faculty-tag">Faculty of Education and Development Sciences</div>
+        <h1 class="club-title">ชุมนุมฟาร์มนิสิต</h1>
+        <p style="opacity: 0.6; font-weight: 200; letter-spacing: 2px;">Kasetsart University Kamphaeng Saen Campus</p>
+    </header>
 
-        <div class="content-body">
-            <div class="top-bar">
-                <h2 class="page-title">บริการ | Service</h2>
-                <div class="system-status">
-                    <span class="dot"></span> ระบบพร้อมใช้งาน
+    <main class="content-body">
+        <section class="service-container">
+            <div class="section-header">
+                <h2 style="font-size: 1.8rem; font-weight: 600;">บริการ | Service</h2>
+                <div class="status-pill">
+                    <span class="dot"></span> ระบบออนไลน์
                 </div>
             </div>
 
-            <div class="service-grid">
-                <a href="#" class="service-card">
-                    <div class="img-container">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="Student 1">
+            <div class="grid">
+                <a href="#" class="card">
+                    <div class="img-wrap">
+                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="">
                     </div>
                     <h3>จองห้องประชุม</h3>
-                    <div class="beta-tag">
-                        <span class="beta-label">BETA</span> <i class="fas fa-satellite-dish"></i> เปิดระบบทดสอบ
-                    </div>
+                    <div style="margin-top:10px; font-size: 0.8rem; color: #94a3b8;"><i class="fas fa-flask"></i> Beta Version</div>
                 </a>
 
-                <a href="#" class="service-card">
-                    <div class="img-container">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="Student 2">
+                <a href="#" class="card">
+                    <div class="img-wrap">
+                        <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="">
                     </div>
                     <h3>ตารางการจองห้อง</h3>
                 </a>
 
-                <a href="#" class="service-card">
-                    <div class="img-container">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="Student 3">
+                <a href="#" class="card">
+                    <div class="img-wrap">
+                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="">
                     </div>
                     <h3>แจ้งปัญหาการใช้งาน</h3>
                 </a>
             </div>
 
-            <div class="info-bar">
-                <i class="fas fa-desktop"></i> เพื่อความสะดวกในการใช้งานโปรดเปิดผ่าน บราวเซอร์ iPad หรือ อุปกรณ์คอมพิวเตอร์
+            <div class="info-strip">
+                <i class="fas fa-info-circle"></i> เพื่อประสิทธิภาพสูงสุด แนะนำให้ใช้งานผ่าน iPad หรือ คอมพิวเตอร์
             </div>
 
-            <div class="feedback-section">
-                <div class="feedback-header">
-                    <i class="far fa-comment-dots" style="color: #ddd;"></i> แสดงความคิดเห็น / ข้อเสนอแนะ
-                </div>
-                <p class="feedback-text">
-                    ผู้พัฒนาระบบยินดีรับฟังความคิดเห็นและข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการและพัฒนาให้ดียิ่งขึ้น
-                </p>
+            <div class="footer-note">
+                <i class="far fa-comment-dots"></i>
+                <p>ผู้พัฒนาระบบยินดีรับฟังข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการให้ดียิ่งขึ้น</p>
             </div>
-        </div>
-
-        <div class="fab-edit"><i class="fas fa-pencil-alt"></i></div>
+        </section>
     </main>
 
 </body>
