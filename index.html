@@ -3,71 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KU KPS - ชุมนุมฟาร์มนิสิต (Animated)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <title>KU KPS - ชุมนุมฟาร์มนิสิต</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --ku-green: #006633;
             --ku-gold: #b29d6c;
             --ku-gold-light: #f9d976;
-            --glass-white: rgba(255, 255, 255, 0.9);
+            --text-dark: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
-        body { background-color: #f8fafc; overflow-x: hidden; }
+        body { background-color: #f8fafc; color: var(--text-dark); overflow-x: hidden; }
 
-        /* --- Cinematic Hero Section with Animations --- */
-        .hero-section {
-            height: 70vh;
+        /* --- Compact Header (เตี้ยลง แต่ยังอลังการ) --- */
+        .header-section {
             background: linear-gradient(135deg, #004d26 0%, #006633 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
+            padding: 40px 20px;
             text-align: center;
-            color: #fff;
-            overflow: hidden;
-            border-bottom-left-radius: 120px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-        }
-
-        /* 1. Background Particle Animation (แสงลอยละล่อง) */
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveBackground 20s linear infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes moveBackground {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; }
-        }
-
-        /* 2. Floating Title Animation (หายใจเบาๆ) */
-        .club-title-container {
             position: relative;
-            z-index: 10;
-            animation: floating 4s ease-in-out infinite;
+            border-bottom: 5px solid var(--ku-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.02); }
-        }
-
-        .club-title {
-            font-size: 5.5rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            /* Shimmer Effect (แสงวิ่งผ่านตัวอักษร) */
+        /* Shine Animation บนตัวอักษรแบบกะทัดรัด */
+        .animated-title {
+            font-size: 3rem; /* ปรับขนาดเล็กลงจากเดิมที่ 5.5rem */
+            font-weight: 600;
+            letter-spacing: 1px;
             background: linear-gradient(
                 to right, 
                 var(--ku-gold) 20%, 
@@ -80,155 +45,147 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: shine 5s linear infinite;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            animation: shine 4s linear infinite;
+            margin-bottom: 5px;
         }
 
         @keyframes shine {
             to { background-position: 200% center; }
         }
 
-        .faculty-tag {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            padding: 8px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            letter-spacing: 3px;
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 200;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: fadeInDown 1.5s ease-out;
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- Content Body --- */
+        .content-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 30px;
         }
 
-        /* --- Content Area --- */
-        .content-body { max-width: 1200px; margin: -100px auto 0; padding: 0 40px 80px; position: relative; z-index: 100; }
-
-        .service-container {
-            background: #fff;
-            border-radius: 50px;
-            padding: 70px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.5);
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        /* --- Grid & Cards --- */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
-        
-        .card { 
-            text-align: center; 
-            text-decoration: none; 
-            color: inherit; 
-            transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+        .status-pill {
+            display: flex; align-items: center; gap: 8px; 
+            background: #fff; padding: 6px 15px; border-radius: 50px; 
+            font-size: 0.8rem; border: 1px solid #eee;
         }
-        
-        .card:hover { transform: translateY(-20px); }
+        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 5px #22c55e; }
 
-        .img-wrap { 
-            height: 350px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-end; 
-            margin-bottom: 30px; 
-            position: relative; 
-        }
-        
-        .img-wrap img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
-            filter: drop-shadow(0 25px 40px rgba(0,0,0,0.15));
-            transition: 0.5s;
+        /* --- Service Grid (Die-cut) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
-        .card:hover img { transform: scale(1.05); filter: drop-shadow(0 35px 50px rgba(0, 102, 51, 0.25)); }
-
-        .card h3 { 
-            font-size: 1.5rem; 
-            font-weight: 600; 
-            position: relative;
-            padding-bottom: 10px;
+        .card {
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
         }
 
-        .card h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%; width: 0; height: 3px;
-            background: var(--ku-green);
-            transform: translateX(-50%);
+        .img-wrap {
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
             transition: 0.4s;
         }
-        .card:hover h3::after { width: 60%; }
 
-        /* --- Navigation & Info --- */
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 8px; background: #f0fdf4;
-            color: #166534; padding: 10px 25px; border-radius: 50px; font-size: 0.9rem;
+        .card:hover img {
+            transform: translateY(-10px);
+            filter: drop-shadow(0 20px 25px rgba(0, 102, 51, 0.2));
         }
-        .dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; }
 
-        @media (max-width: 1024px) {
-            .grid { grid-template-columns: 1fr; gap: 100px; }
-            .club-title { font-size: 3.5rem; }
-            .hero-section { height: 60vh; border-bottom-left-radius: 60px; }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        /* --- Info Bar --- */
+        .info-strip {
+            background: #fff9db;
+            color: #85701d;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .animated-title { font-size: 2.2rem; }
+            .header-section { padding: 30px 15px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-section">
-        <div class="faculty-tag">Faculty of Education and Development Sciences</div>
-        
-        <div class="club-title-container">
-            <h1 class="club-title">ชุมนุมฟาร์มนิสิต</h1>
-        </div>
-        
-        <p style="opacity: 0.7; font-weight: 200; letter-spacing: 3px; margin-top: 15px; animation: fadeIn 2s;">
-            KASETSART UNIVERSITY KAMPHAENG SAEN
-        </p>
+    <header class="header-section">
+        <h1 class="animated-title">ชุมนุมฟาร์มนิสิต</h1>
+        <p class="subtitle">Faculty of Education and Development Sciences</p>
     </header>
 
     <main class="content-body">
-        <section class="service-container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px;">
-                <h2 style="font-size: 2rem; font-weight: 800;">บริการ | Service</h2>
-                <div class="status-pill">
-                    <span class="dot"></span> ระบบออนไลน์ (V.2026)
+        <div class="section-header">
+            <h2 style="font-size: 1.5rem; font-weight: 600;">บริการ | Service</h2>
+            <div class="status-pill">
+                <span class="dot"></span> ระบบพร้อมใช้งาน
+            </div>
+        </div>
+
+        <div class="grid">
+            <a href="#" class="card">
+                <div class="img-wrap">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="">
                 </div>
-            </div>
+                <h3>จองห้องประชุม</h3>
+                <p style="font-size: 0.8rem; color: #94a3b8;">เปิดระบบทดสอบ (Beta)</p>
+            </a>
 
-            <div class="grid">
-                <a href="#" class="card">
-                    <div class="img-wrap">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="">
-                    </div>
-                    <h3>จองห้องประชุม</h3>
-                </a>
+            <a href="#" class="card">
+                <div class="img-wrap">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="">
+                </div>
+                <h3>ตารางการจองห้อง</h3>
+            </a>
 
-                <a href="#" class="card">
-                    <div class="img-wrap">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="">
-                    </div>
-                    <h3>ตารางการจองห้อง</h3>
-                </a>
+            <a href="#" class="card">
+                <div class="img-wrap">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="">
+                </div>
+                <h3>แจ้งปัญหาการใช้งาน</h3>
+            </a>
+        </div>
 
-                <a href="#" class="card">
-                    <div class="img-wrap">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="">
-                    </div>
-                    <h3>แจ้งปัญหาการใช้งาน</h3>
-                </a>
-            </div>
-
-            <div style="margin-top: 80px; padding: 25px; background: #fffbeb; border-radius: 25px; border: 1px solid #fef3c7; text-align: center; color: #92400e;">
-                <i class="fas fa-magic"></i> เพื่อผลลัพธ์ที่ดีที่สุด แนะนำให้เปิดใช้งานผ่านอุปกรณ์หน้าจอใหญ่
-            </div>
-        </section>
+        <div class="info-strip">
+            <i class="fas fa-info-circle"></i> เพื่อความสะดวก โปรดใช้งานผ่าน iPad หรือ คอมพิวเตอร์
+        </div>
     </main>
 
 </body>
