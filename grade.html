@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ระบบตรวจสอบการเรียนตามหลักสูตร</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green:#1b6b35;--green-light:#2d9b50;--green-pale:#e8f5ec;--green-mid:#c2e8cc;
+  --gold:#e8a020;--gold-light:#fdecc8;
+  --sky:#1976d2;--sky-light:#e3f0fd;
+  --coral:#e05c3a;--coral-light:#fdeae4;
+  --purple:#7c3aed;--purple-light:#ede9fe;
+  --teal:#0d9488;--teal-light:#ccfbf1;
+  --bg:#f4f9f6;--white:#fff;--text:#1a2e1e;--muted:#5a7a62;--border:#c8e0cf;
+  --radius:14px;--radius-sm:8px;
+  --font:'Mali',cursive;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+
+/* ===== AUTH ===== */
+.auth-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
+  background:linear-gradient(135deg,#e8f5ec 0%,#c2e8cc 40%,#fdecc8 100%);}
+.auth-card{background:var(--white);border-radius:24px;padding:2.5rem;width:100%;max-width:420px;
+  box-shadow:0 8px 40px rgba(27,107,53,0.13);border:2px solid var(--green-mid);}
+.auth-logo{text-align:center;margin-bottom:1.75rem;}
+.auth-logo-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-light));
+  margin:0 auto 12px;display:flex;align-items:center;justify-content:center;}
+.auth-title{font-size:20px;font-weight:700;color:var(--green);line-height:1.3;}
+.auth-sub{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.field{margin-bottom:1rem;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--green);margin-bottom:6px;}
+.field input,.field select{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-family:var(--font);font-size:14px;color:var(--text);background:var(--white);outline:none;transition:.2s;}
+.field input:focus,.field select:focus{border-color:var(--green-light);background:var(--green-pale);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-primary{width:100%;padding:12px;background:linear-gradient(135deg,var(--green),var(--green-light));
+  color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font);font-size:15px;font-weight:700;
+  cursor:pointer;margin-top:.5rem;transition:.2s;letter-spacing:.3px;}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);}
+.link-btn{background:none;border:none;color:var(--green-light);font-family:var(--font);font-size:13px;
+  cursor:pointer;text-decoration:underline;font-weight:600;}
+.err-msg{font-size:13px;color:var(--coral);margin-top:6px;min-height:18px;font-weight:500;}
+.ok-msg{font-size:13px;color:var(--green);margin-top:6px;min-height:18px;font-weight:500;}
+
+/* ===== MAIN LAYOUT ===== */
+.main-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.topbar{background:linear-gradient(135deg,var(--green) 0%,#2d7a45 100%);padding:1rem 1.5rem;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.topbar-title{flex:1;}
+.topbar-title .t1{font-size:16px;font-weight:700;color:#fff;line-height:1.3;}
+.topbar-title .t2{font-size:12px;color:rgba(255,255,255,.75);margin-top:2px;}
+.topbar-user{display:flex;align-items:center;gap:10px;}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--gold);display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:15px;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.4);}
+.user-info .name{font-size:13px;font-weight:600;color:#fff;}
+.user-info .sid{font-size:11px;color:rgba(255,255,255,.7);}
+.btn-logout{padding:6px 14px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);
+  border-radius:20px;color:#fff;font-family:var(--font);font-size:12px;cursor:pointer;font-weight:600;transition:.2s;}
+.btn-logout:hover{background:rgba(255,255,255,.25);}
+
+/* ===== SUMMARY CARDS ===== */
+.summary-section{padding:1.25rem 1.5rem .5rem;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.sum-card{background:var(--white);border-radius:var(--radius);padding:1rem 1.1rem;
+  border:2px solid var(--border);text-align:center;}
+.sum-card .val{font-size:26px;font-weight:700;color:var(--green);}
+.sum-card .lbl{font-size:12px;color:var(--muted);margin-top:2px;font-weight:500;}
+.sum-card .sub{font-size:11px;color:var(--muted);}
+.sum-card.gpa-card .val{color:var(--sky);}
+.sum-card.status-ok .val{color:var(--green-light);}
+.sum-card.status-no .val{font-size:16px;padding-top:5px;color:var(--coral);}
+
+/* ===== PROGRESS ===== */
+.prog-section{padding:.5rem 1.5rem 1rem;}
+.prog-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:500;}
+.prog-bar{height:10px;background:var(--green-mid);border-radius:5px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--green),var(--green-light));transition:width .6s;}
+
+/* ===== TABS ===== */
+.tabs-wrap{padding:0 1.5rem;border-bottom:2px solid var(--border);}
+.tabs{display:flex;gap:0;}
+.tab{padding:10px 18px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;
+  border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+.tab.active{color:var(--green);border-bottom-color:var(--green);}
+.pane{display:none;}.pane.active{display:block;}
+.content{padding:1.25rem 1.5rem 3rem;}
+
+/* ===== GROUP CARDS ===== */
+.group-wrap{margin-bottom:1rem;}
+.group-card{background:var(--white);border-radius:var(--radius);border:2px solid var(--border);overflow:hidden;}
+.group-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;
+  cursor:pointer;background:var(--white);transition:.15s;gap:10px;}
+.group-header:hover{background:var(--green-pale);}
+.group-header-left{display:flex;align-items:center;gap:12px;}
+.group-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;}
+.group-title{font-size:15px;font-weight:700;color:var(--text);}
+.group-meta{font-size:12px;color:var(--muted);margin-top:1px;font-weight:500;}
+.group-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.credit-badge{font-size:12px;padding:4px 12px;border-radius:20px;font-weight:700;}
+.badge-ok{background:var(--green-pale);color:var(--green);border:1.5px solid var(--green-mid);}
+.badge-no{background:var(--coral-light);color:var(--coral);border:1.5px solid #f5c2b5;}
+.badge-neu{background:#f1f5f9;color:#64748b;border:1.5px solid #e2e8f0;}
+.chevron{font-size:16px;color:var(--muted);transition:transform .25s;display:inline-block;}
+.chevron.open{transform:rotate(180deg);}
+.group-body{display:none;border-top:2px solid var(--border);}
+.group-body.open{display:block;}
+
+/* ===== SUB GROUP ===== */
+.sub-header{display:flex;align-items:center;justify-content:space-between;
+  padding:.65rem 1.25rem;background:#f8fbf9;border-bottom:1px solid var(--border);}
+.sub-label{font-size:13px;font-weight:700;color:var(--green);}
+.sub-credit{font-size:12px;font-weight:700;}
+
+/* ===== COURSE ROW ===== */
+.course-row{display:flex;align-items:flex-start;gap:10px;padding:9px 1.25rem;
+  border-bottom:1px solid var(--border);transition:.12s;}
+.course-row:last-child{border-bottom:none;}
+.course-row:hover{background:#fafffe;}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);
+  cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  transition:.15s;margin-top:1px;}
+.check-box.done{background:var(--green);border-color:var(--green);}
+.check-box.fail{background:var(--coral);border-color:var(--coral);}
+.check-box svg{display:none;}
+.check-box.done svg,.check-box.fail svg{display:block;}
+.course-code{font-size:11px;color:var(--muted);width:100px;flex-shrink:0;font-weight:600;padding-top:2px;}
+.course-info{flex:1;min-width:0;}
+.course-name{font-size:13px;color:var(--text);font-weight:500;line-height:1.4;}
+.course-credit{font-size:12px;color:var(--muted);width:32px;text-align:right;flex-shrink:0;font-weight:600;padding-top:2px;}
+.grade-section{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.grade-entry{display:flex;align-items:center;gap:6px;background:#f8fbf9;border:1.5px solid var(--border);
+  border-radius:8px;padding:4px 10px;}
+.grade-entry select{font-family:var(--font);font-size:13px;border:none;background:transparent;
+  color:var(--text);outline:none;cursor:pointer;font-weight:600;}
+.grade-entry .semester-label{font-size:11px;color:var(--muted);font-weight:600;}
+.grade-badge{display:inline-block;font-size:12px;padding:2px 10px;border-radius:12px;font-weight:700;}
+.gb-a{background:#dcfce7;color:#166534;}
+.gb-b{background:#dbeafe;color:#1e40af;}
+.gb-c{background:#fef9c3;color:#854d0e;}
+.gb-d{background:#ffedd5;color:#9a3412;}
+.gb-f{background:#fee2e2;color:#991b1b;}
+.gb-w{background:#f1f5f9;color:#64748b;}
+.add-attempt-btn{font-size:12px;padding:3px 10px;background:var(--gold-light);color:#92400e;
+  border:1.5px solid #f6d28a;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:700;}
+
+/* ===== FREE / ELECTIVE ADD ===== */
+.add-course-row{display:flex;gap:8px;padding:.75rem 1.25rem;background:#f8fbf9;
+  border-top:1.5px dashed var(--border);flex-wrap:wrap;align-items:flex-end;}
+.add-course-row .mini-field{display:flex;flex-direction:column;gap:4px;}
+.add-course-row .mini-field label{font-size:11px;color:var(--muted);font-weight:600;}
+.add-course-row input{font-family:var(--font);font-size:13px;padding:6px 10px;
+  border:1.5px solid var(--border);border-radius:8px;outline:none;background:var(--white);}
+.add-course-row input:focus{border-color:var(--green-light);}
+.add-btn{padding:7px 14px;background:var(--green-pale);color:var(--green);border:2px solid var(--green-mid);
+  border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;}
+.add-btn:hover{background:var(--green-mid);}
+.remove-btn{background:none;border:none;color:var(--coral);cursor:pointer;font-size:18px;line-height:1;padding:0 2px;}
+.add-err{font-size:12px;color:var(--coral);padding:.25rem 1.25rem;font-weight:600;}
+
+/* ===== PROFILE ===== */
+.profile-card{background:var(--white);border:2px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;max-width:440px;}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-light));
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:#fff;}
+.profile-table td{padding:6px 0;font-size:14px;vertical-align:top;}
+.profile-table td:first-child{color:var(--muted);font-weight:600;width:140px;}
+
+@media(max-width:600px){
+  .summary-section{grid-template-columns:repeat(2,1fr);}
+  .row2{grid-template-columns:1fr;}
+  .tabs-wrap{overflow-x:auto;}
+  .course-code{width:72px;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const USERS_KEY='ase64_users';
+const DATA_KEY='ase64_data';
+
+const GRADE_POINTS={'A':4,'B+':3.5,'B':3,'C+':2.5,'C':2,'D+':1.5,'D':1,'F':0,'W':null};
+const GRADES=Object.keys(GRADE_POINTS);
+
+const GROUPS=[
+  {id:'g1',label:'หมวดวิชาศึกษาทั่วไป',minCredit:30,icon:'🌿',color:'#6366f1',sub:[
+    {id:'g1_1',label:'1.1 กลุ่มสาระอยู่ดีมีสุข',minCredit:6,canAdd:true,courses:[]},
+    {id:'g1_2',label:'1.2 กลุ่มสาระศาสตร์แห่งผู้ประกอบการ',minCredit:3,canAdd:true,courses:[]},
+    {id:'g1_3',label:'1.3 กลุ่มสาระภาษากับการสื่อสาร',minCredit:13,canAdd:true,courses:[]},
+    {id:'g1_4',label:'1.4 กลุ่มสาระพลเมืองไทยและพลเมืองโลก',minCredit:5,canAdd:true,courses:[]},
+    {id:'g1_5',label:'1.5 กลุ่มสาระสุนทรียศาสตร์',minCredit:3,canAdd:true,courses:[]},
+  ]},
+  {id:'g2',label:'วิชาเฉพาะบังคับ',minCredit:79,icon:'🌾',color:'#1b6b35',sub:[
+    {id:'g2_1',label:'2.1.1 กลุ่มวิชาวิทยาศาสตร์',minCredit:21,canAdd:false,courses:[
+      {code:'01403111-60',name:'เคมีทั่วไป',credit:4},
+      {code:'01403112-65',name:'ปฏิบัติการเคมีทั่วไป',credit:1},
+      {code:'01403221-60',name:'เคมีอินทรีย์',credit:4},
+      {code:'01403222-65',name:'ปฏิบัติการเคมีอินทรีย์',credit:1},
+      {code:'01419211-65',name:'จุลชีวิทยาทั่วไป',credit:3},
+      {code:'01419214-65',name:'จุลชีววิทยาพื้นฐานภาคปฏิบัติการ',credit:1},
+      {code:'01422111-65',name:'หลักสถิติ',credit:3},
+      {code:'01424111-66',name:'หลักชีววิทยา',credit:3},
+      {code:'01424112-66',name:'ชีววิทยาภาคปฏิบัติการ',credit:1},
+    ]},
+    {id:'g2_2',label:'2.1.2 กลุ่มวิชาเกษตรและสิ่งแวดล้อมศึกษา',minCredit:42,canAdd:false,courses:[
+      {code:'02181111-64',name:'เกษตรและสิ่งแวดล้อมศึกษาเบื้องต้น',credit:3},
+      {code:'02181161-64',name:'ประสบการณ์พื้นฐานทางเกษตรและสิ่งแวดล้อมศึกษา',credit:1},
+      {code:'02181162-64',name:'ทักษะพื้นฐานทางเกษตรและสิ่งแวดล้อมศึกษา',credit:1},
+      {code:'02181261-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา I',credit:1},
+      {code:'02181262-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา II',credit:1},
+      {code:'02181331-64',name:'การสื่อสารทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
+      {code:'02181333-64',name:'การประยุกต์คอมพิวเตอร์ทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
+      {code:'02181351-64',name:'การประเมินการจัดการศึกษาทางเกษตรและสิ่งแวดล้อม',credit:3},
+      {code:'02181361-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา III',credit:1},
+      {code:'02181362-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา IV',credit:1},
+      {code:'02181411-64',name:'การพัฒนาทรัพยากรมนุษย์และชุมชนทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
+      {code:'02181422-64',name:'การจัดการศึกษาทางเกษตรและสิ่งแวดล้อมในชุมชน',credit:3},
+      {code:'02181441-64',name:'การวางแผนโครงการและกิจกรรมทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
+      {code:'02818461-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา V',credit:2},
+      {code:'02181471-64',name:'การจัดการสิ่งแวดล้อมในชุมชน',credit:3},
+      {code:'02181472-64',name:'นิเวศวิทยาทางการเกษตร',credit:3},
+      {code:'02181481-64',name:'ค่านิยมและจริยธรรมทางเกษตรและสิ่งแวดล้อม',credit:3},
+      {code:'02181491-64',name:'วิธีวิจัยทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
+      {code:'02181497-64',name:'สัมมนา',credit:1},
+    ]},
+    {id:'g2_3',label:'2.1.3 กลุ่มวิชาวิทยาศาสตร์เกษตรและสิ่งแวดล้อม',minCredit:16,canAdd:false,courses:[
+      {code:'02036221-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านสัตว์',credit:3},
+      {code:'02036231-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านพืชไร่',credit:2},
+      {code:'02036241-66',name:'กีฏวิทยาเบื้องต้น',credit:3},
+      {code:'02036261-66',name:'วิทยาศาสตร์ทางดิน',credit:3},
+      {code:'02036271-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านพืชสวน',credit:2},
+      {code:'02036281-66',name:'โรคพืชวิทยาเบื้องต้น',credit:3},
+    ]},
+  ]},
+  {id:'g3',label:'วิชาเฉพาะเลือก',minCredit:21,icon:'🔬',color:'#0d9488',sub:[
+    {id:'g3_1',label:'2.2.1 วิชาเลือกสาขาเกษตรและสิ่งแวดล้อมศึกษา',minCredit:6,canAdd:true,courses:[]},
+    {id:'g3_2',label:'2.2.2 กลุ่มวิทยาศาสตร์เกษตรและสิ่งแวดล้อม',minCredit:15,canAdd:true,courses:[]},
+  ]},
+  {id:'g4',label:'วิชาเสรี',minCredit:6,icon:'✨',color:'#7c3aed',sub:[
+    {id:'g4_1',label:'3. วิชาเสรี',minCredit:6,canAdd:true,courses:[]},
+  ]},
+];
+
+const TOTAL_CREDIT=136;
+let currentUser=null;
+// grades: {code: [{grade:'A', attempt:1},...]}
+let grades={};
+// freeData: {subId: [{code,name,credit,grades:[...]}]}
+let freeData={};
+const app=document.getElementById('app');
+
+/* ── Storage helpers ── */
+function useLocalStorage(){
+  try{window.storage.get('test');return false;}catch(e){return true;}
+}
+async function getUsers(){
+  try{
+    if(typeof window.storage!=='undefined'){
+      try{const r=await window.storage.get(USERS_KEY,true);return r?JSON.parse(r.value):{}}catch(e){return {}}
+    }
+  }catch(e){}
+  try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}')}catch(e){return {}}
+}
+async function saveUsers(u){
+  try{
+    if(typeof window.storage!=='undefined'){await window.storage.set(USERS_KEY,JSON.stringify(u),true);return;}
+  }catch(e){}
+  localStorage.setItem(USERS_KEY,JSON.stringify(u));
+}
+async function loadStudentData(sid){
+  try{
+    if(typeof window.storage!=='undefined'){
+      try{const r=await window.storage.get(DATA_KEY+':'+sid);return r?JSON.parse(r.value):{grades:{},free:{}}}catch(e){return {grades:{},free:{}}}
+    }
+  }catch(e){}
+  try{return JSON.parse(localStorage.getItem(DATA_KEY+':'+sid)||'{}')}catch(e){return {grades:{},free:{}}}
+}
+async function saveStudentData(sid){
+  const d=JSON.stringify({grades,free:freeData});
+  try{
+    if(typeof window.storage!=='undefined'){await window.storage.set(DATA_KEY+':'+sid,d);return;}
+  }catch(e){}
+  localStorage.setItem(DATA_KEY+':'+sid,d);
+}
+
+/* ── Grade logic ── */
+// Returns best grade for GPA (last non-W attempt; for F that got retaken use the last one)
+// For credit counting: passed = any attempt with grade != F and != W
+// GPA uses ALL attempts where grade != W (both F and retake count, per KU rule)
+function getAttempts(code){return grades[code]||[];}
+
+function isCourseAttempted(code){return getAttempts(code).length>0;}
+
+function getCreditStatus(code){
+  // A course contributes to "passed credits" if the LATEST non-W grade is not F
+  const atts=getAttempts(code).filter(a=>a.grade!=='W');
+  if(!atts.length)return 'none';
+  const last=atts[atts.length-1];
+  return last.grade==='F'?'fail':'pass';
+}
+
+function calcGPA(){
+  let totalPoints=0, totalCredits=0;
+  // from fixed courses
+  GROUPS.forEach(g=>g.sub.forEach(sub=>{
+    sub.courses.forEach(c=>{
+      const atts=getAttempts(c.code).filter(a=>a.grade!=='W');
+      atts.forEach(a=>{
+        const pts=GRADE_POINTS[a.grade];
+        if(pts!==null){totalPoints+=pts*c.credit;totalCredits+=c.credit;}
+      });
+    });
+    if(sub.canAdd){
+      (freeData[sub.id]||[]).forEach(fc=>{
+        (fc.grades||[]).filter(a=>a.grade!=='W').forEach(a=>{
+          const pts=GRADE_POINTS[a.grade];
+          if(pts!==null){totalPoints+=pts*fc.credit;totalCredits+=fc.credit;}
+        });
+      });
+    }
+  }));
+  if(!totalCredits)return{gpa:0,credits:totalCredits};
+  return{gpa:totalPoints/totalCredits,credits:totalCredits};
+}
+
+function calcPassedCredits(){
+  let total=0;
+  GROUPS.forEach(g=>g.sub.forEach(sub=>{
+    sub.courses.forEach(c=>{if(getCreditStatus(c.code)==='pass')total+=c.credit;});
+    if(sub.canAdd){
+      (freeData[sub.id]||[]).forEach(fc=>{
+        const atts=(fc.grades||[]).filter(a=>a.grade!=='W');
+        if(atts.length&&atts[atts.length-1].grade!=='F')total+=fc.credit;
+      });
+    }
+  }));
+  return total;
+}
+
+function calcGroupCredit(g){
+  let c=0;
+  g.sub.forEach(sub=>{
+    sub.courses.forEach(co=>{if(getCreditStatus(co.code)==='pass')c+=co.credit;});
+    if(sub.canAdd)(freeData[sub.id]||[]).forEach(fc=>{
+      const atts=(fc.grades||[]).filter(a=>a.grade!=='W');
+      if(atts.length&&atts[atts.length-1].grade!=='F')c+=fc.credit;
+    });
+  });
+  return c;
+}
+
+function needsRetake(code){
+  const atts=getAttempts(code);
+  if(!atts.length)return false;
+  const last=atts[atts.length-1];
+  return last.grade==='F'||last.grade==='W';
+}
+
+function initials(f,l){return((f||'')[0]||'')+((l||'')[0]||'');}
+
+/* ── Render helpers ── */
+function gradeBadgeClass(g){
+  if(g==='A')return 'gb-a';
+  if(g==='B+'||g==='B')return 'gb-b';
+  if(g==='C+'||g==='C')return 'gb-c';
+  if(g==='D+'||g==='D')return 'gb-d';
+  if(g==='F')return 'gb-f';
+  return 'gb-w';
+}
+
+function gradeSelect(code,attIdx,val,isFreeSub,freeIdx){
+  const id=`gs_${code.replace(/[^a-z0-9]/gi,'_')}_${attIdx}`;
+  const onchange=isFreeSub
+    ?`setFreeGrade('${isFreeSub}',${freeIdx},${attIdx},this.value)`
+    :`setGrade('${code}',${attIdx},this.value)`;
+  return `<select id="${id}" onchange="${onchange}">
+    ${GRADES.map(g=>`<option value="${g}"${g===val?' selected':''}>${g}</option>`).join('')}
+  </select>`;
+}
+
+function renderGradeSection(code,atts,credit,isFreeSub,freeIdx){
+  if(!atts||!atts.length)return '';
+  let html='<div class="grade-section">';
+  atts.forEach((a,i)=>{
+    const label=atts.length>1?`ครั้งที่ ${i+1}`:'';
+    html+=`<div class="grade-entry">
+      ${label?`<span class="semester-label">${label}</span>`:''}
+      ${gradeSelect(code,i,a.grade,isFreeSub,freeIdx)}
+      <span class="grade-badge ${gradeBadgeClass(a.grade)}">${a.grade}</span>
+    </div>`;
+  });
+  const lastAtt=atts[atts.length-1];
+  if(lastAtt.grade==='F'||lastAtt.grade==='W'){
+    const retakeOnclick=isFreeSub
+      ?`addFreeRetake('${isFreeSub}',${freeIdx})`
+      :`addRetake('${code}')`;
+    html+=`<button class="add-attempt-btn" onclick="${retakeOnclick}">+ เพิ่มผลเรียนใหม่</button>`;
+  }
+  html+='</div>';
+  return html;
+}
+
+/* ── AUTH ── */
+function renderLogin(){
+  app.innerHTML=`
+  <div class="auth-bg">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2">
+            <path d="M12 2a9 9 0 0 1 9 9c0 4-2.5 7.5-6 9l-3 2-3-2C5.5 18.5 3 15 3 11a9 9 0 0 1 9-9z"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+        </div>
+        <div class="auth-title">ระบบตรวจสอบการเรียนตามหลักสูตร</div>
+        <div class="auth-sub">สาขาเกษตรและสิ่งแวดล้อมศึกษา<br>หลักสูตรปรับปรุง พ.ศ. 2564</div>
+      </div>
+      <div class="field"><label>รหัสนิสิต</label><input id="l-id" placeholder="เช่น 6510450000" maxlength="10"/></div>
+      <div class="field"><label>เบอร์โทรศัพท์ (Password)</label><input id="l-pw" type="password" placeholder="เบอร์ที่ลงทะเบียนไว้"/></div>
+      <div id="l-err" class="err-msg"></div>
+      <button class="btn-primary" onclick="doLogin()">เข้าสู่ระบบ</button>
+      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted);">
+        ยังไม่มีบัญชี? <button class="link-btn" onclick="renderRegister()">สมัครสมาชิก</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('l-pw').addEventListener('keydown',e=>e.key==='Enter'&&doLogin());
+}
+
+function renderRegister(){
+  app.innerHTML=`
+  <div class="auth-bg">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-title">สมัครสมาชิก</div>
+        <div class="auth-sub">สาขาเกษตรและสิ่งแวดล้อมศึกษา หลักสูตรปรับปรุง พ.ศ. 2564</div>
+      </div>
+      <div class="field"><label>คำนำหน้า</label>
+        <select id="r-pre"><option>นาย</option><option>นางสาว</option></select></div>
+      <div class="row2">
+        <div class="field"><label>ชื่อ</label><input id="r-fn" placeholder="ชื่อ"/></div>
+        <div class="field"><label>นามสกุล</label><input id="r-ln" placeholder="นามสกุล"/></div>
+      </div>
+      <div class="field"><label>รหัสนิสิต (Username)</label><input id="r-id" placeholder="เช่น 6510450000" maxlength="10"/></div>
+      <div class="field"><label>เบอร์โทรศัพท์ (Password)</label><input id="r-pw" placeholder="เช่น 0812345678" maxlength="10"/></div>
+      <div id="r-err" class="err-msg"></div>
+      <div id="r-ok" class="ok-msg"></div>
+      <button class="btn-primary" onclick="doRegister()">สมัครสมาชิก</button>
+      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted);">
+        มีบัญชีแล้ว? <button class="link-btn" onclick="renderLogin()">เข้าสู่ระบบ</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function doLogin(){
+  const sid=document.getElementById('l-id').value.trim();
+  const pw=document.getElementById('l-pw').value.trim();
+  const err=document.getElementById('l-err');
+  if(!sid||!pw){err.textContent='กรุณากรอกข้อมูลให้ครบ';return;}
+  const users=await getUsers();
+  if(!users[sid]){err.textContent='ไม่พบรหัสนิสิตนี้ในระบบ';return;}
+  if(users[sid].phone!==pw){err.textContent='เบอร์โทรศัพท์ไม่ถูกต้อง';return;}
+  currentUser={...users[sid],sid};
+  const d=await loadStudentData(sid);
+  grades=d.grades||{};
+  freeData=d.free||{};
+  renderMain();
+}
+
+async function doRegister(){
+  const prefix=document.getElementById('r-pre').value;
+  const fname=document.getElementById('r-fn').value.trim();
+  const lname=document.getElementById('r-ln').value.trim();
+  const sid=document.getElementById('r-id').value.trim();
+  const pw=document.getElementById('r-pw').value.trim();
+  const err=document.getElementById('r-err'),ok=document.getElementById('r-ok');
+  err.textContent='';ok.textContent='';
+  if(!fname||!lname||!sid||!pw){err.textContent='กรุณากรอกข้อมูลให้ครบ';return;}
+  if(!/^\d{10}$/.test(sid)){err.textContent='รหัสนิสิตต้องเป็นตัวเลข 10 หลัก';return;}
+  if(!/^\d{9,10}$/.test(pw)){err.textContent='เบอร์โทรศัพท์ต้องเป็นตัวเลข 9-10 หลัก';return;}
+  const users=await getUsers();
+  if(users[sid]){err.textContent='รหัสนิสิตนี้มีในระบบแล้ว';return;}
+  users[sid]={prefix,fname,lname,phone:pw,createdAt:new Date().toISOString()};
+  await saveUsers(users);
+  ok.textContent='สมัครสำเร็จ! กำลังเข้าสู่ระบบ...';
+  currentUser={...users[sid],sid};
+  grades={};freeData={};
+  setTimeout(renderMain,900);
+}
+
+/* ── MAIN ── */
+function renderMain(){
+  const passed=calcPassedCredits();
+  const {gpa}=calcGPA();
+  const pct=Math.round(Math.min(passed/TOTAL_CREDIT*100,100));
+  const groupOk=GROUPS.filter(g=>calcGroupCredit(g)>=g.minCredit).length;
+  const ini=initials(currentUser.fname,currentUser.lname);
+
+  app.innerHTML=`
+  <div class="main-wrap">
+    <div class="topbar">
+      <div class="topbar-title">
+        <div class="t1">ระบบตรวจสอบการเรียนตามหลักสูตร</div>
+        <div class="t2">สาขาเกษตรและสิ่งแวดล้อมศึกษา หลักสูตรปรับปรุง พ.ศ. 2564</div>
+      </div>
+      <div class="topbar-user">
+        <div class="user-info" style="text-align:right;">
+          <div class="name">${currentUser.prefix}${currentUser.fname} ${currentUser.lname}</div>
+          <div class="sid">${currentUser.sid}</div>
+        </div>
+        <div class="avatar">${ini}</div>
+        <button class="btn-logout" onclick="doLogout()">ออกจากระบบ</button>
+      </div>
+    </div>
+
+    <div class="summary-section" id="summary-row">
+      <div class="sum-card"><div class="val" id="s-passed">${passed}</div><div class="lbl">หน่วยกิตที่ผ่าน</div><div class="sub">จาก ${TOTAL_CREDIT}</div></div>
+      <div class="sum-card gpa-card"><div class="val" id="s-gpa">${gpa.toFixed(2)}</div><div class="lbl">เกรดเฉลี่ยสะสม</div><div class="sub">GPA</div></div>
+      <div class="sum-card"><div class="val" id="s-group">${groupOk}/4</div><div class="lbl">หมวดที่ครบ</div></div>
+      <div class="sum-card ${groupOk===4?'status-ok':'status-no'}">
+        <div class="val" id="s-status" style="font-size:${groupOk===4?'22':'14'}px;padding-top:${groupOk===4?'0':'8'}px;">${groupOk===4?'ครบหลักสูตร':'ยังไม่ครบ'}</div>
+        <div class="lbl">สถานะ</div>
+      </div>
+    </div>
+
+    <div class="prog-section">
+      <div class="prog-label">
+        <span>ความคืบหน้ารวม</span>
+        <span id="s-pct">${pct}% (${passed}/${TOTAL_CREDIT} หน่วยกิต)</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:${pct}%"></div></div>
+    </div>
+
+    <div class="tabs-wrap">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('curriculum',this)">ตรวจสอบหลักสูตร</button>
+        <button class="tab" onclick="switchTab('profile',this)">ข้อมูลส่วนตัว</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="pane-curriculum" class="pane active"></div>
+      <div id="pane-profile" class="pane"></div>
+    </div>
+  </div>`;
+
+  renderCurriculum();
+  renderProfile();
+}
+
+function updateSummary(){
+  const passed=calcPassedCredits();
+  const {gpa}=calcGPA();
+  const pct=Math.round(Math.min(passed/TOTAL_CREDIT*100,100));
+  const groupOk=GROUPS.filter(g=>calcGroupCredit(g)>=g.minCredit).length;
+  const els={
+    's-passed':passed,'s-gpa':gpa.toFixed(2),
+    's-group':groupOk+'/4','s-pct':pct+'% ('+passed+'/'+TOTAL_CREDIT+' หน่วยกิต)'
+  };
+  Object.entries(els).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.textContent=v;});
+  const pf=document.getElementById('prog-fill');
+  if(pf)pf.style.width=pct+'%';
+  const ss=document.getElementById('s-status');
+  if(ss){ss.textContent=groupOk===4?'ครบหลักสูตร':'ยังไม่ครบ';
+    ss.style.color=groupOk===4?'var(--green-light)':'var(--coral)';}
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  const p=document.getElementById('pane-'+id);if(p)p.classList.add('active');
+}
+
+/* ── CURRICULUM ── */
+function renderCurriculum(){
+  const pane=document.getElementById('pane-curriculum');
+  if(!pane)return;
+  let html='';
+  GROUPS.forEach(g=>{
+    const got=calcGroupCredit(g);
+    const ok=got>=g.minCredit;
+    html+=`<div class="group-wrap">
+    <div class="group-card">
+      <div class="group-header" onclick="toggleGroup('${g.id}')">
+        <div class="group-header-left">
+          <div class="group-icon" style="background:${g.color}22;">${g.icon}</div>
+          <div>
+            <div class="group-title">${g.label}</div>
+            <div class="group-meta">ต้องการไม่น้อยกว่า ${g.minCredit} หน่วยกิต</div>
+          </div>
+        </div>
+        <div class="group-right">
+          <span class="credit-badge ${ok?'badge-ok':'badge-no'}">${got}/${g.minCredit} น.</span>
+          <span class="chevron" id="chev-${g.id}">▼</span>
+        </div>
+      </div>
+      <div class="group-body" id="body-${g.id}">`;
+
+    g.sub.forEach(sub=>{
+      const subGot=sub.courses.reduce((a,c)=>a+(getCreditStatus(c.code)==='pass'?c.credit:0),0)
+        +(sub.canAdd?(freeData[sub.id]||[]).reduce((a,fc)=>{
+          const atts=(fc.grades||[]).filter(x=>x.grade!=='W');
+          return a+(atts.length&&atts[atts.length-1].grade!=='F'?fc.credit:0);
+        },0):0);
+      const subOk=subGot>=sub.minCredit;
+
+      html+=`<div>
+        <div class="sub-header">
+          <span class="sub-label">${sub.label}</span>
+          <span class="credit-badge ${subOk?'badge-ok':'badge-neu'}" style="font-size:11px;">${subGot}/${sub.minCredit} น.</span>
+        </div>`;
+
+      sub.courses.forEach(c=>{
+        const atts=getAttempts(c.code);
+        const status=getCreditStatus(c.code);
+        const attempted=atts.length>0;
+        const boxClass=status==='pass'?'done':status==='fail'?'fail':'';
+        const checkIcon=status==='pass'
+          ?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2"><polyline points="1.5,6 5,9.5 10.5,2.5"/></svg>`
+          :status==='fail'
+          ?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>`
+          :'';
+        const gradeHtml=renderGradeSection(c.code,atts,c.credit,false,null);
+
+        html+=`<div class="course-row">
+          <div class="check-box ${boxClass}" onclick="toggleCourseGrade('${c.code}',${c.credit})">${checkIcon}</div>
+          <div class="course-code">${c.code}</div>
+          <div class="course-info">
+            <div class="course-name">${c.name}</div>
+            ${gradeHtml}
+          </div>
+          <div class="course-credit">${c.credit} น.</div>
+        </div>`;
+      });
+
+      if(sub.canAdd){
+        (freeData[sub.id]||[]).forEach((fc,fi)=>{
+          const fatts=fc.grades||[];
+          const fstatus=fatts.filter(x=>x.grade!=='W');
+          const flast=fstatus.length?fstatus[fstatus.length-1]:null;
+          const fok=flast&&flast.grade!=='F';
+          const boxClass=fok?'done':(flast&&flast.grade==='F')?'fail':'';
+          const checkIcon=fok
+            ?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2"><polyline points="1.5,6 5,9.5 10.5,2.5"/></svg>`
+            :(flast&&flast.grade==='F')
+            ?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>`
+            :'';
+          html+=`<div class="course-row">
+            <div class="check-box ${boxClass}">${checkIcon}</div>
+            <div class="course-code">${fc.code||'-'}</div>
+            <div class="course-info">
+              <div class="course-name">${fc.name}
+                <button class="remove-btn" onclick="removeFree('${sub.id}',${fi})">×</button>
+              </div>
+              ${renderGradeSection(sub.id+'_free_'+fi,fatts,fc.credit,sub.id,fi)}
+            </div>
+            <div class="course-credit">${fc.credit} น.</div>
+          </div>`;
+        });
+        html+=`<div class="add-course-row">
+          <div class="mini-field"><label>รหัสวิชา</label><input id="fc-${sub.id}" placeholder="เช่น 01999011" style="width:120px;"/></div>
+          <div class="mini-field" style="flex:1;min-width:120px;"><label>ชื่อวิชา</label><input id="fn-${sub.id}" placeholder="ชื่อวิชา"/></div>
+          <div class="mini-field"><label>หน่วยกิต</label><input id="fk-${sub.id}" type="number" min="1" max="9" placeholder="3" style="width:70px;"/></div>
+          <div class="mini-field"><label style="visibility:hidden;">a</label><button class="add-btn" onclick="addFree('${sub.id}')">+ เพิ่ม</button></div>
+        </div>
+        <div id="ferr-${sub.id}" class="add-err" style="display:none;"></div>`;
+      }
+      html+=`</div>`;
+    });
+    html+=`</div></div></div>`;
+  });
+  pane.innerHTML=html;
+}
+
+function toggleGroup(id){
+  const body=document.getElementById('body-'+id);
+  const chev=document.getElementById('chev-'+id);
+  if(!body)return;
+  const open=body.classList.toggle('open');
+  if(chev)chev.classList.toggle('open',open);
+}
+
+async function toggleCourseGrade(code,credit){
+  const atts=getAttempts(code);
+  if(!atts.length){
+    // First time: add one attempt with default 'A'
+    grades[code]=[{grade:'A'}];
+  } else {
+    // toggle off
+    delete grades[code];
+  }
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function setGrade(code,attIdx,val){
+  if(!grades[code])return;
+  grades[code][attIdx].grade=val;
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function addRetake(code){
+  if(!grades[code])return;
+  grades[code].push({grade:'A'});
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function addFree(subId){
+  const code=document.getElementById('fc-'+subId)?.value.trim()||'';
+  const name=document.getElementById('fn-'+subId)?.value.trim()||'';
+  const credit=parseInt(document.getElementById('fk-'+subId)?.value)||0;
+  const errEl=document.getElementById('ferr-'+subId);
+  if(!name||!credit){
+    if(errEl){errEl.textContent='กรุณากรอกชื่อวิชาและหน่วยกิต';errEl.style.display='block';}return;
+  }
+  if(!freeData[subId])freeData[subId]=[];
+  freeData[subId].push({code,name,credit,grades:[{grade:'A'}]});
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function setFreeGrade(subId,freeIdx,attIdx,val){
+  if(!freeData[subId]||!freeData[subId][freeIdx])return;
+  if(!freeData[subId][freeIdx].grades)freeData[subId][freeIdx].grades=[];
+  freeData[subId][freeIdx].grades[attIdx].grade=val;
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function addFreeRetake(subId,freeIdx){
+  if(!freeData[subId]||!freeData[subId][freeIdx])return;
+  if(!freeData[subId][freeIdx].grades)freeData[subId][freeIdx].grades=[];
+  freeData[subId][freeIdx].grades.push({grade:'A'});
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+async function removeFree(subId,idx){
+  if(freeData[subId])freeData[subId].splice(idx,1);
+  await saveStudentData(currentUser.sid);
+  renderCurriculum();
+  updateSummary();
+}
+
+/* ── PROFILE ── */
+function renderProfile(){
+  const pane=document.getElementById('pane-profile');
+  if(!pane)return;
+  const u=currentUser;
+  const {gpa,credits}=calcGPA();
+  const passed=calcPassedCredits();
+  pane.innerHTML=`
+  <div class="profile-card">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:1.25rem;">
+      <div class="profile-avatar">${initials(u.fname,u.lname)}</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;color:var(--green);">${u.prefix}${u.fname} ${u.lname}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px;">สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
+      </div>
+    </div>
+    <div style="border-top:2px solid var(--border);padding-top:1rem;">
+      <table class="profile-table" style="width:100%;">
+        <tr><td>รหัสนิสิต</td><td style="font-weight:600;">${u.sid}</td></tr>
+        <tr><td>ชื่อ-นามสกุล</td><td>${u.prefix}${u.fname} ${u.lname}</td></tr>
+        <tr><td>เบอร์โทรศัพท์</td><td>${u.phone}</td></tr>
+        <tr><td>หน่วยกิตที่ผ่าน</td><td style="color:var(--green);font-weight:700;">${passed} หน่วยกิต</td></tr>
+        <tr><td>เกรดเฉลี่ยสะสม</td><td style="color:var(--sky);font-weight:700;">${gpa.toFixed(2)}</td></tr>
+        <tr><td>วันที่สมัคร</td><td>${new Date(u.createdAt).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}</td></tr>
+      </table>
+    </div>
+  </div>`;
+}
+
+function doLogout(){currentUser=null;grades={};freeData={};renderLogin();}
+
+renderLogin();
+</script>
+</body>
+</html>
