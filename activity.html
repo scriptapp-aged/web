@@ -9,27 +9,16 @@
     <style>
         body { font-family: 'Kanit', sans-serif; background-color: #fcfcfc; color: #334155; }
         
-        /* กรอบโลโก้แนวนอนขนาดยาว */
         .logo-banner {
-            width: 100%;
-            height: 80px;
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: #94a3b8;
-            font-size: 0.875rem;
-            overflow: hidden;
+            width: 100%; height: 90px;
+            background: #f8fafc; border: 1px solid #f1f5f9;
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; overflow: hidden; margin-bottom: 1.5rem;
         }
 
         .project-card {
-            background: white;
-            border: 1px solid #f1f5f9;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+            background: white; border: 1px solid #f1f5f9;
+            border-radius: 24px; transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
 
@@ -39,126 +28,148 @@
             border-color: #10b981;
         }
 
-        /* Modal Styles */
+        /* Modal Overlay */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 50;
+            display: none; position: fixed; z-index: 50;
             left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+            background-color: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
         }
+        
         .modal-content {
-            background-color: white;
-            margin: 10% auto;
-            padding: 2.5rem;
-            border-radius: 24px;
-            max-width: 600px;
-            position: relative;
-            animation: slideUp 0.3s ease-out;
+            background-color: white; margin: 5% auto;
+            padding: 2.5rem; border-radius: 32px;
+            max-width: 750px; width: 90%;
+            position: relative; animation: fadeIn 0.3s ease-out;
         }
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .sdg-box {
+            width: 45px; height: 45px;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 8px; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 10px; color: #94a3b8;
+        }
+
+        .info-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+            background: #f8fafc; padding: 1.5rem; border-radius: 16px;
         }
     </style>
 </head>
 <body class="py-16 px-6">
 
     <header class="max-w-5xl mx-auto text-center mb-16">
-        <h1 class="text-3xl md:text-4xl font-semibold text-slate-800 mb-4">ประชาสัมพันธ์โครงการชุมนุมฟาร์มนิสิต</h1>
-        <p class="text-slate-500 font-light italic text-lg">ปีการศึกษา 2569 | Student Farm Projects</p>
+        <h1 class="text-3xl font-semibold text-slate-800">รายละเอียดโครงการชุมนุมฟาร์มนิสิต</h1>
+        <p class="text-emerald-600 font-medium mt-2">ปีการศึกษา 2569</p>
     </header>
 
     <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
         <div class="project-card p-8 flex flex-col">
             <div class="logo-banner">
-                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+เกษตรน้องใหม่หัวใจ+EDS" alt="Logo EDS" class="w-full h-full object-contain">
+                <img src="https://via.placeholder.com/400x100/f8fafc/10b981?text=LOGO+EDS+PROJECT" class="h-full w-full object-contain">
             </div>
-            <h2 class="text-xl font-semibold text-slate-800 mb-4">เกษตรน้องใหม่หัวใจ EDS</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
-                ปูพื้นฐานการเกษตรสมัยใหม่ด้วยแนวคิด EDS พัฒนาทักษะผู้นำ...
-            </p>
-            <button onclick="openModal('modal1')" class="mt-auto w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-emerald-600 transition-colors">
-                แสดงรายละเอียด
-            </button>
+            <h2 class="text-xl font-bold text-slate-800 mb-6">เกษตรน้องใหม่หัวใจ EDS</h2>
+            <button onclick="openModal('modal1')" class="mt-auto w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-emerald-600 transition-colors">แสดงรายละเอียด</button>
         </div>
 
-        <div class="project-card p-8 flex flex-col border-t-4 border-t-emerald-500">
+        <div class="project-card p-8 flex flex-col border-t-4 border-emerald-500">
             <div class="logo-banner">
-                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+ZERO+WASTE+HUB" alt="Logo Zero Waste" class="w-full h-full object-contain">
+                <img src="https://via.placeholder.com/400x100/f8fafc/10b981?text=LOGO+ZERO+WASTE+HUB" class="h-full w-full object-contain">
             </div>
-            <h2 class="text-xl font-semibold text-slate-800 mb-4 leading-snug">จัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
-                Zero Waste & Organic Fertilizer Innovation Hub เพื่อฟาร์มที่ยั่งยืน...
-            </p>
-            <button onclick="openModal('modal2')" class="mt-auto w-full bg-emerald-600 text-white py-3 rounded-xl font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-100">
-                แสดงรายละเอียด
-            </button>
+            <h2 class="text-xl font-bold text-slate-800 mb-6">จัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง</h2>
+            <button onclick="openModal('modal2')" class="mt-auto w-full bg-emerald-600 text-white py-3 rounded-xl hover:bg-emerald-700 transition-colors">แสดงรายละเอียด</button>
         </div>
 
         <div class="project-card p-8 flex flex-col">
             <div class="logo-banner">
-                <img src="https://via.placeholder.com/300x80/f8fafc/10b981?text=LOGO+ECONOMY+SCHOOL" alt="Logo Sufficiency" class="w-full h-full object-contain">
+                <img src="https://via.placeholder.com/400x100/f8fafc/10b981?text=LOGO+SUFFICIENCY" class="h-full w-full object-contain">
             </div>
-            <h2 class="text-xl font-semibold text-slate-800 mb-4">ถ่ายทอดความรู้เศรษฐกิจพอเพียงสู่โรงเรียน</h2>
-            <p class="text-slate-500 text-sm mb-8 leading-relaxed line-clamp-2 italic font-light">
-                ส่งต่อองค์ความรู้ตามหลักปรัชญาเศรษฐกิจพอเพียงสู่เยาวชน...
-            </p>
-            <button onclick="openModal('modal3')" class="mt-auto w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-emerald-600 transition-colors">
-                แสดงรายละเอียด
-            </button>
+            <h2 class="text-xl font-bold text-slate-800 mb-6">เกษตรพอเพียงสู่โรงเรียน</h2>
+            <button onclick="openModal('modal3')" class="mt-auto w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-emerald-600 transition-colors">แสดงรายละเอียด</button>
         </div>
 
     </main>
 
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <button onclick="closeModal('modal1')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
-            <h3 class="text-2xl font-semibold text-emerald-600 mb-4">เกษตรน้องใหม่หัวใจ EDS</h3>
-            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
-                <p><strong>รายละเอียด:</strong> โครงการมุ่งเน้นให้นิสิตใหม่มีความเข้าใจพื้นฐานด้านการเกษตรแบบยั่งยืน โดยใช้หลักการ EDS (Education for Sustainable Development)</p>
-                <p><strong>วัตถุประสงค์:</strong> เพื่อสร้างเครือข่ายนิสิตเกษตรที่มีใจรักในงานบริการและพัฒนาชุมชน</p>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>Workshop การปลูกพืชพื้นฐาน</li>
-                    <li>การใช้เทคโนโลยีจัดการฟาร์มเบื้องต้น</li>
-                    <li>กิจกรรมสัมพันธ์สร้างผู้นำรุ่นใหม่</li>
-                </ul>
-            </div>
-            <button onclick="closeModal('modal1')" class="mt-8 w-full border border-slate-200 py-3 rounded-xl hover:bg-slate-50 transition-colors">ปิดหน้าต่าง</button>
-        </div>
-    </div>
-
     <div id="modal2" class="modal">
-        <div class="modal-content border-t-8 border-emerald-500">
-            <button onclick="closeModal('modal2')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
-            <h3 class="text-2xl font-semibold text-emerald-600 mb-4 leading-tight">Zero Waste & Organic Fertilizer Hub</h3>
-            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
-                <p><strong>รายละเอียด:</strong> การจัดการขยะอินทรีย์ภายในมหาวิทยาลัยและแปลงฟาร์ม เพื่อแปรรูปเป็นปุ๋ยหมักคุณภาพสูง</p>
-                <p><strong>จุดเด่น:</strong> เรียนรู้กระบวนการผลิตปุ๋ยมาตรฐานสากลด้วยระบบนวัตกรรมย่อยสลายที่รวดเร็ว</p>
-                <p>นิสิตจะได้สัมผัสการบริหารจัดการขยะแบบครบวงจร ตั้งแต่ต้นน้ำถึงปลายน้ำ</p>
-            </div>
-            <button onclick="closeModal('modal2')" class="mt-8 w-full bg-emerald-600 text-white py-3 rounded-xl font-medium">ปิดหน้าต่าง</button>
-        </div>
-    </div>
-
-    <div id="modal3" class="modal">
         <div class="modal-content">
-            <button onclick="closeModal('modal3')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">✕</button>
-            <h3 class="text-2xl font-semibold text-emerald-600 mb-4">เศรษฐกิจพอเพียงสู่โรงเรียน</h3>
-            <div class="space-y-4 text-slate-600 font-light leading-relaxed">
-                <p><strong>รายละเอียด:</strong> กิจกรรมออกค่ายเพื่อถ่ายทอดองค์ความรู้การเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียงให้กับนักเรียนในพื้นที่ใกล้เคียง</p>
-                <p><strong>กิจกรรมหลัก:</strong> พานิสิตลงพื้นที่จัดทำแปลงผักโรงเรียน และสอนน้องๆ ทำระบบน้ำเบื้องต้น</p>
+            <button onclick="closeModal('modal2')" class="absolute top-8 right-8 text-slate-400 hover:text-slate-600 text-xl">✕</button>
+            
+            <h3 class="text-2xl font-bold text-emerald-600 mb-2">ข้อมูลรายละเอียดโครงการ</h3>
+            <p class="text-slate-400 text-sm mb-8 border-b pb-4 italic">จัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูงเพื่อฟาร์มยั่งยืน</p>
+
+            <div class="space-y-6">
+                <section>
+                    <p class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-1">ชื่อองค์กรนิสิต</p>
+                    <p class="text-slate-800 font-medium">ชุมนุมฟาร์มนิสิต คณะเกษตร</p>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-y py-6 border-slate-100">
+                    <section>
+                        <p class="text-sm font-semibold text-slate-400 uppercase mb-1">กำหนดการจัดโครงการ</p>
+                        <p class="text-slate-800">1 สิงหาคม - 30 พฤศจิกายน 2569</p>
+                    </section>
+                    <section>
+                        <p class="text-sm font-semibold text-slate-400 uppercase mb-1">งบประมาณดำเนินการ</p>
+                        <p class="text-slate-800 font-bold">45,000 บาท</p>
+                    </section>
+                </div>
+
+                <section>
+                    <p class="text-sm font-semibold text-slate-400 uppercase mb-2">วัตถุประสงค์ของโครงการ</p>
+                    <ul class="text-slate-600 text-sm space-y-1 list-disc pl-5">
+                        <li>เพื่อบริหารจัดการขยะอินทรีย์ภายในฟาร์มให้เกิดประโยชน์สูงสุด</li>
+                        <li>เพื่อผลิตปุ๋ยอินทรีย์คุณภาพสูงสำหรับใช้ในแปลงสาธิต</li>
+                        <li>เพื่อสร้างแหล่งเรียนรู้ด้านนวัตกรรม Zero Waste</li>
+                    </ul>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <section>
+                        <p class="text-sm font-semibold text-slate-400 uppercase mb-3 text-emerald-700">บรรลุเป้าหมายอัตลักษณ์ (IDKU)</p>
+                        <div class="flex gap-3">
+                            <span class="text-emerald-500 font-bold">✅</span>
+                            <span class="text-emerald-500 font-bold">✅</span>
+                            <span class="text-emerald-500 font-bold">✅</span>
+                            <span class="text-emerald-500 font-bold">✅</span>
+                        </div>
+                    </section>
+                    <section>
+                        <p class="text-sm font-semibold text-slate-400 uppercase mb-3 text-blue-700">เป้าหมายการพัฒนา (SDGs)</p>
+                        <div class="grid grid-cols-5 gap-2">
+                            <div class="sdg-box">SDG</div> <div class="sdg-box">SDG</div>
+                            <div class="sdg-box">SDG</div> <div class="sdg-box">SDG</div>
+                            <div class="sdg-box">SDG</div> <div class="sdg-box">SDG</div>
+                            <div class="sdg-box">SDG</div> <div class="sdg-box">SDG</div>
+                            <div class="sdg-box">SDG</div> <div class="sdg-box">SDG</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="info-grid mt-6">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase">กลุ่มเป้าหมาย</p>
+                        <p class="text-slate-700">นิสิตทุกคณะ / ชุมชน</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase">จำนวนผู้เข้าร่วม</p>
+                        <p class="text-slate-700 font-bold">100 คน</p>
+                    </div>
+                </div>
             </div>
-            <button onclick="closeModal('modal3')" class="mt-8 w-full border border-slate-200 py-3 rounded-xl">ปิดหน้าต่าง</button>
+
+            <button onclick="closeModal('modal2')" class="mt-10 w-full bg-slate-100 text-slate-600 py-3 rounded-2xl hover:bg-slate-200 transition-all font-medium">ปิดหน้าต่างรายละเอียด</button>
         </div>
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).style.display = "block"; }
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        window.onclick = function(event) { if (event.target.className === 'modal') { event.target.style.display = "none"; } }
+        function openModal(id) { document.getElementById(id).style.display = "block"; document.body.style.overflow = "hidden"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
+        window.onclick = function(event) { if (event.target.className === 'modal') { closeModal(event.target.id); } }
     </script>
 
 </body>
