@@ -3,49 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KU KPS - ชุมนุมฟาร์มนิสิต</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>KU KPS - ชุมนุมฟาร์มนิสิต (Animated)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --ku-green: #006633;
             --ku-gold: #b29d6c;
+            --ku-gold-light: #f9d976;
             --glass-white: rgba(255, 255, 255, 0.9);
-            --text-main: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
-        body { background-color: #f8fafc; color: var(--text-main); overflow-x: hidden; }
+        body { background-color: #f8fafc; overflow-x: hidden; }
 
-        /* --- Floating Navigation --- */
-        .top-nav {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1200px;
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px);
-            border-radius: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .brand-logo { color: var(--ku-green); font-size: 1.2rem; font-weight: 600; line-height: 1.1; }
-        .nav-links { display: flex; gap: 25px; list-style: none; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.95rem; font-weight: 400; transition: 0.3s; opacity: 0.7; }
-        .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--ku-green); }
-
-        /* --- Cinematic Hero Section --- */
+        /* --- Cinematic Hero Section with Animations --- */
         .hero-section {
-            height: 65vh;
+            height: 70vh;
             background: linear-gradient(135deg, #004d26 0%, #006633 100%);
             display: flex;
             flex-direction: column;
@@ -55,116 +30,175 @@
             text-align: center;
             color: #fff;
             overflow: hidden;
-            border-bottom-left-radius: 100px; /* เพิ่มความโค้งมนให้ดูแพง */
-            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.1);
+            border-bottom-left-radius: 120px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
         }
 
-        /* เอฟเฟกต์รัศมีทองจางๆ */
+        /* 1. Background Particle Animation (แสงลอยละล่อง) */
         .hero-section::before {
-            content: ''; position: absolute; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(178, 157, 108, 0.15) 0%, transparent 70%);
-            top: -200px; right: -100px;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        /* 2. Floating Title Animation (หายใจเบาๆ) */
+        .club-title-container {
+            position: relative;
+            z-index: 10;
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
         }
 
         .club-title {
-            font-size: 5rem;
-            font-weight: 600;
+            font-size: 5.5rem;
+            font-weight: 800;
             letter-spacing: -2px;
-            background: linear-gradient(to bottom, #fff 40%, #b29d6c 100%);
+            /* Shimmer Effect (แสงวิ่งผ่านตัวอักษร) */
+            background: linear-gradient(
+                to right, 
+                var(--ku-gold) 20%, 
+                var(--ku-gold-light) 40%, 
+                #fff 50%, 
+                var(--ku-gold-light) 60%, 
+                var(--ku-gold) 80%
+            );
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
-            z-index: 2;
+            animation: shine 5s linear infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         .faculty-tag {
             background: rgba(255, 255, 255, 0.1);
-            padding: 5px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            backdrop-filter: blur(5px);
+            padding: 8px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInDown 1.5s ease-out;
         }
 
-        /* --- Service Body --- */
-        .content-body { max-width: 1200px; margin: -80px auto 0; padding: 0 40px 80px; position: relative; z-index: 10; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Content Area --- */
+        .content-body { max-width: 1200px; margin: -100px auto 0; padding: 0 40px 80px; position: relative; z-index: 100; }
 
         .service-container {
             background: #fff;
-            border-radius: 40px;
-            padding: 60px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
-            border: 1px solid #f1f5f9;
+            border-radius: 50px;
+            padding: 70px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; }
-        .status-pill {
-            display: flex; align-items: center; gap: 8px; background: #f0fdf4;
-            color: #166534; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 500;
-        }
-        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
-        
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
-
-        /* --- Die-cut Grid --- */
+        /* --- Grid & Cards --- */
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
-        .card { text-align: center; text-decoration: none; color: inherit; transition: 0.4s ease; }
-        .card:hover { transform: translateY(-15px); }
+        
+        .card { 
+            text-align: center; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        
+        .card:hover { transform: translateY(-20px); }
 
-        .img-wrap { height: 320px; display: flex; justify-content: center; align-items: flex-end; margin-bottom: 25px; position: relative; }
-        .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); }
-
-        .card h3 { font-size: 1.4rem; font-weight: 600; color: #0f172a; margin-bottom: 12px; border-bottom: 2px solid transparent; display: inline-block; transition: 0.3s; }
-        .card:hover h3 { border-bottom: 2px solid var(--ku-green); color: var(--ku-green); }
-
-        /* --- Info Bar (Modern Minimal) --- */
-        .info-strip {
-            background: #fffbeb;
-            color: #92400e;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 60px;
-            border: 1px solid #fef3c7;
-            text-align: center;
+        .img-wrap { 
+            height: 350px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-end; 
+            margin-bottom: 30px; 
+            position: relative; 
+        }
+        
+        .img-wrap img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            filter: drop-shadow(0 25px 40px rgba(0,0,0,0.15));
+            transition: 0.5s;
         }
 
-        .footer-note { margin-top: 60px; padding-top: 30px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 15px; color: #94a3b8; font-size: 0.9rem; }
+        .card:hover img { transform: scale(1.05); filter: drop-shadow(0 35px 50px rgba(0, 102, 51, 0.25)); }
+
+        .card h3 { 
+            font-size: 1.5rem; 
+            font-weight: 600; 
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; width: 0; height: 3px;
+            background: var(--ku-green);
+            transform: translateX(-50%);
+            transition: 0.4s;
+        }
+        .card:hover h3::after { width: 60%; }
+
+        /* --- Navigation & Info --- */
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 8px; background: #f0fdf4;
+            color: #166534; padding: 10px 25px; border-radius: 50px; font-size: 0.9rem;
+        }
+        .dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; }
 
         @media (max-width: 1024px) {
-            .grid { grid-template-columns: 1fr; gap: 80px; }
+            .grid { grid-template-columns: 1fr; gap: 100px; }
             .club-title { font-size: 3.5rem; }
-            .hero-section { border-bottom-left-radius: 50px; }
+            .hero-section { height: 60vh; border-bottom-left-radius: 60px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="brand-logo">AG-ED KU.KPS.</div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">หน้าหลัก</a></li>
-            <li><a href="#">จองห้องประชุม</a></li>
-            <li><a href="#">แจ้งปัญหา</a></li>
-            <li><a href="#"><i class="fas fa-search"></i></a></li>
-        </ul>
-    </nav>
-
     <header class="hero-section">
         <div class="faculty-tag">Faculty of Education and Development Sciences</div>
-        <h1 class="club-title">ชุมนุมฟาร์มนิสิต</h1>
-        <p style="opacity: 0.6; font-weight: 200; letter-spacing: 2px;">Kasetsart University Kamphaeng Saen Campus</p>
+        
+        <div class="club-title-container">
+            <h1 class="club-title">ชุมนุมฟาร์มนิสิต</h1>
+        </div>
+        
+        <p style="opacity: 0.7; font-weight: 200; letter-spacing: 3px; margin-top: 15px; animation: fadeIn 2s;">
+            KASETSART UNIVERSITY KAMPHAENG SAEN
+        </p>
     </header>
 
     <main class="content-body">
         <section class="service-container">
-            <div class="section-header">
-                <h2 style="font-size: 1.8rem; font-weight: 600;">บริการ | Service</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px;">
+                <h2 style="font-size: 2rem; font-weight: 800;">บริการ | Service</h2>
                 <div class="status-pill">
-                    <span class="dot"></span> ระบบออนไลน์
+                    <span class="dot"></span> ระบบออนไลน์ (V.2026)
                 </div>
             </div>
 
@@ -174,7 +208,6 @@
                         <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="">
                     </div>
                     <h3>จองห้องประชุม</h3>
-                    <div style="margin-top:10px; font-size: 0.8rem; color: #94a3b8;"><i class="fas fa-flask"></i> Beta Version</div>
                 </a>
 
                 <a href="#" class="card">
@@ -192,13 +225,8 @@
                 </a>
             </div>
 
-            <div class="info-strip">
-                <i class="fas fa-info-circle"></i> เพื่อประสิทธิภาพสูงสุด แนะนำให้ใช้งานผ่าน iPad หรือ คอมพิวเตอร์
-            </div>
-
-            <div class="footer-note">
-                <i class="far fa-comment-dots"></i>
-                <p>ผู้พัฒนาระบบยินดีรับฟังข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการให้ดียิ่งขึ้น</p>
+            <div style="margin-top: 80px; padding: 25px; background: #fffbeb; border-radius: 25px; border: 1px solid #fef3c7; text-align: center; color: #92400e;">
+                <i class="fas fa-magic"></i> เพื่อผลลัพธ์ที่ดีที่สุด แนะนำให้เปิดใช้งานผ่านอุปกรณ์หน้าจอใหญ่
             </div>
         </section>
     </main>
