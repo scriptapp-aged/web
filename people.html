@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>คณะกรรมการฟาร์ม 2569 | KU KPS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --ku-green: #006633;
             --ku-gold: #b29d6c;
-            --soft-bg: #f8fafc;
-            --card-white: #ffffff;
+            --text-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.7);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -20,139 +20,167 @@
             background-color: #ffffff;
             background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
             background-size: 30px 30px;
-            padding: 80px 20px;
-            color: #334155;
+            padding: 40px 20px 100px;
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; position: relative; }
 
-        /* --- Header Section --- */
-        .header { margin-bottom: 70px; }
-        .header p { font-size: 0.9rem; color: #94a3b8; letter-spacing: 4px; text-transform: uppercase; }
-        .header h1 { font-size: 3rem; font-weight: 700; color: var(--ku-green); margin-top: 5px; }
-
-        /* --- Grid Layout --- */
-        .committee-row {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        /* --- ✨ New Card Design (Glass-Border) --- */
-        .member-card {
-            background: var(--card-white);
-            flex: 1;
-            min-width: 250px;
-            max-width: 270px;
-            border-radius: 24px; /* ลบมุมแบบพอดีๆ ไม่แหลมและไม่มนเกินไป */
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            transition: all 0.4s ease;
+        /* --- ✨ ดีไซน์ชื่อเว็บใหม่ (Cinematic Header) --- */
+        .header-container {
+            text-align: center;
+            padding: 80px 20px 60px;
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
+
+        .header-aura {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 600px; height: 250px;
+            background: radial-gradient(circle, rgba(0, 102, 51, 0.08) 0%, transparent 70%);
+            filter: blur(60px); z-index: -1;
+            animation: auraPulse 6s infinite ease-in-out;
+        }
+
+        @keyframes auraPulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .faculty-label {
+            font-size: 0.85rem; font-weight: 300; color: #94a3b8;
+            letter-spacing: 5px; text-transform: uppercase; margin-bottom: 15px; display: block;
+        }
+
+        .main-web-title {
+            font-size: clamp(2.5rem, 7vw, 4.2rem);
+            font-weight: 800; letter-spacing: -2px;
+            background: linear-gradient(135deg, #004d26 0%, #006633 50%, #008f4c 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            position: relative; display: inline-block;
+        }
+
+        /* แสงวิ่งผ่านตัวหนังสือ */
+        .main-web-title::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg); animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer { 0% { left: -100%; } 30%, 100% { left: 200%; } }
+
+        .title-underline {
+            width: 100px; height: 4px; background: var(--ku-gold);
+            margin: 20px auto 0; border-radius: 10px;
+        }
+
+        /* --- 🖼️ ดีไซน์การ์ดใหม่ (Modern Soft-Edge) --- */
+        .committee-row {
+            display: flex; justify-content: center; gap: 25px;
+            margin-bottom: 40px; flex-wrap: wrap;
+        }
+
+        .member-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            flex: 1; min-width: 250px; max-width: 270px;
+            border-radius: 24px; /* มนแบบทันสมัย */
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+            opacity: 0; animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(30px); } }
 
         .member-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px);
             border-color: var(--ku-green);
-            box-shadow: 0 20px 25px -5px rgba(0, 102, 51, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 102, 51, 0.1);
         }
 
-        /* กรอบรูปด้านใน (ลบมุมให้รับกับตัวการ์ด) */
+        /* เฟรมรูป: เห็นหัวชัดเจน เป็นสีปกติ */
         .image-frame {
-            width: 100%;
-            height: 280px;
-            background: #f1f5f9;
-            border-radius: 18px; /* มนน้อยกว่าตัวการ์ดเพื่อให้ดูเข้าชุดกัน */
-            overflow: hidden;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
+            width: 100%; height: 280px;
+            background: #f8fafc; border-radius: 18px;
+            overflow: hidden; margin-bottom: 15px;
+            display: flex; justify-content: center; align-items: flex-end;
         }
 
         .image-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* เห็นครบทั้งตัวและหัว */
-            transition: transform 0.5s ease;
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; /* เห็นครบทั้งใบ หัวไม่ขาด */
+            transition: 0.5s ease;
         }
 
-        .member-card:hover .image-frame img {
-            transform: scale(1.08);
-        }
+        .member-card:hover .image-frame img { transform: scale(1.08); }
 
-        /* --- ข้อมูลสมาชิก --- */
-        .info h3 { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+        .info h3 { font-size: 1.15rem; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
         .info .role { font-size: 0.85rem; color: var(--ku-gold); font-weight: 500; }
 
-        /* การ์ดเน้นพิเศษ (อาจารย์/ประธาน) */
-        .special-card { border: 2.5px solid var(--ku-gold); background: #fffdf9; }
-        .special-card .role { color: var(--ku-green); font-weight: 600; }
+        /* การ์ดประธาน/ที่ปรึกษา */
+        .special-card { border-top: 5px solid var(--ku-gold); background: #fffdf9; }
 
-        /* Grid กรรมการโครงการ */
+        .section-tag { font-size: 1.4rem; font-weight: 700; color: #cbd5e1; margin: 60px 0 30px; letter-spacing: 5px; text-transform: uppercase; }
+
         .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            max-width: 1100px;
-            margin: 60px auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px; max-width: 1100px; margin: 0 auto;
         }
-
-        .section-tag { font-size: 1.4rem; font-weight: 700; color: #cbd5e1; margin-bottom: 30px; letter-spacing: 5px; }
 
         .back-home {
-            display: inline-flex; align-items: center; padding: 12px 30px;
+            display: inline-flex; align-items: center; padding: 14px 35px;
             background: #1e293b; color: white; text-decoration: none;
-            border-radius: 12px; font-weight: 500; transition: 0.3s;
+            border-radius: 100px; font-weight: 500; margin-top: 60px; transition: 0.4s;
         }
-        .back-home:hover { background: var(--ku-green); transform: scale(1.05); }
+        .back-home:hover { background: var(--ku-green); transform: translateX(-10px); }
 
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header class="header">
-        <p>Faculty of Education and Development Sciences</p>
-        <h1>คณะกรรมการฟาร์ม 2569</h1>
+    <header class="header-container">
+        <div class="header-aura"></div>
+        <span class="faculty-label">Faculty of Education and Development Sciences</span>
+        <h1 class="main-web-title">คณะกรรมการฟาร์ม 2569</h1>
+        <div class="title-underline"></div>
     </header>
 
     <div class="committee-row">
-        <div class="member-card">
-            <div class="image-frame"><img src="12.jpg" alt=""></div>
+        <div class="member-card" style="animation-delay: 0.1s;">
+            <div class="image-frame"><img src="12.jpg" alt="ผศ.ดร.นิรันดร์"></div>
             <div class="info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="web.jpg" alt=""></div>
+        <div class="member-card" style="animation-delay: 0.2s;">
+            <div class="image-frame"><img src="web.jpg" alt="อ.ดร.อรวรรณ"></div>
             <div class="info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
         </div>
     </div>
 
     <div class="committee-row">
-        <div class="member-card special-card" style="max-width: 290px;">
-            <div class="image-frame" style="height: 310px;"><img src="pres.jpg" alt=""></div>
+        <div class="member-card special-card" style="animation-delay: 0.3s; max-width: 290px;">
+            <div class="image-frame" style="height: 310px;"><img src="pres.jpg" alt="ประธาน"></div>
             <div class="info"><h3>นายศุภเสกย์ นิลเทพา</h3><p class="role">ประธานชุมนุม</p></div>
         </div>
     </div>
 
     <div class="committee-row">
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 0.4s;">
             <div class="image-frame"><img src="vp1.jpg" alt=""></div>
             <div class="info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div>
         </div>
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 0.5s;">
             <div class="image-frame"><img src="vp2.jpg" alt=""></div>
             <div class="info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div>
         </div>
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 0.6s;">
             <div class="image-frame"><img src="sec.jpg" alt=""></div>
             <div class="info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div>
+        <div class="member-card" style="animation-delay: 0.7s;">
+            <div class="image-frame"><img src="IMG_1699.JPEG" alt="นายเมธี"></div>
             <div class="info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div>
         </div>
     </div>
@@ -160,34 +188,22 @@
     <div class="section-tag">Committee</div>
     
     <div class="project-grid">
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 0.8s;">
             <div class="image-frame"><img src="staff1.jpg" alt=""></div>
             <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div>
         </div>
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 0.9s;">
             <div class="image-frame"><img src="staff2.jpg" alt=""></div>
             <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div>
         </div>
-        <div class="member-card">
+        <div class="member-card" style="animation-delay: 1s;">
             <div class="image-frame"><img src="staff3.jpg" alt=""></div>
             <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff4.jpg" alt=""></div>
-            <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff5.jpg" alt=""></div>
-            <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff6.jpg" alt=""></div>
-            <div class="info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
-        </div>
-    </div>
 
-    <div style="margin-top: 50px;">
-        <a href="index.html" class="back-home"><i class="fas fa-arrow-left" style="margin-right: 10px;"></i> BACK TO HOME</a>
+    <div style="text-align: center;">
+        <a href="index.html" class="back-home"><i class="fas fa-home" style="margin-right: 12px;"></i> BACK TO HOME</a>
     </div>
 </div>
 
