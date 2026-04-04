@@ -6,129 +6,169 @@
     <title>โครงการชุมนุมฟาร์มนิสิต 2569</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { font-family: 'Kanit', sans-serif; background-color: #fcfcfc; color: #1e293b; overflow-x: hidden; }
         
-        /* สไตล์การ์ดหน้าหลักตามรูปที่ส่งมา */
+        /* แอนิเมชั่นหัวเว็บ */
+        .header-glow {
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            animation: fadeInDown 1s both;
+        }
+
+        /* สไตล์การ์ดหน้าหลัก (ตามรูป Screenshot) */
         .main-card {
             background: white; border-radius: 40px;
-            border: 1px solid #e2e8f0; padding: 40px;
-            text-align: center; transition: all 0.3s ease;
+            border: 1px solid #f1f5f9; padding: 45px;
+            text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
-        .main-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+        .main-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            border-color: #10b981;
+        }
 
         /* ลูกเล่นโลโก้ */
-        .logo-wrapper {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
+        .logo-box {
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.05));
         }
-        .main-card:hover .logo-wrapper {
-            transform: scale(1.1) rotate(2deg);
-            filter: drop-shadow(0 10px 15px rgba(16, 185, 129, 0.2));
+        .main-card:hover .logo-box {
+            transform: scale(1.15) rotate(-2deg);
+            filter: drop-shadow(0 15px 20px rgba(16, 185, 129, 0.2));
         }
 
-        .btn-detail {
+        /* ปุ่มแสดงรายละเอียด */
+        .btn-dark {
             background-color: #121926; color: white;
-            padding: 16px 32px; border-radius: 16px;
-            width: 100%; font-weight: 500; transition: 0.3s;
+            padding: 18px 30px; border-radius: 20px;
+            width: 100%; font-weight: 500; font-size: 1.1rem;
+            transition: all 0.3s;
         }
-        .btn-detail:hover { background-color: #1e293b; letter-spacing: 1px; }
+        .btn-dark:hover { background-color: #10b981; transform: scale(1.02); }
 
-        /* Modal แนวนอนขยายออก */
+        /* Modal แนวนอน */
         .modal {
             display: none; position: fixed; z-index: 100;
             left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(15, 25, 42, 0.8); backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
         }
         .modal-content {
-            background: white; margin: 5vh auto; border-radius: 40px;
-            max-width: 1100px; width: 95%; display: flex; flex-direction: row;
-            overflow: hidden; animation: zoomIn 0.3s ease;
+            background: white; margin: 4vh auto; border-radius: 45px;
+            max-width: 1150px; width: 95%; display: flex; flex-direction: row;
+            overflow: hidden; animation: zoomIn 0.4s both;
         }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        .sdg-placeholder {
-            width: 50px; height: 50px; border: 1.5px dashed #cbd5e1;
-            border-radius: 10px; display: flex; align-items: center;
+        .sdg-box {
+            width: 100%; aspect-ratio: 1; border: 1.5px dashed #cbd5e1;
+            border-radius: 12px; display: flex; align-items: center;
             justify-content: center; font-size: 10px; color: #94a3b8;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate3d(0, -100%, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
     </style>
 </head>
-<body class="py-20 px-6">
+<body class="py-10 px-6">
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <header class="max-w-6xl mx-auto text-center mb-20 header-glow">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 tracking-tight">
+            โครงการชุมนุมฟาร์มนิสิต <span class="text-emerald-500">ปีการศึกษา 2569</span>
+        </h1>
+        <div class="h-1.5 w-32 bg-emerald-500 mx-auto mt-6 rounded-full animate__animated animate__stretchOut"></div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         
-        <div class="main-card">
-            <div class="logo-wrapper mb-8">
-                <img src="https://via.placeholder.com/300x120/ffffff/10b981?text=LOGOPROJECT" class="mx-auto h-24 object-contain">
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="logo-box mb-10 h-32 flex items-center justify-center">
+                <img src="https://via.placeholder.com/400x150/ffffff/10b981?text=LOGO+EDS" class="max-h-full object-contain">
             </div>
-            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
-            <button onclick="openModal('modal1')" class="btn-detail">แสดงรายละเอียด</button>
+            <h2 class="text-xl font-bold mb-12 text-slate-700">โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
+            <button onclick="openModal('modal1')" class="btn-detail btn-dark">แสดงรายละเอียด</button>
         </div>
 
-        <div class="main-card">
-            <div class="logo-wrapper mb-8">
-                <img src="https://via.placeholder.com/300x120/ffffff/10b981?text=LOGOPROJECT" class="mx-auto h-24 object-contain">
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+            <div class="logo-box mb-10 h-32 flex items-center justify-center">
+                <img src="https://via.placeholder.com/400x150/ffffff/10b981?text=LOGO+ZERO+WASTE" class="max-h-full object-contain">
             </div>
-            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการนวัตกรรมขยะสู่ปุ๋ย</h2>
-            <button onclick="openModal('modal2')" class="btn-detail">แสดงรายละเอียด</button>
+            <h2 class="text-xl font-bold mb-12 text-slate-700 italic">โครงการจัดการนวัตกรรมขยะอินทรีย์ฯ</h2>
+            <button onclick="openModal('modal2')" class="btn-detail btn-dark">แสดงรายละเอียด</button>
         </div>
 
-        <div class="main-card">
-            <div class="logo-wrapper mb-8">
-                <img src="https://via.placeholder.com/300x120/ffffff/10b981?text=LOGOPROJECT" class="mx-auto h-24 object-contain">
+        <div class="main-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+            <div class="logo-box mb-10 h-32 flex items-center justify-center">
+                <img src="https://via.placeholder.com/400x150/ffffff/10b981?text=LOGO+SUFFICIENCY" class="max-h-full object-contain">
             </div>
-            <h2 class="text-xl font-bold mb-10 text-slate-700">โครงการพอเพียงสู่โรงเรียน</h2>
-            <button onclick="openModal('modal3')" class="btn-detail">แสดงรายละเอียด</button>
+            <h2 class="text-xl font-bold mb-12 text-slate-700">โครงการเกษตรพอเพียงสู่โรงเรียน</h2>
+            <button onclick="openModal('modal3')" class="btn-detail btn-dark">แสดงรายละเอียด</button>
         </div>
 
-    </div>
+    </main>
 
     <div id="modal1" class="modal">
         <div class="modal-content flex flex-col md:flex-row">
-            <div class="p-10 md:w-1/2 border-r border-slate-100">
-                <h3 class="text-2xl font-bold text-emerald-600 mb-6 pb-4 border-b">รายละเอียดโครงการ</h3>
-                <div class="space-y-4 text-sm">
-                    <p><strong>ชื่อองค์กรนิสิต:</strong> ชุมนุมฟาร์มนิสิต คณะเกษตร</p>
-                    <p><strong>กำหนดการ:</strong> สิงหาคม - กันยายน 2569</p>
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <p class="font-bold mb-2 text-emerald-700">วัตถุประสงค์ของโครงการ:</p>
-                        <ol class="list-decimal pl-5 space-y-1 text-slate-600">
-                            <li>พัฒนาทักษะผู้นำด้านการเกษตร</li>
-                            <li>สร้างเครือข่ายความร่วมมือระหว่างนิสิต</li>
-                            <li>ส่งเสริมการเรียนรู้เชิงประสบการณ์จริง</li>
-                            <li>พัฒนาทักษะการแก้ปัญหาอย่างยั่งยืน</li>
-                        </ol>
+            <div class="p-12 md:w-1/2 border-r border-slate-100 overflow-y-auto max-h-[90vh]">
+                <h3 class="text-2xl font-bold text-emerald-600 mb-6 pb-4 border-b">ข้อมูลโครงการ</h3>
+                <div class="space-y-5 text-sm">
+                    <div><p class="text-slate-400 font-bold uppercase text-[11px] mb-1">ชื่อองค์กรนิสิต</p><p class="text-slate-800 font-medium">ชุมนุมฟาร์มนิสิต คณะเกษตร</p></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><p class="text-slate-400 font-bold uppercase text-[11px] mb-1">กำหนดการจัดโครงการ</p><p class="text-slate-800">สิงหาคม - กันยายน 2569</p></div>
+                        <div><p class="text-slate-400 font-bold uppercase text-[11px] mb-1">งบประมาณดำเนินการ</p><p class="text-emerald-600 font-bold">35,000 บาท</p></div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mt-4">
-                        <p><strong>กลุ่มเป้าหมาย:</strong> นิสิตใหม่</p>
-                        <p><strong>จำนวน:</strong> 150 คน</p>
-                        <p class="col-span-2"><strong>งบประมาณดำเนินการ:</strong> 35,000 บาท</p>
+                    <div>
+                        <p class="text-slate-400 font-bold uppercase text-[11px] mb-2">วัตถุประสงค์ของโครงการ</p>
+                        <ul class="list-decimal pl-5 space-y-1.5 text-slate-600 leading-relaxed">
+                            <li>เพื่อปูพื้นฐานงานเกษตรสมัยใหม่ด้วยแนวคิด EDS สำหรับนิสิตใหม่</li>
+                            <li>เพื่อพัฒนาทักษะการเป็นผู้นำและการจัดการฟาร์มเบื้องต้น</li>
+                            <li>เพื่อสร้างเครือข่ายความร่วมมือและการทำงานร่วมกันเป็นทีม</li>
+                            <li>เพื่อปลูกฝังจิตสำนึกรับผิดชอบต่อสังคมและสิ่งแวดล้อม</li>
+                        </ul>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div><p class="text-slate-400 font-bold uppercase text-[11px] mb-1">กลุ่มเป้าหมาย</p><p class="text-slate-800">นิสิตใหม่ทุกคณะ</p></div>
+                        <div><p class="text-slate-400 font-bold uppercase text-[11px] mb-1">จำนวนผู้เข้าร่วม</p><p class="text-slate-800">150 คน</p></div>
                     </div>
                 </div>
             </div>
 
-            <div class="p-10 md:w-1/2 bg-slate-50/30">
-                <div class="mb-8">
-                    <p class="font-bold text-slate-800 mb-4">บรรลุเป้าหมายตามอัตลักษณ์ (IDKU)</p>
-                    <div class="space-y-2 text-sm">
-                        <p class="flex items-center text-emerald-600 font-medium">✅ I = สำนึกดี (Integrity)</p>
-                        <p class="flex items-center text-emerald-600 font-medium">✅ D = มุ่งมั่น (Determination)</p>
-                        <p class="flex items-center text-emerald-600 font-medium">✅ K = สร้างสรรค์ (Knowledge Creation)</p>
-                        <p class="flex items-center text-emerald-600 font-medium">✅ U = สามัคคี (Unity)</p>
-                    </div>
-                </div>
+            <div class="p-12 md:w-1/2 bg-slate-50/40 flex flex-col justify-between">
                 <div>
-                    <p class="font-bold text-slate-800 mb-4">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</p>
-                    <div class="grid grid-cols-5 gap-2">
-                        <div class="sdg-placeholder">SDG</div><div class="sdg-placeholder">SDG</div>
-                        <div class="sdg-placeholder">SDG</div><div class="sdg-placeholder">SDG</div>
-                        <div class="sdg-placeholder">SDG</div><div class="sdg-placeholder">SDG</div>
-                        <div class="sdg-placeholder">SDG</div><div class="sdg-placeholder">SDG</div>
-                        <div class="sdg-placeholder">SDG</div><div class="sdg-placeholder">SDG</div>
+                    <h4 class="font-bold text-slate-800 mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mr-3 text-xs">IDKU</span>
+                        บรรลุเป้าหมายตามอัตลักษณ์ (IDKU)
+                    </h4>
+                    <div class="space-y-3 mb-10">
+                        <p class="flex items-center text-emerald-600 font-medium bg-white p-3 rounded-xl border border-emerald-100 shadow-sm">
+                            <span class="mr-3">✅</span> I = สำนึกดี (Integrity)
+                        </p>
+                        <p class="flex items-center text-emerald-600 font-medium bg-white p-3 rounded-xl border border-emerald-100 shadow-sm">
+                            <span class="mr-3">✅</span> D = มุ่งมั่น (Determination)
+                        </p>
+                        <p class="flex items-center text-emerald-600 font-medium bg-white p-3 rounded-xl border border-emerald-100 shadow-sm">
+                            <span class="mr-3">✅</span> K = สร้างสรรค์ (Knowledge Creation)
+                        </p>
+                        <p class="flex items-center text-emerald-600 font-medium bg-white p-3 rounded-xl border border-emerald-100 shadow-sm">
+                            <span class="mr-3">✅</span> U = สามัคคี (Unity)
+                        </p>
+                    </div>
+
+                    <h4 class="font-bold text-slate-800 mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mr-3 text-xs">SDGs</span>
+                        เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)
+                    </h4>
+                    <div class="grid grid-cols-5 gap-3">
+                        <div class="sdg-box">IMG</div><div class="sdg-box">IMG</div>
+                        <div class="sdg-box">IMG</div><div class="sdg-box">IMG</div>
+                        <div class="sdg-box">IMG</div><div class="sdg-box">IMG</div>
+                        <div class="sdg-box">IMG</div><div class="sdg-box">IMG</div>
+                        <div class="sdg-box">IMG</div><div class="sdg-box">IMG</div>
                     </div>
                 </div>
-                <button onclick="closeModal('modal1')" class="mt-10 w-full bg-slate-200 py-3 rounded-2xl font-bold hover:bg-slate-300">ปิดหน้าต่าง</button>
+                <button onclick="closeModal('modal1')" class="mt-12 w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-red-500 transition-all">ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>
