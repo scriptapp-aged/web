@@ -4,215 +4,238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #006633;
-            --gold: #b29d6c;
-            --gold-light: #f9d976;
-            --glass: rgba(255, 255, 255, 0.9);
+            --primary-neon: #00ff88; /* เขียวสว่างแบบนีออน ไม่แก่ */
+            --ku-green: #006633;
+            --text-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
 
         body {
-            background: #f1f5f9;
+            background-color: #ffffff;
+            color: var(--text-dark);
             min-height: 100vh;
             overflow-x: hidden;
-            background: radial-gradient(circle at 50% -20%, #e8f5e9 0%, #f1f5f9 100%);
+            /* พื้นหลังขาวสะอาด มีจุดตารางจางๆ แบบเว็บ Design */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* --- ✨ ส่วนหัวข้ออลังการ (The Mega Header) --- */
-        .hero-section {
-            padding: 100px 20px 60px;
+        /* --- ✨ Modern Header (ไม่แก่ ไม่ริบบิ้น) --- */
+        .hero-header {
+            padding: 120px 20px 80px;
             text-align: center;
             position: relative;
         }
 
-        /* เอฟเฟกต์รัศมีเรืองแสงด้านหลังหัวข้อ */
+        /* แสงฟุ้งด้านหลังตัวอักษร (Backlight) */
         .header-glow {
             position: absolute;
-            top: 50%; left: 50%;
+            top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px; height: 150px;
-            background: radial-gradient(circle, rgba(0, 102, 51, 0.15) 0%, transparent 70%);
-            filter: blur(40px);
-            animation: pulseGlow 4s infinite ease-in-out;
-            z-index: 1;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+            animation: moveGlow 10s infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+        @keyframes moveGlow {
+            from { transform: translate(-60%, -40%) scale(1); }
+            to { transform: translate(-40%, -60%) scale(1.2); }
         }
 
-        /* แถบป้ายชื่อชุมนุม (The Emblem) */
-        .emblem-container {
-            display: inline-block;
-            position: relative;
-            z-index: 10;
-            padding: 20px 80px;
-            /* พื้นหลังไล่เฉดเขียวเข้มแบบพรีเมียม */
-            background: linear-gradient(135deg, #004d26 0%, #006633 50%, #004d26 100%);
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
-            border: 2px solid var(--gold);
-            transform: perspective(1000px) rotateX(5deg);
-            animation: floating 3s ease-in-out infinite;
-        }
+        .title-container { position: relative; z-index: 1; }
 
-        @keyframes floating {
-            0%, 100% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
-        }
-
-        /* ตัวอักษรสีทอง Shimmer */
-        .animated-title {
-            font-size: clamp(2rem, 5vw, 3.8rem);
-            font-weight: 800;
-            margin-bottom: 0;
-            background: linear-gradient(to bottom, #f9d976 20%, #b29d6c 50%, #f9d976 80%);
+        .main-title {
+            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            font-weight: 700;
+            letter-spacing: -3px; /* ตัวอักษรชิดกันแบบเว็บนอก */
+            line-height: 1;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            /* แอนิเมชันสีเลื่อนผ่านตัวอักษรเบาๆ */
+            background: linear-gradient(90deg, #0f172a, #006633, #0f172a);
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
-            animation: shineText 5s linear infinite;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-            letter-spacing: 2px;
+            animation: textFlow 5s linear infinite;
         }
 
-        @keyframes shineText {
+        @keyframes textFlow {
             to { background-position: 200% center; }
         }
 
-        .faculty-subtitle {
-            color: var(--gold-light);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 300;
-            margin-top: 10px;
-            opacity: 0.9;
+        .subtitle-pill {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 8px 24px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--ku-green);
+            letter-spacing: 1px;
+            border: 1px solid #e2e8f0;
         }
 
-        /* --- ส่วนบริการ (Grid) --- */
+        /* --- Service Section (Grid แบบโปร่งแสง) --- */
         .main-portal {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px 100px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 40px;
         }
 
-        .service-card {
-            background: #ffffff;
-            border-radius: 30px;
-            padding: 40px 20px;
-            text-decoration: none;
-            color: #334155;
+        .card {
             text-align: center;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
-            border: 1px solid #edf2f7;
+            text-decoration: none;
+            color: inherit;
             position: relative;
+            transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
-        .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 30px 60px rgba(0, 102, 51, 0.1);
-            border-color: var(--primary);
-        }
+        .card:hover { transform: translateY(-20px); }
 
-        .img-box {
-            height: 280px;
+        .image-wrapper {
+            width: 100%;
+            height: 350px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        .img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+        /* แสงวงกลมหลังรูป */
+        .image-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            background: rgba(0, 255, 136, 0.1);
+            filter: blur(50px);
+            border-radius: 50%;
+            bottom: 20px;
+            z-index: -1;
             transition: 0.5s;
         }
 
-        .service-card:hover .img-box img {
-            transform: scale(1.1);
-            filter: drop-shadow(0 25px 40px rgba(0, 102, 51, 0.2));
+        .card:hover .image-wrapper::before { background: rgba(0, 255, 136, 0.3); width: 250px; }
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.8); /* ตอนปกติจะดู Art ขาวดำ */
+            transition: 0.5s ease;
         }
 
-        .service-card h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            text-decoration: underline;
-            color: var(--primary);
+        .card:hover img {
+            filter: grayscale(0%) opacity(1) drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+            transform: scale(1.05);
         }
 
-        /* แถบแจ้งเตือนด้านล่าง */
-        .info-bar {
-            grid-column: span 3;
-            background: #fff9db;
-            color: #85701d;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: 30px;
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
         }
+
+        /* เส้นใต้แบบ Minimal วิ่งจากกลาง */
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 50%;
+            width: 0; height: 2px;
+            background: var(--primary-neon);
+            transition: 0.4s;
+            transform: translateX(-50%);
+        }
+
+        .card:hover h3::after { width: 100%; }
+
+        /* แถบแจ้งเตือนล่างสุด */
+        .bottom-nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+            font-size: 0.85rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .status-dot { width: 8px; height: 8px; background: var(--primary-neon); border-radius: 50%; animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.5); } }
 
         @media (max-width: 900px) {
             .main-portal { grid-template-columns: 1fr; }
-            .info-bar { grid-column: span 1; }
-            .emblem-container { padding: 15px 30px; }
+            .main-title { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-section">
-        <div class="header-glow"></div>
-        
-        <div class="emblem-container">
-            <h1 class="animated-title">ชุมนุมฟาร์มนิสิต</h1>
-            <div class="faculty-subtitle">FACULTY OF EDUCATION & DEV. SCIENCES</div>
+    <div class="header-glow"></div>
+
+    <header class="hero-header">
+        <div class="title-container">
+            <div class="subtitle-pill">PORTAL v.2026</div>
+            <h1 class="main-title">ชุมนุมฟาร์มนิสิต</h1>
+            <p style="color: #64748b; font-weight: 200; letter-spacing: 2px; font-size: 1.1rem;">
+                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
+            </p>
         </div>
-        
-        <p style="margin-top: 30px; color: #64748b; font-size: 0.9rem; font-weight: 300;">
-            KASETSART UNIVERSITY KAMPHAENG SAEN
-        </p>
     </header>
 
     <div class="main-portal">
-        <a href="#" class="service-card">
-            <div class="img-box">
+        <a href="#" class="card">
+            <div class="image-wrapper">
                 <img src="https://static.vecteezy.com/system/resources/previews/009/397/835/original/man-student-with-backpack-free-png.png" alt="Student 1">
             </div>
             <h3>จองห้องประชุม</h3>
-            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">ระบบเปิดให้ทดสอบเบต้า</p>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">Room Reservation System</p>
         </a>
 
-        <a href="#" class="service-card">
-            <div class="img-box">
+        <a href="#" class="card">
+            <div class="image-wrapper">
                 <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/young-girl-student-holding-book-free-png.png" alt="Student 2">
             </div>
             <h3>ตารางการจองห้อง</h3>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">Live Status Schedule</p>
         </a>
 
-        <a href="#" class="service-card">
-            <div class="img-box">
+        <a href="#" class="card">
+            <div class="image-wrapper">
                 <img src="https://static.vecteezy.com/system/resources/previews/009/397/892/original/man-student-carrying-a-lot-of-books-free-png.png" alt="Student 3">
             </div>
             <h3>แจ้งปัญหาการใช้งาน</h3>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">Service & Support</p>
         </a>
+    </div>
 
-        <div class="info-bar">
-            <i class="fas fa-info-circle"></i> โปรดใช้งานผ่าน iPad หรือ คอมพิวเตอร์เพื่อความสะดวกสูงสุด
-        </div>
+    <div class="bottom-nav">
+        <div class="status-dot"></div>
+        <span>ระบบพร้อมใช้งาน (System Active)</span>
+        <div style="width: 1px; height: 15px; background: #444;"></div>
+        <span style="opacity: 0.6;">Kasetsart University</span>
     </div>
 
 </body>
