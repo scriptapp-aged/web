@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบตรวจสอบการเรียนตามหลักสูตร</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -14,172 +14,167 @@
 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: #fcfcfc;
+            background-color: #ffffff; /* พื้นหลังขาวล้วน */
             color: #334155;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .container {
+        .content-wrapper {
             width: 100%;
-            max-width: 650px;
-            padding: 50px 40px;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            max-width: 800px;
             text-align: center;
-            border: 1px solid #f1f5f9;
+            padding: 20px;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: #1e293b;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #64748b;
-            margin-bottom: 30px;
+            margin-bottom: 5px;
         }
 
-        /* เส้นสถานะแบบพอดี */
-        .progress-box {
-            max-width: 400px;
-            margin: 0 auto 40px;
-        }
-        .progress-text {
-            font-size: 0.9rem;
-            color: #3b82f6;
-            margin-bottom: 8px;
+        .curriculum {
+            font-size: 1.2rem;
+            color: #1e293b;
             font-weight: 500;
-        }
-        .progress-bar {
-            height: 6px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            width: 80%;
-            height: 100%;
-            background: #3b82f6;
-            border-radius: 10px;
-            transition: width 1s ease-in-out;
+            margin-bottom: 40px;
         }
 
-        /* นับถอยหลังที่ดูเด่นแบบพอดี */
+        /* นับถอยหลังแบบเน้นๆ แต่ไม่ตะโกน */
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 25px;
+            margin-bottom: 50px;
         }
-        .time-unit {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 12px;
-            min-width: 85px;
+
+        .time-item {
+            text-align: center;
         }
+
         .time-num {
             display: block;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: #1e293b;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: #3b82f6; /* สีฟ้าให้ความรู้สึกโปร่งสบาย */
+            line-height: 1;
         }
+
         .time-label {
-            font-size: 0.8rem;
+            font-size: 1rem;
             color: #94a3b8;
+            margin-top: 8px;
         }
 
-        /* ส่วนประกาศสำหรับนิสิต */
-        .student-notice {
-            background: #eff6ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+        /* ส่วนประกาศนิสิต */
+        .notice-area {
+            margin-bottom: 40px;
         }
-        .notice-info {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: #1e40af;
+
+        .notice-text {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 20px;
         }
-        .btn-link {
+
+        .btn-portal {
             display: inline-block;
-            background: #1e293b;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 8px;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 32px;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 1rem;
-            transition: background 0.2s;
-        }
-        .btn-link:hover {
-            background: #334155;
+            font-size: 1.1rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
         }
 
-        .opening-info {
-            font-size: 0.85rem;
-            color: #94a3b8;
+        .btn-portal:hover {
+            background-color: #334155;
+            transform: translateY(-1px);
+        }
+
+        .system-date {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-top: 20px;
+        }
+
+        /* สำหรับมือถือ */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .time-num { font-size: 2.5rem; }
+            .countdown { gap: 15px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="content-wrapper">
     <h1>เราจะกลับมา</h1>
-    <p class="subtitle">ระบบตรวจสอบการเรียนตามหลักสูตร (พ.ศ. 2564)</p>
-
-    <div class="progress-box">
-        <div class="progress-text">สถานะ: อยู่ระหว่างการพัฒนา</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-    </div>
+    <p class="subtitle">ระบบตรวจสอบการเรียนตามหลักสูตร</p>
+    <p class="curriculum">- หลักสูตรปรับปรุง พ.ศ. 2564 -</p>
 
     <div class="countdown">
-        <div class="time-unit">
+        <div class="time-item">
             <span class="time-num" id="days">00</span>
             <span class="time-label">วัน</span>
         </div>
-        <div class="time-unit">
+        <div class="time-item">
             <span class="time-num" id="hours">00</span>
             <span class="time-label">ชม.</span>
         </div>
-        <div class="time-unit">
+        <div class="time-item">
             <span class="time-num" id="minutes">00</span>
             <span class="time-label">นาที</span>
         </div>
-        <div class="time-unit">
+        <div class="time-item">
             <span class="time-num" id="seconds">00</span>
             <span class="time-label">วิ</span>
         </div>
     </div>
 
-    <div class="student-notice">
-        <p class="notice-info">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
-        <a href="URL_ของระบบเก่า" class="btn-link">เข้าสู่ระบบเก่า (มคอ. 2564)</a>
+    <div class="notice-area">
+        <p class="notice-text">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
+        <a href="#" class="btn-portal">เข้าสู่ระบบ (มคอ. 2564)</a>
     </div>
 
-    <p class="opening-info">เปิดระบบวันที่ 20 เมษายน 2569 เวลา 01:00 น.</p>
+    <p class="system-date">เปิดระบบวันที่ 20 เมษายน 2569 เวลา 01:00 น. | อยู่ระหว่างการพัฒนา</p>
 </div>
 
 <script>
-    const target = new Date("April 20, 2026 01:00:00").getTime();
+    const targetDate = new Date("April 20, 2026 01:00:00").getTime();
 
-    setInterval(() => {
+    function updateCountdown() {
         const now = new Date().getTime();
-        const diff = target - now;
+        const diff = targetDate - now;
 
         if (diff > 0) {
-            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        } else {
+            document.querySelector(".countdown").innerHTML = "<h2>พร้อมเปิดให้บริการแล้ว</h2>";
         }
-    }, 1000);
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 </script>
 
 </body>
