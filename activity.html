@@ -3,124 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects | Student Farm Club 2026</title>
+    <title>Our Projects | Student Farm 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #020617; color: white; overflow-x: hidden; }
-        .font-tech { font-family: 'Orbitron', sans-serif; }
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            background-color: #000000; 
+            color: #ffffff;
+            background-image: radial-gradient(circle at 50% -20%, #064e3b 0%, #000000 80%);
+        }
         
-        /* Glassmorphism Reusable Style */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
         }
 
-        /* Project Color Accents */
-        .accent-farm { border-left: 5px solid #10b981; }
-        .accent-tech { border-left: 5px solid #3b82f6; }
-        .accent-table { border-left: 5px solid #f59e0b; }
+        .glass-card:hover {
+            border-color: #10b981;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.05);
+        }
 
-        /* Animation */
-        .reveal { opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s forwards; }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
 
-        .logo-slot {
-            width: 70px; height: 70px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
         }
     </style>
 </head>
-<body class="py-10">
+<body class="min-h-screen py-16 px-4">
 
-    <div class="container mx-auto px-6 mb-16 text-center reveal" style="animation-delay: 0.1s;">
-        <h2 class="font-tech text-emerald-400 text-sm tracking-[0.3em] mb-3">CHOOSE YOUR PATH</h2>
-        <h1 class="text-4xl md:text-5xl font-bold">เจาะลึก 3 โครงการหลัก</h1>
-        <div class="w-24 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 mx-auto mt-6"></div>
+    <div class="max-w-6xl mx-auto text-center mb-20">
+        <h2 class="text-emerald-500 font-bold tracking-[0.2em] mb-4 uppercase">Project Portfolio 2026</h2>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">3 โครงการหลัก <span class="text-emerald-500 neon-text">ชุมนุมฟาร์ม</span></h1>
+        <div class="w-20 h-1 bg-emerald-500 mx-auto rounded-full"></div>
     </div>
 
-    <div class="container mx-auto px-4 space-y-12">
-
-        <div class="glass-panel accent-farm rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 reveal" style="animation-delay: 0.2s;">
-            <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
-                <div class="logo-slot mb-6">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3014/3014388.png" alt="Farm Stay Logo" class="w-full h-full object-contain filter invert opacity-80">
-                </div>
-                <h3 class="text-3xl font-bold text-emerald-400 mb-2">FARM STAY</h3>
-                <p class="text-gray-400 uppercase tracking-widest text-xs font-tech">Back to Basic</p>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center">
+            <div class="logo-placeholder mb-8">
+                <img src="https://api.iconify.design/solar:home-smile-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
             </div>
-            <div class="w-full md:w-2/3">
-                <p class="text-gray-300 text-lg mb-6">เปลี่ยนวันว่างให้เป็นวันลุย! เรียนรู้ทักษะเกษตรกรตั้งแต่การวิเคราะห์ดิน จนถึงการเก็บเกี่ยว พร้อมใช้ชีวิตช้าๆ ในฟาร์มจำลองที่ทันสมัยที่สุด</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-emerald-400 font-bold">Nature</span>
-                        <span class="text-sm text-gray-500">ใกล้ชิดธรรมชาติ</span>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-emerald-400 font-bold">Hands-on</span>
-                        <span class="text-sm text-gray-500">ปฏิบัติจริง 100%</span>
-                    </div>
-                </div>
+            <h3 class="text-2xl font-bold mb-4">FARM STAY</h3>
+            <p class="text-gray-400 mb-8 leading-relaxed">เรียนรู้วิถีเกษตรชุมชน สัมผัสชีวิตชาวนา และการพึ่งพาตนเองอย่างยั่งยืน</p>
+            <div class="mt-auto w-full">
+                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
             </div>
         </div>
 
-        <div class="glass-panel accent-tech rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row-reverse items-center gap-10 reveal" style="animation-delay: 0.3s;">
-            <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
-                <div class="logo-slot mb-6">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Agri-Tech Logo" class="w-full h-full object-contain filter invert opacity-80">
-                </div>
-                <h3 class="text-3xl font-bold text-blue-400 mb-2">AGRI-TECH</h3>
-                <p class="text-gray-400 uppercase tracking-widest text-xs font-tech">Digital Farming</p>
+        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center border-t-2 border-emerald-500/30">
+            <div class="logo-placeholder mb-8 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                <img src="https://api.iconify.design/solar:cpu-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
             </div>
-            <div class="w-full md:w-2/3">
-                <p class="text-gray-300 text-lg mb-6">ลบภาพจำเกษตรแบบเดิมๆ พบกับการประยุกต์ใช้ Coding, Robotics และ IoT เพื่อบริหารฟาร์มให้เกิดประสิทธิภาพสูงสุดในยุค 2026</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-blue-400 font-bold">Innovation</span>
-                        <span class="text-sm text-gray-500">นวัตกรรมล้ำสมัย</span>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-blue-400 font-bold">Automation</span>
-                        <span class="text-sm text-gray-500">ระบบอัตโนมัติ</span>
-                    </div>
-                </div>
+            <h3 class="text-2xl font-bold mb-4 text-emerald-400">AGRI-TECH</h3>
+            <p class="text-gray-400 mb-8 leading-relaxed">ก้าวสู่เกษตรอัจฉริยะด้วยการใช้โดรน AI และระบบควบคุมน้ำผ่านสมาร์ทโฟน</p>
+            <div class="mt-auto w-full">
+                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
             </div>
         </div>
 
-        <div class="glass-panel accent-table rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 reveal" style="animation-delay: 0.4s;">
-            <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left">
-                <div class="logo-slot mb-6">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1261/1261163.png" alt="Farm to Table Logo" class="w-full h-full object-contain filter invert opacity-80">
-                </div>
-                <h3 class="text-3xl font-bold text-orange-400 mb-2">FARM TO TABLE</h3>
-                <p class="text-gray-400 uppercase tracking-widest text-xs font-tech">Entrepreneurship</p>
+        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center">
+            <div class="logo-placeholder mb-8">
+                <img src="https://api.iconify.design/solar:shop-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
             </div>
-            <div class="w-full md:w-2/3">
-                <p class="text-gray-300 text-lg mb-6">สร้างมูลค่าเพิ่มให้ผลผลิต เรียนรู้ตั้งแต่การแปรรูปสินค้า ไปจนถึงการทำ Marketing บนแพลตฟอร์มดิจิทัลเพื่อสร้างรายได้จริง</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-orange-400 font-bold">Business</span>
-                        <span class="text-sm text-gray-500">โมเดลธุรกิจ</span>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                        <span class="block text-orange-400 font-bold">Creative</span>
-                        <span class="text-sm text-gray-500">ความคิดสร้างสรรค์</span>
-                    </div>
-                </div>
+            <h3 class="text-2xl font-bold mb-4">FARM TO TABLE</h3>
+            <p class="text-gray-400 mb-8 leading-relaxed">แปรรูปผลผลิต สร้างแบรนด์สินค้า และเรียนรู้การทำธุรกิจเกษตรยุคดิจิทัล</p>
+            <div class="mt-auto w-full">
+                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
             </div>
         </div>
 
     </div>
 
-    <div class="text-center mt-20 reveal" style="animation-delay: 0.5s;">
-        <button class="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-12 py-4 rounded-full font-bold text-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all">
-            สมัครเข้าร่วมโครงการทั้งหมด
-        </button>
+    <div class="max-w-4xl mx-auto mt-32 text-center py-12 border-t border-white/10">
+        <p class="text-gray-500 mb-4">เชื่อมต่อข้อมูลกับระบบชุมนุมฟาร์มนิสิต</p>
+        <div class="flex justify-center space-x-6">
+            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Facebook</a>
+            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Instagram</a>
+            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Line Official</a>
+        </div>
     </div>
 
 </body>
