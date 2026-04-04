@@ -3,111 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects | Student Farm 2026</title>
+    <title>โครงการชุมนุมฟาร์มนิสิต 2569</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Kanit', sans-serif; 
-            background-color: #000000; 
-            color: #ffffff;
-            background-image: radial-gradient(circle at 50% -20%, #064e3b 0%, #000000 80%);
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #0b0f1a; /* ดำน้ำเงินแบบหน้าเว็บหลัก */
+            color: white;
         }
-        
-        .glass-card {
+        .glass-container {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
+            border-radius: 24px;
         }
-
-        .glass-card:hover {
-            border-color: #10b981;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .neon-text {
-            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-        }
-
-        .logo-placeholder {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
+        .neon-border-green {
             border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            transition: 0.3s;
         }
-
-        .btn-primary {
+        .neon-border-green:hover {
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-green {
             background: #10b981;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-            transition: all 0.3s ease;
+            color: #0b0f1a;
+            font-weight: 600;
+            transition: 0.3s;
         }
-
-        .btn-primary:hover {
+        .btn-green:hover {
             background: #059669;
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
         }
     </style>
 </head>
-<body class="min-h-screen py-16 px-4">
+<body class="min-h-screen flex flex-col items-center py-12 px-4">
 
-    <div class="max-w-6xl mx-auto text-center mb-20">
-        <h2 class="text-emerald-500 font-bold tracking-[0.2em] mb-4 uppercase">Project Portfolio 2026</h2>
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">3 โครงการหลัก <span class="text-emerald-500 neon-text">ชุมนุมฟาร์ม</span></h1>
-        <div class="w-20 h-1 bg-emerald-500 mx-auto rounded-full"></div>
+    <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            โครงการ <span class="gradient-text">ชุมนุมฟาร์มนิสิต</span> 2569
+        </h1>
+        <p class="text-gray-400">SMART FARMING • INNOVATION • SUSTAINABILITY</p>
     </div>
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
         
-        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center">
-            <div class="logo-placeholder mb-8">
-                <img src="https://api.iconify.design/solar:home-smile-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
+        <div class="glass-container neon-border-green p-8 flex flex-col items-center">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/30">
+                <span class="text-3xl">🌿</span>
             </div>
-            <h3 class="text-2xl font-bold mb-4">FARM STAY</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">เรียนรู้วิถีเกษตรชุมชน สัมผัสชีวิตชาวนา และการพึ่งพาตนเองอย่างยั่งยืน</p>
-            <div class="mt-auto w-full">
-                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
-            </div>
+            <h2 class="text-2xl font-bold mb-4 text-emerald-400">FARM STAY</h2>
+            <p class="text-center text-gray-400 text-sm mb-8">
+                เรียนรู้วิถีเกษตรจริง พักในฟาร์ม ลงมือปลูกและดูแลสัตว์แบบครบวงจร
+            </p>
+            <button class="btn-green w-full py-3 rounded-xl">ลงทะเบียน</button>
         </div>
 
-        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center border-t-2 border-emerald-500/30">
-            <div class="logo-placeholder mb-8 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                <img src="https://api.iconify.design/solar:cpu-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
+        <div class="glass-container neon-border-green p-8 flex flex-col items-center border-t-2 border-t-emerald-500">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/30">
+                <span class="text-3xl">🤖</span>
             </div>
-            <h3 class="text-2xl font-bold mb-4 text-emerald-400">AGRI-TECH</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">ก้าวสู่เกษตรอัจฉริยะด้วยการใช้โดรน AI และระบบควบคุมน้ำผ่านสมาร์ทโฟน</p>
-            <div class="mt-auto w-full">
-                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
-            </div>
+            <h2 class="text-2xl font-bold mb-4 text-emerald-400">AGRI-TECH</h2>
+            <p class="text-center text-gray-400 text-sm mb-8">
+                นวัตกรรมฟาร์มอัจฉริยะ ใช้โดรนและระบบ IoT ควบคุมการเกษตรระดับโปร
+            </p>
+            <button class="btn-green w-full py-3 rounded-xl">ลงทะเบียน</button>
         </div>
 
-        <div class="glass-card rounded-[2.5rem] p-10 flex flex-col items-center text-center">
-            <div class="logo-placeholder mb-8">
-                <img src="https://api.iconify.design/solar:shop-bold-duotone.svg?color=%2310b981" class="w-12 h-12" alt="Logo">
+        <div class="glass-container neon-border-green p-8 flex flex-col items-center">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/30">
+                <span class="text-3xl">🍽️</span>
             </div>
-            <h3 class="text-2xl font-bold mb-4">FARM TO TABLE</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">แปรรูปผลผลิต สร้างแบรนด์สินค้า และเรียนรู้การทำธุรกิจเกษตรยุคดิจิทัล</p>
-            <div class="mt-auto w-full">
-                <button class="btn-primary w-full py-4 rounded-2xl font-bold text-black uppercase tracking-wider">Join Project</button>
-            </div>
+            <h2 class="text-2xl font-bold mb-4 text-emerald-400">FARM TO TABLE</h2>
+            <p class="text-center text-gray-400 text-sm mb-8">
+                ปั้นผลผลิตเป็นธุรกิจ แปรรูปสินค้าและทำการตลาดออนไลน์สร้างรายได้จริง
+            </p>
+            <button class="btn-green w-full py-3 rounded-xl">ลงทะเบียน</button>
         </div>
 
     </div>
 
-    <div class="max-w-4xl mx-auto mt-32 text-center py-12 border-t border-white/10">
-        <p class="text-gray-500 mb-4">เชื่อมต่อข้อมูลกับระบบชุมนุมฟาร์มนิสิต</p>
-        <div class="flex justify-center space-x-6">
-            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Facebook</a>
-            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Instagram</a>
-            <a href="#" class="text-gray-400 hover:text-emerald-500 transition-colors">Line Official</a>
-        </div>
+    <div class="mt-20 text-center text-gray-500 text-sm">
+        <p>© 2026 Student Farm Club. สอดคล้องกับระบบหลัก</p>
     </div>
 
 </body>
