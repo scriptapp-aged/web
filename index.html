@@ -24,7 +24,6 @@
             background-size: 40px 40px;
         }
 
-        /* --- ✨ แอนิเมชันพื้นหลัง --- */
         .bg-blob {
             position: fixed;
             width: 500px; height: 500px;
@@ -39,9 +38,8 @@
             100% { transform: translate(100%, 50%) scale(1.5); }
         }
 
-        /* --- Header Section --- */
         .hero-header {
-            padding: 160px 20px 100px; /* เพิ่มระยะบนให้ดูโปร่งขึ้นเมื่อไม่มี Status Bar */
+            padding: 120px 20px 60px;
             text-align: center;
             position: relative;
             animation: fadeInUp 1.2s cubic-bezier(0.2, 1, 0.2, 1);
@@ -100,11 +98,10 @@
             margin-bottom: 20px;
         }
 
-        /* --- Service Portal Cards --- */
         .main-portal {
             max-width: 1250px;
             margin: 0 auto;
-            padding: 0 20px 150px;
+            padding: 0 20px 60px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 60px;
@@ -138,24 +135,6 @@
             align-items: flex-end;
             margin-bottom: 35px;
             position: relative;
-        }
-
-        .image-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 280px; height: 110px;
-            background: rgba(0, 255, 136, 0.1);
-            filter: blur(60px);
-            border-radius: 50%;
-            bottom: 40px;
-            z-index: -1;
-            transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-
-        .card:hover .image-wrapper::before { 
-            background: rgba(0, 255, 136, 0.3); 
-            transform: scale(1.6);
-            filter: blur(40px);
         }
 
         .image-wrapper img {
@@ -193,8 +172,64 @@
 
         .card:hover h3::after { width: 100%; }
 
+        /* --- ✨ New Sections (Bento Grid) --- */
+        .extra-services {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            animation: fadeInUp 1s 1s both;
+        }
+
+        .mini-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 24px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: 0.4s;
+            min-height: 140px;
+        }
+
+        .mini-card:hover {
+            background: #ffffff;
+            transform: translateY(-10px);
+            border-color: var(--ku-green);
+            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.05);
+        }
+
+        .mini-card i {
+            font-size: 1.5rem;
+            color: var(--ku-green);
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .mini-card h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .mini-card span {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 5px;
+            font-weight: 300;
+        }
+
         @media (max-width: 1024px) {
             .main-portal { grid-template-columns: 1fr; gap: 100px; }
+            .extra-services { grid-template-columns: 1fr; }
             .hero-header { padding-top: 100px; }
             .main-title { font-size: 4.5rem; }
             .image-wrapper { height: 320px; }
@@ -239,6 +274,26 @@
             </div>
             <h3>โครงการชุมนุม</h3>
             <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Future Farm Initiatives</p>
+        </a>
+    </div>
+
+    <div class="extra-services">
+        <a href="schedule.html" class="mini-card">
+            <i class="fa-solid fa-calendar-check"></i>
+            <h4>ตารางจองห้องประชุม</h4>
+            <span>เช็คสถานะการใช้งานแบบเรียลไทม์</span>
+        </a>
+
+        <a href="check-64.html" class="mini-card">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4>
+            <span>หลักสูตรปรับปรุง พ.ศ. 2564</span>
+        </a>
+
+        <a href="check-69.html" class="mini-card">
+            <i class="fa-solid fa-seedling"></i>
+            <h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4>
+            <span>หลักสูตรปรับปรุง พ.ศ. 2569</span>
         </a>
     </div>
 
