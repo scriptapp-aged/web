@@ -306,7 +306,7 @@
             background: #1e40af;
         }
 
-        /* --- 🎨 Modal Styles --- */
+        /* --- 🎨 Feedback Modal & Form Styles --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -324,61 +324,83 @@
             background: white;
             padding: 40px;
             border-radius: 30px;
-            max-width: 500px;
+            max-width: 550px;
             width: 90%;
-            text-align: center;
             transform: scale(0.8);
             transition: 0.3s;
+            position: relative;
         }
 
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-overlay.active .modal-content { transform: scale(1); }
 
-        .modal-title { margin-bottom: 25px; font-weight: 600; color: var(--text-dark); }
+        .modal-header { text-align: center; margin-bottom: 25px; }
+        .modal-header h3 { font-weight: 600; color: var(--text-dark); font-size: 1.4rem; }
 
-        .modal-options {
-            display: grid;
-            gap: 15px;
-        }
+        /* การเลือกหัวข้อ */
+        .selection-step { display: block; }
+        .form-step { display: none; }
 
+        .modal-options { display: grid; gap: 15px; }
         .option-card {
             padding: 20px;
             border: 2px solid #f1f5f9;
             border-radius: 15px;
-            text-decoration: none;
-            color: var(--text-dark);
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 15px;
             transition: 0.3s;
-            text-align: left;
         }
+        .option-card:hover { border-color: var(--ku-green); background: rgba(0, 102, 51, 0.02); }
+        .option-card i { font-size: 1.4rem; color: var(--ku-green); }
 
-        .option-card:hover {
-            border-color: var(--ku-green);
-            background: rgba(0, 102, 51, 0.02);
-            transform: translateX(10px);
+        /* ฟอร์มภายใน */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
         }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--ku-green); box-shadow: 0 0 0 4px rgba(0, 102, 51, 0.05); }
 
-        .option-card i {
-            font-size: 1.4rem;
-            color: var(--ku-green);
+        .rating-group { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .rating-btn { 
+            width: 45px; height: 45px; border-radius: 10px; border: 1px solid #e2e8f0; 
+            background: white; cursor: pointer; transition: 0.3s; font-weight: 600;
         }
+        .rating-btn.active { background: var(--ku-green); color: white; border-color: var(--ku-green); }
 
-        .close-modal {
-            margin-top: 25px;
-            color: #94a3b8;
+        .submit-btn {
+            width: 100%;
+            background: var(--ku-green);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 0.9rem;
-            text-decoration: underline;
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #004d26; transform: translateY(-2px); }
+
+        .back-btn {
+            background: none; border: none; color: #64748b; cursor: pointer;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 5px; font-size: 0.85rem;
+        }
+
+        .close-modal-x {
+            position: absolute; top: 20px; right: 25px; color: #94a3b8; cursor: pointer; font-size: 1.2rem;
         }
 
         @media (max-width: 1024px) {
             .main-portal { grid-template-columns: 1fr; gap: 100px; }
             .extra-services { grid-template-columns: 1fr; }
-            .hero-header { padding-top: 100px; }
-            .main-title { font-size: 4.5rem; }
-            .image-wrapper { height: 320px; }
             .feedback-info { flex-direction: column; text-align: center; }
             .feedback-btn { align-self: center; }
         }
@@ -401,102 +423,148 @@
 
     <div class="main-portal">
         <a href="people.html" class="card">
-            <div class="image-wrapper">
-                <img src="090.png" alt="Committee">
-            </div>
+            <div class="image-wrapper"><img src="090.png" alt="Committee"></div>
             <h3>คณะกรรมการฟาร์ม</h3>
             <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Team Excellence 2569</p>
         </a>
-
         <a href="room.html" class="card">
-            <div class="image-wrapper">
-                <img src="091.png" alt="Reservation">
-            </div>
+            <div class="image-wrapper"><img src="091.png" alt="Reservation"></div>
             <h3>จองห้องประชุม</h3>
             <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Smart Space Booking</p>
         </a>
-
         <a href="project.html" class="card">
-            <div class="image-wrapper">
-                <img src="092.png" alt="Projects">
-            </div>
+            <div class="image-wrapper"><img src="092.png" alt="Projects"></div>
             <h3>โครงการชุมนุม</h3>
             <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Future Farm Initiatives</p>
         </a>
     </div>
 
     <div class="extra-services">
-        <a href="schedule.html" class="mini-card">
-            <i class="fa-solid fa-calendar-check"></i>
-            <h4>ตารางจองห้องประชุม</h4>
-            <span>เช็คสถานะการใช้งานแบบเรียลไทม์</span>
-        </a>
-
-        <a href="check-64.html" class="mini-card">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4>
-            <span>หลักสูตรปรับปรุง พ.ศ. 2564</span>
-        </a>
-
-        <a href="check-69.html" class="mini-card">
-            <i class="fa-solid fa-seedling"></i>
-            <h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4>
-            <span>หลักสูตรปรับปรุง พ.ศ. 2569</span>
-        </a>
+        <a href="schedule.html" class="mini-card"><i class="fa-solid fa-calendar-check"></i><h4>ตารางจองห้องประชุม</h4><span>เช็คสถานะการใช้งานแบบเรียลไทม์</span></a>
+        <a href="check-64.html" class="mini-card"><i class="fa-solid fa-graduation-cap"></i><h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4><span>หลักสูตรปรับปรุง พ.ศ. 2564</span></a>
+        <a href="check-69.html" class="mini-card"><i class="fa-solid fa-seedling"></i><h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4><span>หลักสูตรปรับปรุง พ.ศ. 2569</span></a>
     </div>
 
     <div class="feedback-section">
         <div class="feedback-container">
             <div class="feedback-info">
-                <div class="feedback-icon-bg">
-                    <i class="fa-solid fa-comment-dots"></i>
-                </div>
+                <div class="feedback-icon-bg"><i class="fa-solid fa-comment-dots"></i></div>
                 <div class="feedback-text">
                     <h2>แสดงความคิดเห็น / ข้อเสนอแนะ</h2>
                     <p>ผู้พัฒนาระบบยินดีรับฟังความคิดเห็นและข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการและพัฒนาให้ดียิ่งขึ้น</p>
                 </div>
             </div>
-            
             <div class="feedback-divider"></div>
-
             <button class="feedback-btn" onclick="openModal()">
-                <i class="fa-solid fa-file-pen"></i>
-                แบบฟอร์มแสดงความคิดเห็น
+                <i class="fa-solid fa-file-pen"></i> แบบฟอร์มแสดงความคิดเห็น
             </button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 class="modal-title">เลือกหัวข้อที่ต้องการเสนอแนะ</h3>
-            <div class="modal-options">
-                <a href="LINK_FORM_COMMITTEE" class="option-card">
-                    <i class="fa-solid fa-users-gear"></i>
-                    <div>
-                        <strong>การทำงานของคณะกรรมการ</strong>
-                        <p style="font-size: 0.8rem; color: #64748b;">ติชมการดำเนินงานของทีมคณะกรรมการฟาร์ม</p>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal-x" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+            
+            <div id="selectionStep" class="selection-step">
+                <div class="modal-header">
+                    <h3>เลือกหัวข้อที่ต้องการเสนอแนะ</h3>
+                </div>
+                <div class="modal-options">
+                    <div class="option-card" onclick="showForm('กรรมการ')">
+                        <i class="fa-solid fa-users-gear"></i>
+                        <div><strong>การทำงานของคณะกรรมการ</strong><p style="font-size: 0.8rem; color: #64748b;">ติชมการดำเนินงานของทีมคณะกรรมการฟาร์ม</p></div>
                     </div>
-                </a>
-
-                <a href="LINK_FORM_SYSTEM" class="option-card">
-                    <i class="fa-solid fa-laptop-code"></i>
-                    <div>
-                        <strong>การใช้งานระบบเว็บไซต์</strong>
-                        <p style="font-size: 0.8rem; color: #64748b;">แจ้งปัญหาการใช้งานหรือเสนอแนะฟีเจอร์ใหม่</p>
+                    <div class="option-card" onclick="showForm('ระบบ')">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <div><strong>การใช้งานระบบเว็บไซต์</strong><p style="font-size: 0.8rem; color: #64748b;">แจ้งปัญหาการใช้งานหรือเสนอแนะฟีเจอร์ใหม่</p></div>
                     </div>
-                </a>
+                </div>
             </div>
-            <div class="close-modal" onclick="closeModal()">ยกเลิก</div>
+
+            <div id="formStep" class="form-step">
+                <button class="back-btn" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
+                <div class="modal-header">
+                    <h3 id="formTitle">แบบประเมิน</h3>
+                </div>
+                
+                <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                    <div class="form-group">
+                        <label>ความพึงพอใจโดยรวม</label>
+                        <div class="rating-group">
+                            <button type="button" class="rating-btn" onclick="setRating(1)">1</button>
+                            <button type="button" class="rating-btn" onclick="setRating(2)">2</button>
+                            <button type="button" class="rating-btn" onclick="setRating(3)">3</button>
+                            <button type="button" class="rating-btn" onclick="setRating(4)">4</button>
+                            <button type="button" class="rating-btn" onclick="setRating(5)">5</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="descLabel">ความคิดเห็นหรือข้อเสนอแนะ</label>
+                        <textarea id="feedbackMsg" rows="4" placeholder="พิมพ์ข้อความของคุณที่นี่..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ส่งข้อมูล</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
+        let currentRating = 0;
+        let feedbackType = '';
+
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
+            goBack(); // reset to selection step
         }
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function showForm(type) {
+            feedbackType = type;
+            document.getElementById('selectionStep').style.display = 'none';
+            document.getElementById('formStep').style.display = 'block';
+            document.getElementById('formTitle').innerText = 'ประเมินด้าน' + type;
+            document.getElementById('descLabel').innerText = type === 'ระบบ' ? 'ปัญหาที่พบหรือข้อเสนอแนะ' : 'ความคิดเห็นต่อคณะกรรมการ';
+        }
+
+        function goBack() {
+            document.getElementById('selectionStep').style.display = 'block';
+            document.getElementById('formStep').style.display = 'none';
+            document.getElementById('feedbackForm').reset();
+            setRating(0);
+        }
+
+        function setRating(n) {
+            currentRating = n;
+            const btns = document.querySelectorAll('.rating-btn');
+            btns.forEach((btn, i) => {
+                if (i < n) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
+
+        function submitFeedback(e) {
+            e.preventDefault();
+            if(currentRating === 0) {
+                alert('กรุณาเลือกคะแนนความพึงพอใจ');
+                return;
+            }
+            
+            const message = document.getElementById('feedbackMsg').value;
+            
+            // ในทางปฏิบัติ คุณสามารถส่งข้อมูลไปยัง Line Notify หรือ Database ได้ที่นี่
+            console.log({ type: feedbackType, rating: currentRating, text: message });
+            
+            alert('ขอบคุณสำหรับข้อเสนอแนะ! เราได้รับข้อมูลเรียบร้อยแล้ว');
+            closeModal();
+        }
+
+        // ปิด Modal เมื่อคลิกพื้นหลัง
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalOverlay');
+            if (event.target == modal) closeModal();
         }
     </script>
 
