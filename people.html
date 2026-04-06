@@ -27,51 +27,43 @@
         .container { max-width: 1200px; margin: 0 auto; }
 
         /* --- ✨ Header --- */
-        .header-container { text-align: center; padding: 40px 20px 20px; position: relative; }
+        .header-container { text-align: center; padding: 40px 20px 20px; }
         .faculty-label { font-size: 0.85rem; color: #94a3b8; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        
         .main-web-title {
-            font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; letter-spacing: -1px;
+            font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800;
             background: linear-gradient(135deg, #004d26 0%, #006633 50%, #008f4c 100%);
             -webkit-background-clip: text; background-clip: text; color: transparent;
         }
+        .sub-header-title { font-size: 1.5rem; color: var(--ku-gold); margin-top: 10px; font-weight: 500; }
 
-        .sub-header-title {
-            font-size: 1.5rem; color: var(--ku-gold); margin-top: 10px; font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        /* --- 🧭 Navigation Menu --- */
-        .nav-menu {
-            display: flex; justify-content: center; gap: 15px; margin: 30px 0 50px;
-        }
-
+        /* --- 🧭 Navigation --- */
+        .nav-menu { display: flex; justify-content: center; gap: 15px; margin: 30px 0 50px; }
         .nav-btn {
             padding: 12px 30px; border: 2px solid var(--ku-green); border-radius: 50px;
-            background: transparent; color: var(--ku-green); font-weight: 500; cursor: pointer;
-            transition: 0.3s; font-size: 1.1rem;
+            background: transparent; color: var(--ku-green); font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-
         .nav-btn.active { background: var(--ku-green); color: white; box-shadow: 0 10px 20px rgba(0,102,51,0.2); }
-        .nav-btn:hover { transform: translateY(-3px); }
 
-        /* --- 🖼️ Card Style --- */
+        /* --- 🖼️ Card & Grid --- */
         .tab-content { display: none; animation: fadeIn 0.5s ease; }
         .tab-content.active { display: block; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .committee-row { display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; flex-wrap: wrap; }
-        
-        .member-card {
-            background: var(--glass-bg); backdrop-filter: blur(15px);
-            flex: 1; min-width: 250px; max-width: 270px;
-            border-radius: 24px; border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 15px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            justify-items: center;
+            margin-bottom: 40px;
         }
 
-        .member-card:hover { transform: translateY(-10px); border-color: var(--ku-green); box-shadow: 0 20px 40px rgba(0, 102, 51, 0.08); }
+        .member-card {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            width: 100%; max-width: 270px;
+            border-radius: 24px; border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 15px; transition: 0.4s; text-align: center;
+        }
+        .member-card:hover { transform: translateY(-10px); border-color: var(--ku-green); }
 
         .image-frame {
             width: 100%; height: 280px; background: #f8fafc; border-radius: 18px;
@@ -79,28 +71,18 @@
         }
         .image-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        .card-info h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
-        .card-info .role { font-size: 0.85rem; color: var(--ku-gold); font-weight: 500; }
-        .special-card { border-top: 5px solid var(--ku-gold); background: #fffdf9; }
+        .card-info h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-dark); }
+        .card-info .role { font-size: 0.85rem; color: var(--ku-gold); }
 
-        .section-separator { margin: 60px 0 40px; display: flex; align-items: center; justify-content: center; gap: 20px; }
-        .section-separator::before, .section-separator::after { content: ''; height: 1px; flex-grow: 1; background: linear-gradient(90deg, transparent, #cbd5e1, transparent); }
-        .section-label { font-size: 1.8rem; font-weight: 700; color: var(--ku-green); letter-spacing: 8px; }
-
-        .project-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 30px; max-width: 900px; margin: 0 auto;
-        }
+        .section-separator { margin: 60px 0 40px; display: flex; align-items: center; gap: 20px; }
+        .section-separator::before, .section-separator::after { content: ''; height: 1px; flex-grow: 1; background: #cbd5e1; }
+        .section-label { font-size: 1.5rem; font-weight: 700; color: var(--ku-green); }
 
         .back-home {
             display: inline-flex; align-items: center; padding: 14px 35px;
             background: #1e293b; color: white; text-decoration: none;
-            border-radius: 100px; font-weight: 500; margin-top: 60px; transition: 0.4s;
+            border-radius: 100px; margin-top: 60px; transition: 0.4s;
         }
-        .back-home:hover { background: var(--ku-green); transform: translateX(-10px); }
-
-        @media (max-width: 1024px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } .main-web-title { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
@@ -110,82 +92,71 @@
         <span class="faculty-label">Faculty of Education and Development Sciences</span>
         <h1 class="main-web-title">ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</h1>
         <h2 id="sub-title-display" class="sub-header-title">คณาจารย์ประจำภาควิชา</h2>
-        <div style="width: 80px; height: 4px; background: var(--ku-gold); margin: 15px auto 0; border-radius: 10px;"></div>
     </header>
 
     <nav class="nav-menu">
-        <button class="nav-btn active" onclick="switchTab('teachers', 'คณาจารย์ประจำภาควิชา')">คณาจารย์</button>
+        <button class="nav-btn active" onclick="switchTab('teachers', 'คณาจารย์และบุคลากรประจำภาควิชา')">คณาจารย์ / บุคลากร</button>
         <button class="nav-btn" onclick="switchTab('students', 'คณะกรรมการฟาร์มนิสิต ปีการศึกษา 2569')">ชุมนุมฟาร์มนิสิต</button>
     </nav>
 
     <div id="tab-teachers" class="tab-content active">
-        <div class="committee-row">
-            <div class="member-card">
-                <div class="image-frame"><img src="12.jpg" alt=""></div>
-                <div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ประจำภาควิชา</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="web.jpg" alt=""></div>
-                <div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ประจำภาควิชา</p></div>
-            </div>
-            </div>
+        <div class="section-separator"><h2 class="section-label">คณาจารย์</h2></div>
+        <div class="member-grid">
+            <div class="member-card"><div class="image-frame"><img src="t1.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 1</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t2.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 2</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t3.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 3</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t4.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 4</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t5.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 5</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t6.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 6</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t7.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 7</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t8.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 8</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t9.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 9</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t10.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 10</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t11.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 11</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t12.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 12</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t13.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 13</h3><p class="role">ตำแหน่ง</p></div></div>
+        </div>
+
+        <div class="section-separator"><h2 class="section-label">บุคลากรประจำภาควิชา</h2></div>
+        <div class="member-grid">
+            <div class="member-card"><div class="image-frame"><img src="staff_dept1.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 1</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff_dept2.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 2</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff_dept3.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 3</h3><p class="role">ตำแหน่ง</p></div></div>
+        </div>
     </div>
 
     <div id="tab-students" class="tab-content">
-        <div class="committee-row">
-            <div class="member-card">
-                <div class="image-frame"><img src="12.jpg" alt=""></div>
-                <div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="web.jpg" alt=""></div>
-                <div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
-            </div>
+        <div class="member-grid">
+            <div class="member-card"><div class="image-frame"><img src="12.jpg" alt=""></div><div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษา</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="web.jpg" alt=""></div><div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษา</p></div></div>
         </div>
 
-        <div class="committee-row">
-            <div class="member-card special-card" style="max-width: 290px;">
-                <div class="image-frame" style="height: 310px;"><img src="pres.jpg" alt=""></div>
+        <div style="display: flex; justify-content: center; margin-bottom: 40px;">
+            <div class="member-card" style="border-top: 5px solid var(--ku-gold);">
+                <div class="image-frame"><img src="pres.jpg" alt=""></div>
                 <div class="card-info"><h3>นายศุภเสกย์ นิลเทพา</h3><p class="role">ประธานชุมนุม</p></div>
             </div>
         </div>
 
-        <div class="committee-row">
-            <div class="member-card">
-                <div class="image-frame"><img src="vp1.jpg" alt=""></div>
-                <div class="card-info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="vp2.jpg" alt=""></div>
-                <div class="card-info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="sec.jpg" alt=""></div>
-                <div class="card-info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div>
-                <div class="card-info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div>
-            </div>
+        <div class="member-grid">
+            <div class="member-card"><div class="image-frame"><img src="vp1.jpg" alt=""></div><div class="card-info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="vp2.jpg" alt=""></div><div class="card-info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="sec.jpg" alt=""></div><div class="card-info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div><div class="card-info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div></div>
         </div>
 
-        <div class="section-separator">
-            <h2 class="section-label">กรรมการ</h2>
-        </div>
+        <div class="section-separator"><h2 class="section-label">กรรมการโครงการ</h2></div>
         
-        <div class="project-grid">
-            <div class="member-card">
-                <div class="image-frame"><img src="staff1.jpg" alt=""></div>
-                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="staff2.jpg" alt=""></div>
-                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div>
-            </div>
-            <div class="member-card">
-                <div class="image-frame"><img src="staff3.jpg" alt=""></div>
-                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div>
-            </div>
+        <div class="member-grid">
+            <div class="member-card"><div class="image-frame"><img src="staff1.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff2.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff3.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff4.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff5.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff6.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff7.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff8.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="staff9.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
         </div>
     </div>
 
@@ -196,17 +167,10 @@
 
 <script>
     function switchTab(tabName, subTitle) {
-        // 1. จัดการ Class Active ของปุ่มเมนู
-        const buttons = document.querySelectorAll('.nav-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-
-        // 2. สลับการแสดงผล Content
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        if(event) event.currentTarget.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.getElementById('tab-' + tabName).classList.add('active');
-
-        // 3. เปลี่ยนชื่อหัวข้อรอง
         document.getElementById('sub-title-display').innerText = subTitle;
     }
 </script>
