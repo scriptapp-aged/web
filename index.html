@@ -178,7 +178,7 @@
             margin: 0 auto;
             padding: 0 20px 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr); /* ปรับเป็น 4 คอลัมน์ */
             gap: 25px;
             animation: fadeInUp 1s 1s both;
         }
@@ -337,7 +337,6 @@
         .modal-header { text-align: center; margin-bottom: 25px; }
         .modal-header h3 { font-weight: 600; color: var(--text-dark); font-size: 1.4rem; }
 
-        /* การเลือกหัวข้อ */
         .selection-step { display: block; }
         .form-step { display: none; }
 
@@ -355,7 +354,6 @@
         .option-card:hover { border-color: var(--ku-green); background: rgba(0, 102, 51, 0.02); }
         .option-card i { font-size: 1.4rem; color: var(--ku-green); }
 
-        /* ฟอร์มภายใน */
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
         .form-group input, .form-group textarea, .form-group select {
@@ -400,7 +398,7 @@
 
         @media (max-width: 1024px) {
             .main-portal { grid-template-columns: 1fr; gap: 100px; }
-            .extra-services { grid-template-columns: 1fr; }
+            .extra-services { grid-template-columns: 1fr; } /* แนวตั้งเมื่อจอมือถือ */
             .feedback-info { flex-direction: column; text-align: center; }
             .feedback-btn { align-self: center; }
         }
@@ -440,6 +438,11 @@
     </div>
 
     <div class="extra-services">
+        <a href="academic-calendar.html" class="mini-card">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h4>ปฏิทินการศึกษา</h4>
+            <span>กำหนดการเรียนและสอบประจำปี</span>
+        </a>
         <a href="schedule.html" class="mini-card"><i class="fa-solid fa-calendar-check"></i><h4>ตารางจองห้องประชุม</h4><span>เช็คสถานะการใช้งานแบบเรียลไทม์</span></a>
         <a href="check-64.html" class="mini-card"><i class="fa-solid fa-graduation-cap"></i><h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4><span>หลักสูตรปรับปรุง พ.ศ. 2564</span></a>
         <a href="check-69.html" class="mini-card"><i class="fa-solid fa-seedling"></i><h4>ระบบตรวจสอบการเรียนตามหลักสูตร</h4><span>หลักสูตรปรับปรุง พ.ศ. 2569</span></a>
@@ -554,14 +557,12 @@
             
             const message = document.getElementById('feedbackMsg').value;
             
-            // ในทางปฏิบัติ คุณสามารถส่งข้อมูลไปยัง Line Notify หรือ Database ได้ที่นี่
             console.log({ type: feedbackType, rating: currentRating, text: message });
             
             alert('ขอบคุณสำหรับข้อเสนอแนะ! เราได้รับข้อมูลเรียบร้อยแล้ว');
             closeModal();
         }
 
-        // ปิด Modal เมื่อคลิกพื้นหลัง
         window.onclick = function(event) {
             const modal = document.getElementById('modalOverlay');
             if (event.target == modal) closeModal();
