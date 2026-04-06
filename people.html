@@ -44,45 +44,59 @@
         }
         .nav-btn.active { background: var(--ku-green); color: white; box-shadow: 0 10px 20px rgba(0,102,51,0.2); }
 
-        /* --- 🖼️ Card & Grid --- */
+        /* --- 🖼️ Card Layout --- */
         .tab-content { display: none; animation: fadeIn 0.5s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .member-grid {
+        /* การจัดแถวแบบยืดหยุ่น */
+        .member-row { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 25px; 
+            margin-bottom: 30px; 
+        }
+
+        /* สำหรับแถวละ 4 คน */
+        .grid-4 {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 25px;
-            justify-items: center;
-            margin-bottom: 40px;
+            max-width: 1100px;
+            margin: 0 auto 30px;
         }
 
         .member-card {
             background: var(--glass-bg); backdrop-filter: blur(15px);
-            width: 100%; max-width: 270px;
+            width: 100%; max-width: 260px;
             border-radius: 24px; border: 1px solid rgba(226, 232, 240, 0.8);
             padding: 15px; transition: 0.4s; text-align: center;
+            margin: 0 auto;
         }
         .member-card:hover { transform: translateY(-10px); border-color: var(--ku-green); }
 
         .image-frame {
-            width: 100%; height: 280px; background: #f8fafc; border-radius: 18px;
+            width: 100%; height: 260px; background: #f8fafc; border-radius: 18px;
             overflow: hidden; margin-bottom: 15px; display: flex; justify-content: center; align-items: flex-end;
         }
         .image-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        .card-info h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-dark); }
-        .card-info .role { font-size: 0.85rem; color: var(--ku-gold); }
+        .card-info h3 { font-size: 1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 5px; }
+        .card-info .role { font-size: 0.8rem; color: var(--ku-gold); font-weight: 500; }
 
-        .section-separator { margin: 60px 0 40px; display: flex; align-items: center; gap: 20px; }
+        .section-separator { margin: 50px 0 30px; display: flex; align-items: center; gap: 20px; }
         .section-separator::before, .section-separator::after { content: ''; height: 1px; flex-grow: 1; background: #cbd5e1; }
-        .section-label { font-size: 1.5rem; font-weight: 700; color: var(--ku-green); }
+        .section-label { font-size: 1.4rem; font-weight: 700; color: var(--ku-green); }
 
         .back-home {
             display: inline-flex; align-items: center; padding: 14px 35px;
             background: #1e293b; color: white; text-decoration: none;
             border-radius: 100px; margin-top: 60px; transition: 0.4s;
         }
+
+        @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid-4 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -100,63 +114,74 @@
     </nav>
 
     <div id="tab-teachers" class="tab-content active">
-        <div class="section-separator"><h2 class="section-label">คณาจารย์</h2></div>
-        <div class="member-grid">
-            <div class="member-card"><div class="image-frame"><img src="t1.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 1</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t2.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 2</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t3.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 3</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t4.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 4</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t5.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 5</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t6.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 6</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t7.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 7</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t8.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 8</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t9.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 9</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t10.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 10</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t11.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 11</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t12.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 12</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="t13.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 13</h3><p class="role">ตำแหน่ง</p></div></div>
+        
+        <div class="member-row">
+            <div class="member-card" style="border-top: 5px solid var(--ku-green);">
+                <div class="image-frame"><img src="head.jpg" alt=""></div>
+                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">หัวหน้าภาควิชา</p></div>
+            </div>
         </div>
 
-        <div class="section-separator"><h2 class="section-label">บุคลากรประจำภาควิชา</h2></div>
-        <div class="member-grid">
-            <div class="member-card"><div class="image-frame"><img src="staff_dept1.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 1</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="staff_dept2.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 2</h3><p class="role">ตำแหน่ง</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="staff_dept3.jpg" alt=""></div><div class="card-info"><h3>ชื่อเจ้าหน้าที่ 3</h3><p class="role">ตำแหน่ง</p></div></div>
+        <div class="member-row">
+            <div class="member-card" style="border-top: 5px solid var(--ku-gold);">
+                <div class="image-frame"><img src="vice_head.jpg" alt=""></div>
+                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">รองหัวหน้าภาควิชา</p></div>
+            </div>
+        </div>
+
+        <div class="section-separator"><span class="section-label">คณาจารย์ประจำภาควิชา</span></div>
+
+        <div class="grid-4">
+            <div class="member-card"><div class="image-frame"><img src="t1.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 1</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t2.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 2</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t3.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 3</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t4.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 4</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t5.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 5</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t6.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 6</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t7.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 7</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t8.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 8</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t9.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 9</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t10.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 10</h3><p class="role">อาจารย์</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="t11.jpg" alt=""></div><div class="card-info"><h3>ชื่ออาจารย์ 11</h3><p class="role">อาจารย์</p></div></div>
+            </div>
+
+        <div class="section-separator"><span class="section-label">บุคลากร</span></div>
+        <div class="member-row">
+            <div class="member-card"><div class="image-frame"><img src="s1.jpg" alt=""></div><div class="card-info"><h3>เจ้าหน้าที่ 1</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="s2.jpg" alt=""></div><div class="card-info"><h3>เจ้าหน้าที่ 2</h3><p class="role">ตำแหน่ง</p></div></div>
+            <div class="member-card"><div class="image-frame"><img src="s3.jpg" alt=""></div><div class="card-info"><h3>เจ้าหน้าที่ 3</h3><p class="role">ตำแหน่ง</p></div></div>
         </div>
     </div>
 
     <div id="tab-students" class="tab-content">
-        <div class="member-grid">
+        <div class="member-row">
             <div class="member-card"><div class="image-frame"><img src="12.jpg" alt=""></div><div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษา</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="web.jpg" alt=""></div><div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษา</p></div></div>
         </div>
 
-        <div style="display: flex; justify-content: center; margin-bottom: 40px;">
+        <div class="member-row">
             <div class="member-card" style="border-top: 5px solid var(--ku-gold);">
                 <div class="image-frame"><img src="pres.jpg" alt=""></div>
                 <div class="card-info"><h3>นายศุภเสกย์ นิลเทพา</h3><p class="role">ประธานชุมนุม</p></div>
             </div>
         </div>
 
-        <div class="member-grid">
+        <div class="grid-4">
             <div class="member-card"><div class="image-frame"><img src="vp1.jpg" alt=""></div><div class="card-info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="vp2.jpg" alt=""></div><div class="card-info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="sec.jpg" alt=""></div><div class="card-info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div><div class="card-info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div></div>
         </div>
 
-        <div class="section-separator"><h2 class="section-label">กรรมการโครงการ</h2></div>
+        <div class="section-separator"><h2 class="section-label">คณะกรรมการโครงการ (6 ท่าน)</h2></div>
         
-        <div class="member-grid">
+        <div class="member-row">
             <div class="member-card"><div class="image-frame"><img src="staff1.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="staff2.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="staff3.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="staff4.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="staff5.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
             <div class="member-card"><div class="image-frame"><img src="staff6.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="staff7.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="staff8.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
-            <div class="member-card"><div class="image-frame"><img src="staff9.jpg" alt=""></div><div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div></div>
         </div>
     </div>
 
