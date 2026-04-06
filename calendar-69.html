@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ปฏิทินการศึกษา ปีการศึกษา 2569 — ม.เกษตรศาสตร์ กำแพงแสน</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Mali', cursive;
+    background: #f0ece4;
+    color: #1c1c1a;
+    padding: 2rem 1rem 4rem;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .header-top {
+    background: #1a5276;
+    color: #fff;
+    padding: 14px 24px 10px;
+    border-radius: 10px 10px 0 0;
+  }
+  .header-top h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .header-top h2 {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 3px;
+    opacity: 0.9;
+  }
+  .header-sub {
+    background: #2471a3;
+    color: #d6eaf8;
+    padding: 6px 24px;
+    font-size: 13px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 13px;
+    table-layout: fixed;
+  }
+  col.c-item  { width: 46%; }
+  col.c-s1    { width: 18%; }
+  col.c-s2    { width: 18%; }
+  col.c-s3    { width: 18%; }
+
+  /* Column header */
+  thead tr.col-head th {
+    background: #1a5276;
+    color: #fff;
+    padding: 10px 10px 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #155a8a;
+    line-height: 1.4;
+  }
+  thead tr.col-head th.th-item {
+    text-align: left;
+    padding-left: 14px;
+  }
+
+  /* Section heading rows */
+  tr.sec-head td {
+    background: #2471a3;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 10px 6px 14px;
+    border: 1px solid #1f618d;
+    letter-spacing: 0.01em;
+  }
+
+  /* Sub-section heading rows */
+  tr.subsec-head td {
+    background: #d6eaf8;
+    color: #1a5276;
+    font-weight: 600;
+    font-size: 12.5px;
+    padding: 5px 10px 4px 14px;
+    border: 1px solid #aed6f1;
+    font-style: italic;
+  }
+
+  /* Data rows */
+  tr.data-row td {
+    border: 1px solid #d5d8dc;
+    padding: 6px 10px 5px;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tr.data-row td.td-item {
+    padding-left: 14px;
+    color: #1c1c1a;
+  }
+  tr.data-row td.td-item.indent {
+    padding-left: 26px;
+    color: #2c3e50;
+    font-size: 12.5px;
+  }
+  tr.data-row td.td-date {
+    text-align: center;
+    color: #1c3a52;
+    font-size: 12.5px;
+    vertical-align: middle;
+  }
+  tr.data-row td.td-none {
+    text-align: center;
+    color: #b0b5bb;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+
+  /* Alternating rows */
+  tr.data-row:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  tr.data-row:nth-child(odd) td {
+    background: #fff;
+  }
+
+  /* Important date highlight */
+  .imp { color: #922b21; font-weight: 600; }
+  .warn { color: #7d6608; font-weight: 500; }
+  .new-student { color: #1e8449; font-weight: 500; }
+  .star { color: #c0392b; }
+
+  /* Footer note */
+  .footer-note {
+    background: #fff;
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 1rem;
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.8;
+  }
+  .footer-note strong { color: #1a5276; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+  }
+  .leg { display: flex; align-items: center; gap: 6px; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .d-imp { background: #922b21; }
+  .d-warn { background: #7d6608; }
+  .d-new { background: #1e8449; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .table-wrap { box-shadow: none; }
+  }
+  @media (max-width: 700px) {
+    table { font-size: 11px; }
+    col.c-item { width: 40%; }
+    col.c-s1, col.c-s2, col.c-s3 { width: 20%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-top">
+      <h1>ปฏิทินการศึกษา ปีการศึกษา 2569 ระดับปริญญาตรี</h1>
+      <h2>มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</h2>
+    </div>
+    <div class="header-sub">จัดทำโดย งานบริหารหลักสูตรและยุทธศาสตร์การศึกษา กองบริหารการศึกษา &nbsp;|&nbsp; วันที่ 27 มกราคม พ.ศ. 2569 (ปรับปรุง 22 มิ.ย. 2569)</div>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><span class="leg-dot d-imp"></span> <span class="imp">กำหนดการสำคัญ / วันสุดท้าย</span></div>
+    <div class="leg"><span class="leg-dot d-warn"></span> <span class="warn">มีค่าปรับ</span></div>
+    <div class="leg"><span class="leg-dot d-new"></span> <span class="new-student">นิสิตใหม่</span></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <colgroup>
+        <col class="c-item">
+        <col class="c-s1">
+        <col class="c-s2">
+        <col class="c-s3">
+      </colgroup>
+      <thead>
+        <tr class="col-head">
+          <th class="th-item">กำหนดการ</th>
+          <th>ภาคต้น 2569</th>
+          <th>ภาคปลาย 2569</th>
+          <th>ภาคฤดูร้อน<br>ปี พ.ศ. 2570</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- ===== นิสิตใหม่: สอบ KET ===== -->
+        <tr class="sec-head">
+          <td colspan="4">นิสิตใหม่ : สอบวัดผลภาษาอังกฤษเพื่อจัดชั้นเรียน (KET 1)</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent new-student">รอบที่ 1 (TCAS 1 – 2)</td>
+          <td class="td-date new-student">พฤ.7 – ศ.15 พ.ค. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent new-student">รอบที่ 2 (TCAS 3)</td>
+          <td class="td-date new-student">ส.6 – ศ.12 มิ.ย. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent new-student">รอบที่ 3 (TCAS 4)</td>
+          <td class="td-date new-student">อ.9 – ศ.12 มิ.ย. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== นิสิตใหม่: ขึ้นทะเบียน ===== -->
+        <tr class="sec-head">
+          <td colspan="4">นิสิตใหม่ : ขึ้นทะเบียนเป็นนิสิตใหม่ออนไลน์ และชำระเงินค่าธรรมเนียมการศึกษา</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent new-student">รอบที่ 1 (TCAS 1 – 2)</td>
+          <td class="td-date new-student">จ.25 พ.ค. – ศ.12 มิ.ย. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent new-student">รอบที่ 2 (TCAS 3 – 4)</td>
+          <td class="td-date new-student">ส.6 – ศ.12 มิ.ย. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ค่าธรรมเนียม ===== -->
+        <tr class="sec-head">
+          <td colspan="4">ค่าธรรมเนียมการศึกษาและการลงทะเบียนเรียน</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item">วันชำระเงินค่าธรรมเนียมการศึกษา<br><span style="font-size:12px;color:#666;">(นิสิตต้องชำระเงินก่อน 2 วันทำการ ก่อนวันลงทะเบียนเรียนของแต่ละชั้นปี)</span></td>
+          <td class="td-date">จ.25 พ.ค. – ศ.12 มิ.ย. 69</td>
+          <td class="td-date">จ.2 – ศ.13 พ.ย. 69</td>
+          <td class="td-date">อ.6 – พ.7 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item" style="font-size:12px;color:#444;">นิสิตที่มีหนี้สินค้างชำระ เนื่องจากกู้ยืมเงินจากกองทุน กรอ. และ กยศ. ไม่เพียงพอหรือขอผ่อนผันไว้ต้องชำระเงินให้เสร็จสิ้นก่อนการลงทะเบียนเรียน</td>
+          <td class="td-date" style="font-size:12px;color:#444;">จ.25 พ.ค. – ศ.12 มิ.ย. 69</td>
+          <td class="td-date" style="font-size:12px;color:#444;">จ.2 – ศ.13 พ.ย. 69</td>
+          <td class="td-date" style="font-size:12px;color:#444;">อ.6 – พ.7 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item" style="font-size:12px;color:#444;">นิสิตที่มีคะแนนเฉลี่ยสะสมต่ำกว่า 2.00 ต้องเข้าพบ อ.ที่ปรึกษา ก่อนการชำระเงินและลงทะเบียนเรียน เพื่อให้ อ.ที่ปรึกษาเห็นชอบและปลดล็อคการลงทะเบียนเรียนผ่านระบบ</td>
+          <td class="td-date" style="font-size:12px;color:#444;">จ.25 พ.ค. – ศ.12 มิ.ย. 69</td>
+          <td class="td-date" style="font-size:12px;color:#444;">จ.2 – ศ.13 พ.ย. 69</td>
+          <td class="td-none">–</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการรับคำร้องขอผ่อนผันค่าธรรมเนียมการศึกษา<br><span style="font-size:11.5px;font-weight:400;">ที่นำส่งถึงกองบริหารการศึกษา</span></td>
+          <td class="td-date imp">ศ.12 มิ.ย. 69</td>
+          <td class="td-date imp">ศ.13 พ.ย. 69</td>
+          <td class="td-date imp">พ.7 เม.ย. 70</td>
+        </tr>
+
+        <!-- ===== วันลงทะเบียน ===== -->
+        <tr class="sec-head">
+          <td colspan="4">วันลงทะเบียนเรียนสำหรับนิสิตที่ชำระเงินแล้ว</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตรหัส 66 และน้อยกว่า</td>
+          <td class="td-date">อ.16 มิ.ย. 69</td>
+          <td class="td-date">อ.17 พ.ย. 69</td>
+          <td class="td-date">พฤ.8 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตรหัส 67</td>
+          <td class="td-date">พ.17 มิ.ย. 69</td>
+          <td class="td-date">พฤ.19 พ.ย. 69</td>
+          <td class="td-date">พฤ.8 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตรหัส 68</td>
+          <td class="td-date">พฤ.18 มิ.ย. 69</td>
+          <td class="td-date">ศ.20 พ.ย. 69</td>
+          <td class="td-date">ศ.9 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตรหัส 69</td>
+          <td class="td-date">ศ.19 มิ.ย. 69</td>
+          <td class="td-date">พ.18 พ.ย. 69</td>
+          <td class="td-date">ศ.9 เม.ย. 70</td>
+        </tr>
+
+        <!-- ===== มคอ.3/4 ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการจัดทำรายละเอียดของรายวิชาออนไลน์ (มคอ.3 เดิม) และรายละเอียดของประสบการณ์ภาคสนามออนไลน์ (มคอ.4 เดิม)</td>
+          <td class="td-date imp">อา.21 มิ.ย. 69</td>
+          <td class="td-date imp">อา.22 พ.ย. 69</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== เปิดภาค ===== -->
+        <tr class="sec-head">
+          <td colspan="4"><span class="star">★</span> วันเปิดภาคการศึกษา (วันเริ่มการสอน) / วันเริ่มลงทะเบียนเรียนไม่ระบุสาขาวิชา / วันเริ่มคิดค่าปรับการลงทะเบียนเรียนล่าช้าและชำระเงินล่าช้า</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item imp">วันเปิดภาคการศึกษา <span class="star">★</span></td>
+          <td class="td-date imp">จ.22 มิ.ย. 69</td>
+          <td class="td-date imp">จ.23 พ.ย. 69</td>
+          <td class="td-date imp">จ.19 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item warn">วันลงทะเบียนเรียนสำหรับนิสิตที่ชำระเงินล่าช้าและลงทะเบียนเรียนไม่ทันตามวันและเวลาที่กำหนดให้ (มีค่าปรับ)</td>
+          <td class="td-date warn">จ.22 – ศ.26 มิ.ย. 69</td>
+          <td class="td-date warn">จ.23 – ศ.27 พ.ย. 69</td>
+          <td class="td-date warn">จ.19 – ศ.23 เม.ย. 70</td>
+        </tr>
+
+        <!-- ===== Add/Drop ===== -->
+        <tr class="sec-head">
+          <td colspan="4">วันเปลี่ยนแปลงรายวิชา (Add/Drop)</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent" style="font-size:12px;">งานเกษตรกำแพงแสน (ดูประกาศมหาวิทยาลัยอีกครั้ง)</td>
+          <td class="td-none">–</td>
+          <td class="td-date" style="font-size:12px;">อ.1 – พฤ.10 ธ.ค. 69</td>
+          <td class="td-none">–</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item warn">วันลงทะเบียนเรียนสำหรับนิสิตที่ชำระเงินผ่านธนาคารล่าช้าและลงทะเบียนเรียนไม่ทันตามวันและเวลาที่กำหนดให้<br><span style="font-size:11.5px;">วันเปลี่ยนแปลงรายวิชา (Add/Drop) KU3 online โดยต้องผ่านความเห็นชอบจาก อ.ผู้สอน</span></td>
+          <td class="td-date warn">จ.29 มิ.ย. – ศ.3 ก.ค. 69</td>
+          <td class="td-date warn">จ.30 พ.ย. – ศ.4 ธ.ค. 69</td>
+          <td class="td-date warn">จ.26 – ศ.30 เม.ย. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item" style="font-size:12px;color:#555;">วันพิมพ์ใบเสร็จรับเงิน (KU2) ออนไลน์</td>
+          <td class="td-date" style="font-size:12px;color:#555;">จ.29 มิ.ย. – ศ.3 ก.ค. 69</td>
+          <td class="td-date" style="font-size:12px;color:#555;">จ.30 พ.ย. – ศ.4 ธ.ค. 69</td>
+          <td class="td-date" style="font-size:12px;color:#555;">จ.26 – ศ.30 เม.ย. 70</td>
+        </tr>
+
+        <!-- ===== ถอนวิชา ไม่บันทึก W ===== -->
+        <tr class="data-row">
+          <td class="td-item">วันขอถอนวิชาเรียนบางรายวิชา <strong>โดยไม่บันทึกอักษร W</strong> ในใบรายงานผลการศึกษา</td>
+          <td class="td-date">ส.4 – อ.21 ก.ค. 69</td>
+          <td class="td-date">ส.5 – อ.22 ธ.ค. 69</td>
+          <td class="td-date">ส.1 – จ.24 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== คัดชื่อออก ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันคัดชื่อออกและพ้นสภาพการเป็นนิสิต</td>
+          <td class="td-date imp">จ.6 ก.ค. 69</td>
+          <td class="td-date imp">อ.8 ธ.ค. 69</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== วันไหว้ครู ===== -->
+        <tr class="data-row">
+          <td class="td-item" style="color:#555;">วันไหว้ครู (ดูประกาศมหาวิทยาลัยอีกครั้ง)</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ยื่นขอจบ ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของนิสิตที่คาดว่าจะสำเร็จการศึกษายื่นขอจบผ่านระบบ<br><span style="font-size:11.5px;font-weight:400;">นิสิตสามารถพิมพ์ได้ในวันถัดไปหลังจากชำระเงินค่าธรรมเนียมการศึกษาเรียบร้อยแล้ว</span></td>
+          <td class="td-date imp">อ.21 ก.ค. 69</td>
+          <td class="td-date imp">อ.22 ธ.ค. 69</td>
+          <td class="td-date imp">จ.24 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== ค่าปรับขอจบล่าช้า ===== -->
+        <tr class="data-row">
+          <td class="td-item warn">วันเริ่มคิดค่าธรรมเนียมขอจบล่าช้า</td>
+          <td class="td-date warn">พ.22 ก.ค. 69</td>
+          <td class="td-date warn">พ.23 ธ.ค. 69</td>
+          <td class="td-date warn">พ.19 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== ถอนวิชา บันทึก W (ไม่มีค่าปรับ) ===== -->
+        <tr class="data-row">
+          <td class="td-item">วันขอถอนวิชาเรียนบางรายวิชา <strong>โดยบันทึกอักษร W</strong> ในใบรายงานผลการศึกษา<br><span style="font-size:11.5px;color:#666;">(ไม่ต้องผ่านความเห็นชอบจากอาจารย์ผู้สอน)</span><br><span style="font-size:11.5px;color:#888;">หมายเหตุ : หากดำเนินการเรียบร้อยแล้ว นิสิตต้องพิมพ์รายงานการลงทะเบียนเรียนเก็บไว้เป็นหลักฐาน</span></td>
+          <td class="td-date">พ.22 ก.ค. – พฤ.20 ส.ค. 69</td>
+          <td class="td-date">พ.23 ธ.ค. 69 – พฤ.21 ม.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== Exit Exam ===== -->
+        <tr class="data-row">
+          <td class="td-item">วันทดสอบวัดความรู้ความสามารถด้านภาษาอังกฤษสำหรับนิสิตที่จะสำเร็จการศึกษา ระดับปริญญาตรี มหาวิทยาลัยเกษตรศาสตร์ (Exit-Exam)<br><span style="font-size:11.5px;color:#666;">*เฉพาะนิสิตรหัส 67 (หลักสูตร 4 ปี) / นิสิตรหัส 66 (หลักสูตร 5 และหลักสูตร 6 ปี)</span></td>
+          <td class="td-date">ช่วงเดือน มิ.ย. – ส.ค. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ประเมินการสอน ครั้งที่ 1 ===== -->
+        <tr class="data-row">
+          <td class="td-item">นิสิตกรอกแบบประเมินการสอน ครั้งที่ 1</td>
+          <td class="td-date">จ.10 – ศ.14 ส.ค. 69</td>
+          <td class="td-date">จ.4 – ศ.8 ม.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== สอบกลางภาค ===== -->
+        <tr class="sec-head">
+          <td colspan="4"><span class="star">★</span> วันสอบกลางภาค</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item imp">วันสอบกลางภาค <span class="star">★</span></td>
+          <td class="td-date imp">ส.15 – อา.23 ส.ค. 69</td>
+          <td class="td-date imp">ส.16 – อา.24 ม.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== คืนเงิน ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการขอคืนเงินค่าธรรมเนียมการศึกษาสำหรับกรณีได้รับการยกเว้น</td>
+          <td class="td-date imp">พฤ.20 ส.ค. 69</td>
+          <td class="td-date imp">พฤ.21 ม.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== อาจารย์ดูผลประเมิน ครั้งที่ 1 ===== -->
+        <tr class="data-row">
+          <td class="td-item">อาจารย์ดูสรุปผลประเมินการสอนของนิสิตผ่านเว็บ ครั้งที่ 1</td>
+          <td class="td-date">จ.24 ส.ค. 69</td>
+          <td class="td-date">จ.25 ม.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ถอนวิชา W (ผ่านอาจารย์ ไม่มีค่าปรับ) ===== -->
+        <tr class="data-row">
+          <td class="td-item">วันขอถอนวิชาเรียนบางรายวิชาผ่านระบบ <strong>โดยบันทึกอักษร W</strong> ในใบรายงานผลการศึกษา<br><span style="font-size:11.5px;color:#666;">(ต้องผ่านความเห็นชอบจากอาจารย์ผู้สอนและอาจารย์ที่ปรึกษา)</span></td>
+          <td class="td-date">ศ.21 ส.ค. – จ.7 ก.ย. 69</td>
+          <td class="td-date">ศ.29 ม.ค. – จ.8 ก.พ. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ถอนวิชา W (มีค่าปรับ) ===== -->
+        <tr class="data-row">
+          <td class="td-item warn">วันขอถอนวิชาเรียนบางรายวิชาผ่านระบบ <strong>โดยบันทึกอักษร W</strong> ในใบรายงานผลการศึกษา<br><span style="font-size:11.5px;">(ต้องผ่านความเห็นชอบจากอาจารย์ผู้สอนและอาจารย์ที่ปรึกษา และมีค่าปรับ)</span></td>
+          <td class="td-date warn">อ.8 ก.ย. – จ.12 ต.ค. 69</td>
+          <td class="td-date warn">อ.9 ก.พ. – จ.15 มี.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ซ้อมรับปริญญา ===== -->
+        <tr class="data-row">
+          <td class="td-item">วันซ้อมย่อยและซ้อมใหญ่พิธีพระราชทานปริญญาบัตร<br><span style="font-size:11.5px;color:#666;">(ดูประกาศมหาวิทยาลัยอีกครั้ง และไม่งดการเรียนการสอน)</span></td>
+          <td class="td-date">พ.30 ก.ย. – ส.3 ต.ค. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== พิธีรับปริญญา ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันพิธีพระราชทานปริญญาบัตร<br><span style="font-size:11.5px;font-weight:400;">(ดูประกาศมหาวิทยาลัยอีกครั้ง)</span></td>
+          <td class="td-date imp">จ.5 – พฤ.8 ต.ค. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== เทียบโอน ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการขอเทียบโอนรายวิชาสำหรับนิสิตเข้าใหม่และนิสิตโครงการเรียนล่วงหน้า</td>
+          <td class="td-date imp">พ.7 ต.ค. 69</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ประเมินการสอน ครั้งที่ 2 ===== -->
+        <tr class="data-row">
+          <td class="td-item">นิสิตทำแบบประเมินการสอนออนไลน์ ครั้งที่ 2<br>อาจารย์ทำแบบประเมินตนเองออนไลน์</td>
+          <td class="td-date">จ.12 – ศ.16 ต.ค. 69</td>
+          <td class="td-date">จ.15 – ศ.19 มี.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== ส่งใบขอจบล่าช้า ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการส่งใบขอจบการศึกษาล่าช้า ถึงกองบริหารการศึกษา<br>วันสุดท้ายของการส่งเอกสารขอลาพักการศึกษา ถึงกองบริหารการศึกษา</td>
+          <td class="td-date imp">ศ.16 ต.ค. 69</td>
+          <td class="td-date imp">ศ.12 มี.ค. 70</td>
+          <td class="td-date imp">ศ.28 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== วันสุดท้ายสอน ===== -->
+        <tr class="sec-head">
+          <td colspan="4">วันสุดท้ายของการสอนนิสิตระดับปริญญาตรี</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตภาคปกติ</td>
+          <td class="td-date">ศ.16 ต.ค. 69</td>
+          <td class="td-date">ศ.12 มี.ค. 70</td>
+          <td class="td-date">ศ.28 พ.ค. 70</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item indent">นิสิตภาคพิเศษ</td>
+          <td class="td-date">อา.18 ต.ค. 69</td>
+          <td class="td-date">อา.14 มี.ค. 70</td>
+          <td class="td-date">ศ.28 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== สอบไล่ ===== -->
+        <tr class="sec-head">
+          <td colspan="4"><span class="star">★</span> วันสอบไล่</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item imp">วันสอบไล่ <span class="star">★</span></td>
+          <td class="td-date imp">จ.19 – ศ.30 ต.ค. 69</td>
+          <td class="td-date imp">จ.15 – ศ.26 มี.ค. 70</td>
+          <td class="td-date imp">ส.29 – จ.31 พ.ค. 70</td>
+        </tr>
+
+        <!-- ===== ปิดภาค ===== -->
+        <tr class="sec-head">
+          <td colspan="4"><span class="star">★</span> วันปิดภาคการศึกษา (วันจบการศึกษา)</td>
+        </tr>
+        <tr class="data-row">
+          <td class="td-item imp">วันปิดภาคการศึกษา <span class="star">★</span></td>
+          <td class="td-date imp">จ.2 พ.ย. 69</td>
+          <td class="td-date imp">จ.29 มี.ค. 70</td>
+          <td class="td-date imp">อ.1 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== บันทึกกิจกรรม ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการบันทึกข้อมูลกิจกรรม</td>
+          <td class="td-none">–</td>
+          <td class="td-none">–</td>
+          <td class="td-date imp">อ.1 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== ยื่นผลภาษาอังกฤษ ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการยื่นผลการทดสอบภาษาอังกฤษสำหรับนิสิตที่ไม่ได้เข้าทดสอบตามที่มหาวิทยาลัยกำหนด</td>
+          <td class="td-date imp">จ.2 พ.ย. 69</td>
+          <td class="td-date imp">จ.29 มี.ค. 70</td>
+          <td class="td-date imp">อ.1 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== ส่งคะแนนสอบไล่ ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการส่งคะแนนสอบไล่</td>
+          <td class="td-date imp">พฤ.12 พ.ย. 69</td>
+          <td class="td-date imp">พ.7 เม.ย. 70</td>
+          <td class="td-date imp">ศ.11 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== อาจารย์ดูผลประเมิน ครั้งที่ 2 ===== -->
+        <tr class="data-row">
+          <td class="td-item">อาจารย์ดูสรุปผลประเมินการสอนของนิสิต ครั้งที่ 2</td>
+          <td class="td-date">จ.16 พ.ย. 69</td>
+          <td class="td-date">จ.12 เม.ย. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== เปลี่ยนแปลงคะแนน ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการเปลี่ยนแปลงคะแนนสำหรับนิสิตที่ขอจบการศึกษา</td>
+          <td class="td-date imp">พฤ.19 พ.ย. 69</td>
+          <td class="td-date imp">ศ.16 เม.ย. 70</td>
+          <td class="td-date imp">ศ.18 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== บันทึกขอจบล่าช้า ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการบันทึกขอจบการศึกษาล่าช้า</td>
+          <td class="td-date imp">จ.23 พ.ย. 69</td>
+          <td class="td-date imp">จ.26 เม.ย. 70</td>
+          <td class="td-date imp">พฤ.24 มิ.ย. 70</td>
+        </tr>
+
+        <!-- ===== มคอ.5/6 ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการรายงานผลการดำเนินงานของรายวิชาออนไลน์ (มคอ.5 เดิม) และรายงานผลการดำเนินการของประสบการณ์ภาคสนามออนไลน์ (มคอ.6 เดิม)</td>
+          <td class="td-date imp">พ.2 ธ.ค. 69</td>
+          <td class="td-date imp">พ.28 เม.ย. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+        <!-- ===== แก้ไข I และ N ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการแก้ไขคะแนน I และ N <span class="star">★</span><br><span style="font-size:11.5px;font-weight:400;">หากไม่ปฏิบัติตามนี้ ให้ถือว่าปรับระดับคะแนนเป็น F โดยอัตโนมัติ</span></td>
+          <td class="td-date imp">ศ.11 ธ.ค. 69</td>
+          <td class="td-date imp">ศ.7 พ.ค. 70</td>
+          <td class="td-date imp">ศ.9 ก.ค. 70</td>
+        </tr>
+
+        <!-- ===== มคอ.7 ===== -->
+        <tr class="data-row">
+          <td class="td-item imp">วันสุดท้ายของการรายงานผลการดำเนินการของหลักสูตร (มคอ.7 เดิม)<br><span style="font-size:11.5px;font-weight:400;">งานบริหารหลักสูตรและยุทธศาสตร์การศึกษา กองบริหารการศึกษา</span></td>
+          <td class="td-none">–</td>
+          <td class="td-date imp">ศ.28 พ.ค. 70</td>
+          <td class="td-none">–</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-note">
+    <strong>หมายเหตุ :</strong><br>
+    1) นิสิตสามารถตรวจสอบวันลงทะเบียนเรียนในระบบ<br>
+    2) กรณีที่นิสิตไม่สามารถลงทะเบียนเรียนได้ทันตามเวลาที่กำหนดให้ในวันนั้น ๆ นิสิตสามารถลงทะเบียนเรียนได้อีกครั้งในช่วงเวลา <strong>18.00 น. จนถึง 23.59 น.</strong><br>
+    3) <span class="star">★</span> หมายถึงวันสำคัญที่ระบุในปฏิทินการศึกษา &nbsp;|&nbsp; <span class="imp">สีแดง</span> = กำหนดการสำคัญ/วันสุดท้าย &nbsp;|&nbsp; <span class="warn">สีเหลือง</span> = มีค่าปรับ &nbsp;|&nbsp; <span class="new-student">สีเขียว</span> = นิสิตใหม่
+  </div>
+
+</div>
+</body>
+</html>
