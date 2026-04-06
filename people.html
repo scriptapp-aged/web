@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คณะกรรมการฟาร์ม 2569 | KU KPS</title>
+    <title>ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน | KU KPS</title>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -26,25 +26,41 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* --- ✨ Header: คณะกรรมการฟาร์ม ปีการศึกษา 2569 --- */
-        .header-container { text-align: center; padding: 60px 20px; position: relative; }
+        /* --- ✨ Header --- */
+        .header-container { text-align: center; padding: 40px 20px 20px; position: relative; }
         .faculty-label { font-size: 0.85rem; color: #94a3b8; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 15px; display: block; }
         
         .main-web-title {
-            font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; letter-spacing: -1px;
+            font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; letter-spacing: -1px;
             background: linear-gradient(135deg, #004d26 0%, #006633 50%, #008f4c 100%);
             -webkit-background-clip: text; background-clip: text; color: transparent;
-            position: relative; display: inline-block;
         }
 
-        .main-web-title::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg); animation: shimmer 4s infinite;
+        .sub-header-title {
+            font-size: 1.5rem; color: var(--ku-gold); margin-top: 10px; font-weight: 500;
+            transition: all 0.3s ease;
         }
-        @keyframes shimmer { 0% { left: -100%; } 30%, 100% { left: 200%; } }
 
-        /* --- 🖼️ Card Style (Center Text) --- */
+        /* --- 🧭 Navigation Menu --- */
+        .nav-menu {
+            display: flex; justify-content: center; gap: 15px; margin: 30px 0 50px;
+        }
+
+        .nav-btn {
+            padding: 12px 30px; border: 2px solid var(--ku-green); border-radius: 50px;
+            background: transparent; color: var(--ku-green); font-weight: 500; cursor: pointer;
+            transition: 0.3s; font-size: 1.1rem;
+        }
+
+        .nav-btn.active { background: var(--ku-green); color: white; box-shadow: 0 10px 20px rgba(0,102,51,0.2); }
+        .nav-btn:hover { transform: translateY(-3px); }
+
+        /* --- 🖼️ Card Style --- */
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .committee-row { display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; flex-wrap: wrap; }
         
         .member-card {
@@ -67,17 +83,12 @@
         .card-info .role { font-size: 0.85rem; color: var(--ku-gold); font-weight: 500; }
         .special-card { border-top: 5px solid var(--ku-gold); background: #fffdf9; }
 
-        /* --- 🏷️ กรรมการ (ลูกเล่นขีดกลาง) --- */
-        .section-separator { margin: 80px 0 50px; display: flex; align-items: center; justify-content: center; gap: 20px; }
+        .section-separator { margin: 60px 0 40px; display: flex; align-items: center; justify-content: center; gap: 20px; }
         .section-separator::before, .section-separator::after { content: ''; height: 1px; flex-grow: 1; background: linear-gradient(90deg, transparent, #cbd5e1, transparent); }
+        .section-label { font-size: 1.8rem; font-weight: 700; color: var(--ku-green); letter-spacing: 8px; }
 
-        .section-label { font-size: 1.8rem; font-weight: 700; color: var(--ku-green); letter-spacing: 8px; position: relative; }
-        .section-label::after { content: 'Committee'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; color: var(--ku-gold); letter-spacing: 3px; opacity: 0.7; }
-
-        /* Grid กรรมการ 6 คน */
         .project-grid {
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* แถวละ 3 คน */
+            display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 30px; max-width: 900px; margin: 0 auto;
         }
 
@@ -89,7 +100,7 @@
         .back-home:hover { background: var(--ku-green); transform: translateX(-10px); }
 
         @media (max-width: 1024px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } .main-web-title { font-size: 2.2rem; } }
+        @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } .main-web-title { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
@@ -97,75 +108,84 @@
 <div class="container">
     <header class="header-container">
         <span class="faculty-label">Faculty of Education and Development Sciences</span>
-        <h1 class="main-web-title">คณะกรรมการฟาร์ม ปีการศึกษา 2569</h1>
-        <div style="width: 100px; height: 4px; background: var(--ku-gold); margin: 20px auto 0; border-radius: 10px;"></div>
+        <h1 class="main-web-title">ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</h1>
+        <h2 id="sub-title-display" class="sub-header-title">คณาจารย์ประจำภาควิชา</h2>
+        <div style="width: 80px; height: 4px; background: var(--ku-gold); margin: 15px auto 0; border-radius: 10px;"></div>
     </header>
 
-    <div class="committee-row">
-        <div class="member-card">
-            <div class="image-frame"><img src="12.jpg" alt=""></div>
-            <div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="web.jpg" alt=""></div>
-            <div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
-        </div>
+    <nav class="nav-menu">
+        <button class="nav-btn active" onclick="switchTab('teachers', 'คณาจารย์ประจำภาควิชา')">คณาจารย์</button>
+        <button class="nav-btn" onclick="switchTab('students', 'คณะกรรมการฟาร์มนิสิต ปีการศึกษา 2569')">ชุมนุมฟาร์มนิสิต</button>
+    </nav>
+
+    <div id="tab-teachers" class="tab-content active">
+        <div class="committee-row">
+            <div class="member-card">
+                <div class="image-frame"><img src="12.jpg" alt=""></div>
+                <div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ประจำภาควิชา</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="web.jpg" alt=""></div>
+                <div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ประจำภาควิชา</p></div>
+            </div>
+            </div>
     </div>
 
-    <div class="committee-row">
-        <div class="member-card special-card" style="max-width: 290px;">
-            <div class="image-frame" style="height: 310px;"><img src="pres.jpg" alt=""></div>
-            <div class="card-info"><h3>นายศุภเสกย์ นิลเทพา</h3><p class="role">ประธานชุมนุม</p></div>
+    <div id="tab-students" class="tab-content">
+        <div class="committee-row">
+            <div class="member-card">
+                <div class="image-frame"><img src="12.jpg" alt=""></div>
+                <div class="card-info"><h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="web.jpg" alt=""></div>
+                <div class="card-info"><h3>อ.ดร.อรวรรณ บุญทัน</h3><p class="role">อาจารย์ที่ปรึกษาชุมนุม</p></div>
+            </div>
         </div>
-    </div>
 
-    <div class="committee-row">
-        <div class="member-card">
-            <div class="image-frame"><img src="vp1.jpg" alt=""></div>
-            <div class="card-info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div>
+        <div class="committee-row">
+            <div class="member-card special-card" style="max-width: 290px;">
+                <div class="image-frame" style="height: 310px;"><img src="pres.jpg" alt=""></div>
+                <div class="card-info"><h3>นายศุภเสกย์ นิลเทพา</h3><p class="role">ประธานชุมนุม</p></div>
+            </div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="vp2.jpg" alt=""></div>
-            <div class="card-info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="sec.jpg" alt=""></div>
-            <div class="card-info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div>
-            <div class="card-info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div>
-        </div>
-    </div>
 
-    <div class="section-separator">
-        <h2 class="section-label">กรรมการ</h2>
-    </div>
-    
-    <div class="project-grid">
-        <div class="member-card">
-            <div class="image-frame"><img src="staff1.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div>
+        <div class="committee-row">
+            <div class="member-card">
+                <div class="image-frame"><img src="vp1.jpg" alt=""></div>
+                <div class="card-info"><h3>นายกนกพล แซ่แต้</h3><p class="role">รองประธานคนที่ 1</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="vp2.jpg" alt=""></div>
+                <div class="card-info"><h3>นายธีระพล สมพงษ์</h3><p class="role">รองประธานคนที่ 2</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="sec.jpg" alt=""></div>
+                <div class="card-info"><h3>นางสาวทรายขวัญ วาปีโท</h3><p class="role">เลขานุการ</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="IMG_1699.JPEG" alt=""></div>
+                <div class="card-info"><h3>นายเมธี ใจสุขดี</h3><p class="role">เหรัญญิก</p></div>
+            </div>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff2.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div>
+
+        <div class="section-separator">
+            <h2 class="section-label">กรรมการ</h2>
         </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff3.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff4.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff5.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
-        </div>
-        <div class="member-card">
-            <div class="image-frame"><img src="staff6.jpg" alt=""></div>
-            <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">กรรมการ</p></div>
+        
+        <div class="project-grid">
+            <div class="member-card">
+                <div class="image-frame"><img src="staff1.jpg" alt=""></div>
+                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการเห็ด</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="staff2.jpg" alt=""></div>
+                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการไฮโดรโปนิกส์</p></div>
+            </div>
+            <div class="member-card">
+                <div class="image-frame"><img src="staff3.jpg" alt=""></div>
+                <div class="card-info"><h3>ชื่อ-นามสกุล</h3><p class="role">ประธานโครงการแคสตัส</p></div>
+            </div>
         </div>
     </div>
 
@@ -173,6 +193,23 @@
         <a href="index.html" class="back-home"><i class="fas fa-home" style="margin-right: 12px;"></i> BACK TO HOME</a>
     </div>
 </div>
+
+<script>
+    function switchTab(tabName, subTitle) {
+        // 1. จัดการ Class Active ของปุ่มเมนู
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        // 2. สลับการแสดงผล Content
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+
+        // 3. เปลี่ยนชื่อหัวข้อรอง
+        document.getElementById('sub-title-display').innerText = subTitle;
+    }
+</script>
 
 </body>
 </html>
