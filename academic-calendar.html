@@ -3,140 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Year Selection</title>
+    <title>ปฏิทินการศึกษา 2567-2569</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-red: #e11d48;
+            --navy-blue: #0000aa;
+            --bg-light-cyan: #f0ffff;
+        }
+
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: #f0f2f5;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .calendar-container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* ส่วนหัวและปุ่มสลับปี */
+        .header-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .fire-icon { color: var(--primary-red); font-size: 32px; }
+
+        .year-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--primary-red);
+            margin: 0;
+        }
+
+        .year-selector {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .year-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Kanit', sans-serif;
+            transition: 0.2s;
+        }
+
+        .year-btn.active {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+
+        /* โครงสร้างตารางตามภาพ */
+        .main-card {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .term-header {
+            background-color: var(--navy-blue);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .term-body {
+            background-color: var(--bg-light-cyan);
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* การ์ดภาคเรียน */
+        .semester-card {
+            background: white;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 50px;
-            gap: 40px;
+            justify-content: center;
+            border-radius: 4px;
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s;
         }
 
-        h3 { color: #64748b; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
-        .section { text-align: center; }
-
-        /* --- สไตล์ที่ 1: Modern Card Buttons --- */
-        .modern-wrapper {
-            display: flex;
-            gap: 15px;
+        .semester-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .btn-modern {
-            padding: 15px 30px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 15px;
-            cursor: pointer;
+
+        .book-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .semester-name {
+            font-size: 22px;
             font-weight: 600;
-            color: #475569;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-modern:hover {
-            border-color: #2563eb;
-            color: #2563eb;
-            transform: translateY(-3px);
-        }
-        .btn-modern.active {
-            background: #2563eb;
-            border-color: #2563eb;
-            color: white;
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+            white-space: nowrap;
         }
 
-        /* --- สไตล์ที่ 2: Capsule Pill (Minimal) --- */
-        .pill-container {
-            background: #e2e8f0;
-            padding: 6px;
-            border-radius: 50px;
-            display: inline-flex;
-            gap: 5px;
-        }
-        .btn-pill {
-            border: none;
-            padding: 10px 25px;
-            border-radius: 50px;
-            background: transparent;
-            cursor: pointer;
-            font-weight: 500;
-            color: #64748b;
-            transition: 0.3s;
-        }
-        .btn-pill.active {
-            background: white;
-            color: #1e293b;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
+        /* สีไอคอนแยกตามเทอม */
+        .icon-t1 { fill: #8b3a3a; } /* แดงเข้ม */
+        .icon-t2 { fill: #4a773c; } /* เขียว */
+        .icon-summer { fill: #8b5a8b; } /* ม่วง */
 
-        /* --- สไตล์ที่ 3: Gradient Outline --- */
-        .gradient-wrapper {
-            display: flex;
-            gap: 10px;
+        @media (max-width: 600px) {
+            .term-body { grid-template-columns: 1fr; }
+            .header-section { flex-direction: column; align-items: flex-start; }
+            .year-selector { margin-left: 0; margin-top: 10px; }
         }
-        .btn-grad {
-            padding: 10px 20px;
-            border: 2px solid transparent;
-            background: linear-gradient(white, white) padding-box,
-                        linear-gradient(45deg, #3b82f6, #8b5cf6) border-box;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #3b82f6;
-        }
-        .btn-grad.active {
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-            color: white;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="section">
-        <h3>Style 1: Modern Cards</h3>
-        <div class="modern-wrapper">
-            <button class="btn-modern active" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2567</button>
-            <button class="btn-modern" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2568</button>
-            <button class="btn-modern" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2569</button>
+<div class="calendar-container">
+    <div class="header-section">
+        <span class="fire-icon">🔥</span>
+        <h1 class="year-title" id="displayYear">ปีการศึกษา 2567</h1>
+        
+        <div class="year-selector">
+            <button class="year-btn active" onclick="changeYear('2567', this)">2567</button>
+            <button class="year-btn" onclick="changeYear('2568', this)">2568</button>
+            <button class="year-btn" onclick="changeYear('2569', this)">2569</button>
         </div>
     </div>
 
-    <div class="section">
-        <h3>Style 2: Capsule Pill</h3>
-        <div class="pill-container">
-            <button class="btn-pill active" onclick="setActive(this, 'btn-pill')">2567</button>
-            <button class="btn-pill" onclick="setActive(this, 'btn-pill')">2568</button>
-            <button class="btn-pill" onclick="setActive(this, 'btn-pill')">2569</button>
+    <div class="main-card">
+        <div class="term-header">ภาคปกติ</div>
+        <div class="term-body">
+            
+            <a href="#" class="semester-card">
+                <svg class="book-icon icon-t1" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <div class="semester-name">ภาคเรียนที่ 1</div>
+            </a>
+
+            <a href="#" class="semester-card">
+                <svg class="book-icon icon-t2" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <div class="semester-name">ภาคเรียนที่ 2</div>
+            </a>
+
+            <a href="#" class="semester-card">
+                <svg class="book-icon icon-summer" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <div class="semester-name">ภาคฤดูร้อน</div>
+            </a>
+
         </div>
     </div>
+</div>
 
-    <div class="section">
-        <h3>Style 3: Gradient Border</h3>
-        <div class="gradient-wrapper">
-            <button class="btn-grad active" onclick="setActive(this, 'btn-grad')">พ.ศ. 2567</button>
-            <button class="btn-grad" onclick="setActive(this, 'btn-grad')">พ.ศ. 2568</button>
-            <button class="btn-grad" onclick="setActive(this, 'btn-grad')">พ.ศ. 2569</button>
-        </div>
-    </div>
-
-    <script>
-        function setActive(element, className) {
-            // ค้นหาปุ่มทั้งหมดในกลุ่มเดียวกัน (ใช้ Class Name)
-            const buttons = document.getElementsByClassName(className);
-            
-            // ลบ Class 'active' ออกจากปุ่มทั้งหมดในกลุ่มนั้น
-            for (let btn of buttons) {
-                btn.classList.remove('active');
-            }
-            
-            // เพิ่ม Class 'active' ให้กับปุ่มที่ถูกกด
-            element.classList.add('active');
-            
-            // แสดง Log ใน Console (ไว้สำหรับเอาไปเขียนเงื่อนไขเปิด-ปิดเนื้อหาต่อ)
-            console.log("Selected Year: " + element.innerText);
-        }
-    </script>
+<script>
+    function changeYear(year, btn) {
+        // เปลี่ยนข้อความหัวข้อ
+        document.getElementById('displayYear').innerText = 'ปีการศึกษา ' + year;
+        
+        // สลับ Class Active ของปุ่ม
+        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // คุณสามารถเพิ่ม Logic การเปลี่ยน Link หรือข้อมูลตรงนี้ได้
+        console.log("เปลี่ยนข้อมูลเป็นปี: " + year);
+    }
+</script>
 
 </body>
 </html>
