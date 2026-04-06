@@ -3,99 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปฏิทินการศึกษา 2567-2569</title>
+    <title>Academic Year Selection</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #64748b;
-            --bg: #f8fafc;
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            gap: 40px;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #1e293b; margin-bottom: 2rem; }
-        
-        /* Tabs System */
-        .tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 20px; border: none; background: #e2e8f0; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s; }
-        .tab-btn.active { background: var(--primary); color: white; }
-        
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s; }
 
-        /* Table Style */
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background: #f1f5f9; color: var(--secondary); text-transform: uppercase; font-size: 0.85rem; }
-        tr:hover { background: #f8fafc; }
-        .semester-header { background: #eff6ff; font-weight: bold; color: var(--primary); }
+        h3 { color: #64748b; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
+        .section { text-align: center; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- สไตล์ที่ 1: Modern Card Buttons --- */
+        .modern-wrapper {
+            display: flex;
+            gap: 15px;
+        }
+        .btn-modern {
+            padding: 15px 30px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-modern:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            transform: translateY(-3px);
+        }
+        .btn-modern.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        /* --- สไตล์ที่ 2: Capsule Pill (Minimal) --- */
+        .pill-container {
+            background: #e2e8f0;
+            padding: 6px;
+            border-radius: 50px;
+            display: inline-flex;
+            gap: 5px;
+        }
+        .btn-pill {
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #64748b;
+            transition: 0.3s;
+        }
+        .btn-pill.active {
+            background: white;
+            color: #1e293b;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- สไตล์ที่ 3: Gradient Outline --- */
+        .gradient-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-grad {
+            padding: 10px 20px;
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #3b82f6, #8b5cf6) border-box;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .btn-grad.active {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🗓️ ปฏิทินการศึกษา</h1>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'y2567')">ปีการศึกษา 2567</button>
-        <button class="tab-btn" onclick="openTab(event, 'y2568')">ปีการศึกษา 2568</button>
-        <button class="tab-btn" onclick="openTab(event, 'y2569')">ปีการศึกษา 2569</button>
+    <div class="section">
+        <h3>Style 1: Modern Cards</h3>
+        <div class="modern-wrapper">
+            <button class="btn-modern active" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2567</button>
+            <button class="btn-modern" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2568</button>
+            <button class="btn-modern" onclick="setActive(this, 'btn-modern')">ปีการศึกษา 2569</button>
+        </div>
     </div>
 
-    <div id="y2567" class="tab-content active">
-        <table>
-            <thead>
-                <tr><th>วันที่ / ช่วงเวลา</th><th>กิจกรรมการศึกษา</th></tr>
-            </thead>
-            <tbody>
-                <tr class="semester-header"><td colspan="2">ภาคการศึกษาที่ 1/2567</td></tr>
-                <tr><td>มิถุนายน 2567</td><td>เปิดภาคการศึกษา / ลงทะเบียนเรียน</td></tr>
-                <tr><td>สิงหาคม 2567</td><td>สอบกลางภาค</td></tr>
-                <tr><td>ตุลาคม 2567</td><td>สอบปลายภาค / ปิดภาคเรียน</td></tr>
-            </tbody>
-        </table>
+    <div class="section">
+        <h3>Style 2: Capsule Pill</h3>
+        <div class="pill-container">
+            <button class="btn-pill active" onclick="setActive(this, 'btn-pill')">2567</button>
+            <button class="btn-pill" onclick="setActive(this, 'btn-pill')">2568</button>
+            <button class="btn-pill" onclick="setActive(this, 'btn-pill')">2569</button>
+        </div>
     </div>
 
-    <div id="y2568" class="tab-content">
-        <table>
-            <thead>
-                <tr><th>วันที่ / ช่วงเวลา</th><th>กิจกรรมการศึกษา</th></tr>
-            </thead>
-            <tbody>
-                <tr class="semester-header"><td colspan="2">ภาคการศึกษาที่ 1/2568</td></tr>
-                <tr><td>มิถุนายน 2568</td><td>รายงานตัวนักศึกษาใหม่</td></tr>
-                <tr><td>กันยายน 2568</td><td>กิจกรรมกีฬาสี / สัปดาห์วิชาการ</td></tr>
-            </tbody>
-        </table>
+    <div class="section">
+        <h3>Style 3: Gradient Border</h3>
+        <div class="gradient-wrapper">
+            <button class="btn-grad active" onclick="setActive(this, 'btn-grad')">พ.ศ. 2567</button>
+            <button class="btn-grad" onclick="setActive(this, 'btn-grad')">พ.ศ. 2568</button>
+            <button class="btn-grad" onclick="setActive(this, 'btn-grad')">พ.ศ. 2569</button>
+        </div>
     </div>
 
-    <div id="y2569" class="tab-content">
-        <table>
-            <thead>
-                <tr><th>วันที่ / ช่วงเวลา</th><th>กิจกรรมการศึกษา</th></tr>
-            </thead>
-            <tbody>
-                <tr class="semester-header"><td colspan="2">ภาคการศึกษาที่ 1/2569</td></tr>
-                <tr><td>พฤษภาคม 2569</td><td>ปฐมนิเทศนักศึกษาใหม่</td></tr>
-                <tr><td>กรกฎาคม 2569</td><td>วันไหว้ครูประจำปีการศึกษา</td></tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
-        document.getElementById(tabName).style.display = "block";
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.className += " active";
-    }
-</script>
+    <script>
+        function setActive(element, className) {
+            // ค้นหาปุ่มทั้งหมดในกลุ่มเดียวกัน (ใช้ Class Name)
+            const buttons = document.getElementsByClassName(className);
+            
+            // ลบ Class 'active' ออกจากปุ่มทั้งหมดในกลุ่มนั้น
+            for (let btn of buttons) {
+                btn.classList.remove('active');
+            }
+            
+            // เพิ่ม Class 'active' ให้กับปุ่มที่ถูกกด
+            element.classList.add('active');
+            
+            // แสดง Log ใน Console (ไว้สำหรับเอาไปเขียนเงื่อนไขเปิด-ปิดเนื้อหาต่อ)
+            console.log("Selected Year: " + element.innerText);
+        }
+    </script>
 
 </body>
 </html>
