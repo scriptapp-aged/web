@@ -8,76 +8,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Kanit', sans-serif; }
-        .hero-bg { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&q=80&w=1920'); background-size: cover; background-position: center; }
+        .hero-section {
+            background: linear-gradient(rgba(20, 54, 1, 0.7), rgba(20, 54, 1, 0.7)), 
+                        url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .card-hover:hover { transform: translateY(-10px); transition: all 0.3s ease; }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="bg-gray-50 text-gray-800">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-green-700">🌱 ฟาร์มนิสิต 2569</div>
-            <div class="hidden md:flex space-x-6 text-gray-600">
-                <a href="#home" class="hover:text-green-600">หน้าแรก</a>
-                <a href="#projects" class="hover:text-green-600">โครงการ</a>
-                <a href="#contact" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">ติดต่อเรา</a>
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🚜</span>
+                <span class="text-xl font-bold text-green-800 tracking-tight">ชุมนุมฟาร์มนิสิต</span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-medium">
+                <a href="#" class="text-green-700">หน้าหลัก</a>
+                <a href="#projects" class="hover:text-green-600 transition">โครงการปี 2569</a>
+                <a href="#" class="hover:text-green-600 transition">เกี่ยวกับเรา</a>
             </div>
         </div>
     </nav>
 
-    <header id="home" class="hero-bg h-[500px] flex items-center justify-center text-center text-white px-4">
+    <section class="hero-section h-[500px] flex items-center justify-center text-center text-white px-4">
         <div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">ชุมนุมฟาร์มนิสิต EDS</h1>
-            <p class="text-xl md:text-2xl font-light">ก้าวสู่เกษตรอัจฉริยะและความยั่งยืน ปีการศึกษา 2569</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">ชุมนุมฟาร์มนิสิต</h1>
+            <p class="text-xl md:text-2xl font-light mb-8 opacity-90">โครงการประจำปีการศึกษา 2569</p>
+            <a href="#projects" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-lg">
+                ดูโครงการทั้งหมด
+            </a>
         </div>
-    </header>
+    </section>
 
-    <main id="projects" class="max-w-7xl mx-auto py-16 px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-800">โครงการหลักในปีนี้</h2>
-            <div class="w-20 h-1 bg-green-500 mx-auto mt-4"></div>
+    <section id="projects" class="max-w-7xl mx-auto py-20 px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">โครงการส่งเสริมศักยภาพเกษตรกรรม</h2>
+            <p class="text-gray-500">มุ่งเน้นนวัตกรรม ความยั่งยืน และการแบ่งปันความรู้สู่สังคม</p>
+            <div class="w-24 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
             
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-105">
-                <div class="bg-green-100 p-6 text-5xl flex justify-center">🌱</div>
-                <div class="p-6">
-                    <h3 class="font-bold text-xl mb-3 text-green-800">เกษตรน้องใหม่หัวใจ EDS</h3>
-                    <p class="text-gray-600">สร้างพื้นฐานและปลูกจิตสำนึกด้านการเกษตรสมัยใหม่ให้กับนิสิตใหม่ที่มีหัวใจรักธรรมชาติ</p>
-                </div>
+            <div class="card-hover bg-white rounded-3xl p-8 shadow-md border border-gray-100 flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🌱</div>
+                <h3 class="text-xl font-bold text-green-900 mb-4">โครงการเกษตรน้องใหม่<br>หัวใจ EDS</h3>
+                <p class="text-gray-600 leading-relaxed">
+                    การปูพื้นฐานการเกษตรสมัยใหม่ให้กับนิสิตชั้นปีที่ 1 เพื่อสร้างแรงบันดาลใจและทักษะการเป็นเกษตรกรอัจฉริยะ
+                </p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-105 border-t-4 border-orange-400">
-                <div class="bg-orange-50 p-6 text-5xl flex justify-center">♻️</div>
-                <div class="p-6">
-                    <h3 class="font-bold text-xl mb-3 text-orange-800">Zero Waste & Organic Fertilizer</h3>
-                    <p class="text-gray-600 font-semibold mb-2">นวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง</p>
-                    <p class="text-sm text-gray-500">จัดการขยะอย่างเป็นระบบ เพื่อสร้างปุ๋ยอินทรีย์ที่ยั่งยืนระดับ Innovation Hub</p>
-                </div>
+            <div class="card-hover bg-green-900 rounded-3xl p-8 shadow-xl flex flex-col items-center text-center text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 bg-yellow-400 text-green-900 text-xs font-bold uppercase tracking-widest">Highlight</div>
+                <div class="w-16 h-16 bg-green-800 rounded-2xl flex items-center justify-center text-3xl mb-6">♻️</div>
+                <h3 class="text-xl font-bold mb-4">โครงการจัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูงเพื่อความยั่งยืน</h3>
+                <p class="text-green-100/80 leading-relaxed mb-4">
+                    (Zero waste & organic Fertilizer Innovation Hub) ศูนย์กลางการเปลี่ยนขยะให้เป็นทรัพยากรล้ำค่า
+                </p>
+                <div class="mt-auto text-yellow-400 text-sm font-medium italic">#ZeroWaste #Sustainability</div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition hover:scale-105">
-                <div class="bg-blue-50 p-6 text-5xl flex justify-center">🏫</div>
-                <div class="p-6">
-                    <h3 class="font-bold text-xl mb-3 text-blue-800">เกษตรพอเพียงสู่โรงเรียน</h3>
-                    <p class="text-gray-600">ถ่ายทอดองค์ความรู้ตามหลักปรัชญาเศรษฐกิจพอเพียง พัฒนาแหล่งเรียนรู้ในชุมชนและโรงเรียน</p>
-                </div>
+            <div class="card-hover bg-white rounded-3xl p-8 shadow-md border border-gray-100 flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🏫</div>
+                <h3 class="text-xl font-bold text-green-900 mb-4">โครงการถ่ายทอดความรู้ทางเกษตรสู่โรงเรียน</h3>
+                <p class="text-gray-600 leading-relaxed">
+                    น้อมนำหลักปรัชญาเศรษฐกิจพอเพียงไปถ่ายทอดให้เยาวชน เพื่อสร้างแหล่งเรียนรู้และความมั่นคงทางอาหารในท้องถิ่น
+                </p>
             </div>
 
-        </div>
-    </main>
-
-    <section class="bg-green-700 py-16 text-white text-center">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-6">"เพราะการเกษตร ไม่ใช่แค่การปลูกพืช"</h2>
-            <p class="text-lg opacity-90">แต่คือการสร้างนวัตกรรมเพื่อส่งต่อโลกที่สมบูรณ์ให้คนรุ่นถัดไป ร่วมเป็นส่วนหนึ่งของชุมนุมฟาร์มนิสิต EDS 2569</p>
         </div>
     </section>
 
-    <footer id="contact" class="bg-gray-800 text-gray-300 py-10 px-4">
-        <div class="max-w-7xl mx-auto text-center border-t border-gray-700 pt-8">
-            <p>© 2026 ชุมนุมฟาร์มนิสิต EDS - ปีการศึกษา 2569</p>
-            <p class="mt-2 text-sm">มุ่งมั่นสู่นวัตกรรมเกษตรอินทรีย์และความยั่งยืน</p>
+    <footer class="bg-white border-t border-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-500">
+            <p class="mb-4 font-semibold text-green-800">ชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</p>
+            <p class="text-sm">คณะเกษตรศาสตร์ / ภาควิชา EDS | มหาวิทยาลัยของเรา</p>
+            <div class="flex justify-center space-x-4 mt-6">
+                <span class="hover:text-green-600 cursor-pointer">Facebook</span>
+                <span class="hover:text-green-600 cursor-pointer">Instagram</span>
+                <span class="hover:text-green-600 cursor-pointer">Contact Us</span>
+            </div>
         </div>
     </footer>
 
