@@ -3,106 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ชุมนุมฟาร์มนิสิต 2569</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Farm Club 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-    font-family:'Mali',cursive;
-    background:#f4f8f5;
+  font-family:'Noto Sans Thai',sans-serif;
+  background:linear-gradient(120deg,#eef7f0,#ffffff);
 }
 
 header{
-    background:linear-gradient(135deg,#2e7d32,#66bb6a);
-    color:white;
-    text-align:center;
-    padding:60px 20px;
+  padding:80px 20px;
+  text-align:center;
+  background:radial-gradient(circle at top,#66bb6a,#1b5e20);
+  color:white;
 }
 
-header h1{font-size:36px}
-header p{margin-top:10px;font-size:18px}
+header h1{
+  font-size:42px;
+  font-weight:600;
+}
+
+header p{
+  margin-top:10px;
+  font-size:18px;
+  opacity:0.9;
+}
 
 .container{
-    max-width:1200px;
-    margin:auto;
-    padding:30px 20px;
+  max-width:1200px;
+  margin:auto;
+  padding:40px 20px;
 }
 
 .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
 }
 
 .card{
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition:0.3s;
-    position:relative;
-    overflow:hidden;
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:25px;
+  transition:0.4s;
+  border:1px solid rgba(255,255,255,0.3);
+  position:relative;
 }
 
 .card:hover{
-    transform:translateY(-8px) scale(1.02);
-}
-
-.card::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:5px;
-    top:0;
-    left:0;
-    background:linear-gradient(90deg,#4caf50,#81c784);
+  transform:translateY(-10px) scale(1.03);
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
 }
 
 .card h2{
-    color:#2e7d32;
-    font-size:20px;
-    margin-bottom:10px;
+  color:#1b5e20;
+  font-size:20px;
+  margin-bottom:10px;
 }
 
 .card p{
-    color:#555;
-    line-height:1.6;
-    font-size:14px;
+  color:#444;
+  font-size:14px;
+  line-height:1.6;
 }
 
 .badge{
-    display:inline-block;
-    background:#e8f5e9;
-    color:#2e7d32;
-    padding:5px 12px;
-    border-radius:20px;
-    font-size:13px;
-    margin-bottom:10px;
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  background:linear-gradient(90deg,#4caf50,#81c784);
+  color:white;
+  margin-bottom:12px;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  background:rgba(76,175,80,0.1);
+  border-radius:50%;
+  top:-30px;
+  right:-30px;
 }
 
 footer{
-    text-align:center;
-    padding:20px;
-    color:#777;
+  text-align:center;
+  padding:25px;
+  color:#666;
 }
 
-/* animation */
+/* smooth fade */
 .card{
-    opacity:0;
-    transform:translateY(20px);
-    animation:fadeUp 0.8s forwards;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUp 0.8s forwards;
 }
 
 .card:nth-child(2){animation-delay:0.2s}
 .card:nth-child(3){animation-delay:0.4s}
 
 @keyframes fadeUp{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+  to{opacity:1;transform:translateY(0)}
 }
 
 </style>
@@ -111,47 +117,36 @@ footer{
 <body>
 
 <header>
-    <h1>ชุมนุมฟาร์มนิสิต</h1>
-    <p>โครงการ ปีการศึกษา 2569</p>
+  <h1>ชุมนุมฟาร์มนิสิต</h1>
+  <p>โครงการ ปีการศึกษา 2569</p>
 </header>
 
 <div class="container">
+  <div class="grid">
 
-<div class="grid">
+    <div class="card">
+      <div class="badge">EDS</div>
+      <h2>โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
+      <p>พัฒนาทักษะนิสิตใหม่ด้านการเกษตร พร้อมปลูกฝังแนวคิดความยั่งยืนผ่านการปฏิบัติจริง</p>
+    </div>
 
-<div class="card">
-    <div class="badge">โครงการที่ 1</div>
-    <h2>โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
-    <p>
-        เสริมสร้างพื้นฐานความรู้ด้านการเกษตรสำหรับนิสิตใหม่
-        พร้อมปลูกฝังแนวคิดการพัฒนาที่ยั่งยืนผ่านการลงมือปฏิบัติจริง
-    </p>
-</div>
+    <div class="card">
+      <div class="badge">Zero Waste</div>
+      <h2>Organic Fertilizer Innovation Hub</h2>
+      <p>นวัตกรรมจัดการขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง ลดของเสียและสร้างคุณค่าอย่างยั่งยืน</p>
+    </div>
 
-<div class="card">
-    <div class="badge">โครงการที่ 2</div>
-    <h2>Zero Waste & Organic Fertilizer Innovation Hub</h2>
-    <p>
-        การจัดการขยะอินทรีย์ให้เกิดประโยชน์สูงสุด
-        พัฒนาเป็นปุ๋ยคุณภาพสูง ลดของเสีย และสร้างความยั่งยืนให้ชุมชน
-    </p>
-</div>
+    <div class="card">
+      <div class="badge">Sufficiency</div>
+      <h2>ถ่ายทอดความรู้สู่โรงเรียน</h2>
+      <p>ส่งต่อองค์ความรู้เกษตรตามหลักเศรษฐกิจพอเพียง เพื่อการใช้งานจริงในชุมชนและโรงเรียน</p>
+    </div>
 
-<div class="card">
-    <div class="badge">โครงการที่ 3</div>
-    <h2>โครงการถ่ายทอดความรู้สู่โรงเรียน</h2>
-    <p>
-        ถ่ายทอดองค์ความรู้ทางการเกษตรตามหลักเศรษฐกิจพอเพียง
-        สร้างความเข้าใจและการนำไปใช้ได้จริงในสถานศึกษา
-    </p>
-</div>
-
-</div>
-
+  </div>
 </div>
 
 <footer>
-    © 2569 ชุมนุมฟาร์มนิสิต
+  © 2569 Farm Student Club
 </footer>
 
 </body>
