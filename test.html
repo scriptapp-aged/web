@@ -1,116 +1,144 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ชุมนุมฟาร์มนิสิต 2569 | EDS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@100;300;400;500;600;700&family=Sarabun:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary-green: #1a4d2e;
+            --soft-green: #4f6f52;
+        }
         body { 
-            font-family: 'Kanit', sans-serif; 
-            background-color: #fcfdfc; 
-            color: #2d3436;
-            scroll-behavior: smooth;
+            font-family: 'Sarabun', sans-serif; 
+            background-color: #f8faf8;
+            color: #333;
         }
-        .smooth-transition {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        h1, h2, h3, .font-heading {
+            font-family: 'Anuphan', sans-serif;
+            letter-spacing: -0.02em;
         }
-        .image-container:hover img {
-            transform: scale(1.08);
+        .smooth-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
         }
-        .btn-detail {
+        .reveal {
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .image-zoom {
+            overflow: hidden;
+            border-radius: 2rem;
+        }
+        .image-zoom img {
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .image-zoom:hover img {
+            transform: scale(1.05);
+        }
+        .btn-modern {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-detail:hover {
-            transform: translateX(8px);
-            background-color: #15803d;
-            color: white;
+        .btn-modern::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--primary-green);
+            transition: width 0.4s ease;
+        }
+        .btn-modern:hover::after {
+            width: 100%;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-green-50">
-        <div class="max-w-6xl mx-auto px-8 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold">F</div>
-                <span class="text-lg font-semibold tracking-tight text-green-900">ฟาร์มนิสิต EDS</span>
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
+            <div class="font-heading font-bold text-xl text-green-900 tracking-tight">
+                ฟาร์มนิสิต <span class="text-green-600 font-light">EDS</span>
             </div>
-            <div class="flex gap-8 text-sm font-medium text-gray-500">
-                <a href="#" class="hover:text-green-700 smooth-transition">หน้าหลัก</a>
-                <a href="#projects" class="hover:text-green-700 smooth-transition">โครงการ</a>
-                <a href="#" class="px-4 py-1.5 bg-green-50 text-green-700 rounded-full hover:bg-green-100 smooth-transition">เข้าสู่ระบบ</a>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="#projects" class="hover:text-green-700 transition">โครงการ</a>
+                <a href="#" class="hover:text-green-700 transition">ติดต่อ</a>
             </div>
         </div>
     </nav>
 
-    <header class="pt-40 pb-24 px-8 max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row items-end gap-6 mb-12">
-            <h1 class="text-6xl md:text-[120px] font-semibold leading-none tracking-tighter text-gray-900">
-                ชุมนุม <br> <span class="text-green-600 italic">ฟาร์มนิสิต</span>
+    <header class="pt-48 pb-24 px-8 max-w-6xl mx-auto">
+        <div class="space-y-4">
+            <span class="font-heading text-green-600 font-medium tracking-[0.3em] uppercase text-xs">Student Farm Club</span>
+            <h1 class="text-6xl md:text-8xl font-bold text-gray-900 leading-[1.1]">
+                ชุมนุม<br><span class="text-green-800">ฟาร์มนิสิต</span>
             </h1>
-            <div class="mb-4 text-gray-400 font-light text-sm tracking-[0.2em] uppercase">
-                ปีการศึกษา 2569 / โครงการยุทธศาสตร์
-            </div>
+            <div class="h-1 w-20 bg-green-600 my-8"></div>
+            <p class="max-w-2xl text-lg md:text-xl text-gray-500 font-light leading-relaxed">
+                โครงการยุทธศาสตร์ ปีการศึกษา 2569 ภายใต้แนวคิดนวัตกรรมเกษตรยั่งยืน <br class="hidden md:block"> 
+                และการจัดการทรัพยากรแบบ Zero Waste
+            </p>
         </div>
-        <p class="max-w-xl text-xl text-gray-500 font-light leading-relaxed">
-            เราสร้างสรรค์นวัตกรรมผ่านการลงมือทำจริง เปลี่ยนขยะให้เป็นคุณค่า <br> 
-            และส่งต่อความรู้ตามหลักปรัชญาของเศรษฐกิจพอเพียง
-        </p>
     </header>
 
     <section id="projects" class="max-w-6xl mx-auto px-8 py-20">
-        <div class="space-y-40">
+        <div class="space-y-48">
 
-            <div class="group grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl shadow-green-100/50 image-container">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="image-zoom smooth-shadow">
                     <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?auto=format&fit=crop&q=80&w=1000" 
-                         class="w-full h-[400px] object-cover smooth-transition" alt="เกษตรน้องใหม่">
+                         class="w-full h-[450px] object-cover" alt="โครงการ 1">
                 </div>
-                <div class="flex flex-col items-start">
-                    <span class="text-green-600 font-bold tracking-widest text-sm mb-4">PROJECT 01</span>
-                    <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-6">โครงการเกษตรน้องใหม่<br>หัวใจ EDS</h2>
-                    <p class="text-gray-500 font-light text-lg mb-8 leading-relaxed">
-                        เปิดประตูสู่โลกเกษตรกรรมยุคใหม่สำหรับนิสิตชั้นปีที่ 1 เน้นการเรียนรู้แบบ Active Learning ในฟาร์มจริงเพื่อสร้างทักษะและทัศนคติที่ยั่งยืน
+                <div class="space-y-6">
+                    <span class="font-heading text-gray-300 font-bold text-5xl">01</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">โครงการเกษตรน้องใหม่<br>หัวใจ EDS</h2>
+                    <p class="text-gray-500 text-lg leading-relaxed font-light">
+                        เตรียมความพร้อมและสร้างแรงบันดาลใจให้แก่นิสิตใหม่ ผ่านประสบการณ์จริงในฟาร์มต้นแบบ เพื่อก้าวสู่การเป็นเกษตรกรยุคใหม่ที่มีวิสัยทัศน์ยั่งยืน
                     </p>
-                    <a href="#" class="btn-detail flex items-center gap-4 py-3 px-8 rounded-full border border-gray-200 text-gray-700 font-medium">
-                        ดูรายละเอียดโครงการ <span class="text-green-600">→</span>
+                    <a href="#" class="btn-modern inline-flex items-center gap-3 py-2 text-green-900 font-medium group">
+                        ดูรายละเอียดโครงการ 
+                        <span class="group-hover:translate-x-2 transition-transform duration-300">→</span>
                     </a>
                 </div>
             </div>
 
-            <div class="group grid md:grid-cols-2 gap-16 items-center">
-                <div class="md:order-2 relative overflow-hidden rounded-[2.5rem] shadow-2xl shadow-green-100/50 image-container">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="md:order-2 image-zoom smooth-shadow">
                     <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&q=80&w=1000" 
-                         class="w-full h-[400px] object-cover smooth-transition" alt="Zero Waste">
+                         class="w-full h-[450px] object-cover" alt="โครงการ 2">
                 </div>
-                <div class="md:order-1 flex flex-col items-start">
-                    <span class="text-green-600 font-bold tracking-widest text-sm mb-4">PROJECT 02</span>
-                    <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-4 leading-tight">โครงการจัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูง</h2>
-                    <p class="text-xs font-bold text-green-700/50 uppercase tracking-widest mb-6">Zero waste & organic Fertilizer Innovation Hub</p>
-                    <p class="text-gray-500 font-light text-lg mb-8 leading-relaxed">
-                        ศูนย์กลางนวัตกรรมที่เปลี่ยนขยะอินทรีย์ภายในสถานศึกษาให้เป็นปุ๋ยพรีเมียม เพื่อลดผลกระทบทางสิ่งแวดล้อมและสร้างระบบหมุนเวียนทรัพยากร
+                <div class="md:order-1 space-y-6">
+                    <span class="font-heading text-gray-300 font-bold text-5xl">02</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">นวัตกรรมขยะอินทรีย์<br>สู่ปุ๋ยคุณภาพสูง</h2>
+                    <p class="font-heading text-xs font-bold text-green-700 uppercase tracking-widest bg-green-50 inline-block px-3 py-1 rounded">Zero waste & organic Fertilizer Hub</p>
+                    <p class="text-gray-500 text-lg leading-relaxed font-light">
+                        พลิกโฉมการจัดการขยะอินทรีย์ด้วยเทคโนโลยีทันสมัย เปลี่ยนทรัพยากรที่ถูกลืมให้เป็นปุ๋ยคุณภาพสูง เพื่อสร้างระบบนิเวศการเกษตรที่ไร้ขยะอย่างแท้จริง
                     </p>
-                    <a href="#" class="btn-detail flex items-center gap-4 py-3 px-8 rounded-full border border-gray-200 text-gray-700 font-medium">
-                        ดูรายละเอียดโครงการ <span class="text-green-600">→</span>
+                    <a href="#" class="btn-modern inline-flex items-center gap-3 py-2 text-green-900 font-medium group">
+                        ดูรายละเอียดโครงการ 
+                        <span class="group-hover:translate-x-2 transition-transform duration-300">→</span>
                     </a>
                 </div>
             </div>
 
-            <div class="group grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl shadow-green-100/50 image-container">
+            <div class="grid md:grid-cols-2 gap-20 items-center pb-20">
+                <div class="image-zoom smooth-shadow">
                     <img src="https://images.unsplash.com/photo-1505230833350-732314f3ef82?auto=format&fit=crop&q=80&w=1000" 
-                         class="w-full h-[400px] object-cover smooth-transition" alt="เกษตรสู่โรงเรียน">
+                         class="w-full h-[450px] object-cover" alt="โครงการ 3">
                 </div>
-                <div class="flex flex-col items-start">
-                    <span class="text-green-600 font-bold tracking-widest text-sm mb-4">PROJECT 03</span>
-                    <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-6">โครงการถ่ายทอดความรู้ทางเกษตรสู่โรงเรียน</h2>
-                    <p class="text-gray-500 font-light text-lg mb-8 leading-relaxed">
-                        ส่งต่อองค์ความรู้ตามหลักปรัชญาของเศรษฐกิจพอเพียงให้แก่โรงเรียนเครือข่าย เพื่อสร้างความมั่นคงทางอาหารและพัฒนาชุมชนอย่างเป็นรูปธรรม
+                <div class="space-y-6">
+                    <span class="font-heading text-gray-300 font-bold text-5xl">03</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">เกษตรพอเพียงสู่โรงเรียน</h2>
+                    <p class="text-gray-500 text-lg leading-relaxed font-light">
+                        การถ่ายทอดองค์ความรู้และทักษะการพึ่งพาตนเองตามหลักปรัชญาของเศรษฐกิจพอเพียงให้แก่เยาวชน เพื่อสร้างความมั่นคงทางอาหารในระดับชุมชน
                     </p>
-                    <a href="#" class="btn-detail flex items-center gap-4 py-3 px-8 rounded-full border border-gray-200 text-gray-700 font-medium">
-                        ดูรายละเอียดโครงการ <span class="text-green-600">→</span>
+                    <a href="#" class="btn-modern inline-flex items-center gap-3 py-2 text-green-900 font-medium group">
+                        ดูรายละเอียดโครงการ 
+                        <span class="group-hover:translate-x-2 transition-transform duration-300">→</span>
                     </a>
                 </div>
             </div>
@@ -118,20 +146,19 @@
         </div>
     </section>
 
-    <footer class="bg-white border-t border-green-50 py-20 px-8">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-            <div>
-                <div class="text-2xl font-bold text-green-900 mb-2">EDS FARM CLUB</div>
-                <p class="text-gray-400 font-light">มุ่งมั่นสร้างสรรค์ เพื่ออนาคตเกษตรไทยที่ยั่งยืน</p>
+    <footer class="bg-white py-20 border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-sm">
+            <div class="font-heading font-medium text-gray-800">
+                ชุมนุมฟาร์มนิสิต EDS 2569
             </div>
-            <div class="flex gap-12 text-sm font-medium text-gray-500 uppercase tracking-widest">
-                <a href="#" class="hover:text-green-600 smooth-transition">Facebook</a>
-                <a href="#" class="hover:text-green-600 smooth-transition">Line Official</a>
-                <a href="#" class="hover:text-green-600 smooth-transition">Instagram</a>
+            <div class="flex gap-8 uppercase tracking-widest text-[10px]">
+                <a href="#" class="hover:text-green-600 transition">Facebook</a>
+                <a href="#" class="hover:text-green-600 transition">Instagram</a>
+                <a href="#" class="hover:text-green-600 transition">Line</a>
             </div>
-        </div>
-        <div class="text-center mt-20 text-xs text-gray-300 tracking-widest">
-            © 2569 STUDENT FARM CLUB | FACULTY OF AGRICULTURE
+            <div class="font-light">
+                © 2026 Student Farm Club
+            </div>
         </div>
     </footer>
 
