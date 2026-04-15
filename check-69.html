@@ -3,234 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบตรวจสอบการเรียนตามหลักสูตร - กำลังพัฒนา</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>ระบบขอเอกสารทางการศึกษาออนไลน์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Kanit', sans-serif;
-            background-color: #ffffff; /* พื้นหลังขาวล้วนตามต้องการ */
-            color: #334155;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* --- Modern Layout Container --- */
-        .modern-wrapper {
-            width: 100%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr; /* แบ่งซ้าย-ขวา */
-            gap: 50px;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            padding: 60px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05); /* เงาบางๆ ให้ดูลอย */
-            border: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        /* --- Left Side: System Info --- */
-        .left-content h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 5px;
-            letter-spacing: -1px;
-        }
-
-        .left-content .subtitle {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .left-content .system-label {
-            display: inline-block;
-            background: #fff5f5;
-            color: #e53e3e;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .left-content h2 {
-            font-size: 1.6rem;
-            font-weight: 500;
-            color: #1A2B48;
-            margin-bottom: 5px;
-        }
-
-        .left-content .curriculum-info {
-            font-size: 1rem;
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        /* --- Right Side: Modern Countdown --- */
-        .right-content .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            text-align: center;
-        }
-
-        .countdown-grid .time-box {
-            background: #f8fafc;
-            padding: 15px 10px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .countdown-grid .time-num {
-            display: block;
-            font-size: 2rem;
-            font-weight: 600;
-            color: #D4AF37; /* สีทองอ่อนๆ ดูพรีเมียม */
-            line-height: 1;
-        }
-
-        .countdown-grid .time-label {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            margin-top: 5px;
-        }
-
-        .legacy-link {
-            display: block;
-            margin-top: 25px;
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .legacy-link:hover {
-            color: #1e293b;
-        }
-
-        /* --- Footer Section --- */
-        .bottom-bar {
-            grid-column: 1 / -1; /* ครอบคลุมทั้งสองฝั่ง */
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-            text-align: center;
-        }
-
-        .btn-modern {
-            display: inline-block;
-            background-color: #1A2B48;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            box-shadow: 0 5px 15px rgba(26, 43, 72, 0.1);
-        }
-
-        .btn-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(26, 43, 72, 0.15);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .modern-wrapper {
-                grid-template-columns: 1fr;
-                padding: 40px;
-                gap: 30px;
-                text-align: center;
-            }
-            .left-content h1 { font-size: 2rem; }
-            .right-content .time-num { font-size: 1.5rem; }
-            .countdown-grid { gap: 10px; }
-        }
+        body { font-family: 'Sarabun', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100">
 
-<div class="modern-wrapper">
-    <div class="left-content">
-        <h1>เราจะกลับมา</h1>
-        <p class="subtitle">เรากำลังพัฒนาสิ่งที่ดีกว่า</p>
-        
-        <div class="system-label">● อยู่ระหว่างการพัฒนา</div>
-        <h2>ระบบตรวจสอบการเรียนตามหลักสูตร</h2>
-        <p class="curriculum-info">
-            หลักสูตรปรับปรุง พ.ศ. 2564<br>
-            เปิดให้บริการวันที่ 20 เมษายน 2569 เวลา 01:00 น.
-        </p>
-    </div>
-
-    <div class="right-content">
-        <div class="countdown-grid">
-            <div class="time-box">
-                <span class="time-num" id="days">00</span>
-                <span class="time-label">วัน</span>
-            </div>
-            <div class="time-box">
-                <span class="time-num" id="hours">00</span>
-                <span class="time-label">ชม.</span>
-            </div>
-            <div class="time-box">
-                <span class="time-num" id="minutes">00</span>
-                <span class="time-label">นาที</span>
-            </div>
-            <div class="time-box">
-                <span class="time-num" id="seconds">00</span>
-                <span class="time-label">วิ</span>
+    <header class="bg-green-700 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">e-Document Service | วิทยาเขตกำแพงแสน</h1>
+            <div class="flex items-center space-x-4">
+                <span>สวัสดี, นายสมชาย ใจดี</span>
+                <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm transition">ออกจากระบบ</button>
             </div>
         </div>
-        <a href="#" class="legacy-link">← เข้าสู่ระบบเก่า (มคอ. 2564) สำหรับนิสิตปัจจุบัน</a>
+    </header>
+
+    <div class="container mx-auto flex mt-6 gap-6">
+        <aside class="w-1/4 bg-white rounded-lg shadow p-4 hidden md:block">
+            <nav class="space-y-2">
+                <a href="#" class="block p-2 bg-green-50 text-green-700 rounded font-semibold">หน้าแรก</a>
+                <a href="#" class="block p-2 hover:bg-gray-100 rounded text-gray-600">ขอเอกสารใหม่</a>
+                <a href="#" class="block p-2 hover:bg-gray-100 rounded text-gray-600">ติดตามสถานะ</a>
+                <a href="#" class="block p-2 hover:bg-gray-100 rounded text-gray-600">ประวัติการขอเอกสาร</a>
+                <a href="#" class="block p-2 hover:bg-gray-100 rounded text-gray-600">คู่มือการใช้งาน</a>
+            </nav>
+        </aside>
+
+        <main class="w-full md:w-3/4">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-2xl font-semibold mb-4 border-b pb-2">รายการเอกสารที่ขอได้</h2>
+                
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="border rounded-lg p-4 flex justify-between items-center hover:bg-gray-50 transition">
+                        <div>
+                            <h3 class="font-bold text-lg">ใบรายงานผลการศึกษา (Transcript)</h3>
+                            <p class="text-sm text-gray-500">แบบไม่สำเร็จการศึกษา (ฉบับภาษาอังกฤษ)</p>
+                        </div>
+                        <button class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">ขอเอกสาร</button>
+                    </div>
+
+                    <div class="border rounded-lg p-4 flex justify-between items-center hover:bg-gray-50 transition">
+                        <div>
+                            <h3 class="font-bold text-lg">หนังสือรับรองสถานภาพนิสิต</h3>
+                            <p class="text-sm text-gray-500">ภาษาไทย / ภาษาอังกฤษ</p>
+                        </div>
+                        <button class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">ขอเอกสาร</button>
+                    </div>
+
+                    <div class="border rounded-lg p-4 flex justify-between items-center hover:bg-gray-50 transition">
+                        <div>
+                            <h3 class="font-bold text-lg">บัตรนิสิต (กรณีสูญหาย/ชำรุด)</h3>
+                            <p class="text-sm text-gray-500">ติดต่อทำบัตรใหม่ผ่านระบบ</p>
+                        </div>
+                        <button class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">ขอเอกสาร</button>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h2 class="text-xl font-semibold mb-3">สถานะล่าสุด</h2>
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="p-2 border">วันที่</th>
+                                <th class="p-2 border">รายการ</th>
+                                <th class="p-2 border">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2 border italic text-gray-500" colspan="3 text-center">ยังไม่มีประวัติการทำรายการในระบบใหม่</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="bottom-bar">
-        <p class="curriculum-info" style="margin-bottom: 15px;">สำหรับนิสิตปัจจุบัน โปรดใช้ระบบ หลักสูตรปรับปรุง พ.ศ. 2564</p>
-        <a href="#" class="btn-modern">เข้าสู่ระบบเก่า (มคอ. 2564)</a>
-    </div>
-</div>
-
-<script>
-    // เป้าหมาย 20 เมษายน 2569 เวลา 01:00 น.
-    const targetDate = new Date("April 20, 2026 01:00:00").getTime();
-
-    function updateTimer() {
-        const now = new Date().getTime();
-        const diff = targetDate - now;
-
-        if (diff > 0) {
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = d.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-        } else {
-            document.querySelector(".countdown-grid").innerHTML = "<h3>ระบบพร้อมใช้งานแล้ว</h3>";
-        }
-    }
-
-    setInterval(updateTimer, 1000);
-    updateTimer(); // เรียกใช้งานทันทีเมื่อโหลดหน้าเว็บ
-</script>
+    <footer class="mt-12 bg-gray-800 text-white p-6 text-center text-sm">
+        <p>กองบริหารการศึกษา มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</p>
+        <p>ติดต่อสอบถาม: 034-351-XXX หรืออีเมล reg_kps@ku.th</p>
+    </footer>
 
 </body>
 </html>
