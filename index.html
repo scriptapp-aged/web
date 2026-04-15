@@ -99,6 +99,54 @@
             margin-bottom: 20px;
         }
 
+        /* --- ✨ New Countdown Styles --- */
+        .countdown-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s 0.4s both;
+        }
+
+        .countdown-project-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--ku-green);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 3px solid var(--ku-green);
+            padding: 10px;
+            min-width: 75px;
+            backdrop-filter: blur(5px);
+        }
+
+        .countdown-num {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1;
+        }
+
+        .countdown-unit {
+            display: block;
+            font-size: 0.65rem;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
         .main-portal {
             max-width: 1250px;
             margin: 0 auto;
@@ -405,6 +453,28 @@
             <p style="color: #64748b; font-weight: 300; letter-spacing: 4px; font-size: 1rem; opacity: 0.7;">
                 FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
             </p>
+
+            <div class="countdown-section">
+                <div class="countdown-project-label">โครงการเกษตรน้องใหม่หัวใจ EDS</div>
+                <div class="countdown-grid">
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-days">00</span>
+                        <span class="countdown-unit">Days</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-hours">00</span>
+                        <span class="countdown-unit">Hours</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-mins">00</span>
+                        <span class="countdown-unit">Mins</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-secs">00</span>
+                        <span class="countdown-unit">Secs</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -568,6 +638,32 @@
             const modal = document.getElementById('modalOverlay');
             if (event.target == modal) closeModal();
         }
+
+        // --- ⏳ Countdown Logic ---
+        function startCountdown() {
+            const target = new Date("June 27, 2026 00:00:00").getTime();
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('d-days').innerText = days.toString().padStart(2, '0');
+                    document.getElementById('d-hours').innerText = hours.toString().padStart(2, '0');
+                    document.getElementById('d-mins').innerText = mins.toString().padStart(2, '0');
+                    document.getElementById('d-secs').innerText = secs.toString().padStart(2, '0');
+                } else {
+                    document.querySelector('.countdown-section').innerHTML = "<div class='countdown-project-label'>โครงการกำลังดำเนินการ!</div>";
+                }
+            }, 1000);
+        }
+        
+        startCountdown();
     </script>
 </body>
 </html>
