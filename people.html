@@ -3,154 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRCD Personnel</title>
+    <title>HRCD Personnel - KPS</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Root & Basic Reset --- */
+        /* --- Base Style (Sharp Edges & White Theme) --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Sarabun', sans-serif;
-            border-radius: 0 !important; /* ย้ำความเหลี่ยมตามสไตล์ที่ชอบ */
+            border-radius: 0 !important;
         }
 
         body {
-            background-color: #ffffff; /* พื้นหลังสีขาวบริสุทธิ์ */
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(240, 240, 240, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(230, 235, 245, 0.5) 0px, transparent 50%);
-            min-height: 100vh;
+            background-color: #ffffff;
             color: #333;
             padding: 60px 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* --- Header Section --- */
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         header h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #1a1a1a;
             letter-spacing: 1px;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            color: #1a1a1a;
+            margin-bottom: 20px;
         }
 
         .accent-line {
-            width: 80px;
-            height: 5px;
-            background: #2d3436; /* สีเทาเข้มเกือบดำ */
+            width: 60px;
+            height: 4px;
+            background: #000;
             margin: 0 auto;
         }
 
-        /* --- Navigation Tabs --- */
+        /* --- Tabs --- */
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid #eee;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            padding: 15px 40px;
+            padding: 15px 30px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #888;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .tab-btn:hover {
-            color: #000;
+            font-size: 1rem;
+            color: #999;
+            transition: 0.3s;
         }
 
         .tab-btn.active {
             color: #000;
             font-weight: 700;
+            border-bottom: 3px solid #000;
         }
 
-        .tab-btn.active::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
+        /* --- Layout Control --- */
+        .section-title {
             width: 100%;
-            height: 2px;
-            background: #000;
+            text-align: center;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #555;
+            display: none; /* ซ่อนหัวข้อกลุ่มย่อยถ้าต้องการความคลีน */
         }
 
-        /* --- Personnel Grid --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            animation: fadeIn 0.6s ease-out;
+            gap: 25px;
+            margin-bottom: 50px;
         }
 
-        /* --- White Glass Card --- */
+        /* แถวเดี่ยว (หัวหน้า / รองหัวหน้า) */
+        .grid-single {
+            grid-template-columns: minmax(280px, 400px);
+            justify-content: center;
+        }
+
+        /* แถวละ 3 คน (อาจารย์) */
+        .grid-triple {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 900px) {
+            .grid-triple { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .grid-triple { grid-template-columns: 1fr; }
+        }
+
+        /* --- Personnel Card --- */
         .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid #eeeeee;
-            padding: 40px 20px;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 30px 15px;
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-            border-color: #ddd;
+            border-color: #000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
         .card img {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 180px;
             object-fit: cover;
-            margin-bottom: 25px;
-            border: 1px solid #f0f0f0;
-            padding: 5px;
-            background: #fff;
+            background: #f9f9f9;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
         }
 
         .card h3 {
-            font-size: 1.2rem;
-            color: #1a1a1a;
-            margin-bottom: 8px;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .card p {
-            font-size: 0.9rem;
-            color: #636e72;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            color: #777;
         }
 
-        /* --- Animation --- */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Mobile Responsive --- */
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .tabs { flex-direction: column; }
-            .tab-btn { width: 100%; text-align: center; border-bottom: 1px solid #eee; }
         }
     </style>
 </head>
@@ -163,54 +161,74 @@
         </header>
 
         <nav class="tabs">
-            <button class="tab-btn active" onclick="switchTab('teachers')">คณาจารย์ประจำภาควิชา</button>
-            <button class="tab-btn" onclick="switchTab('committee')">คณะกรรมการฟาร์ม</button>
+            <button class="tab-btn active" onclick="showTab('teachers')">คณาจารย์ประจำภาควิชา</button>
+            <button class="tab-btn" onclick="showTab('committee')">คณะกรรมการฟาร์ม</button>
         </nav>
 
-        <div id="display-grid" class="grid">
+        <div id="content-area" class="fade-in">
             </div>
     </div>
 
     <script>
-        // ข้อมูลตัวอย่าง
-        const personnel = {
-            teachers: [
-                { name: "รศ.ดร. ชื่อจริง นามสกุล", pos: "อาจารย์ประจำภาควิชา", img: "https://via.placeholder.com/200/f8f9fa/333?text=Photo" },
-                { name: "ผศ.ดร. ชื่อจริง นามสกุล", pos: "อาจารย์ประจำภาควิชา", img: "https://via.placeholder.com/200/f8f9fa/333?text=Photo" },
-                { name: "ดร. ชื่อจริง นามสกุล", pos: "อาจารย์ประจำภาควิชา", img: "https://via.placeholder.com/200/f8f9fa/333?text=Photo" }
-            ],
-            committee: [
-                { name: "เมธี ใจสุขดี", pos: "ประธานกรรมการฟาร์มนิสิต", img: "https://via.placeholder.com/200/f8f9fa/333?text=MEETHEE" },
-                { name: "คณะกรรมการ ท่านที่ 2", pos: "ฝ่ายประสานงาน", img: "https://via.placeholder.com/200/f8f9fa/333?text=Photo" },
-                { name: "คณะกรรมการ ท่านที่ 3", pos: "ฝ่ายสวัสดิการ", img: "https://via.placeholder.com/200/f8f9fa/333?text=Photo" }
-            ]
+        const personnelData = {
+            teachers: {
+                head: [{ name: "หัวหน้าภาควิชา", pos: "หัวหน้าภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน", img: "" }],
+                deputy: [{ name: "รองหัวหน้าภาควิชา", pos: "รองหัวหน้าภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน", img: "" }],
+                staff: Array(11).fill({ name: "ชื่ออาจารย์", pos: "อาจารย์ประจำภาควิชา", img: "" })
+            },
+            committee: {
+                staff: [
+                    { name: "เมธี ใจสุขดี", pos: "ประธานกรรมการฟาร์มนิสิต", img: "" },
+                    { name: "กรรมการท่านที่ 2", pos: "กรรมการ", img: "" },
+                    { name: "กรรมการท่านที่ 3", pos: "กรรมการ", img: "" }
+                ]
+            }
         };
 
-        function switchTab(type) {
-            const grid = document.getElementById('display-grid');
-            const btns = document.querySelectorAll('.tab-btn');
-
-            // อัปเดตปุ่มที่เลือก
-            btns.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('onclick').includes(type)) btn.classList.add('active');
-            });
-
-            // ล้างหน้าจอและสร้างการ์ดใหม่
-            grid.innerHTML = '';
-            personnel[type].forEach(item => {
-                grid.innerHTML += `
-                    <div class="card">
-                        <img src="${item.img}" alt="${item.name}">
-                        <h3>${item.name}</h3>
-                        <p>${item.pos}</p>
-                    </div>
-                `;
-            });
+        function createCard(person) {
+            const imgSrc = person.img || "https://via.placeholder.com/140x180/f0f0f0/999?text=PHOTO";
+            return `
+                <div class="card">
+                    <img src="${imgSrc}" alt="${person.name}">
+                    <h3>${person.name}</h3>
+                    <p>${person.pos}</p>
+                </div>
+            `;
         }
 
-        // โหลดข้อมูลชุดแรก (อาจารย์) ทันทีที่เปิดหน้าเว็บ
-        window.onload = () => switchTab('teachers');
+        function showTab(type) {
+            const content = document.getElementById('content-area');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            content.innerHTML = '';
+
+            if (type === 'teachers') {
+                const d = personnelData.teachers;
+                
+                // 1. หัวหน้าภาค (1 แถว)
+                let html = `<div class="grid grid-single">${d.head.map(createCard).join('')}</div>`;
+                
+                // 2. รองหัวหน้าภาค (1 แถว)
+                html += `<div class="grid grid-single">${d.deputy.map(createCard).join('')}</div>`;
+                
+                // 3. อาจารย์ 11 คน (แถวละ 3)
+                html += `<div class="grid grid-triple">${d.staff.map(createCard).join('')}</div>`;
+                
+                content.innerHTML = html;
+            } else {
+                // คณะกรรมการฟาร์ม (Grid ปกติ)
+                content.innerHTML = `<div class="grid grid-triple">${personnelData.committee.staff.map(createCard).join('')}</div>`;
+            }
+        }
+
+        // Initial Load
+        window.onload = () => {
+            // จำลองการโหลดหน้าแรกโดยส่ง event หลอกๆ
+            showTab('teachers');
+        };
     </script>
 </body>
 </html>
