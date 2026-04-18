@@ -3,152 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คณาจารย์ | ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Personnel | Agriculture & Environmental Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --ku-green: #006633; --ku-gold: #b29d6c; --text-dark: #0f172a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
-        body { background-color: #ffffff; padding: 40px 20px; color: var(--text-dark); }
-        .container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        /* --- Root & Reset --- */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --accent-color: #ffffff;
+            --text-color: #ffffff;
+        }
 
-        .header { margin-bottom: 50px; }
-        .main-title { font-size: 2.2rem; font-weight: 800; color: var(--ku-green); margin-bottom: 10px; }
-        .sub-title { font-size: 1.5rem; color: var(--ku-gold); font-weight: 500; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+            border-radius: 0 !important; /* บังคับขอบเหลี่ยมทุกจุด */
+        }
 
-        /* การจัดแถว */
-        .member-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-bottom: 40px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; max-width: 1150px; margin: 0 auto; }
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* โทนเข้มสะอาดตา */
+            min-height: 100vh;
+            color: var(--text-color);
+            padding: 50px 20px;
+        }
 
-        /* การ์ด */
-        .member-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 15px; width: 100%; max-width: 270px; transition: 0.3s; }
-        .member-card:hover { transform: translateY(-10px); border-color: var(--ku-green); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        
-        .img-box { width: 100%; height: 280px; background: #f8fafc; border-radius: 18px; overflow: hidden; margin-bottom: 15px; display: flex; align-items: flex-end; justify-content: center; }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
 
-        /* ชื่อและรหัสบรรทัดเดียวกัน */
-        .name-wrapper { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 5px; }
-        .name-wrapper h3 { font-size: 1rem; font-weight: 700; margin: 0; }
-        .advisor-id { font-size: 0.85rem; color: #64748b; font-weight: 400; }
-        
-        .role { font-size: 0.85rem; color: var(--ku-gold); font-weight: 500; line-height: 1.4; }
+        /* --- Header --- */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-        .separator { display: flex; align-items: center; gap: 15px; margin: 60px 0 40px; }
-        .separator::before, .separator::after { content: ""; height: 1px; flex: 1; background: #cbd5e1; }
-        .separator span { font-size: 1.4rem; font-weight: 700; color: var(--ku-green); }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
 
-        @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 650px) { .grid-4 { grid-template-columns: 1fr; } .name-wrapper { flex-direction: column; gap: 2px; } }
+        .line {
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 0 auto;
+        }
+
+        /* --- Tabs Navigation --- */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2px; /* ช่องว่างเล็กน้อยแบบเหลี่ยม */
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 15px 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 400;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #0f2027;
+            font-weight: 700;
+        }
+
+        /* --- Personnel Grid --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* --- Glass Card --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 5px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+            filter: grayscale(20%);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        /* --- Animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            .tabs { flex-direction: column; }
+            .tab-btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1 class="main-title">ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</h1>
-        <h2 class="sub-title">คณาจารย์ประจำภาควิชา</h2>
-    </div>
+    <div class="container">
+        <header>
+            <h1>PERSONNEL</h1>
+            <div class="line"></div>
+        </header>
 
-    <div class="member-row">
-        <div class="member-card" style="border-top: 5px solid var(--ku-green);">
-            <div class="img-box"><img src="head.jpg"></div>
-            <div class="name-wrapper">
-                <h3>ผศ.ดร.นิรันดร์ ยิ่งยวด</h3>
-                <span class="advisor-id">(รหัส: 001)</span>
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="updateView('teachers')">อาจารย์</button>
+            <button class="tab-btn" onclick="updateView('committee')">คณะกรรมการฟาร์ม</button>
+        </nav>
+
+        <div id="personnel-grid" class="grid">
             </div>
-            <p class="role">หัวหน้าภาควิชา</p>
-        </div>
     </div>
 
-    <div class="member-row">
-        <div class="member-card" style="border-top: 5px solid var(--ku-gold);">
-            <div class="img-box"><img src="vice_head.jpg"></div>
-            <div class="name-wrapper">
-                <h3>ผศ.ดร.อิสรีย์ ทรัพย์นุ้ย</h3>
-                <span class="advisor-id">(รหัส: 002)</span>
-            </div>
-            <p class="role">รองหัวหน้าภาควิชา</p>
-        </div>
-    </div>
+    <script>
+        // ข้อมูลตัวอย่าง (คุณสามารถนำไปเชื่อมกับ Google Sheets API ได้ในอนาคต)
+        const data = {
+            teachers: [
+                { name: "รศ.ดร. สมชาย รักเกษตร", pos: "อาจารย์ประจำหลักสูตร", img: "https://via.placeholder.com/200" },
+                { name: "ผศ.ดร. นภา สดใส", pos: "อาจารย์ประจำหลักสูตร", img: "https://via.placeholder.com/200" },
+                { name: "ดร. วิชาญ ใจดี", pos: "อาจารย์พิเศษ", img: "https://via.placeholder.com/200" }
+            ],
+            committee: [
+                { name: "เมธี ใจสุขดี", pos: "ประธานกรรมการฟาร์มนิสิต", img: "https://via.placeholder.com/200" },
+                { name: "สมโภชน์ ปลูกผัก", pos: "รองประธานฝ่ายปฏิบัติการ", img: "https://via.placeholder.com/200" },
+                { name: "ใจดี รักดิน", pos: "เหรัญญิก", img: "https://via.placeholder.com/200" }
+            ]
+        };
 
-    <div class="separator"><span>คณาจารย์</span></div>
+        function updateView(category) {
+            const grid = document.getElementById('personnel-grid');
+            const btns = document.querySelectorAll('.tab-btn');
 
-    <div class="grid-4">
-        <div class="member-card">
-            <div class="img-box"><img src="t3.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 003)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t4.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 004)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t5.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 005)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t6.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 006)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t7.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 007)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t8.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 008)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t9.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 009)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t10.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 010)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t11.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 011)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t12.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 012)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="t13.jpg"></div>
-            <div class="name-wrapper"><h3>ชื่ออาจารย์</h3><span class="advisor-id">(รหัส: 013)</span></div>
-            <p class="role">อาจารย์ประจำภาควิชา</p>
-        </div>
-    </div>
+            // เปลี่ยนสถานะปุ่ม
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.includes(category === 'teachers' ? 'อาจารย์' : 'คณะกรรมการ')) {
+                    btn.classList.add('active');
+                }
+            });
 
-    <div class="separator"><span>บุคลากรสายสนับสนุน</span></div>
+            // ล้างข้อมูลเดิมและใส่ข้อมูลใหม่
+            grid.innerHTML = '';
+            data[category].forEach(item => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${item.img}" alt="${item.name}">
+                        <h3>${item.name}</h3>
+                        <p>${item.pos}</p>
+                    </div>
+                `;
+            });
+        }
 
-    <div class="member-row">
-        <div class="member-card">
-            <div class="img-box"><img src="s1.jpg"></div>
-            <h3>ชื่อเจ้าหน้าที่</h3><p class="role">ตำแหน่ง</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="s2.jpg"></div>
-            <h3>ชื่อเจ้าหน้าที่</h3><p class="role">ตำแหน่ง</p>
-        </div>
-        <div class="member-card">
-            <div class="img-box"><img src="s3.jpg"></div>
-            <h3>ชื่อเจ้าหน้าที่</h3><p class="role">ตำแหน่ง</p>
-        </div>
-    </div>
-</div>
-
+        // เริ่มต้นหน้าเว็บด้วยเมนูอาจารย์
+        window.onload = () => updateView('teachers');
+    </script>
 </body>
 </html>
