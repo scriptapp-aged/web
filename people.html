@@ -6,7 +6,7 @@
 
   <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
 
-  <!-- FONT MITR -->
+  <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -16,7 +16,6 @@
       --light-green:#0f766e;
       --text-dark:#0f172a;
       --text-gray:#64748b;
-      --border:#d1d5db;
       --bg:#f4f6f9;
     }
 
@@ -30,14 +29,15 @@
 
     body{
       background:var(--bg);
-      padding:50px 20px;
       color:var(--text-dark);
       overflow-x:hidden;
+      padding:50px 20px;
       background-image: radial-gradient(#dbe4ea 1px, transparent 1px);
-      background-size: 30px 30px;
+      background-size:30px 30px;
     }
 
-    /* BG Glow */
+    /* Background Glow */
+
     .bg-glow{
       position:fixed;
       width:500px;
@@ -57,22 +57,23 @@
       }
     }
 
+    /* Container */
+
     .container{
       max-width:1350px;
       margin:auto;
-      background:rgba(255,255,255,0.88);
+      background:rgba(255,255,255,0.92);
       backdrop-filter:blur(10px);
       border:1px solid rgba(255,255,255,0.6);
       padding:60px 40px;
       box-shadow:0 10px 40px rgba(0,0,0,0.06);
     }
 
-    /* HEADER */
+    /* Header */
 
     .header{
       text-align:center;
       margin-bottom:60px;
-      position:relative;
     }
 
     .header::after{
@@ -99,7 +100,7 @@
       font-weight:300;
     }
 
-    /* LINE */
+    /* Line */
 
     .line{
       width:4px;
@@ -108,7 +109,7 @@
       margin:10px auto 40px;
     }
 
-    /* SECTION */
+    /* Section */
 
     .section{
       display:flex;
@@ -118,13 +119,13 @@
       margin-bottom:30px;
     }
 
-    /* CARD */
+    /* Card */
 
     .card{
       width:270px;
       background:#ffffff;
-      border-top:6px solid var(--ku-green);
       border:1px solid #e2e8f0;
+      border-top:6px solid var(--ku-green);
       padding:30px 20px;
       text-align:center;
       transition:0.45s;
@@ -157,42 +158,41 @@
       box-shadow:0 18px 40px rgba(0,102,51,0.12);
     }
 
-    /* PRESIDENT */
+    /* President */
 
     .president-card{
       width:320px;
       border-top:8px solid #14532d;
     }
 
-    /* PHOTO */
+    /* Photo */
 
     .photo{
       width:150px;
       height:190px;
       margin:auto;
       margin-bottom:20px;
-      border:1px solid #cbd5e1;
-      background:#e5e7eb;
+      border:2px solid #d1d5db;
+      background:#f1f5f9;
       overflow:hidden;
       display:flex;
       justify-content:center;
       align-items:center;
-      color:#64748b;
-      font-size:0.95rem;
-      transition:0.4s;
-    }
-
-    .card:hover .photo{
-      transform:scale(1.03);
+      position:relative;
     }
 
     .photo img{
       width:100%;
       height:100%;
       object-fit:cover;
+      transition:0.4s;
     }
 
-    /* TEXT */
+    .card:hover .photo img{
+      transform:scale(1.05);
+    }
+
+    /* Text */
 
     .name{
       font-size:1.2rem;
@@ -217,7 +217,7 @@
       letter-spacing:1px;
     }
 
-    /* FOOTER */
+    /* Footer */
 
     .footer{
       margin-top:60px;
@@ -230,7 +230,7 @@
       font-weight:300;
     }
 
-    /* RESPONSIVE */
+    /* Responsive */
 
     @media(max-width:768px){
 
@@ -269,7 +269,7 @@
     <div class="header">
 
       <!-- LOGO -->
-      <!-- <img src="logo.png" width="90"> -->
+      <!-- <img src="images/logo.png" width="90"> -->
 
       <h1>คณะกรรมการฟาร์ม</h1>
 
@@ -283,13 +283,12 @@
 
       <div class="card">
 
-        <div class="12.jpg">
-          <!-- <img src="12.jpg"> -->
-          รูปภาพ
+        <div class="photo">
+          <img src="images/teacher1.jpg" alt="teacher1">
         </div>
 
         <div class="name">
-          ผศ.ดร.นิรันดร์ ยิ่งยวด
+          อาจารย์ท่านที่ 1
         </div>
 
         <div class="position">
@@ -300,13 +299,12 @@
 
       <div class="card">
 
-        <div class="web.jpg">
-          <!-- <img src="web.jpg"> -->
-          รูปภาพ
+        <div class="photo">
+          <img src="images/teacher2.jpg" alt="teacher2">
         </div>
 
         <div class="name">
-          อ.ดร.อรวรรณ บุญทัน
+          อาจารย์ท่านที่ 2
         </div>
 
         <div class="position">
@@ -325,13 +323,12 @@
 
       <div class="card president-card">
 
-        <div class="IMG_2757.JPG">
-          <!-- <img src="president.jpg"> -->
-          รูปภาพ
+        <div class="photo">
+          <img src="images/president.jpg" alt="president">
         </div>
 
         <div class="name">
-          นายศุภเสกย์ นิลเทพา
+          ชื่อ-สกุล
         </div>
 
         <div class="position">
@@ -355,15 +352,15 @@
       <div class="card">
 
         <div class="photo">
-          รูปภาพ
+          <img src="images/member1.jpg" alt="member1">
         </div>
 
         <div class="name">
-          นายกนกพล แซ่แต้
+          ชื่อ-สกุล
         </div>
 
         <div class="position">
-          รองประธานฟาร์มคนที่ 1
+          รองประธานฝ่ายบริหาร
         </div>
 
       </div>
@@ -371,15 +368,15 @@
       <div class="card">
 
         <div class="photo">
-          รูปภาพ
+          <img src="images/member2.jpg" alt="member2">
         </div>
 
         <div class="name">
-          นายธีระพล สมพงษ์
+          ชื่อ-สกุล
         </div>
 
         <div class="position">
-          รองประธานฟาร์มคนที่ 2
+          รองประธานฝ่ายกิจกรรม
         </div>
 
       </div>
@@ -387,31 +384,31 @@
       <div class="card">
 
         <div class="photo">
-          รูปภาพ
+          <img src="images/member3.jpg" alt="member3">
         </div>
 
         <div class="name">
-          นางสาวทรายขวัญ วาปีโท
+          ชื่อ-สกุล
         </div>
 
         <div class="position">
-          เลขานุการ
+          รองประธานฝ่ายวิชาการ
         </div>
 
       </div>
 
       <div class="card">
 
-        <div class="IMG_0282.JPG">
-          รูปภาพ
+        <div class="photo">
+          <img src="images/member4.jpg" alt="member4">
         </div>
 
         <div class="name">
-          นายเมธี ใจสุขดี
+          ชื่อ-สกุล
         </div>
 
         <div class="position">
-          เหรัญญิก
+          รองประธานฝ่ายประชาสัมพันธ์
         </div>
 
       </div>
