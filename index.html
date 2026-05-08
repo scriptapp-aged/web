@@ -1,679 +1,430 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-neon: #00ff88;
-            --ku-green: #006633;
-            --text-dark: #0f172a;
-            --feedback-blue: #1e3a8a;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* รีเซ็ตขอบมนตามความต้องการเดิม (Sharp Edges) */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; border-radius: 0 !important; }
+  <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
 
-        body {
-            background-color: #ffffff;
-            color: var(--text-dark);
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-            background-size: 40px 40px;
-        }
+  <!-- FONT MITR -->
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .bg-blob {
-            position: fixed;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-            filter: blur(80px);
-            z-index: -1;
-            animation: moveBlob 20s infinite alternate;
-        }
+  <style>
 
-        @keyframes moveBlob {
-            0% { transform: translate(-10%, -10%) scale(1); }
-            100% { transform: translate(100%, 50%) scale(1.5); }
-        }
+    :root{
+      --ku-green:#006633;
+      --light-green:#0f766e;
+      --text-dark:#0f172a;
+      --text-gray:#64748b;
+      --border:#d1d5db;
+      --bg:#f4f6f9;
+    }
 
-        .hero-header {
-            padding: 120px 20px 60px;
-            text-align: center;
-            position: relative;
-            animation: fadeInUp 1.2s cubic-bezier(0.2, 1, 0.2, 1);
-        }
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Mitr',sans-serif;
+      border-radius:0 !important;
+    }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
+    body{
+      background:var(--bg);
+      padding:50px 20px;
+      color:var(--text-dark);
+      overflow-x:hidden;
+      background-image: radial-gradient(#dbe4ea 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
 
-        .header-glow {
-            position: absolute;
-            top: 40%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
-            filter: blur(100px);
-            z-index: 0;
-            animation: breathing 5s ease-in-out infinite;
-        }
+    /* BG Glow */
+    .bg-glow{
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,rgba(0,255,136,0.08),transparent 70%);
+      filter:blur(90px);
+      z-index:-1;
+      animation:moveGlow 15s infinite alternate;
+    }
 
-        @keyframes breathing {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
-        }
+    @keyframes moveGlow{
+      from{
+        transform:translate(-10%,-10%) scale(1);
+      }
+      to{
+        transform:translate(80%,50%) scale(1.4);
+      }
+    }
 
-        .main-title {
-            font-size: clamp(3.5rem, 10vw, 6.8rem);
-            font-weight: 700;
-            letter-spacing: -4px;
-            line-height: 0.9;
-            color: var(--text-dark);
-            margin-bottom: 30px;
-            background: linear-gradient(90deg, #0f172a, #006633, #0f172a);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: textFlow 10s linear infinite;
-        }
+    .container{
+      max-width:1350px;
+      margin:auto;
+      background:rgba(255,255,255,0.88);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.6);
+      padding:60px 40px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.06);
+    }
 
-        @keyframes textFlow {
-            to { background-position: 200% center; }
-        }
+    /* HEADER */
 
-        .subtitle-pill {
-            display: inline-block;
-            background: rgba(241, 245, 249, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 12px 32px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--ku-green);
-            letter-spacing: 2px;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            margin-bottom: 20px;
-        }
+    .header{
+      text-align:center;
+      margin-bottom:60px;
+      position:relative;
+    }
 
-        /* --- ⏳ Countdown Styles --- */
-        .countdown-section {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeInUp 1.2s 0.4s both;
-        }
+    .header::after{
+      content:'';
+      width:140px;
+      height:4px;
+      background:linear-gradient(to right,var(--ku-green),#00ff88);
+      display:block;
+      margin:20px auto 0;
+    }
 
-        .countdown-project-label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--ku-green);
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
+    .header h1{
+      font-size:3rem;
+      font-weight:700;
+      color:var(--text-dark);
+      letter-spacing:-1px;
+    }
 
-        .countdown-date-label {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 15px;
-            font-weight: 300;
-        }
+    .header p{
+      margin-top:10px;
+      color:var(--text-gray);
+      font-size:1rem;
+      letter-spacing:2px;
+      font-weight:300;
+    }
 
-        .countdown-grid {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
+    /* LINE */
 
-        .countdown-box {
-            background: rgba(255, 255, 255, 0.5);
-            border-bottom: 3px solid var(--ku-green);
-            padding: 12px;
-            min-width: 75px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
+    .line{
+      width:4px;
+      height:45px;
+      background:linear-gradient(var(--ku-green),#00ff88);
+      margin:10px auto 40px;
+    }
 
-        .countdown-num {
-            display: block;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            line-height: 1;
-        }
+    /* SECTION */
 
-        .countdown-unit {
-            display: block;
-            font-size: 0.65rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-top: 4px;
-            letter-spacing: 1px;
-        }
+    .section{
+      display:flex;
+      justify-content:center;
+      gap:35px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
+    }
 
-        .main-portal {
-            max-width: 1250px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 60px;
-        }
+    /* CARD */
 
-        .card {
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            opacity: 0;
-            animation: cardReveal 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
-        }
+    .card{
+      width:270px;
+      background:#ffffff;
+      border-top:6px solid var(--ku-green);
+      border:1px solid #e2e8f0;
+      padding:30px 20px;
+      text-align:center;
+      transition:0.45s;
+      position:relative;
+      overflow:hidden;
+    }
 
-        .card:nth-child(1) { animation-delay: 0.3s; }
-        .card:nth-child(2) { animation-delay: 0.5s; }
-        .card:nth-child(3) { animation-delay: 0.7s; }
+    .card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(0,255,136,0.08),
+        transparent
+      );
+      transition:0.7s;
+    }
 
-        @keyframes cardReveal {
-            from { opacity: 0; transform: translateY(60px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .card:hover::before{
+      left:100%;
+    }
 
-        .card:hover { transform: translateY(-30px); }
+    .card:hover{
+      transform:translateY(-12px);
+      box-shadow:0 18px 40px rgba(0,102,51,0.12);
+    }
 
-        .image-wrapper {
-            width: 100%;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            margin-bottom: 35px;
-            position: relative;
-        }
+    /* PRESIDENT */
 
-        .image-wrapper img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: grayscale(100%) opacity(0.5) brightness(1.1);
-            transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
-        }
+    .president-card{
+      width:320px;
+      border-top:8px solid #14532d;
+    }
 
-        .card:hover img {
-            filter: grayscale(0%) opacity(1) drop-shadow(0 40px 60px rgba(0,0,0,0.15));
-            transform: scale(1.08) translateY(-15px);
-        }
+    /* PHOTO */
 
-        .card h3 {
-            font-size: 1.7rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            position: relative;
-            display: inline-block;
-            transition: 0.4s;
-        }
+    .photo{
+      width:150px;
+      height:190px;
+      margin:auto;
+      margin-bottom:20px;
+      border:1px solid #cbd5e1;
+      background:#e5e7eb;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:#64748b;
+      font-size:0.95rem;
+      transition:0.4s;
+    }
 
-        .card:hover h3 { color: var(--ku-green); letter-spacing: 1.5px; }
+    .card:hover .photo{
+      transform:scale(1.03);
+    }
 
-        .card h3::after {
-            content: '';
-            position: absolute;
-            bottom: -10px; left: 0;
-            width: 0; height: 4px;
-            background: linear-gradient(90deg, var(--primary-neon), var(--ku-green));
-            transition: 0.6s cubic-bezier(0.2, 1, 0.2, 1);
-        }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
 
-        .card:hover h3::after { width: 100%; }
+    /* TEXT */
 
-        .extra-services {
-            max-width: 1250px;
-            margin: 0 auto;
-            padding: 0 20px 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            animation: fadeInUp 1s 1s both;
-        }
+    .name{
+      font-size:1.2rem;
+      font-weight:600;
+      color:var(--text-dark);
+      margin-bottom:8px;
+    }
 
-        .mini-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 25px;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            transition: 0.4s;
-            min-height: 140px;
-        }
+    .position{
+      font-size:0.95rem;
+      color:var(--text-gray);
+      line-height:1.6;
+      font-weight:300;
+    }
 
-        .mini-card:hover {
-            background: #ffffff;
-            transform: translateY(-10px);
-            border-color: var(--ku-green);
-            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.05);
-        }
+    .committee-title{
+      text-align:center;
+      margin-bottom:35px;
+      font-size:1.5rem;
+      color:var(--ku-green);
+      font-weight:600;
+      letter-spacing:1px;
+    }
 
-        .mini-card i {
-            font-size: 1.5rem;
-            color: var(--ku-green);
-            margin-bottom: 12px;
-            opacity: 0.7;
-        }
+    /* FOOTER */
 
-        .mini-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.4;
-        }
+    .footer{
+      margin-top:60px;
+      padding-top:20px;
+      border-top:1px solid #e2e8f0;
+      text-align:center;
+      color:var(--text-gray);
+      font-size:0.9rem;
+      letter-spacing:1px;
+      font-weight:300;
+    }
 
-        .mini-card span {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 5px;
-            font-weight: 300;
-        }
+    /* RESPONSIVE */
 
-        /* --- ✨ Feedback Section --- */
-        .feedback-section {
-            max-width: 1250px;
-            margin: 40px auto 100px;
-            padding: 0 20px;
-            animation: fadeInUp 1s 1.2s both;
-        }
+    @media(max-width:768px){
 
-        .feedback-container {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+      .container{
+        padding:40px 20px;
+      }
 
-        .feedback-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+      .header h1{
+        font-size:2rem;
+      }
 
-        .feedback-icon-bg {
-            background: rgba(0, 102, 51, 0.05);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--ku-green);
-            font-size: 1.5rem;
-        }
+      .card,
+      .president-card{
+        width:100%;
+        max-width:330px;
+      }
 
-        .feedback-text h2 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-        }
+      .photo{
+        width:140px;
+        height:180px;
+      }
 
-        .feedback-text p {
-            color: #64748b;
-            font-size: 1rem;
-            font-weight: 300;
-        }
+    }
 
-        .feedback-divider {
-            height: 1px;
-            background: rgba(226, 232, 240, 0.8);
-            width: 100%;
-        }
-
-        .feedback-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--feedback-blue);
-            color: #ffffff;
-            padding: 14px 30px;
-            text-decoration: none;
-            width: fit-content;
-            transition: 0.3s;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.15);
-        }
-
-        .feedback-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.25);
-            background: #1e40af;
-        }
-
-        /* --- 🎨 Modal Styles --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            max-width: 550px;
-            width: 90%;
-            transform: scale(0.8);
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-
-        .modal-header { text-align: center; margin-bottom: 25px; }
-        .modal-header h3 { font-weight: 600; color: var(--text-dark); font-size: 1.4rem; }
-
-        .selection-step { display: block; }
-        .form-step { display: none; }
-
-        .modal-options { display: grid; gap: 15px; }
-        .option-card {
-            padding: 20px;
-            border: 2px solid #f1f5f9;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
-        }
-        .option-card:hover { border-color: var(--ku-green); background: rgba(0, 102, 51, 0.02); }
-        .option-card i { font-size: 1.4rem; color: var(--ku-green); }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #e2e8f0;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .rating-group { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        .rating-btn { 
-            width: 45px; height: 45px; border: 1px solid #e2e8f0; 
-            background: white; cursor: pointer; transition: 0.3s; font-weight: 600;
-        }
-        .rating-btn.active { background: var(--ku-green); color: white; border-color: var(--ku-green); }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--ku-green);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .back-btn {
-            background: none; border: none; color: #64748b; cursor: pointer;
-            margin-bottom: 15px; display: flex; align-items: center; gap: 5px; font-size: 0.85rem;
-        }
-
-        .close-modal-x {
-            position: absolute; top: 20px; right: 25px; color: #94a3b8; cursor: pointer; font-size: 1.2rem;
-        }
-
-        @media (max-width: 1024px) {
-            .main-portal { grid-template-columns: 1fr; gap: 100px; }
-            .extra-services { grid-template-columns: 1fr; }
-            .feedback-info { flex-direction: column; text-align: center; }
-            .feedback-btn { align-self: center; }
-        }
-    </style>
+  </style>
 </head>
+
 <body>
 
-    <div class="bg-blob"></div>
-    <div class="header-glow"></div>
+  <div class="bg-glow"></div>
 
-    <header class="hero-header">
-        <div class="title-container">
-            <div class="subtitle-pill">Department of Human and Community Resource Development</div>
-            <h1 class="main-title">ชุมนุมฟาร์มนิสิต</h1>
-            <p style="color: #64748b; font-weight: 300; letter-spacing: 4px; font-size: 1rem; opacity: 0.7;">
-                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
-            </p>
+  <div class="container">
 
-            <div class="countdown-section">
-                <div class="countdown-project-label">โครงการเกษตรน้องใหม่หัวใจ EDS</div>
-                <div class="countdown-date-label">27 มิถุนายน 2569</div>
-                <div class="countdown-grid">
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-days">00</span>
-                        <span class="countdown-unit">Days</span>
-                    </div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-hours">00</span>
-                        <span class="countdown-unit">Hours</span>
-                    </div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-mins">00</span>
-                        <span class="countdown-unit">Mins</span>
-                    </div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-secs">00</span>
-                        <span class="countdown-unit">Secs</span>
-                    </div>
-                </div>
-            </div>
+    <!-- HEADER -->
+
+    <div class="header">
+
+      <!-- LOGO -->
+      <!-- <img src="logo.png" width="90"> -->
+
+      <h1>คณะกรรมการฟาร์ม</h1>
+
+      <p>FARM COMMITTEE • ACADEMIC YEAR 2569</p>
+
+    </div>
+
+    <!-- อาจารย์ -->
+
+    <div class="section">
+
+      <div class="card">
+
+        <div class="photo">
+          <!-- <img src="teacher1.jpg"> -->
+          รูปภาพ
         </div>
-    </header>
 
-    <div class="main-portal">
-        <a href="people.html" class="card">
-            <div class="image-wrapper"><img src="090.png" alt="Committee"></div>
-            <h3>คณะกรรมการฟาร์ม</h3>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Team Excellence 2569</p>
-        </a>
-        <a href="room.html" class="card">
-            <div class="image-wrapper"><img src="111.png" alt="Reservation"></div>
-            <h3>จองห้องประชุม</h3>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Smart Space Booking</p>
-        </a>
-        <a href="project.html" class="card">
-            <div class="image-wrapper"><img src="092.png" alt="Projects"></div>
-            <h3>โครงการชุมนุม</h3>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Future Farm Initiatives</p>
-        </a>
-    </div>
-
-    <div class="extra-services">
-        <a href="academic-calendar.html" class="mini-card">
-            <i class="fa-solid fa-calendar-days"></i>
-            <h4>ปฏิทินการศึกษา</h4>
-            <span>กำหนดการเรียนและสอบ</span>
-        </a>
-        <a href="schedule.html" class="mini-card">
-            <i class="fa-solid fa-calendar-check"></i>
-            <h4>ตารางจองห้องประชุม</h4>
-            <span>เช็คสถานะการใช้งานเรียลไทม์</span>
-        </a>
-        <a href="curriculum-structure.html" class="mini-card">
-            <i class="fa-solid fa-book-open"></i>
-            <h4>โครงสร้างหลักสูตร ป.ตรี</h4>
-            <span>สาขาเกษตรและสิ่งแวดล้อมศึกษา</span>
-        </a>
-        <a href="check-64.html" class="mini-card">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <h4>ตรวจสอบหลักสูตร 64</h4>
-            <span>นิสิตรหัส 64 เป็นต้นไป</span>
-        </a>
-        <a href="admin-approve.html" class="mini-card" style="border-style: dashed; background: rgba(0, 102, 51, 0.03);">
-            <i class="fa-solid fa-user-shield"></i>
-            <h4>ระบบอนุมัติการจอง</h4>
-            <span style="color: var(--ku-green); font-weight: 500;">สำหรับ Admin</span>
-        </a>
-    </div>
-
-    <div class="feedback-section">
-        <div class="feedback-container">
-            <div class="feedback-info">
-                <div class="feedback-icon-bg"><i class="fa-solid fa-comment-dots"></i></div>
-                <div class="feedback-text">
-                    <h2>แสดงความคิดเห็น / ข้อเสนอแนะ</h2>
-                    <p>ผู้พัฒนาระบบยินดีรับฟังความคิดเห็นและข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการและพัฒนาให้ดียิ่งขึ้น</p>
-                </div>
-            </div>
-            <div class="feedback-divider"></div>
-            <button class="feedback-btn" onclick="openModal()">
-                <i class="fa-solid fa-file-pen"></i> แบบฟอร์มแสดงความคิดเห็น
-            </button>
+        <div class="name">
+          อาจารย์ท่านที่ 1
         </div>
-    </div>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <span class="close-modal-x" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
-            
-            <div id="selectionStep" class="selection-step">
-                <div class="modal-header">
-                    <h3>เลือกหัวข้อที่ต้องการเสนอแนะ</h3>
-                </div>
-                <div class="modal-options">
-                    <div class="option-card" onclick="showForm('กรรมการ')">
-                        <i class="fa-solid fa-users-gear"></i>
-                        <div><strong>การทำงานของคณะกรรมการ</strong><p style="font-size: 0.8rem; color: #64748b;">ติชมการดำเนินงานของทีมคณะกรรมการฟาร์ม</p></div>
-                    </div>
-                    <div class="option-card" onclick="showForm('ระบบ')">
-                        <i class="fa-solid fa-laptop-code"></i>
-                        <div><strong>การใช้งานระบบเว็บไซต์</strong><p style="font-size: 0.8rem; color: #64748b;">แจ้งปัญหาการใช้งานหรือเสนอแนะฟีเจอร์ใหม่</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="formStep" class="form-step">
-                <button class="back-btn" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
-                <div class="modal-header">
-                    <h3 id="formTitle">แบบประเมิน</h3>
-                </div>
-                
-                <form id="feedbackForm" onsubmit="submitFeedback(event)">
-                    <div class="form-group">
-                        <label>ความพึงพอใจโดยรวม</label>
-                        <div class="rating-group">
-                            <button type="button" class="rating-btn" onclick="setRating(1)">1</button>
-                            <button type="button" class="rating-btn" onclick="setRating(2)">2</button>
-                            <button type="button" class="rating-btn" onclick="setRating(3)">3</button>
-                            <button type="button" class="rating-btn" onclick="setRating(4)">4</button>
-                            <button type="button" class="rating-btn" onclick="setRating(5)">5</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label id="descLabel">ความคิดเห็นหรือข้อเสนอแนะ</label>
-                        <textarea id="feedbackMsg" rows="4" placeholder="พิมพ์ข้อความของคุณที่นี่..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">ส่งข้อมูล</button>
-                </form>
-            </div>
+        <div class="position">
+          อาจารย์ที่ปรึกษา
         </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          <!-- <img src="teacher2.jpg"> -->
+          รูปภาพ
+        </div>
+
+        <div class="name">
+          อาจารย์ท่านที่ 2
+        </div>
+
+        <div class="position">
+          อาจารย์ที่ปรึกษา
+        </div>
+
+      </div>
+
     </div>
 
-    <script>
-        let currentRating = 0;
-        let feedbackType = '';
+    <div class="line"></div>
 
-        function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
-            goBack();
-        }
+    <!-- PRESIDENT -->
 
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-        }
+    <div class="section">
 
-        function showForm(type) {
-            feedbackType = type;
-            document.getElementById('selectionStep').style.display = 'none';
-            document.getElementById('formStep').style.display = 'block';
-            document.getElementById('formTitle').innerText = 'ประเมินด้าน' + type;
-            document.getElementById('descLabel').innerText = type === 'ระบบ' ? 'ปัญหาที่พบหรือข้อเสนอแนะ' : 'ความคิดเห็นต่อคณะกรรมการ';
-        }
+      <div class="card president-card">
 
-        function goBack() {
-            document.getElementById('selectionStep').style.display = 'block';
-            document.getElementById('formStep').style.display = 'none';
-            document.getElementById('feedbackForm').reset();
-            setRating(0);
-        }
+        <div class="photo">
+          <!-- <img src="president.jpg"> -->
+          รูปภาพ
+        </div>
 
-        function setRating(n) {
-            currentRating = n;
-            const btns = document.querySelectorAll('.rating-btn');
-            btns.forEach((btn, i) => {
-                if (i < n) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-        }
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
-        function submitFeedback(e) {
-            e.preventDefault();
-            if(currentRating === 0) {
-                alert('กรุณาเลือกคะแนนความพึงพอใจ');
-                return;
-            }
-            alert('ขอบคุณสำหรับข้อเสนอแนะ! เราได้รับข้อมูลเรียบร้อยแล้ว');
-            closeModal();
-        }
+        <div class="position">
+          ประธานฟาร์ม
+        </div>
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('modalOverlay');
-            if (event.target == modal) closeModal();
-        }
+      </div>
 
-        // --- ⏳ Countdown Logic ---
-        function startCountdown() {
-            // ตั้งค่าเป้าหมายวันที่ 27 มิถุนายน 2569
-            const target = new Date("June 27, 2026 00:00:00").getTime();
+    </div>
 
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
+    <div class="line"></div>
 
-                if (diff > 0) {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    <!-- COMMITTEE -->
 
-                    document.getElementById('d-days').innerText = days.toString().padStart(2, '0');
-                    document.getElementById('d-hours').innerText = hours.toString().padStart(2, '0');
-                    document.getElementById('d-mins').innerText = mins.toString().padStart(2, '0');
-                    document.getElementById('d-secs').innerText = secs.toString().padStart(2, '0');
-                } else {
-                    document.querySelector('.countdown-section').innerHTML = "<div class='countdown-project-label'>เริ่มโครงการแล้ววันนี้! (27 มิ.ย. 69)</div>";
-                }
-            }, 1000);
-        }
-        
-        startCountdown();
-    </script>
+    <div class="committee-title">
+      คณะกรรมการฝ่ายบริหาร
+    </div>
+
+    <div class="section">
+
+      <div class="card">
+
+        <div class="photo">
+          รูปภาพ
+        </div>
+
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
+
+        <div class="position">
+          รองประธานฝ่ายบริหาร
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          รูปภาพ
+        </div>
+
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
+
+        <div class="position">
+          รองประธานฝ่ายกิจกรรม
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          รูปภาพ
+        </div>
+
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
+
+        <div class="position">
+          รองประธานฝ่ายวิชาการ
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          รูปภาพ
+        </div>
+
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
+
+        <div class="position">
+          รองประธานฝ่ายประชาสัมพันธ์
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+      KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
+    </div>
+
+  </div>
+
 </body>
 </html>
