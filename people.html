@@ -6,56 +6,109 @@
 
   <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
+  <!-- FONT MITR -->
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+
+    :root{
+      --ku-green:#006633;
+      --light-green:#0f766e;
+      --text-dark:#0f172a;
+      --text-gray:#64748b;
+      --border:#d1d5db;
+      --bg:#f4f6f9;
+    }
 
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
-      font-family: 'Sarabun', sans-serif;
+      font-family:'Mitr',sans-serif;
+      border-radius:0 !important;
     }
 
     body{
-      background:#f4f6f9;
+      background:var(--bg);
       padding:50px 20px;
-      color:#1f2937;
+      color:var(--text-dark);
+      overflow-x:hidden;
+      background-image: radial-gradient(#dbe4ea 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    /* BG Glow */
+    .bg-glow{
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,rgba(0,255,136,0.08),transparent 70%);
+      filter:blur(90px);
+      z-index:-1;
+      animation:moveGlow 15s infinite alternate;
+    }
+
+    @keyframes moveGlow{
+      from{
+        transform:translate(-10%,-10%) scale(1);
+      }
+      to{
+        transform:translate(80%,50%) scale(1.4);
+      }
     }
 
     .container{
-      max-width:1300px;
+      max-width:1350px;
       margin:auto;
-      background:#ffffff;
-      border:1px solid #d1d5db;
-      border-radius:12px;
-      padding:50px 40px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      background:rgba(255,255,255,0.88);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.6);
+      padding:60px 40px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.06);
     }
+
+    /* HEADER */
 
     .header{
       text-align:center;
-      margin-bottom:50px;
-      border-bottom:3px solid #0f766e;
-      padding-bottom:25px;
+      margin-bottom:60px;
+      position:relative;
     }
 
-    .header img{
-      width:90px;
-      margin-bottom:15px;
+    .header::after{
+      content:'';
+      width:140px;
+      height:4px;
+      background:linear-gradient(to right,var(--ku-green),#00ff88);
+      display:block;
+      margin:20px auto 0;
     }
 
     .header h1{
-      font-size:2rem;
-      color:#0f172a;
-      margin-bottom:10px;
+      font-size:3rem;
       font-weight:700;
+      color:var(--text-dark);
+      letter-spacing:-1px;
     }
 
     .header p{
-      font-size:1.05rem;
-      color:#475569;
+      margin-top:10px;
+      color:var(--text-gray);
+      font-size:1rem;
+      letter-spacing:2px;
+      font-weight:300;
     }
+
+    /* LINE */
+
+    .line{
+      width:4px;
+      height:45px;
+      background:linear-gradient(var(--ku-green),#00ff88);
+      margin:10px auto 40px;
+    }
+
+    /* SECTION */
 
     .section{
       display:flex;
@@ -65,36 +118,72 @@
       margin-bottom:30px;
     }
 
+    /* CARD */
+
     .card{
-      width:260px;
+      width:270px;
       background:#ffffff;
-      border:1px solid #cbd5e1;
-      border-top:6px solid #0f766e;
-      border-radius:10px;
+      border-top:6px solid var(--ku-green);
+      border:1px solid #e2e8f0;
       padding:30px 20px;
       text-align:center;
-      transition:0.3s;
+      transition:0.45s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(0,255,136,0.08),
+        transparent
+      );
+      transition:0.7s;
+    }
+
+    .card:hover::before{
+      left:100%;
     }
 
     .card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 8px 18px rgba(0,0,0,0.08);
+      transform:translateY(-12px);
+      box-shadow:0 18px 40px rgba(0,102,51,0.12);
     }
 
+    /* PRESIDENT */
+
+    .president-card{
+      width:320px;
+      border-top:8px solid #14532d;
+    }
+
+    /* PHOTO */
+
     .photo{
-      width:140px;
-      height:180px;
+      width:150px;
+      height:190px;
       margin:auto;
-      margin-bottom:18px;
+      margin-bottom:20px;
       border:1px solid #cbd5e1;
       background:#e5e7eb;
-      border-radius:6px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#6b7280;
-      font-size:0.95rem;
       overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:#64748b;
+      font-size:0.95rem;
+      transition:0.4s;
+    }
+
+    .card:hover .photo{
+      transform:scale(1.03);
     }
 
     .photo img{
@@ -103,62 +192,65 @@
       object-fit:cover;
     }
 
+    /* TEXT */
+
     .name{
-      font-size:1.1rem;
-      font-weight:700;
+      font-size:1.2rem;
+      font-weight:600;
+      color:var(--text-dark);
       margin-bottom:8px;
-      color:#0f172a;
     }
 
     .position{
-      font-size:0.97rem;
-      color:#475569;
-      line-height:1.5;
-    }
-
-    .line{
-      width:3px;
-      height:40px;
-      background:#0f766e;
-      margin:0 auto 30px;
-      border-radius:10px;
-    }
-
-    .president-card{
-      width:300px;
-      border-top:7px solid #14532d;
+      font-size:0.95rem;
+      color:var(--text-gray);
+      line-height:1.6;
+      font-weight:300;
     }
 
     .committee-title{
       text-align:center;
-      margin-bottom:30px;
-      font-size:1.3rem;
-      color:#0f172a;
-      font-weight:700;
+      margin-bottom:35px;
+      font-size:1.5rem;
+      color:var(--ku-green);
+      font-weight:600;
+      letter-spacing:1px;
     }
 
+    /* FOOTER */
+
     .footer{
-      margin-top:50px;
-      text-align:center;
-      color:#64748b;
-      font-size:0.9rem;
-      border-top:1px solid #cbd5e1;
+      margin-top:60px;
       padding-top:20px;
+      border-top:1px solid #e2e8f0;
+      text-align:center;
+      color:var(--text-gray);
+      font-size:0.9rem;
+      letter-spacing:1px;
+      font-weight:300;
     }
+
+    /* RESPONSIVE */
 
     @media(max-width:768px){
 
       .container{
-        padding:35px 20px;
+        padding:40px 20px;
       }
 
       .header h1{
-        font-size:1.5rem;
+        font-size:2rem;
       }
 
-      .card{
+      .card,
+      .president-card{
         width:100%;
-        max-width:320px;
+        max-width:330px;
+      }
+
+      .photo{
+        width:140px;
+        height:180px;
       }
 
     }
@@ -168,54 +260,67 @@
 
 <body>
 
+  <div class="bg-glow"></div>
+
   <div class="container">
 
-    <!-- ส่วนหัว -->
+    <!-- HEADER -->
+
     <div class="header">
 
-      <!-- ใส่โลโก้ -->
-      <!-- <img src="logo.png" alt="logo"> -->
+      <!-- LOGO -->
+      <!-- <img src="logo.png" width="90"> -->
 
       <h1>คณะกรรมการฟาร์ม</h1>
-      <p>ปีการศึกษา 2569</p>
+
+      <p>FARM COMMITTEE • ACADEMIC YEAR 2569</p>
 
     </div>
 
     <!-- อาจารย์ -->
+
     <div class="section">
 
       <div class="card">
+
         <div class="photo">
-          <!-- ใส่รูป -->
-          <!-- <img src="12.jpg"> -->
+          <!-- <img src="teacher1.jpg"> -->
           รูปภาพ
         </div>
 
-        <div class="name">ผศ.ดร.นิรันดร์ ยิ่งยวด</div>
+        <div class="name">
+          อาจารย์ท่านที่ 1
+        </div>
 
         <div class="position">
           อาจารย์ที่ปรึกษา
         </div>
+
       </div>
 
       <div class="card">
+
         <div class="photo">
-          <!-- <img src="web.jpg"> -->
+          <!-- <img src="teacher2.jpg"> -->
           รูปภาพ
         </div>
 
-        <div class="name">อ.ดร.อรวรรณ บุญทัน</div>
+        <div class="name">
+          อาจารย์ท่านที่ 2
+        </div>
 
         <div class="position">
           อาจารย์ที่ปรึกษา
         </div>
+
       </div>
 
     </div>
 
     <div class="line"></div>
 
-    <!-- ประธาน -->
+    <!-- PRESIDENT -->
+
     <div class="section">
 
       <div class="card president-card">
@@ -225,7 +330,9 @@
           รูปภาพ
         </div>
 
-        <div class="name">ชื่อ-สกุล</div>
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
         <div class="position">
           ประธานฟาร์ม
@@ -237,7 +344,8 @@
 
     <div class="line"></div>
 
-    <!-- รองประธาน -->
+    <!-- COMMITTEE -->
+
     <div class="committee-title">
       คณะกรรมการฝ่ายบริหาร
     </div>
@@ -250,10 +358,12 @@
           รูปภาพ
         </div>
 
-        <div class="name">นายกนกพล แซ่แต้</div>
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
         <div class="position">
-          รองประธานฟาร์มคนที่ 1
+          รองประธานฝ่ายบริหาร
         </div>
 
       </div>
@@ -264,10 +374,12 @@
           รูปภาพ
         </div>
 
-        <div class="name">นายธีระพล สมพงษ์</div>
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
         <div class="position">
-          รองประธานฟาร์มคนที่ 2
+          รองประธานฝ่ายกิจกรรม
         </div>
 
       </div>
@@ -278,10 +390,12 @@
           รูปภาพ
         </div>
 
-        <div class="name">นางสาวทรายขวัญ วาปีโท</div>
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
         <div class="position">
-          เลขานุการ
+          รองประธานฝ่ายวิชาการ
         </div>
 
       </div>
@@ -292,19 +406,22 @@
           รูปภาพ
         </div>
 
-        <div class="name">นายเมธี ใจสุขดี</div>
+        <div class="name">
+          ชื่อ-สกุล
+        </div>
 
         <div class="position">
-          เหรัญญิก
+          รองประธานฝ่ายประชาสัมพันธ์
         </div>
 
       </div>
 
     </div>
 
-    <!-- ส่วนท้าย -->
+    <!-- FOOTER -->
+
     <div class="footer">
-      คณะกรรมการฟาร์ม ปีการศึกษา 2569
+      KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
     </div>
 
   </div>
