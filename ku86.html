@@ -174,7 +174,9 @@ body{
 
   display:grid;
 
-  gap:45px;
+  grid-template-columns:repeat(2,1fr);
+
+  gap:30px;
 }
 
 /* ===== Banner ===== */
@@ -488,6 +490,15 @@ body{
 }
 
 /* ===== Responsive ===== */
+
+@media(max-width:900px){
+
+  .banner-section{
+
+    grid-template-columns:1fr;
+  }
+
+}
 
 @media(max-width:768px){
 
