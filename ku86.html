@@ -16,7 +16,6 @@
   --primary:#00ff88;
   --dark:#0f172a;
   --gray:#64748b;
-  --light:#f8fafc;
 }
 
 *{
@@ -31,14 +30,19 @@ body{
   background:#ffffff;
   color:var(--dark);
   overflow-x:hidden;
-  background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+
+  background-image:
+    radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+
   background-size:40px 40px;
 }
 
 /* ===== Background Glow ===== */
 
 .bg-blob{
+
   position:fixed;
+
   width:650px;
   height:650px;
 
@@ -74,7 +78,8 @@ body{
 /* ===== HERO ===== */
 
 .hero{
-  min-height:65vh;
+
+  min-height:60vh;
 
   padding:120px 20px 40px;
 
@@ -83,7 +88,6 @@ body{
   align-items:center;
 
   text-align:center;
-  position:relative;
 }
 
 .hero-content{
@@ -91,6 +95,7 @@ body{
 }
 
 .tag{
+
   display:inline-block;
 
   padding:12px 30px;
@@ -142,17 +147,37 @@ body{
 
 }
 
-/* ===== 16:9 Banner ===== */
+.hero-subtitle{
+
+  margin-top:25px;
+
+  color:var(--ku-green);
+
+  font-size:1.05rem;
+
+  letter-spacing:4px;
+
+  font-weight:500;
+
+  opacity:.9;
+}
+
+/* ===== Banner Section ===== */
 
 .banner-section{
+
   max-width:1380px;
 
   margin:auto;
 
   padding:0 20px 90px;
 
-  perspective:1500px;
+  display:grid;
+
+  gap:45px;
 }
+
+/* ===== Banner ===== */
 
 .banner-container{
 
@@ -172,22 +197,18 @@ body{
     0 50px 120px rgba(0,0,0,.20),
     0 0 0 1px rgba(255,255,255,.03) inset;
 
-  transform-style:preserve-3d;
-
   transition:1s cubic-bezier(.2,1,.2,1);
 }
 
 .banner-container:hover{
 
   transform:
-    rotateX(2deg)
-    rotateY(-2deg)
     translateY(-12px)
     scale(1.01);
 
 }
 
-/* Glow Layer */
+/* ===== Glow ===== */
 
 .banner-glow{
 
@@ -223,7 +244,7 @@ body{
 
 }
 
-/* Image */
+/* ===== Banner Image ===== */
 
 .banner-container img{
 
@@ -234,8 +255,6 @@ body{
 
   object-fit:cover;
 
-  transform:scale(1.03);
-
   filter:
     brightness(.72)
     contrast(1.08)
@@ -245,10 +264,11 @@ body{
 }
 
 .banner-container:hover img{
+
   transform:scale(1.08);
 }
 
-/* Overlay */
+/* ===== Overlay ===== */
 
 .banner-overlay{
 
@@ -273,11 +293,9 @@ body{
   z-index:2;
 }
 
-/* Content */
+/* ===== Banner Content ===== */
 
 .banner-content{
-
-  transform:translateZ(60px);
 
   max-width:850px;
 }
@@ -331,31 +349,44 @@ body{
 /* ===== Sections ===== */
 
 .section{
+
   max-width:1250px;
+
   margin:auto;
+
   padding:80px 20px;
 }
 
 .section-title{
+
   margin-bottom:50px;
+
   text-align:center;
 }
 
 .section-title h2{
+
   font-size:2.5rem;
+
   margin-bottom:10px;
 }
 
 .section-title p{
+
   color:var(--gray);
+
   font-weight:300;
 }
 
 /* ===== Cards ===== */
 
 .card-grid{
+
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
   gap:25px;
 }
 
@@ -391,7 +422,9 @@ body{
 }
 
 .card h3{
+
   margin-bottom:10px;
+
   font-size:1.3rem;
 }
 
@@ -409,7 +442,9 @@ body{
 /* ===== Timeline ===== */
 
 .timeline{
+
   display:grid;
+
   gap:25px;
 }
 
@@ -455,7 +490,7 @@ body{
   font-weight:300;
 }
 
-/* ===== Download ===== */
+/* ===== Downloads ===== */
 
 .download-grid{
 
@@ -512,7 +547,9 @@ body{
 }
 
 .download-card h4{
+
   font-size:1rem;
+
   margin-bottom:3px;
 }
 
@@ -526,7 +563,9 @@ body{
 /* ===== FAQ ===== */
 
 .faq{
+
   display:grid;
+
   gap:20px;
 }
 
@@ -591,6 +630,15 @@ footer p{
     padding:100px 20px 20px;
   }
 
+  .hero-subtitle{
+
+    font-size:.9rem;
+
+    letter-spacing:2px;
+
+    line-height:1.8;
+  }
+
   .banner-overlay{
     padding:28px;
   }
@@ -624,19 +672,24 @@ footer p{
 
     <h1>นิสิตใหม่ KU86</h1>
 
+    <div class="hero-subtitle">
+      KU68 • EDS26 • AG-ED57
+    </div>
+
   </div>
 
 </section>
 
-<!-- ===== 16:9 BANNER ===== -->
+<!-- ===== BANNERS ===== -->
 
 <section class="banner-section">
 
+  <!-- Banner 1 -->
   <div class="banner-container">
 
     <div class="banner-glow"></div>
 
-    <img src="banner-ku86.jpg" alt="KU86 Banner">
+    <img src="banner1.jpg" alt="Banner 1">
 
     <div class="banner-overlay">
 
@@ -661,6 +714,36 @@ footer p{
 
   </div>
 
+  <!-- Banner 2 -->
+  <div class="banner-container">
+
+    <div class="banner-glow"></div>
+
+    <img src="banner2.jpg" alt="Banner 2">
+
+    <div class="banner-overlay">
+
+      <div class="banner-content">
+
+        <span class="banner-badge">
+          EDS FAMILY
+        </span>
+
+        <h2>
+          NEW EXPERIENCE
+          NEW JOURNEY
+        </h2>
+
+        <p>
+          Agricultural and Environmental Education
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
 <!-- ===== INFO ===== -->
@@ -676,9 +759,7 @@ footer p{
 
     <div class="card">
       <i class="fa-solid fa-id-card"></i>
-
       <h3>การรายงานตัว</h3>
-
       <p>
         ตรวจสอบเอกสารสำคัญ ขั้นตอนการรายงานตัว
         และช่องทางติดต่อต่าง ๆ ของมหาวิทยาลัย
@@ -687,9 +768,7 @@ footer p{
 
     <div class="card">
       <i class="fa-solid fa-book"></i>
-
       <h3>การลงทะเบียนเรียน</h3>
-
       <p>
         ศึกษาวิธีลงทะเบียนเรียน ตารางเรียน
         และการใช้งานระบบสารสนเทศนิสิต
@@ -698,9 +777,7 @@ footer p{
 
     <div class="card">
       <i class="fa-solid fa-building-columns"></i>
-
       <h3>ทุนการศึกษา</h3>
-
       <p>
         รวมข้อมูลทุนการศึกษา กยศ.
         และสวัสดิการสำหรับนิสิตใหม่
@@ -709,9 +786,7 @@ footer p{
 
     <div class="card">
       <i class="fa-solid fa-users"></i>
-
       <h3>กิจกรรมนิสิต</h3>
-
       <p>
         พบเพื่อนใหม่ เข้าร่วมกิจกรรมรับน้อง
         และเรียนรู้ชีวิตมหาวิทยาลัย
@@ -721,210 +796,6 @@ footer p{
   </div>
 
 </section>
-
-<!-- ===== TIMELINE ===== -->
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>กำหนดการกิจกรรม</h2>
-    <p>กิจกรรมสำคัญสำหรับนิสิตใหม่ KU86</p>
-  </div>
-
-  <div class="timeline">
-
-    <div class="timeline-item">
-
-      <div class="timeline-date">
-        10 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-
-        <h4>รายงานตัวนิสิตใหม่</h4>
-
-        <p>
-          ตรวจสอบเอกสารและยืนยันสิทธิ์การเข้าศึกษา
-        </p>
-
-      </div>
-
-    </div>
-
-    <div class="timeline-item">
-
-      <div class="timeline-date">
-        20 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-
-        <h4>ปฐมนิเทศนิสิตใหม่</h4>
-
-        <p>
-          แนะนำการใช้ชีวิตในมหาวิทยาลัย
-          และแนวทางการเรียนในระดับอุดมศึกษา
-        </p>
-
-      </div>
-
-    </div>
-
-    <div class="timeline-item">
-
-      <div class="timeline-date">
-        27 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-
-        <h4>โครงการเกษตรน้องใหม่หัวใจ EDS</h4>
-
-        <p>
-          กิจกรรมสร้างความสัมพันธ์และเรียนรู้การทำงานร่วมกัน
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ===== DOWNLOAD ===== -->
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>ดาวน์โหลดเอกสาร</h2>
-    <p>เอกสารสำคัญสำหรับนิสิตใหม่</p>
-  </div>
-
-  <div class="download-grid">
-
-    <a href="#" class="download-card">
-
-      <div class="download-left">
-
-        <i class="fa-solid fa-file-pdf"></i>
-
-        <div>
-
-          <h4>คู่มือนิสิตใหม่ KU86</h4>
-
-          <span>PDF Document</span>
-
-        </div>
-
-      </div>
-
-      <i class="fa-solid fa-download"></i>
-
-    </a>
-
-    <a href="#" class="download-card">
-
-      <div class="download-left">
-
-        <i class="fa-solid fa-file-lines"></i>
-
-        <div>
-
-          <h4>ปฏิทินการศึกษา</h4>
-
-          <span>Academic Calendar</span>
-
-        </div>
-
-      </div>
-
-      <i class="fa-solid fa-download"></i>
-
-    </a>
-
-    <a href="#" class="download-card">
-
-      <div class="download-left">
-
-        <i class="fa-solid fa-book-open"></i>
-
-        <div>
-
-          <h4>โครงสร้างหลักสูตร</h4>
-
-          <span>Curriculum Structure</span>
-
-        </div>
-
-      </div>
-
-      <i class="fa-solid fa-download"></i>
-
-    </a>
-
-  </div>
-
-</section>
-
-<!-- ===== FAQ ===== -->
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>คำถามที่พบบ่อย</h2>
-    <p>FAQ สำหรับนิสิตใหม่</p>
-  </div>
-
-  <div class="faq">
-
-    <div class="faq-item">
-
-      <h4>ต้องแต่งกายอย่างไรในวันรายงานตัว?</h4>
-
-      <p>
-        แต่งกายชุดนักเรียนหรือชุดสุภาพตามที่มหาวิทยาลัยกำหนด
-      </p>
-
-    </div>
-
-    <div class="faq-item">
-
-      <h4>สามารถดูตารางเรียนได้ที่ไหน?</h4>
-
-      <p>
-        สามารถตรวจสอบผ่านระบบสารสนเทศนิสิตของมหาวิทยาลัย
-      </p>
-
-    </div>
-
-    <div class="faq-item">
-
-      <h4>หากลืมรหัสผ่านระบบนิสิตต้องทำอย่างไร?</h4>
-
-      <p>
-        ติดต่อสำนักบริการคอมพิวเตอร์ของมหาวิทยาลัย
-        หรือเจ้าหน้าที่ประจำคณะ
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ===== FOOTER ===== -->
-
-<footer>
-
-  <h3>KU86 Freshman Portal</h3>
-
-  <p>
-    Faculty of Education and Development Sciences<br>
-    Kasetsart University Kamphaeng Saen Campus
-  </p>
-
-</footer>
 
 </body>
 </html>
