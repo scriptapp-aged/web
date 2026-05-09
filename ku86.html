@@ -481,6 +481,88 @@ body{
   font-weight:300;
 }
 
+/* ===== อาคารสำคัญ ===== */
+
+.building-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+  gap:28px;
+}
+
+.building-card{
+
+  background:rgba(255,255,255,.7);
+
+  border:1px solid #e2e8f0;
+
+  overflow:hidden;
+
+  transition:.45s ease;
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.03);
+}
+
+.building-card:hover{
+
+  transform:
+    translateY(-10px);
+
+  border-color:var(--ku-green);
+
+  box-shadow:
+    0 25px 45px rgba(0,0,0,.08);
+}
+
+.building-image{
+
+  width:100%;
+
+  aspect-ratio:16/9;
+
+  overflow:hidden;
+
+  background:#0f172a;
+}
+
+.building-image img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transition:1s ease;
+
+  filter:
+    brightness(.9)
+    contrast(1.05);
+}
+
+.building-card:hover img{
+
+  transform:scale(1.08);
+}
+
+.building-card h3{
+
+  padding:18px;
+
+  text-align:center;
+
+  font-size:1rem;
+
+  color:var(--dark);
+
+  font-weight:500;
+}
+
 /* ===== Responsive ===== */
 
 @media(max-width:900px){
@@ -534,6 +616,8 @@ body{
 <body>
 
 <div class="bg-blob"></div>
+
+<!-- ===== HERO ===== -->
 
 <section class="hero">
 
@@ -679,42 +763,104 @@ body{
     <p>จุดสำคัญที่นิสิตใหม่ควรรู้จักภายในมหาวิทยาลัย</p>
   </div>
 
-  <div class="card-grid">
+  <div class="building-grid">
 
-    <div class="card">
-      <i class="fa-solid fa-school"></i>
-      <h3>สำนักบริการคอมพิวเตอร์</h3>
-      <p>
-        จุดให้บริการด้านระบบอินเทอร์เน็ต
-        บัญชีผู้ใช้งาน และบริการเทคโนโลยีสารสนเทศ
-      </p>
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building01.jpg" alt="">
+      </div>
+      <h3>อาคารสารนิเทศ 50 ปี</h3>
     </div>
 
-    <div class="card">
-      <i class="fa-solid fa-book-open-reader"></i>
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building02.jpg" alt="">
+      </div>
       <h3>หอสมุดกำแพงแสน</h3>
-      <p>
-        แหล่งค้นคว้าข้อมูล หนังสือ
-        พื้นที่อ่านหนังสือ และ Co-working Space
-      </p>
     </div>
 
-    <div class="card">
-      <i class="fa-solid fa-utensils"></i>
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building03.jpg" alt="">
+      </div>
+      <h3>สำนักบริการคอมพิวเตอร์</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building04.jpg" alt="">
+      </div>
       <h3>โรงอาหารกลาง</h3>
-      <p>
-        ศูนย์รวมร้านอาหาร เครื่องดื่ม
-        และพื้นที่พักผ่อนสำหรับนิสิต
-      </p>
     </div>
 
-    <div class="card">
-      <i class="fa-solid fa-hospital"></i>
-      <h3>ศูนย์แพทย์มหาวิทยาลัย</h3>
-      <p>
-        ให้บริการด้านสุขภาพ
-        ตรวจรักษาเบื้องต้นและดูแลสุขภาพนิสิต
-      </p>
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building05.jpg" alt="">
+      </div>
+      <h3>ศูนย์กีฬาและสุขภาพ</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building06.jpg" alt="">
+      </div>
+      <h3>โรงพยาบาลสัตว์</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building07.jpg" alt="">
+      </div>
+      <h3>อาคารเรียนรวม 1</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building08.jpg" alt="">
+      </div>
+      <h3>อาคารเรียนรวม 2</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building09.jpg" alt="">
+      </div>
+      <h3>อาคารเรียนรวม 3</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building10.jpg" alt="">
+      </div>
+      <h3>สระพระพิรุณ</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building11.jpg" alt="">
+      </div>
+      <h3>หอประชุมใหญ่</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building12.jpg" alt="">
+      </div>
+      <h3>คณะศึกษาศาสตร์ฯ</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building13.jpg" alt="">
+      </div>
+      <h3>สำนักทะเบียนและประมวลผล</h3>
+    </div>
+
+    <div class="building-card">
+      <div class="building-image">
+        <img src="building14.jpg" alt="">
+      </div>
+      <h3>หอพักนิสิต</h3>
     </div>
 
   </div>
