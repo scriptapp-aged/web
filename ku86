@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KU86 | นิสิตใหม่</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --ku-green:#006633;
+      --primary:#00ff88;
+      --dark:#0f172a;
+      --gray:#64748b;
+      --light:#f8fafc;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Mitr',sans-serif;
+      border-radius:0 !important;
+    }
+
+    body{
+      background:#fff;
+      color:var(--dark);
+      overflow-x:hidden;
+      background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+      background-size:40px 40px;
+    }
+
+    .bg-blob{
+      position:fixed;
+      width:600px;
+      height:600px;
+      background:radial-gradient(circle,rgba(0,255,136,.12) 0%,transparent 70%);
+      filter:blur(90px);
+      z-index:-1;
+      top:-100px;
+      right:-100px;
+      animation:blobMove 15s infinite alternate ease-in-out;
+    }
+
+    @keyframes blobMove{
+      from{
+        transform:translateY(0) scale(1);
+      }
+      to{
+        transform:translateY(120px) scale(1.2);
+      }
+    }
+
+    .hero{
+      min-height:100vh;
+      padding:120px 20px 80px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      position:relative;
+    }
+
+    .hero-content{
+      max-width:1100px;
+    }
+
+    .tag{
+      display:inline-block;
+      padding:12px 30px;
+      background:rgba(255,255,255,.6);
+      border:1px solid #e2e8f0;
+      backdrop-filter:blur(10px);
+      color:var(--ku-green);
+      letter-spacing:2px;
+      font-size:.9rem;
+      margin-bottom:25px;
+    }
+
+    .hero h1{
+      font-size:clamp(3.5rem,10vw,7rem);
+      line-height:.9;
+      margin-bottom:20px;
+      background:linear-gradient(90deg,#0f172a,#006633,#00ff88,#0f172a);
+      background-size:300%;
+      -webkit-background-clip:text;
+      color:transparent;
+      animation:textFlow 10s linear infinite;
+    }
+
+    @keyframes textFlow{
+      to{
+        background-position:300%;
+      }
+    }
+
+    .hero p{
+      max-width:800px;
+      margin:auto;
+      color:var(--gray);
+      font-size:1.1rem;
+      line-height:1.9;
+      font-weight:300;
+    }
+
+    .hero-btns{
+      margin-top:40px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      text-decoration:none;
+      padding:15px 35px;
+      font-size:1rem;
+      transition:.3s;
+      font-weight:500;
+    }
+
+    .btn-primary{
+      background:var(--ku-green);
+      color:white;
+      box-shadow:0 15px 35px rgba(0,102,51,.15);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-6px);
+      background:#008844;
+    }
+
+    .btn-outline{
+      border:1px solid #cbd5e1;
+      color:var(--dark);
+      background:white;
+    }
+
+    .btn-outline:hover{
+      transform:translateY(-6px);
+      border-color:var(--ku-green);
+      color:var(--ku-green);
+    }
+
+    .section{
+      max-width:1250px;
+      margin:auto;
+      padding:80px 20px;
+    }
+
+    .section-title{
+      margin-bottom:50px;
+      text-align:center;
+    }
+
+    .section-title h2{
+      font-size:2.5rem;
+      margin-bottom:10px;
+    }
+
+    .section-title p{
+      color:var(--gray);
+      font-weight:300;
+    }
+
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(10px);
+      border:1px solid #e2e8f0;
+      padding:35px 30px;
+      transition:.4s;
+    }
+
+    .card:hover{
+      transform:translateY(-12px);
+      border-color:var(--ku-green);
+      box-shadow:0 25px 45px rgba(0,0,0,.05);
+    }
+
+    .card i{
+      font-size:2rem;
+      color:var(--ku-green);
+      margin-bottom:20px;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:1.3rem;
+    }
+
+    .card p{
+      color:var(--gray);
+      font-size:.95rem;
+      line-height:1.8;
+      font-weight:300;
+    }
+
+    .timeline{
+      display:grid;
+      gap:25px;
+    }
+
+    .timeline-item{
+      display:flex;
+      gap:25px;
+      padding:30px;
+      border-left:5px solid var(--ku-green);
+      background:white;
+      box-shadow:0 10px 25px rgba(0,0,0,.03);
+    }
+
+    .timeline-date{
+      min-width:130px;
+      font-weight:600;
+      color:var(--ku-green);
+      font-size:1.1rem;
+    }
+
+    .timeline-content h4{
+      margin-bottom:10px;
+      font-size:1.2rem;
+    }
+
+    .timeline-content p{
+      color:var(--gray);
+      line-height:1.7;
+      font-weight:300;
+    }
+
+    .download-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .download-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:25px;
+      border:1px solid #e2e8f0;
+      background:white;
+      text-decoration:none;
+      color:inherit;
+      transition:.3s;
+    }
+
+    .download-card:hover{
+      transform:translateY(-8px);
+      border-color:var(--ku-green);
+    }
+
+    .download-left{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .download-left i{
+      font-size:1.8rem;
+      color:var(--ku-green);
+    }
+
+    .download-card h4{
+      font-size:1rem;
+      margin-bottom:3px;
+    }
+
+    .download-card span{
+      color:var(--gray);
+      font-size:.85rem;
+    }
+
+    .faq{
+      display:grid;
+      gap:20px;
+    }
+
+    .faq-item{
+      background:white;
+      border:1px solid #e2e8f0;
+      padding:25px;
+    }
+
+    .faq-item h4{
+      color:var(--ku-green);
+      margin-bottom:10px;
+    }
+
+    .faq-item p{
+      color:var(--gray);
+      line-height:1.8;
+      font-weight:300;
+    }
+
+    footer{
+      padding:60px 20px;
+      text-align:center;
+      border-top:1px solid #e2e8f0;
+      margin-top:60px;
+    }
+
+    footer h3{
+      margin-bottom:10px;
+      color:var(--ku-green);
+    }
+
+    footer p{
+      color:var(--gray);
+      font-weight:300;
+    }
+
+    @media(max-width:768px){
+
+      .hero{
+        padding-top:100px;
+      }
+
+      .timeline-item{
+        flex-direction:column;
+      }
+
+      .hero-btns{
+        flex-direction:column;
+        align-items:center;
+      }
+
+      .btn{
+        width:100%;
+        max-width:320px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="bg-blob"></div>
+
+<section class="hero">
+  <div class="hero-content">
+
+    <div class="tag">
+      KASETSART UNIVERSITY KAMPHAENG SAEN
+    </div>
+
+    <h1>นิสิตใหม่ KU86</h1>
+
+    <p>
+      ยินดีต้อนรับสู่ครอบครัวเกษตรศาสตร์ วิทยาเขตกำแพงแสน
+      พื้นที่รวมข้อมูลสำคัญสำหรับนิสิตใหม่ ทั้งกำหนดการ กิจกรรม เอกสาร
+      และคู่มือการใช้ชีวิตในรั้วมหาวิทยาลัย
+    </p>
+
+    <div class="hero-btns">
+      <a href="#activities" class="btn btn-primary">
+        <i class="fa-solid fa-calendar-days"></i> ดูกิจกรรม
+      </a>
+
+      <a href="#downloads" class="btn btn-outline">
+        <i class="fa-solid fa-download"></i> ดาวน์โหลดเอกสาร
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+
+  <div class="section-title">
+    <h2>สิ่งที่นิสิตใหม่ควรรู้</h2>
+    <p>เริ่มต้นชีวิตมหาวิทยาลัยได้อย่างมั่นใจ</p>
+  </div>
+
+  <div class="card-grid">
+
+    <div class="card">
+      <i class="fa-solid fa-id-card"></i>
+      <h3>การรายงานตัว</h3>
+      <p>
+        ตรวจสอบเอกสารสำคัญ ขั้นตอนการรายงานตัว
+        และช่องทางติดต่อต่าง ๆ ของมหาวิทยาลัย
+      </p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-book"></i>
+      <h3>การลงทะเบียนเรียน</h3>
+      <p>
+        ศึกษาวิธีลงทะเบียนเรียน ตารางเรียน
+        และการใช้งานระบบสารสนเทศนิสิต
+      </p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-building-columns"></i>
+      <h3>ทุนการศึกษา</h3>
+      <p>
+        รวมข้อมูลทุนการศึกษา กยศ.
+        และสวัสดิการสำหรับนิสิตใหม่
+      </p>
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-users"></i>
+      <h3>กิจกรรมนิสิต</h3>
+      <p>
+        พบเพื่อนใหม่ เข้าร่วมกิจกรรมรับน้อง
+        และเรียนรู้ชีวิตมหาวิทยาลัย
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="activities">
+
+  <div class="section-title">
+    <h2>กำหนดการกิจกรรม</h2>
+    <p>กิจกรรมสำคัญสำหรับนิสิตใหม่ KU86</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        10 มิ.ย. 69
+      </div>
+
+      <div class="timeline-content">
+        <h4>รายงานตัวนิสิตใหม่</h4>
+        <p>
+          ตรวจสอบเอกสารและยืนยันสิทธิ์การเข้าศึกษา
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        20 มิ.ย. 69
+      </div>
+
+      <div class="timeline-content">
+        <h4>ปฐมนิเทศนิสิตใหม่</h4>
+        <p>
+          แนะนำการใช้ชีวิตในมหาวิทยาลัย
+          และแนวทางการเรียนในระดับอุดมศึกษา
+        </p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        27 มิ.ย. 69
+      </div>
+
+      <div class="timeline-content">
+        <h4>โครงการเกษตรน้องใหม่หัวใจ EDS</h4>
+        <p>
+          กิจกรรมสร้างความสัมพันธ์และเรียนรู้การทำงานร่วมกัน
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section" id="downloads">
+
+  <div class="section-title">
+    <h2>ดาวน์โหลดเอกสาร</h2>
+    <p>เอกสารสำคัญสำหรับนิสิตใหม่</p>
+  </div>
+
+  <div class="download-grid">
+
+    <a href="#" class="download-card">
+      <div class="download-left">
+        <i class="fa-solid fa-file-pdf"></i>
+        <div>
+          <h4>คู่มือนิสิตใหม่ KU86</h4>
+          <span>PDF Document</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-download"></i>
+    </a>
+
+    <a href="#" class="download-card">
+      <div class="download-left">
+        <i class="fa-solid fa-file-lines"></i>
+        <div>
+          <h4>ปฏิทินการศึกษา</h4>
+          <span>Academic Calendar</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-download"></i>
+    </a>
+
+    <a href="#" class="download-card">
+      <div class="download-left">
+        <i class="fa-solid fa-book-open"></i>
+        <div>
+          <h4>โครงสร้างหลักสูตร</h4>
+          <span>Curriculum Structure</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-download"></i>
+    </a>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="section-title">
+    <h2>คำถามที่พบบ่อย</h2>
+    <p>FAQ สำหรับนิสิตใหม่</p>
+  </div>
+
+  <div class="faq">
+
+    <div class="faq-item">
+      <h4>ต้องแต่งกายอย่างไรในวันรายงานตัว?</h4>
+      <p>
+        แต่งกายชุดนักเรียนหรือชุดสุภาพตามที่มหาวิทยาลัยกำหนด
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>สามารถดูตารางเรียนได้ที่ไหน?</h4>
+      <p>
+        สามารถตรวจสอบผ่านระบบสารสนเทศนิสิตของมหาวิทยาลัย
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h4>หากลืมรหัสผ่านระบบนิสิตต้องทำอย่างไร?</h4>
+      <p>
+        ติดต่อสำนักบริการคอมพิวเตอร์ของมหาวิทยาลัย
+        หรือเจ้าหน้าที่ประจำคณะ
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+
+  <h3>KU86 Freshman Portal</h3>
+
+  <p>
+    Faculty of Education and Development Sciences<br>
+    Kasetsart University Kamphaeng Saen Campus
+  </p>
+
+</footer>
+
+</body>
+</html>
