@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+
     :root{
       --ku-green:#006633;
       --primary:#00ff88;
@@ -26,7 +27,7 @@
     }
 
     body{
-      background:#fff;
+      background:#ffffff;
       color:var(--dark);
       overflow-x:hidden;
       background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
@@ -143,6 +144,63 @@
       transform:translateY(-6px);
       border-color:var(--ku-green);
       color:var(--ku-green);
+    }
+
+    /* ===== Banner 16:9 ===== */
+
+    .banner-section{
+      max-width:1250px;
+      margin:auto;
+      padding:0 20px 60px;
+    }
+
+    .banner-container{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      overflow:hidden;
+      border:1px solid rgba(226,232,240,.8);
+      background:#f8fafc;
+      box-shadow:0 20px 40px rgba(0,0,0,.05);
+    }
+
+    .banner-container img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:.6s;
+    }
+
+    .banner-container:hover img{
+      transform:scale(1.05);
+    }
+
+    .banner-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        to top,
+        rgba(15,23,42,.75),
+        rgba(15,23,42,.15)
+      );
+
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:40px;
+    }
+
+    .banner-overlay h2{
+      color:white;
+      font-size:clamp(2rem,5vw,4rem);
+      margin-bottom:10px;
+      letter-spacing:2px;
+    }
+
+    .banner-overlay p{
+      color:rgba(255,255,255,.8);
+      font-weight:300;
+      letter-spacing:1px;
     }
 
     .section{
@@ -339,15 +397,21 @@
         max-width:320px;
       }
 
+      .banner-overlay{
+        padding:25px;
+      }
+
     }
 
   </style>
 </head>
+
 <body>
 
 <div class="bg-blob"></div>
 
 <section class="hero">
+
   <div class="hero-content">
 
     <div class="tag">
@@ -363,16 +427,38 @@
     </p>
 
     <div class="hero-btns">
+
       <a href="#activities" class="btn btn-primary">
-        <i class="fa-solid fa-calendar-days"></i> ดูกิจกรรม
+        <i class="fa-solid fa-calendar-days"></i>
+        ดูกิจกรรม
       </a>
 
       <a href="#downloads" class="btn btn-outline">
-        <i class="fa-solid fa-download"></i> ดาวน์โหลดเอกสาร
+        <i class="fa-solid fa-download"></i>
+        ดาวน์โหลดเอกสาร
       </a>
+
     </div>
 
   </div>
+
+</section>
+
+<!-- ===== Banner 16:9 ===== -->
+
+<section class="banner-section">
+
+  <div class="banner-container">
+
+    <img src="123.png" alt="KU86 Banner">
+
+    <div class="banner-overlay">
+      <h2>WELCOME FRESHY KU86</h2>
+      <p>Faculty of Education and Development Sciences</p>
+    </div>
+
+  </div>
+
 </section>
 
 <section class="section">
@@ -487,36 +573,48 @@
   <div class="download-grid">
 
     <a href="#" class="download-card">
+
       <div class="download-left">
         <i class="fa-solid fa-file-pdf"></i>
+
         <div>
           <h4>คู่มือนิสิตใหม่ KU86</h4>
           <span>PDF Document</span>
         </div>
       </div>
+
       <i class="fa-solid fa-download"></i>
+
     </a>
 
     <a href="#" class="download-card">
+
       <div class="download-left">
         <i class="fa-solid fa-file-lines"></i>
+
         <div>
           <h4>ปฏิทินการศึกษา</h4>
           <span>Academic Calendar</span>
         </div>
       </div>
+
       <i class="fa-solid fa-download"></i>
+
     </a>
 
     <a href="#" class="download-card">
+
       <div class="download-left">
         <i class="fa-solid fa-book-open"></i>
+
         <div>
           <h4>โครงสร้างหลักสูตร</h4>
           <span>Curriculum Structure</span>
         </div>
       </div>
+
       <i class="fa-solid fa-download"></i>
+
     </a>
 
   </div>
