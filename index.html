@@ -1,573 +1,679 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KU86 | นิสิตใหม่</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-neon: #00ff88;
+            --ku-green: #006633;
+            --text-dark: #0f172a;
+            --feedback-blue: #1e3a8a;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        /* รีเซ็ตขอบมนตามความต้องการเดิม (Sharp Edges) */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; border-radius: 0 !important; }
 
-  <style>
-    :root{
-      --ku-green:#006633;
-      --primary:#00ff88;
-      --dark:#0f172a;
-      --gray:#64748b;
-      --light:#f8fafc;
-    }
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+        }
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Mitr',sans-serif;
-      border-radius:0 !important;
-    }
+        .bg-blob {
+            position: fixed;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            animation: moveBlob 20s infinite alternate;
+        }
 
-    body{
-      background:#fff;
-      color:var(--dark);
-      overflow-x:hidden;
-      background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-      background-size:40px 40px;
-    }
+        @keyframes moveBlob {
+            0% { transform: translate(-10%, -10%) scale(1); }
+            100% { transform: translate(100%, 50%) scale(1.5); }
+        }
 
-    .bg-blob{
-      position:fixed;
-      width:600px;
-      height:600px;
-      background:radial-gradient(circle,rgba(0,255,136,.12) 0%,transparent 70%);
-      filter:blur(90px);
-      z-index:-1;
-      top:-100px;
-      right:-100px;
-      animation:blobMove 15s infinite alternate ease-in-out;
-    }
+        .hero-header {
+            padding: 120px 20px 60px;
+            text-align: center;
+            position: relative;
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+        }
 
-    @keyframes blobMove{
-      from{
-        transform:translateY(0) scale(1);
-      }
-      to{
-        transform:translateY(120px) scale(1.2);
-      }
-    }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
 
-    .hero{
-      min-height:100vh;
-      padding:120px 20px 80px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      position:relative;
-    }
+        .header-glow {
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: 0;
+            animation: breathing 5s ease-in-out infinite;
+        }
 
-    .hero-content{
-      max-width:1100px;
-    }
+        @keyframes breathing {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+        }
 
-    .tag{
-      display:inline-block;
-      padding:12px 30px;
-      background:rgba(255,255,255,.6);
-      border:1px solid #e2e8f0;
-      backdrop-filter:blur(10px);
-      color:var(--ku-green);
-      letter-spacing:2px;
-      font-size:.9rem;
-      margin-bottom:25px;
-    }
+        .main-title {
+            font-size: clamp(3.5rem, 10vw, 6.8rem);
+            font-weight: 700;
+            letter-spacing: -4px;
+            line-height: 0.9;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #0f172a, #006633, #0f172a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textFlow 10s linear infinite;
+        }
 
-    .hero h1{
-      font-size:clamp(3.5rem,10vw,7rem);
-      line-height:.9;
-      margin-bottom:20px;
-      background:linear-gradient(90deg,#0f172a,#006633,#00ff88,#0f172a);
-      background-size:300%;
-      -webkit-background-clip:text;
-      color:transparent;
-      animation:textFlow 10s linear infinite;
-    }
+        @keyframes textFlow {
+            to { background-position: 200% center; }
+        }
 
-    @keyframes textFlow{
-      to{
-        background-position:300%;
-      }
-    }
+        .subtitle-pill {
+            display: inline-block;
+            background: rgba(241, 245, 249, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 32px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--ku-green);
+            letter-spacing: 2px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            margin-bottom: 20px;
+        }
 
-    .hero p{
-      max-width:800px;
-      margin:auto;
-      color:var(--gray);
-      font-size:1.1rem;
-      line-height:1.9;
-      font-weight:300;
-    }
+        /* --- ⏳ Countdown Styles --- */
+        .countdown-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s 0.4s both;
+        }
 
-    .hero-btns{
-      margin-top:40px;
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
-    }
+        .countdown-project-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--ku-green);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
 
-    .btn{
-      text-decoration:none;
-      padding:15px 35px;
-      font-size:1rem;
-      transition:.3s;
-      font-weight:500;
-    }
+        .countdown-date-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
 
-    .btn-primary{
-      background:var(--ku-green);
-      color:white;
-      box-shadow:0 15px 35px rgba(0,102,51,.15);
-    }
+        .countdown-grid {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
 
-    .btn-primary:hover{
-      transform:translateY(-6px);
-      background:#008844;
-    }
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 3px solid var(--ku-green);
+            padding: 12px;
+            min-width: 75px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
 
-    .btn-outline{
-      border:1px solid #cbd5e1;
-      color:var(--dark);
-      background:white;
-    }
+        .countdown-num {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1;
+        }
 
-    .btn-outline:hover{
-      transform:translateY(-6px);
-      border-color:var(--ku-green);
-      color:var(--ku-green);
-    }
+        .countdown-unit {
+            display: block;
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
 
-    .section{
-      max-width:1250px;
-      margin:auto;
-      padding:80px 20px;
-    }
+        .main-portal {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
 
-    .section-title{
-      margin-bottom:50px;
-      text-align:center;
-    }
+        .card {
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            opacity: 0;
+            animation: cardReveal 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
 
-    .section-title h2{
-      font-size:2.5rem;
-      margin-bottom:10px;
-    }
+        .card:nth-child(1) { animation-delay: 0.3s; }
+        .card:nth-child(2) { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 0.7s; }
 
-    .section-title p{
-      color:var(--gray);
-      font-weight:300;
-    }
+        @keyframes cardReveal {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .card-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:25px;
-    }
+        .card:hover { transform: translateY(-30px); }
 
-    .card{
-      background:rgba(255,255,255,.6);
-      backdrop-filter:blur(10px);
-      border:1px solid #e2e8f0;
-      padding:35px 30px;
-      transition:.4s;
-    }
+        .image-wrapper {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 35px;
+            position: relative;
+        }
 
-    .card:hover{
-      transform:translateY(-12px);
-      border-color:var(--ku-green);
-      box-shadow:0 25px 45px rgba(0,0,0,.05);
-    }
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.5) brightness(1.1);
+            transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+        }
 
-    .card i{
-      font-size:2rem;
-      color:var(--ku-green);
-      margin-bottom:20px;
-    }
+        .card:hover img {
+            filter: grayscale(0%) opacity(1) drop-shadow(0 40px 60px rgba(0,0,0,0.15));
+            transform: scale(1.08) translateY(-15px);
+        }
 
-    .card h3{
-      margin-bottom:10px;
-      font-size:1.3rem;
-    }
+        .card h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            transition: 0.4s;
+        }
 
-    .card p{
-      color:var(--gray);
-      font-size:.95rem;
-      line-height:1.8;
-      font-weight:300;
-    }
+        .card:hover h3 { color: var(--ku-green); letter-spacing: 1.5px; }
 
-    .timeline{
-      display:grid;
-      gap:25px;
-    }
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 0;
+            width: 0; height: 4px;
+            background: linear-gradient(90deg, var(--primary-neon), var(--ku-green));
+            transition: 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+        }
 
-    .timeline-item{
-      display:flex;
-      gap:25px;
-      padding:30px;
-      border-left:5px solid var(--ku-green);
-      background:white;
-      box-shadow:0 10px 25px rgba(0,0,0,.03);
-    }
+        .card:hover h3::after { width: 100%; }
 
-    .timeline-date{
-      min-width:130px;
-      font-weight:600;
-      color:var(--ku-green);
-      font-size:1.1rem;
-    }
+        .extra-services {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 1s 1s both;
+        }
 
-    .timeline-content h4{
-      margin-bottom:10px;
-      font-size:1.2rem;
-    }
+        .mini-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: 0.4s;
+            min-height: 140px;
+        }
 
-    .timeline-content p{
-      color:var(--gray);
-      line-height:1.7;
-      font-weight:300;
-    }
+        .mini-card:hover {
+            background: #ffffff;
+            transform: translateY(-10px);
+            border-color: var(--ku-green);
+            box-shadow: 0 20px 40px rgba(0, 102, 51, 0.05);
+        }
 
-    .download-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    }
+        .mini-card i {
+            font-size: 1.5rem;
+            color: var(--ku-green);
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
 
-    .download-card{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:25px;
-      border:1px solid #e2e8f0;
-      background:white;
-      text-decoration:none;
-      color:inherit;
-      transition:.3s;
-    }
+        .mini-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
 
-    .download-card:hover{
-      transform:translateY(-8px);
-      border-color:var(--ku-green);
-    }
+        .mini-card span {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+            font-weight: 300;
+        }
 
-    .download-left{
-      display:flex;
-      align-items:center;
-      gap:18px;
-    }
+        /* --- ✨ Feedback Section --- */
+        .feedback-section {
+            max-width: 1250px;
+            margin: 40px auto 100px;
+            padding: 0 20px;
+            animation: fadeInUp 1s 1.2s both;
+        }
 
-    .download-left i{
-      font-size:1.8rem;
-      color:var(--ku-green);
-    }
+        .feedback-container {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-    .download-card h4{
-      font-size:1rem;
-      margin-bottom:3px;
-    }
+        .feedback-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-    .download-card span{
-      color:var(--gray);
-      font-size:.85rem;
-    }
+        .feedback-icon-bg {
+            background: rgba(0, 102, 51, 0.05);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--ku-green);
+            font-size: 1.5rem;
+        }
 
-    .faq{
-      display:grid;
-      gap:20px;
-    }
+        .feedback-text h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
 
-    .faq-item{
-      background:white;
-      border:1px solid #e2e8f0;
-      padding:25px;
-    }
+        .feedback-text p {
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 300;
+        }
 
-    .faq-item h4{
-      color:var(--ku-green);
-      margin-bottom:10px;
-    }
+        .feedback-divider {
+            height: 1px;
+            background: rgba(226, 232, 240, 0.8);
+            width: 100%;
+        }
 
-    .faq-item p{
-      color:var(--gray);
-      line-height:1.8;
-      font-weight:300;
-    }
+        .feedback-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--feedback-blue);
+            color: #ffffff;
+            padding: 14px 30px;
+            text-decoration: none;
+            width: fit-content;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.15);
+        }
 
-    footer{
-      padding:60px 20px;
-      text-align:center;
-      border-top:1px solid #e2e8f0;
-      margin-top:60px;
-    }
+        .feedback-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.25);
+            background: #1e40af;
+        }
 
-    footer h3{
-      margin-bottom:10px;
-      color:var(--ku-green);
-    }
+        /* --- 🎨 Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: 0.3s;
+        }
 
-    footer p{
-      color:var(--gray);
-      font-weight:300;
-    }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            max-width: 550px;
+            width: 90%;
+            transform: scale(0.8);
+            transition: 0.3s;
+            position: relative;
+        }
 
-    @media(max-width:768px){
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
 
-      .hero{
-        padding-top:100px;
-      }
+        .modal-header { text-align: center; margin-bottom: 25px; }
+        .modal-header h3 { font-weight: 600; color: var(--text-dark); font-size: 1.4rem; }
 
-      .timeline-item{
-        flex-direction:column;
-      }
+        .selection-step { display: block; }
+        .form-step { display: none; }
 
-      .hero-btns{
-        flex-direction:column;
-        align-items:center;
-      }
+        .modal-options { display: grid; gap: 15px; }
+        .option-card {
+            padding: 20px;
+            border: 2px solid #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        .option-card:hover { border-color: var(--ku-green); background: rgba(0, 102, 51, 0.02); }
+        .option-card i { font-size: 1.4rem; color: var(--ku-green); }
 
-      .btn{
-        width:100%;
-        max-width:320px;
-      }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            outline: none;
+        }
 
-    }
+        .rating-group { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .rating-btn { 
+            width: 45px; height: 45px; border: 1px solid #e2e8f0; 
+            background: white; cursor: pointer; transition: 0.3s; font-weight: 600;
+        }
+        .rating-btn.active { background: var(--ku-green); color: white; border-color: var(--ku-green); }
 
-  </style>
+        .submit-btn {
+            width: 100%;
+            background: var(--ku-green);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .back-btn {
+            background: none; border: none; color: #64748b; cursor: pointer;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 5px; font-size: 0.85rem;
+        }
+
+        .close-modal-x {
+            position: absolute; top: 20px; right: 25px; color: #94a3b8; cursor: pointer; font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-portal { grid-template-columns: 1fr; gap: 100px; }
+            .extra-services { grid-template-columns: 1fr; }
+            .feedback-info { flex-direction: column; text-align: center; }
+            .feedback-btn { align-self: center; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="header-glow"></div>
 
-<section class="hero">
-  <div class="hero-content">
+    <header class="hero-header">
+        <div class="title-container">
+            <div class="subtitle-pill">Department of Human and Community Resource Development</div>
+            <h1 class="main-title">ชุมนุมฟาร์มนิสิต</h1>
+            <p style="color: #64748b; font-weight: 300; letter-spacing: 4px; font-size: 1rem; opacity: 0.7;">
+                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
+            </p>
 
-    <div class="tag">
-      KASETSART UNIVERSITY KAMPHAENG SAEN
-    </div>
-
-    <h1>นิสิตใหม่ KU86</h1>
-
-    <p>
-      ยินดีต้อนรับสู่ครอบครัวเกษตรศาสตร์ วิทยาเขตกำแพงแสน
-      พื้นที่รวมข้อมูลสำคัญสำหรับนิสิตใหม่ ทั้งกำหนดการ กิจกรรม เอกสาร
-      และคู่มือการใช้ชีวิตในรั้วมหาวิทยาลัย
-    </p>
-
-    <div class="hero-btns">
-      <a href="#activities" class="btn btn-primary">
-        <i class="fa-solid fa-calendar-days"></i> ดูกิจกรรม
-      </a>
-
-      <a href="#downloads" class="btn btn-outline">
-        <i class="fa-solid fa-download"></i> ดาวน์โหลดเอกสาร
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>สิ่งที่นิสิตใหม่ควรรู้</h2>
-    <p>เริ่มต้นชีวิตมหาวิทยาลัยได้อย่างมั่นใจ</p>
-  </div>
-
-  <div class="card-grid">
-
-    <div class="card">
-      <i class="fa-solid fa-id-card"></i>
-      <h3>การรายงานตัว</h3>
-      <p>
-        ตรวจสอบเอกสารสำคัญ ขั้นตอนการรายงานตัว
-        และช่องทางติดต่อต่าง ๆ ของมหาวิทยาลัย
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-book"></i>
-      <h3>การลงทะเบียนเรียน</h3>
-      <p>
-        ศึกษาวิธีลงทะเบียนเรียน ตารางเรียน
-        และการใช้งานระบบสารสนเทศนิสิต
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-building-columns"></i>
-      <h3>ทุนการศึกษา</h3>
-      <p>
-        รวมข้อมูลทุนการศึกษา กยศ.
-        และสวัสดิการสำหรับนิสิตใหม่
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-users"></i>
-      <h3>กิจกรรมนิสิต</h3>
-      <p>
-        พบเพื่อนใหม่ เข้าร่วมกิจกรรมรับน้อง
-        และเรียนรู้ชีวิตมหาวิทยาลัย
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section" id="activities">
-
-  <div class="section-title">
-    <h2>กำหนดการกิจกรรม</h2>
-    <p>กิจกรรมสำคัญสำหรับนิสิตใหม่ KU86</p>
-  </div>
-
-  <div class="timeline">
-
-    <div class="timeline-item">
-      <div class="timeline-date">
-        10 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-        <h4>รายงานตัวนิสิตใหม่</h4>
-        <p>
-          ตรวจสอบเอกสารและยืนยันสิทธิ์การเข้าศึกษา
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">
-        20 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-        <h4>ปฐมนิเทศนิสิตใหม่</h4>
-        <p>
-          แนะนำการใช้ชีวิตในมหาวิทยาลัย
-          และแนวทางการเรียนในระดับอุดมศึกษา
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-date">
-        27 มิ.ย. 69
-      </div>
-
-      <div class="timeline-content">
-        <h4>โครงการเกษตรน้องใหม่หัวใจ EDS</h4>
-        <p>
-          กิจกรรมสร้างความสัมพันธ์และเรียนรู้การทำงานร่วมกัน
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section" id="downloads">
-
-  <div class="section-title">
-    <h2>ดาวน์โหลดเอกสาร</h2>
-    <p>เอกสารสำคัญสำหรับนิสิตใหม่</p>
-  </div>
-
-  <div class="download-grid">
-
-    <a href="#" class="download-card">
-      <div class="download-left">
-        <i class="fa-solid fa-file-pdf"></i>
-        <div>
-          <h4>คู่มือนิสิตใหม่ KU86</h4>
-          <span>PDF Document</span>
+            <div class="countdown-section">
+                <div class="countdown-project-label">โครงการเกษตรน้องใหม่หัวใจ EDS</div>
+                <div class="countdown-date-label">27 มิถุนายน 2569</div>
+                <div class="countdown-grid">
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-days">00</span>
+                        <span class="countdown-unit">Days</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-hours">00</span>
+                        <span class="countdown-unit">Hours</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-mins">00</span>
+                        <span class="countdown-unit">Mins</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-secs">00</span>
+                        <span class="countdown-unit">Secs</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <i class="fa-solid fa-download"></i>
-    </a>
+    </header>
 
-    <a href="#" class="download-card">
-      <div class="download-left">
-        <i class="fa-solid fa-file-lines"></i>
-        <div>
-          <h4>ปฏิทินการศึกษา</h4>
-          <span>Academic Calendar</span>
+    <div class="main-portal">
+        <a href="people.html" class="card">
+            <div class="image-wrapper"><img src="090.png" alt="Committee"></div>
+            <h3>คณะกรรมการฟาร์ม</h3>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Team Excellence 2569</p>
+        </a>
+        <a href="room.html" class="card">
+            <div class="image-wrapper"><img src="091.png" alt="Reservation"></div>
+            <h3>จองห้องประชุม</h3>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Smart Space Booking</p>
+        </a>
+        <a href="project.html" class="card">
+            <div class="image-wrapper"><img src="092.png" alt="Projects"></div>
+            <h3>โครงการชุมนุม</h3>
+            <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 300;">Future Farm Initiatives</p>
+        </a>
+    </div>
+
+    <div class="extra-services">
+        <a href="academic-calendar.html" class="mini-card">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h4>ปฏิทินการศึกษา</h4>
+            <span>กำหนดการเรียนและสอบ</span>
+        </a>
+        <a href="schedule.html" class="mini-card">
+            <i class="fa-solid fa-calendar-check"></i>
+            <h4>ตารางจองห้องประชุม</h4>
+            <span>เช็คสถานะการใช้งานเรียลไทม์</span>
+        </a>
+        <a href="curriculum-structure.html" class="mini-card">
+            <i class="fa-solid fa-book-open"></i>
+            <h4>โครงสร้างหลักสูตร ป.ตรี</h4>
+            <span>สาขาเกษตรและสิ่งแวดล้อมศึกษา</span>
+        </a>
+        <a href="check-64.html" class="mini-card">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h4>ตรวจสอบหลักสูตร 64</h4>
+            <span>นิสิตรหัส 64 เป็นต้นไป</span>
+        </a>
+        <a href="admin-approve.html" class="mini-card" style="border-style: dashed; background: rgba(0, 102, 51, 0.03);">
+            <i class="fa-solid fa-user-shield"></i>
+            <h4>ระบบอนุมัติการจอง</h4>
+            <span style="color: var(--ku-green); font-weight: 500;">สำหรับ Admin</span>
+        </a>
+    </div>
+
+    <div class="feedback-section">
+        <div class="feedback-container">
+            <div class="feedback-info">
+                <div class="feedback-icon-bg"><i class="fa-solid fa-comment-dots"></i></div>
+                <div class="feedback-text">
+                    <h2>แสดงความคิดเห็น / ข้อเสนอแนะ</h2>
+                    <p>ผู้พัฒนาระบบยินดีรับฟังความคิดเห็นและข้อเสนอแนะ เพื่อนำไปปรับปรุงการให้บริการและพัฒนาให้ดียิ่งขึ้น</p>
+                </div>
+            </div>
+            <div class="feedback-divider"></div>
+            <button class="feedback-btn" onclick="openModal()">
+                <i class="fa-solid fa-file-pen"></i> แบบฟอร์มแสดงความคิดเห็น
+            </button>
         </div>
-      </div>
-      <i class="fa-solid fa-download"></i>
-    </a>
+    </div>
 
-    <a href="#" class="download-card">
-      <div class="download-left">
-        <i class="fa-solid fa-book-open"></i>
-        <div>
-          <h4>โครงสร้างหลักสูตร</h4>
-          <span>Curriculum Structure</span>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal-x" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+            
+            <div id="selectionStep" class="selection-step">
+                <div class="modal-header">
+                    <h3>เลือกหัวข้อที่ต้องการเสนอแนะ</h3>
+                </div>
+                <div class="modal-options">
+                    <div class="option-card" onclick="showForm('กรรมการ')">
+                        <i class="fa-solid fa-users-gear"></i>
+                        <div><strong>การทำงานของคณะกรรมการ</strong><p style="font-size: 0.8rem; color: #64748b;">ติชมการดำเนินงานของทีมคณะกรรมการฟาร์ม</p></div>
+                    </div>
+                    <div class="option-card" onclick="showForm('ระบบ')">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <div><strong>การใช้งานระบบเว็บไซต์</strong><p style="font-size: 0.8rem; color: #64748b;">แจ้งปัญหาการใช้งานหรือเสนอแนะฟีเจอร์ใหม่</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="formStep" class="form-step">
+                <button class="back-btn" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
+                <div class="modal-header">
+                    <h3 id="formTitle">แบบประเมิน</h3>
+                </div>
+                
+                <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                    <div class="form-group">
+                        <label>ความพึงพอใจโดยรวม</label>
+                        <div class="rating-group">
+                            <button type="button" class="rating-btn" onclick="setRating(1)">1</button>
+                            <button type="button" class="rating-btn" onclick="setRating(2)">2</button>
+                            <button type="button" class="rating-btn" onclick="setRating(3)">3</button>
+                            <button type="button" class="rating-btn" onclick="setRating(4)">4</button>
+                            <button type="button" class="rating-btn" onclick="setRating(5)">5</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="descLabel">ความคิดเห็นหรือข้อเสนอแนะ</label>
+                        <textarea id="feedbackMsg" rows="4" placeholder="พิมพ์ข้อความของคุณที่นี่..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ส่งข้อมูล</button>
+                </form>
+            </div>
         </div>
-      </div>
-      <i class="fa-solid fa-download"></i>
-    </a>
-
-  </div>
-
-</section>
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>คำถามที่พบบ่อย</h2>
-    <p>FAQ สำหรับนิสิตใหม่</p>
-  </div>
-
-  <div class="faq">
-
-    <div class="faq-item">
-      <h4>ต้องแต่งกายอย่างไรในวันรายงานตัว?</h4>
-      <p>
-        แต่งกายชุดนักเรียนหรือชุดสุภาพตามที่มหาวิทยาลัยกำหนด
-      </p>
     </div>
 
-    <div class="faq-item">
-      <h4>สามารถดูตารางเรียนได้ที่ไหน?</h4>
-      <p>
-        สามารถตรวจสอบผ่านระบบสารสนเทศนิสิตของมหาวิทยาลัย
-      </p>
-    </div>
+    <script>
+        let currentRating = 0;
+        let feedbackType = '';
 
-    <div class="faq-item">
-      <h4>หากลืมรหัสผ่านระบบนิสิตต้องทำอย่างไร?</h4>
-      <p>
-        ติดต่อสำนักบริการคอมพิวเตอร์ของมหาวิทยาลัย
-        หรือเจ้าหน้าที่ประจำคณะ
-      </p>
-    </div>
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            goBack();
+        }
 
-  </div>
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
 
-</section>
+        function showForm(type) {
+            feedbackType = type;
+            document.getElementById('selectionStep').style.display = 'none';
+            document.getElementById('formStep').style.display = 'block';
+            document.getElementById('formTitle').innerText = 'ประเมินด้าน' + type;
+            document.getElementById('descLabel').innerText = type === 'ระบบ' ? 'ปัญหาที่พบหรือข้อเสนอแนะ' : 'ความคิดเห็นต่อคณะกรรมการ';
+        }
 
-<footer>
+        function goBack() {
+            document.getElementById('selectionStep').style.display = 'block';
+            document.getElementById('formStep').style.display = 'none';
+            document.getElementById('feedbackForm').reset();
+            setRating(0);
+        }
 
-  <h3>KU86 Freshman Portal</h3>
+        function setRating(n) {
+            currentRating = n;
+            const btns = document.querySelectorAll('.rating-btn');
+            btns.forEach((btn, i) => {
+                if (i < n) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
 
-  <p>
-    Faculty of Education and Development Sciences<br>
-    Kasetsart University Kamphaeng Saen Campus
-  </p>
+        function submitFeedback(e) {
+            e.preventDefault();
+            if(currentRating === 0) {
+                alert('กรุณาเลือกคะแนนความพึงพอใจ');
+                return;
+            }
+            alert('ขอบคุณสำหรับข้อเสนอแนะ! เราได้รับข้อมูลเรียบร้อยแล้ว');
+            closeModal();
+        }
 
-</footer>
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalOverlay');
+            if (event.target == modal) closeModal();
+        }
 
+        // --- ⏳ Countdown Logic ---
+        function startCountdown() {
+            // ตั้งค่าเป้าหมายวันที่ 27 มิถุนายน 2569
+            const target = new Date("June 27, 2026 00:00:00").getTime();
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('d-days').innerText = days.toString().padStart(2, '0');
+                    document.getElementById('d-hours').innerText = hours.toString().padStart(2, '0');
+                    document.getElementById('d-mins').innerText = mins.toString().padStart(2, '0');
+                    document.getElementById('d-secs').innerText = secs.toString().padStart(2, '0');
+                } else {
+                    document.querySelector('.countdown-section').innerHTML = "<div class='countdown-project-label'>เริ่มโครงการแล้ววันนี้! (27 มิ.ย. 69)</div>";
+                }
+            }, 1000);
+        }
+        
+        startCountdown();
+    </script>
 </body>
 </html>
