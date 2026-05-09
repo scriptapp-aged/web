@@ -198,6 +198,8 @@ body{
     0 0 0 1px rgba(255,255,255,.03) inset;
 
   transition:1s cubic-bezier(.2,1,.2,1);
+
+  cursor:pointer;
 }
 
 .banner-container:hover{
@@ -325,6 +327,73 @@ body{
   font-weight:300;
 }
 
+/* ===== Popup ===== */
+
+.popup{
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.85);
+
+  display:none;
+
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+
+  padding:30px;
+}
+
+.popup.active{
+  display:flex;
+}
+
+.popup img{
+
+  max-width:95%;
+  max-height:90vh;
+
+  object-fit:contain;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.5);
+
+  animation:popupShow .4s ease;
+}
+
+@keyframes popupShow{
+
+  from{
+    opacity:0;
+    transform:scale(.8);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.close-popup{
+
+  position:absolute;
+
+  top:30px;
+  right:40px;
+
+  color:white;
+
+  font-size:2rem;
+
+  cursor:pointer;
+
+  z-index:10000;
+}
+
 /* ===== Sections ===== */
 
 .section{
@@ -418,57 +487,6 @@ body{
   font-weight:300;
 }
 
-/* ===== Timeline ===== */
-
-.timeline{
-
-  display:grid;
-
-  gap:25px;
-}
-
-.timeline-item{
-
-  display:flex;
-
-  gap:25px;
-
-  padding:30px;
-
-  border-left:5px solid var(--ku-green);
-
-  background:white;
-
-  box-shadow:0 10px 25px rgba(0,0,0,.03);
-}
-
-.timeline-date{
-
-  min-width:130px;
-
-  font-weight:600;
-
-  color:var(--ku-green);
-
-  font-size:1.1rem;
-}
-
-.timeline-content h4{
-
-  margin-bottom:10px;
-
-  font-size:1.2rem;
-}
-
-.timeline-content p{
-
-  color:var(--gray);
-
-  line-height:1.7;
-
-  font-weight:300;
-}
-
 /* ===== Responsive ===== */
 
 @media(max-width:768px){
@@ -495,8 +513,9 @@ body{
     line-height:1.08;
   }
 
-  .timeline-item{
-    flex-direction:column;
+  .close-popup{
+    top:15px;
+    right:20px;
   }
 
 }
@@ -533,7 +552,7 @@ body{
 <section class="banner-section">
 
   <!-- Banner 1 -->
-  <div class="banner-container">
+  <div class="banner-container" onclick="openPopup('banner1.jpg')">
 
     <div class="banner-glow"></div>
 
@@ -559,7 +578,7 @@ body{
   </div>
 
   <!-- Banner 2 -->
-  <div class="banner-container">
+  <div class="banner-container" onclick="openPopup('banner2.jpg')">
 
     <div class="banner-glow"></div>
 
@@ -585,6 +604,18 @@ body{
   </div>
 
 </section>
+
+<!-- ===== POPUP ===== -->
+
+<div class="popup" id="popup">
+
+  <span class="close-popup" onclick="closePopup()">
+    <i class="fa-solid fa-xmark"></i>
+  </span>
+
+  <img id="popup-img" src="">
+
+</div>
 
 <!-- ===== INFO ===== -->
 
@@ -636,6 +667,30 @@ body{
   </div>
 
 </section>
+
+<script>
+
+function openPopup(imageSrc){
+
+  document.getElementById("popup").classList.add("active");
+
+  document.getElementById("popup-img").src = imageSrc;
+}
+
+function closePopup(){
+
+  document.getElementById("popup").classList.remove("active");
+}
+
+document.getElementById("popup").addEventListener("click", function(e){
+
+  if(e.target.id === "popup"){
+    closePopup();
+  }
+
+});
+
+</script>
 
 </body>
 </html>
