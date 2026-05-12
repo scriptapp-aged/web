@@ -40,53 +40,35 @@ body{
 /* ===== Background Glow ===== */
 
 .bg-blob{
-
   position:fixed;
-
   width:650px;
   height:650px;
-
   background:
     radial-gradient(
       circle,
       rgba(0,255,136,.14) 0%,
       transparent 70%
     );
-
   filter:blur(100px);
-
   z-index:-1;
-
   top:-150px;
   right:-120px;
-
   animation:blobMove 14s ease-in-out infinite alternate;
 }
 
 @keyframes blobMove{
-
-  from{
-    transform:translateY(0) scale(1);
-  }
-
-  to{
-    transform:translateY(140px) scale(1.2);
-  }
-
+  from{ transform:translateY(0) scale(1); }
+  to{ transform:translateY(140px) scale(1.2); }
 }
 
 /* ===== HERO ===== */
 
 .hero{
-
   min-height:60vh;
-
   padding:120px 20px 40px;
-
   display:flex;
   justify-content:center;
   align-items:center;
-
   text-align:center;
 }
 
@@ -95,32 +77,20 @@ body{
 }
 
 .tag{
-
   display:inline-block;
-
   padding:12px 30px;
-
   background:rgba(255,255,255,.6);
-
   border:1px solid #e2e8f0;
-
   backdrop-filter:blur(10px);
-
   color:var(--ku-green);
-
   letter-spacing:2px;
-
   font-size:.9rem;
-
   margin-bottom:25px;
 }
 
 .hero h1{
-
   font-size:clamp(4rem,11vw,8rem);
-
   line-height:.9;
-
   background:
     linear-gradient(
       90deg,
@@ -129,151 +99,89 @@ body{
       #00ff88,
       #0f172a
     );
-
   background-size:300%;
-
   -webkit-background-clip:text;
-
   color:transparent;
-
   animation:textFlow 10s linear infinite;
 }
 
 @keyframes textFlow{
-
-  to{
-    background-position:300%;
-  }
-
+  to{ background-position:300%; }
 }
 
 .hero-subtitle{
-
   margin-top:25px;
-
   color:var(--ku-green);
-
   font-size:1.05rem;
-
   letter-spacing:4px;
-
   font-weight:500;
-
   opacity:.9;
 }
 
 /* ===== Banner Section ===== */
 
 .banner-section{
-
   max-width:1380px;
-
   margin:auto;
-
   padding:0 20px 90px;
-
   display:grid;
-
   grid-template-columns:repeat(2,1fr);
-
   gap:30px;
 }
 
-/* ===== Banner ===== */
-
 .banner-container{
-
   position:relative;
-
   width:100%;
-
   aspect-ratio:16/9;
-
   overflow:hidden;
-
   background:#0f172a;
-
   border:1px solid rgba(255,255,255,.08);
-
   box-shadow:
     0 50px 120px rgba(0,0,0,.20),
     0 0 0 1px rgba(255,255,255,.03) inset;
-
   transition:1s cubic-bezier(.2,1,.2,1);
-
   cursor:pointer;
 }
 
 .banner-container:hover{
-
-  transform:
-    translateY(-12px)
-    scale(1.01);
-
+  transform: translateY(-12px) scale(1.01);
 }
 
 .banner-glow{
-
   position:absolute;
-
   inset:-150px;
-
   background:
     radial-gradient(
       circle at center,
       rgba(0,255,136,.25),
       transparent 60%
     );
-
   filter:blur(100px);
-
   z-index:1;
-
   animation:glowMove 6s ease-in-out infinite;
 }
 
 @keyframes glowMove{
-
-  0%,100%{
-    transform:scale(1);
-    opacity:.65;
-  }
-
-  50%{
-    transform:scale(1.2);
-    opacity:1;
-  }
-
+  0%,100%{ transform:scale(1); opacity:.65; }
+  50%{ transform:scale(1.2); opacity:1; }
 }
 
 .banner-container img{
-
   position:absolute;
-
   width:100%;
   height:100%;
-
   object-fit:cover;
-
-  filter:
-    brightness(.72)
-    contrast(1.08)
-    saturate(1.12);
-
+  filter: brightness(.72) contrast(1.08) saturate(1.12);
   transition:1.2s ease;
 }
 
 .banner-container:hover img{
-
   transform:scale(1.08);
 }
 
 .banner-overlay{
-
   position:absolute;
-
   inset:0;
-
   background:
     linear-gradient(
       to top,
@@ -281,63 +189,41 @@ body{
       rgba(15,23,42,.40),
       rgba(15,23,42,.08)
     );
-
   display:flex;
-
   align-items:flex-end;
-
   padding:45px;
-
   z-index:2;
 }
 
 .banner-content{
-
   max-width:700px;
 }
 
 .banner-overlay h2{
-
   color:white;
-
   font-size:clamp(1.5rem,3vw,3rem);
-
   line-height:1.1;
-
   margin-bottom:12px;
-
-  text-shadow:
-    0 15px 35px rgba(0,0,0,.35);
+  text-shadow: 0 15px 35px rgba(0,0,0,.35);
 }
 
 .banner-overlay p{
-
   color:rgba(255,255,255,.78);
-
   font-size:.9rem;
-
   letter-spacing:1px;
-
   font-weight:300;
 }
 
 /* ===== Popup ===== */
 
 .popup{
-
   position:fixed;
-
   inset:0;
-
   background:rgba(0,0,0,.85);
-
   display:none;
-
   justify-content:center;
   align-items:center;
-
   z-index:9999;
-
   padding:30px;
 }
 
@@ -346,268 +232,41 @@ body{
 }
 
 .popup img{
-
   max-width:95%;
   max-height:90vh;
-
   object-fit:contain;
-
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.5);
-
+  box-shadow: 0 30px 80px rgba(0,0,0,.5);
   animation:popupShow .4s ease;
 }
 
 @keyframes popupShow{
-
-  from{
-    opacity:0;
-    transform:scale(.8);
-  }
-
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-
+  from{ opacity:0; transform:scale(.8); }
+  to{ opacity:1; transform:scale(1); }
 }
 
 .close-popup{
-
   position:absolute;
-
   top:30px;
   right:40px;
-
   color:white;
-
   font-size:2rem;
-
   cursor:pointer;
-
   z-index:10000;
-}
-
-/* ===== Sections ===== */
-
-.section{
-
-  max-width:1250px;
-
-  margin:auto;
-
-  padding:80px 20px;
-}
-
-.section-title{
-
-  margin-bottom:50px;
-
-  text-align:center;
-}
-
-.section-title h2{
-
-  font-size:2.5rem;
-
-  margin-bottom:10px;
-}
-
-.section-title p{
-
-  color:var(--gray);
-
-  font-weight:300;
-}
-
-/* ===== Cards ===== */
-
-.card-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
-
-  gap:25px;
-}
-
-.card{
-
-  background:rgba(255,255,255,.65);
-
-  backdrop-filter:blur(10px);
-
-  border:1px solid #e2e8f0;
-
-  padding:35px 30px;
-
-  transition:.4s;
-}
-
-.card:hover{
-
-  transform:translateY(-12px);
-
-  border-color:var(--ku-green);
-
-  box-shadow:0 25px 45px rgba(0,0,0,.05);
-}
-
-.card i{
-
-  font-size:2rem;
-
-  color:var(--ku-green);
-
-  margin-bottom:20px;
-}
-
-.card h3{
-
-  margin-bottom:10px;
-
-  font-size:1.3rem;
-}
-
-.card p{
-
-  color:var(--gray);
-
-  font-size:.95rem;
-
-  line-height:1.8;
-
-  font-weight:300;
-}
-
-/* ===== อาคารสำคัญ ===== */
-
-.building-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-  gap:28px;
-}
-
-.building-card{
-
-  background:rgba(255,255,255,.7);
-
-  border:1px solid #e2e8f0;
-
-  overflow:hidden;
-
-  transition:.45s ease;
-
-  backdrop-filter:blur(10px);
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,.03);
-}
-
-.building-card:hover{
-
-  transform:
-    translateY(-10px);
-
-  border-color:var(--ku-green);
-
-  box-shadow:
-    0 25px 45px rgba(0,0,0,.08);
-}
-
-.building-image{
-
-  width:100%;
-
-  aspect-ratio:16/9;
-
-  overflow:hidden;
-
-  background:#0f172a;
-}
-
-.building-image img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
-
-  transition:1s ease;
-
-  filter:
-    brightness(.9)
-    contrast(1.05);
-}
-
-.building-card:hover img{
-
-  transform:scale(1.08);
-}
-
-.building-card h3{
-
-  padding:18px;
-
-  text-align:center;
-
-  font-size:1rem;
-
-  color:var(--dark);
-
-  font-weight:500;
 }
 
 /* ===== Responsive ===== */
 
 @media(max-width:900px){
-
-  .banner-section{
-
-    grid-template-columns:1fr;
-  }
-
+  .banner-section{ grid-template-columns:1fr; }
 }
 
 @media(max-width:768px){
-
-  .hero{
-    min-height:45vh;
-    padding:100px 20px 20px;
-  }
-
-  .hero-subtitle{
-
-    font-size:.9rem;
-
-    letter-spacing:2px;
-
-    line-height:1.8;
-  }
-
-  .banner-overlay{
-    padding:24px;
-  }
-
-  .banner-overlay h2{
-    font-size:1.4rem;
-    line-height:1.1;
-  }
-
-  .banner-overlay p{
-    font-size:.8rem;
-  }
-
-  .close-popup{
-    top:15px;
-    right:20px;
-  }
-
+  .hero{ min-height:45vh; padding:100px 20px 20px; }
+  .hero-subtitle{ font-size:.9rem; letter-spacing:2px; line-height:1.8; }
+  .banner-overlay{ padding:24px; }
+  .banner-overlay h2{ font-size:1.4rem; line-height:1.1; }
+  .banner-overlay p{ font-size:.8rem; }
+  .close-popup{ top:15px; right:20px; }
 }
 
 </style>
@@ -618,277 +277,66 @@ body{
 <div class="bg-blob"></div>
 
 <!-- ===== HERO ===== -->
-
 <section class="hero">
-
   <div class="hero-content">
-
     <div class="tag">
       KASETSART UNIVERSITY KAMPHAENG SAEN
     </div>
-
     <h1>นิสิตใหม่ KU86</h1>
-
     <div class="hero-subtitle">
       KU68 • EDS26 • AG-ED57
     </div>
-
   </div>
-
 </section>
 
 <!-- ===== BANNERS ===== -->
-
 <section class="banner-section">
-
   <div class="banner-container" onclick="openPopup('120.png')">
-
     <div class="banner-glow"></div>
-
     <img src="120.png" alt="Banner 1">
-
     <div class="banner-overlay">
-
       <div class="banner-content">
-
-        <h2>
-          WELCOME TO AG-ED
-        </h2>
-
-        <p>
-          Faculty of Education and Development Sciences
-        </p>
-
+        <h2>WELCOME TO AG-ED</h2>
+        <p>Faculty of Education and Development Sciences</p>
       </div>
-
     </div>
-
   </div>
 
   <div class="banner-container" onclick="openPopup('123.png')">
-
     <div class="banner-glow"></div>
-
     <img src="123.png" alt="Banner 2">
-
     <div class="banner-overlay">
-
       <div class="banner-content">
-
-        <h2>
-          ACTIVITY 2026
-        </h2>
-
-        <p>
-          Agricultural and Environmental Education
-        </p>
-
+        <h2>ACTIVITY 2026</h2>
+        <p>Agricultural and Environmental Education</p>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- ===== POPUP ===== -->
-
 <div class="popup" id="popup">
-
   <span class="close-popup" onclick="closePopup()">
     <i class="fa-solid fa-xmark"></i>
   </span>
-
   <img id="popup-img" src="">
-
 </div>
 
-<!-- ===== INFO ===== -->
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>สิ่งที่นิสิตใหม่ควรรู้</h2>
-    <p>เริ่มต้นชีวิตมหาวิทยาลัยได้อย่างมั่นใจ</p>
-  </div>
-
-  <div class="card-grid">
-
-    <div class="card">
-      <i class="fa-solid fa-id-card"></i>
-      <h3>การรายงานตัว</h3>
-      <p>
-        ตรวจสอบเอกสารสำคัญ ขั้นตอนการรายงานตัว
-        และช่องทางติดต่อต่าง ๆ ของมหาวิทยาลัย
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-book"></i>
-      <h3>การลงทะเบียนเรียน</h3>
-      <p>
-        ศึกษาวิธีลงทะเบียนเรียน ตารางเรียน
-        และการใช้งานระบบสารสนเทศนิสิต
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-building-columns"></i>
-      <h3>ทุนการศึกษา</h3>
-      <p>
-        รวมข้อมูลทุนการศึกษา กยศ.
-        และสวัสดิการสำหรับนิสิตใหม่
-      </p>
-    </div>
-
-    <div class="card">
-      <i class="fa-solid fa-users"></i>
-      <h3>กิจกรรมนิสิต</h3>
-      <p>
-        พบเพื่อนใหม่ เข้าร่วมกิจกรรมรับน้อง
-        และเรียนรู้ชีวิตมหาวิทยาลัย
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ===== IMPORTANT PLACES ===== -->
-
-<section class="section">
-
-  <div class="section-title">
-    <h2>สถานที่สำคัญใน มก.กพส.</h2>
-    <p>จุดสำคัญที่นิสิตใหม่ควรรู้จักภายในมหาวิทยาลัย</p>
-  </div>
-
-  <div class="building-grid">
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building01.jpg" alt="">
-      </div>
-      <h3>อาคารสารนิเทศ 50 ปี</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building02.jpg" alt="">
-      </div>
-      <h3>หอสมุดกำแพงแสน</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building03.jpg" alt="">
-      </div>
-      <h3>สำนักบริการคอมพิวเตอร์</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building04.jpg" alt="">
-      </div>
-      <h3>โรงอาหารกลาง</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building05.jpg" alt="">
-      </div>
-      <h3>ศูนย์กีฬาและสุขภาพ</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building06.jpg" alt="">
-      </div>
-      <h3>โรงพยาบาลสัตว์</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building07.jpg" alt="">
-      </div>
-      <h3>อาคารเรียนรวม 1</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building08.jpg" alt="">
-      </div>
-      <h3>อาคารเรียนรวม 2</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building09.jpg" alt="">
-      </div>
-      <h3>อาคารเรียนรวม 3</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building10.jpg" alt="">
-      </div>
-      <h3>สระพระพิรุณ</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building11.jpg" alt="">
-      </div>
-      <h3>หอประชุมใหญ่</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building12.jpg" alt="">
-      </div>
-      <h3>คณะศึกษาศาสตร์ฯ</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building13.jpg" alt="">
-      </div>
-      <h3>สำนักทะเบียนและประมวลผล</h3>
-    </div>
-
-    <div class="building-card">
-      <div class="building-image">
-        <img src="building14.jpg" alt="">
-      </div>
-      <h3>หอพักนิสิต</h3>
-    </div>
-
-  </div>
-
-</section>
-
 <script>
-
 function openPopup(imageSrc){
-
   document.getElementById("popup").classList.add("active");
-
   document.getElementById("popup-img").src = imageSrc;
 }
 
 function closePopup(){
-
   document.getElementById("popup").classList.remove("active");
 }
 
 document.getElementById("popup").addEventListener("click", function(e){
-
   if(e.target.id === "popup"){
     closePopup();
   }
-
 });
-
 </script>
 
 </body>
