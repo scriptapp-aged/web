@@ -4,130 +4,196 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คณะกรรมการฟาร์ม 2569</title>
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --ku-green: #006633;
-      --text-dark: #0f172a;
+      --ku-gold: #b2a05d;
+      --text-dark: #1e293b;
       --text-gray: #64748b;
-      --bg: #f4f6f9;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
-    body { background: var(--bg); padding: 50px 20px; }
+    body { background: #f8fafc; color: var(--text-dark); padding: 40px 15px; }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      background: white;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-
+    .container { max-width: 1200px; margin: auto; }
     .header { text-align: center; margin-bottom: 50px; }
-    .header h1 { color: var(--ku-green); font-size: 2.2rem; }
+    .header h1 { font-size: 2.2rem; color: var(--ku-green); margin-bottom: 10px; }
 
-    /* Layout */
-    .section-title { text-align: center; margin: 30px 0; font-weight: 600; color: var(--ku-green); }
-    .grid-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
+    /* Layout Sections */
+    .section-group { margin-bottom: 60px; }
+    .section-title { text-align: center; margin-bottom: 30px; font-size: 1.4rem; color: var(--ku-green); position: relative; }
+    .section-title::after { content: ''; display: block; width: 50px; height: 3px; background: var(--ku-gold); margin: 8px auto; }
+    
+    .grid-center { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
 
-    /* Card */
+    /* Card Design */
     .card {
-      width: 250px; background: #fff; border: 1px solid #eee;
-      border-top: 5px solid var(--ku-green); padding: 25px 15px;
-      text-align: center; cursor: pointer; transition: 0.3s;
+      width: 260px; background: white; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer;
+      border: 1px solid #e2e8f0; text-align: center; padding-bottom: 20px;
     }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .card:hover { transform: translateY(-10px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: var(--ku-green); }
 
-    .photo-circle {
-      width: 120px; height: 120px; margin: 0 auto 15px;
-      border-radius: 50%; overflow: hidden; background: #f0f0f0;
-      border: 2px solid #eee;
+    /* Cartoon Profile (In Card) */
+    .avatar-box {
+      background: #f1f5f9; padding: 30px 0; margin-bottom: 15px;
+      border-bottom: 4px solid var(--ku-green);
     }
-    .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-box img { width: 100px; height: 100px; border-radius: 50%; background: white; }
 
-    .name { font-size: 1.1rem; font-weight: 500; }
-    .pos { color: var(--text-gray); font-size: 0.9rem; }
+    .card .name { font-weight: 600; font-size: 1.1rem; padding: 0 10px; }
+    .card .pos { color: var(--text-gray); font-size: 0.9rem; margin-top: 5px; }
 
-    /* Modal */
+    /* Modal Pop-up */
     .modal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: none; justify-content: center; align-items: center; z-index: 100;
-      backdrop-filter: blur(4px);
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8);
+      display: none; justify-content: center; align-items: center; z-index: 1000;
+      backdrop-filter: blur(8px); padding: 20px;
     }
     .modal-content {
-      background: white; padding: 40px; width: 90%; max-width: 400px;
-      text-align: center; position: relative;
+      background: white; width: 100%; max-width: 500px; border-radius: 20px;
+      position: relative; animation: slideUp 0.4s ease-out; overflow: hidden;
     }
-    .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; }
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header { height: 120px; background: var(--ku-green); }
+    .close-btn { position: absolute; top: 15px; right: 20px; color: white; font-size: 1.5rem; cursor: pointer; z-index: 10; }
+
+    .real-photo-wrap {
+      width: 180px; height: 180px; margin: -90px auto 20px;
+      border: 6px solid white; border-radius: 50%; overflow: hidden; background: #eee;
+    }
+    .real-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    .info-body { padding: 0 40px 40px; text-align: center; }
+    .info-body h2 { font-size: 1.5rem; margin-bottom: 5px; }
+    .info-body .tag { display: inline-block; padding: 4px 15px; background: #f0fdf4; color: var(--ku-green); border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; }
+    
+    .detail-grid { text-align: left; display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .detail-item { font-size: 0.95rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; }
+    .label { font-weight: 600; color: var(--text-gray); width: 80px; display: inline-block; }
+
   </style>
 </head>
 <body>
 
   <div class="container">
     <div class="header">
-      <h1>คณะกรรมการชุมนุมฟาร์มนิสิต 2569</h1>
+      <h1>คณะกรรมการชุมนุมฟาร์มนิสิต</h1>
+      <p style="letter-spacing: 2px; color: var(--text-gray);">ACADEMIC YEAR 2026</p>
     </div>
 
-    <div id="advisor-list" class="grid-container"></div>
-    <hr style="margin: 40px 0; opacity: 0.2;">
-    <div id="committee-list" class="grid-container"></div>
+    <!-- 1. อาจารย์ที่ปรึกษา -->
+    <div class="section-group">
+      <h2 class="section-title">อาจารย์ที่ปรึกษา</h2>
+      <div id="advisor-grid" class="grid-center"></div>
+    </div>
+
+    <!-- 2. ประธาน (อยู่บนสุดของนิสิต) -->
+    <div class="section-group">
+      <h2 class="section-title">ประธานชุมนุม</h2>
+      <div id="president-grid" class="grid-center"></div>
+    </div>
+
+    <!-- 3. คณะกรรมการอื่นๆ -->
+    <div class="section-group">
+      <h2 class="section-title">คณะกรรมการฝ่ายบริหาร</h2>
+      <div id="committee-grid" class="grid-center"></div>
+    </div>
   </div>
 
-  <!-- Pop-up -->
+  <!-- Modal -->
   <div id="infoModal" class="modal" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="closeModal()">&times;</span>
-      <div id="modal-img" class="photo-circle" style="width:150px; height:150px;"></div>
-      <h2 id="modal-name"></h2>
-      <p id="modal-pos" style="color:var(--ku-green)"></p>
-      <p style="margin-top:15px; font-size: 0.85rem; color: #999;">ข้อมูลสมาชิกชุมนุมฟาร์มนิสิต ปี 2569</p>
+      <div class="modal-header"></div>
+      <div class="real-photo-wrap" id="m-photo"></div>
+      
+      <div class="info-body">
+        <h2 id="m-name">ชื่อ นามสกุล</h2>
+        <div id="m-pos" class="tag">ตำแหน่ง</div>
+        
+        <div class="detail-grid">
+          <div class="detail-item"><span class="label">สาขา:</span> <span id="m-major">-</span></div>
+          <div class="detail-item"><span class="label">ชั้นปี:</span> <span id="m-year">-</span></div>
+          <div class="detail-item"><span class="label">ติดต่อ:</span> <span id="m-contact">-</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // --- 1. ส่วนของข้อมูล (Data) ---
-    // คุณสามารถเพิ่ม/ลบ ข้อมูลตรงนี้ได้เลย
-    const members = [
-      { id: 1, name: "ผศ.ดร.นิรันดร์ ยิ่งยวด", pos: "อาจารย์ที่ปรึกษา", gender: "male", type: "advisor" },
-      { id: 2, name: "อ.ดร.อรวรรณ บุญทัน", pos: "อาจารย์ที่ปรึกษา", gender: "female", type: "advisor" },
-      { id: 3, name: "นายศุภเสกย์ นิลเทพา", pos: "ประธานชุมนุม", gender: "male", type: "committee" },
-      { id: 4, name: "นายกนกพล แซ่แต้", pos: "รองประธานชุมนุมคนที่ 1", gender: "male", type: "committee" },
-      { id: 5, name: "นายธีระพล สมพงษ์", pos: "รองประธานชุมนุมคนที่ 2", gender: "male", type: "committee" },
-      { id: 6, name: "นางสาวทรายขวัญ วาปีโท", pos: "เลขานุการ", gender: "female", type: "committee" },
-      { id: 7, name: "นายเมธี ใจสุขดี", pos: "เหรัญญิก", gender: "male", type: "committee" }
+    // --- ข้อมูลแยกรายบุคคล ---
+    const data = [
+      {
+        id: 1, type: 'advisor', pos: 'อาจารย์ที่ปรึกษา', name: 'ผศ.ดร.นิรันดร์ ยิ่งยวด',
+        major: 'ภาควิชาสัตวบาล', year: '-', contact: 'niran.y@ku.th',
+        gender: 'male', realImg: '12.jpg' 
+      },
+      {
+        id: 2, type: 'advisor', pos: 'อาจารย์ที่ปรึกษา', name: 'อ.ดร.อรวรรณ บุญทัน',
+        major: 'ภาควิชาสัตวบาล', year: '-', contact: 'orawan.b@ku.th',
+        gender: 'female', realImg: 'web.jpg'
+      },
+      {
+        id: 3, type: 'president', pos: 'ประธานชุมนุม', name: 'นายศุภเสกย์ นิลเทพา',
+        major: 'สัตวบาล', year: 'ชั้นปีที่ 3', contact: '08x-xxx-xxxx / FB: Supasek',
+        gender: 'male', realImg: 'pres.jpg' // เปลี่ยนชื่อไฟล์รูปจริงตรงนี้
+      },
+      {
+        id: 4, type: 'committee', pos: 'รองประธานคนที่ 1', name: 'นายกนกพล แซ่แต้',
+        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'Line: kanok_lp',
+        gender: 'male', realImg: 'kanok.jpg'
+      },
+      {
+        id: 5, type: 'committee', pos: 'รองประธานคนที่ 2', name: 'นายธีระพล สมพงษ์',
+        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'FB: Teerapol S.',
+        gender: 'male', realImg: 'teera.jpg'
+      },
+      {
+        id: 6, type: 'committee', pos: 'เลขานุการ', name: 'นางสาวทรายขวัญ วาปีโท',
+        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'IG: saikwan_wp',
+        gender: 'female', realImg: 'sai.jpg'
+      }
     ];
 
-    // --- 2. ฟังก์ชันแสดงผลการ์ด ---
-    function renderCards() {
-      const advisorContainer = document.getElementById('advisor-list');
-      const committeeContainer = document.getElementById('committee-list');
+    function createCard(person) {
+      // สร้าง Avatar การ์ตูนสำหรับหน้า Card
+      const avatarSeed = person.gender === 'female' ? `&gender=female&seed=${person.id}` : `&seed=${person.id}`;
+      const cartoonUrl = `https://api.dicebear.com/7.x/avataaars/svg?mouth=smile${avatarSeed}`;
 
-      members.forEach(m => {
-        // เลือกรูปการ์ตูนตามเพศ
-        const avatarStyle = m.gender === 'male' ? 'avataaars' : 'avataaars';
-        const imgUrl = `https://api.dicebear.com/7.x/${avatarStyle}/svg?seed=${m.id}${m.gender==='female'?'&gender=female':''}`;
-
-        const cardHtml = `
-          <div class="card" onclick="openModal('${m.name}', '${m.pos}', '${imgUrl}')">
-            <div class="photo-circle">
-              <img src="${imgUrl}" alt="profile">
-            </div>
-            <div class="name">${m.name}</div>
-            <div class="pos">${m.pos}</div>
+      return `
+        <div class="card" onclick="openModal(${person.id})">
+          <div class="avatar-box">
+            <img src="${cartoonUrl}" alt="avatar">
           </div>
-        `;
+          <div class="name">${person.name}</div>
+          <div class="pos">${person.pos}</div>
+        </div>
+      `;
+    }
 
-        if(m.type === 'advisor') advisorContainer.innerHTML += cardHtml;
-        else committeeContainer.innerHTML += cardHtml;
+    function renderAll() {
+      data.forEach(p => {
+        const html = createCard(p);
+        if(p.type === 'advisor') document.getElementById('advisor-grid').innerHTML += html;
+        else if(p.type === 'president') document.getElementById('president-grid').innerHTML += html;
+        else document.getElementById('committee-grid').innerHTML += html;
       });
     }
 
-    // --- 3. ฟังก์ชัน Pop-up ---
-    function openModal(name, pos, img) {
-      document.getElementById('modal-name').innerText = name;
-      document.getElementById('modal-pos').innerText = pos;
-      document.getElementById('modal-img').innerHTML = `<img src="${img}">`;
+    function openModal(id) {
+      const person = data.find(p => p.id === id);
+      document.getElementById('m-name').innerText = person.name;
+      document.getElementById('m-pos').innerText = person.pos;
+      document.getElementById('m-major').innerText = person.major;
+      document.getElementById('m-year').innerText = person.year;
+      document.getElementById('m-contact').innerText = person.contact;
+      
+      // แสดงรูปจริงใน Pop-up
+      document.getElementById('m-photo').innerHTML = `<img src="${person.realImg}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">`;
+      
       document.getElementById('infoModal').style.display = 'flex';
     }
 
@@ -135,8 +201,7 @@
       document.getElementById('infoModal').style.display = 'none';
     }
 
-    // รันโปรแกรม
-    renderCards();
+    window.onload = renderAll;
   </script>
 </body>
 </html>
