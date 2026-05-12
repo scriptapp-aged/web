@@ -3,205 +3,425 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>คณะกรรมการฟาร์ม 2569</title>
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --ku-green: #006633;
-      --ku-gold: #b2a05d;
-      --text-dark: #1e293b;
-      --text-gray: #64748b;
+
+    :root{
+      --ku-green:#006633;
+      --light-green:#0f766e;
+      --text-dark:#0f172a;
+      --text-gray:#64748b;
+      --bg:#f4f6f9;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
-    body { background: #f8fafc; color: var(--text-dark); padding: 40px 15px; }
-
-    .container { max-width: 1200px; margin: auto; }
-    .header { text-align: center; margin-bottom: 50px; }
-    .header h1 { font-size: 2.2rem; color: var(--ku-green); margin-bottom: 10px; }
-
-    /* Layout Sections */
-    .section-group { margin-bottom: 60px; }
-    .section-title { text-align: center; margin-bottom: 30px; font-size: 1.4rem; color: var(--ku-green); position: relative; }
-    .section-title::after { content: ''; display: block; width: 50px; height: 3px; background: var(--ku-gold); margin: 8px auto; }
-    
-    .grid-center { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
-
-    /* Card Design */
-    .card {
-      width: 260px; background: white; border-radius: 12px; overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer;
-      border: 1px solid #e2e8f0; text-align: center; padding-bottom: 20px;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Mitr',sans-serif;
+      border-radius:0 !important;
     }
-    .card:hover { transform: translateY(-10px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); border-color: var(--ku-green); }
 
-    /* Cartoon Profile (In Card) */
-    .avatar-box {
-      background: #f1f5f9; padding: 30px 0; margin-bottom: 15px;
-      border-bottom: 4px solid var(--ku-green);
+    body{
+      background:var(--bg);
+      color:var(--text-dark);
+      overflow-x:hidden;
+      padding:50px 20px;
+      background-image: radial-gradient(#dbe4ea 1px, transparent 1px);
+      background-size:30px 30px;
     }
-    .avatar-box img { width: 100px; height: 100px; border-radius: 50%; background: white; }
 
-    .card .name { font-weight: 600; font-size: 1.1rem; padding: 0 10px; }
-    .card .pos { color: var(--text-gray); font-size: 0.9rem; margin-top: 5px; }
+    /* Background Glow */
 
-    /* Modal Pop-up */
-    .modal {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8);
-      display: none; justify-content: center; align-items: center; z-index: 1000;
-      backdrop-filter: blur(8px); padding: 20px;
+    .bg-glow{
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,rgba(0,255,136,0.08),transparent 70%);
+      filter:blur(90px);
+      z-index:-1;
+      animation:moveGlow 15s infinite alternate;
     }
-    .modal-content {
-      background: white; width: 100%; max-width: 500px; border-radius: 20px;
-      position: relative; animation: slideUp 0.4s ease-out; overflow: hidden;
+
+    @keyframes moveGlow{
+      from{
+        transform:translate(-10%,-10%) scale(1);
+      }
+      to{
+        transform:translate(80%,50%) scale(1.4);
+      }
     }
-    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    .modal-header { height: 120px; background: var(--ku-green); }
-    .close-btn { position: absolute; top: 15px; right: 20px; color: white; font-size: 1.5rem; cursor: pointer; z-index: 10; }
+    /* Container */
 
-    .real-photo-wrap {
-      width: 180px; height: 180px; margin: -90px auto 20px;
-      border: 6px solid white; border-radius: 50%; overflow: hidden; background: #eee;
+    .container{
+      max-width:1350px;
+      margin:auto;
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,0.6);
+      padding:60px 40px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.06);
     }
-    .real-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-    .info-body { padding: 0 40px 40px; text-align: center; }
-    .info-body h2 { font-size: 1.5rem; margin-bottom: 5px; }
-    .info-body .tag { display: inline-block; padding: 4px 15px; background: #f0fdf4; color: var(--ku-green); border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; }
-    
-    .detail-grid { text-align: left; display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .detail-item { font-size: 0.95rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; }
-    .label { font-weight: 600; color: var(--text-gray); width: 80px; display: inline-block; }
+    /* Header */
+
+    .header{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .header::after{
+      content:'';
+      width:140px;
+      height:4px;
+      background:linear-gradient(to right,var(--ku-green),#00ff88);
+      display:block;
+      margin:20px auto 0;
+    }
+
+    .header h1{
+      font-size:3rem;
+      font-weight:700;
+      color:var(--text-dark);
+      letter-spacing:-1px;
+    }
+
+    .header p{
+      margin-top:10px;
+      color:var(--text-gray);
+      font-size:1rem;
+      letter-spacing:2px;
+      font-weight:300;
+    }
+
+    /* Line */
+
+    .line{
+      width:4px;
+      height:45px;
+      background:linear-gradient(var(--ku-green),#00ff88);
+      margin:10px auto 40px;
+    }
+
+    /* Section */
+
+    .section{
+      display:flex;
+      justify-content:center;
+      gap:35px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
+    }
+
+    /* Card */
+
+    .card{
+      width:270px;
+      background:#ffffff;
+      border:1px solid #e2e8f0;
+      border-top:6px solid var(--ku-green);
+      padding:30px 20px;
+      text-align:center;
+      transition:0.45s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(0,255,136,0.08),
+        transparent
+      );
+      transition:0.7s;
+    }
+
+    .card:hover::before{
+      left:100%;
+    }
+
+    .card:hover{
+      transform:translateY(-12px);
+      box-shadow:0 18px 40px rgba(0,102,51,0.12);
+    }
+
+    /* President */
+
+    .president-card{
+      width:320px;
+      border-top:8px solid #14532d;
+    }
+
+    /* Photo */
+
+    .photo{
+      width:150px;
+      height:190px;
+      margin:auto;
+      margin-bottom:20px;
+      border:2px solid #d1d5db;
+      background:#f1f5f9;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
+
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:0.4s;
+    }
+
+    .card:hover .photo img{
+      transform:scale(1.05);
+    }
+
+    /* Text */
+
+    .name{
+      font-size:1.2rem;
+      font-weight:600;
+      color:var(--text-dark);
+      margin-bottom:8px;
+    }
+
+    .position{
+      font-size:0.95rem;
+      color:var(--text-gray);
+      line-height:1.6;
+      font-weight:300;
+    }
+
+    .committee-title{
+      text-align:center;
+      margin-bottom:35px;
+      font-size:1.5rem;
+      color:var(--ku-green);
+      font-weight:600;
+      letter-spacing:1px;
+    }
+
+    /* Footer */
+
+    .footer{
+      margin-top:60px;
+      padding-top:20px;
+      border-top:1px solid #e2e8f0;
+      text-align:center;
+      color:var(--text-gray);
+      font-size:0.9rem;
+      letter-spacing:1px;
+      font-weight:300;
+    }
+
+    /* Responsive */
+
+    @media(max-width:768px){
+
+      .container{
+        padding:40px 20px;
+      }
+
+      .header h1{
+        font-size:2rem;
+      }
+
+      .card,
+      .president-card{
+        width:100%;
+        max-width:330px;
+      }
+
+      .photo{
+        width:140px;
+        height:180px;
+      }
+
+    }
 
   </style>
 </head>
+
 <body>
 
+  <div class="bg-glow"></div>
+
   <div class="container">
+
+    <!-- HEADER -->
+
     <div class="header">
-      <h1>คณะกรรมการชุมนุมฟาร์มนิสิต</h1>
-      <p style="letter-spacing: 2px; color: var(--text-gray);">ACADEMIC YEAR 2026</p>
+
+      <!-- LOGO -->
+      <!-- <img src="images/logo.png" width="90"> -->
+
+      <h1>คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</h1>
+
+      <p>FARM COMMITTEE • ACADEMIC YEAR 2569</p>
+
     </div>
 
-    <!-- 1. อาจารย์ที่ปรึกษา -->
-    <div class="section-group">
-      <h2 class="section-title">อาจารย์ที่ปรึกษา</h2>
-      <div id="advisor-grid" class="grid-center"></div>
-    </div>
+    <!-- อาจารย์ -->
 
-    <!-- 2. ประธาน (อยู่บนสุดของนิสิต) -->
-    <div class="section-group">
-      <h2 class="section-title">ประธานชุมนุม</h2>
-      <div id="president-grid" class="grid-center"></div>
-    </div>
+    <div class="section">
 
-    <!-- 3. คณะกรรมการอื่นๆ -->
-    <div class="section-group">
-      <h2 class="section-title">คณะกรรมการฝ่ายบริหาร</h2>
-      <div id="committee-grid" class="grid-center"></div>
-    </div>
-  </div>
+      <div class="card">
 
-  <!-- Modal -->
-  <div id="infoModal" class="modal" onclick="closeModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <div class="modal-header"></div>
-      <div class="real-photo-wrap" id="m-photo"></div>
-      
-      <div class="info-body">
-        <h2 id="m-name">ชื่อ นามสกุล</h2>
-        <div id="m-pos" class="tag">ตำแหน่ง</div>
-        
-        <div class="detail-grid">
-          <div class="detail-item"><span class="label">สาขา:</span> <span id="m-major">-</span></div>
-          <div class="detail-item"><span class="label">ชั้นปี:</span> <span id="m-year">-</span></div>
-          <div class="detail-item"><span class="label">ติดต่อ:</span> <span id="m-contact">-</span></div>
+        <div class="photo">
+          <img src="12.jpg" alt="teacher1">
         </div>
+
+        <div class="name">
+          ผศ.ดร.นิรันดร์ ยิ่งยวด
+        </div>
+
+        <div class="position">
+          อาจารย์ที่ปรึกษา
+        </div>
+
       </div>
+
+      <div class="card">
+
+        <div class="photo">
+          <img src="web.jpg" alt="teacher2">
+        </div>
+
+        <div class="name">
+          อ.ดร.อรวรรณ บุญทัน
+        </div>
+
+        <div class="position">
+          อาจารย์ที่ปรึกษา
+        </div>
+
+      </div>
+
     </div>
+
+    <div class="line"></div>
+
+    <!-- PRESIDENT -->
+
+    <div class="section">
+
+      <div class="card president-card">
+
+        <div class="photo">
+          <img src="IMG" alt="ศุภเสกย์">
+        </div>
+
+        <div class="name">
+          นายศุภเสกย์ นิลเทพา
+        </div>
+
+        <div class="position">
+          ประธานชุมนุม
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="line"></div>
+
+    <!-- COMMITTEE -->
+
+    <div class="committee-title">
+      คณะกรรมการฝ่ายบริหาร
+    </div>
+
+    <div class="section">
+
+      <div class="card">
+
+        <div class="photo">
+          <img src="images/member1.jpg" alt="กนกพล">
+        </div>
+
+        <div class="name">
+          นายกนกพล แซ่แต้
+        </div>
+
+        <div class="position">
+          รองประธานชุมนุมคนที่ 1
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          <img src="images/member2.jpg" alt="ธีระพล">
+        </div>
+
+        <div class="name">
+          นายธีระพล สมพงษ์
+        </div>
+
+        <div class="position">
+          รองประธานชุมนุมคนที่ 2
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          <img src="images/member3.jpg" alt="ทรายขวัญ">
+        </div>
+
+        <div class="name">
+          นางสาวทรายขวัญ วาปีโท
+        </div>
+
+        <div class="position">
+          เลขานุการ
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="photo">
+          <img src="ดดด" alt="เมธี">
+        </div>
+
+        <div class="name">
+          นายเมธี ใจสุขดี
+        </div>
+
+        <div class="position">
+          เหรัญญิก
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+      KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
+    </div>
+
   </div>
 
-  <script>
-    // --- ข้อมูลแยกรายบุคคล ---
-    const data = [
-      {
-        id: 1, type: 'advisor', pos: 'อาจารย์ที่ปรึกษา', name: 'ผศ.ดร.นิรันดร์ ยิ่งยวด',
-        major: 'ภาควิชาสัตวบาล', year: '-', contact: 'niran.y@ku.th',
-        gender: 'male', realImg: '12.jpg' 
-      },
-      {
-        id: 2, type: 'advisor', pos: 'อาจารย์ที่ปรึกษา', name: 'อ.ดร.อรวรรณ บุญทัน',
-        major: 'ภาควิชาสัตวบาล', year: '-', contact: 'orawan.b@ku.th',
-        gender: 'female', realImg: 'web.jpg'
-      },
-      {
-        id: 3, type: 'president', pos: 'ประธานชุมนุม', name: 'นายศุภเสกย์ นิลเทพา',
-        major: 'สัตวบาล', year: 'ชั้นปีที่ 3', contact: '08x-xxx-xxxx / FB: Supasek',
-        gender: 'male', realImg: 'pres.jpg' // เปลี่ยนชื่อไฟล์รูปจริงตรงนี้
-      },
-      {
-        id: 4, type: 'committee', pos: 'รองประธานคนที่ 1', name: 'นายกนกพล แซ่แต้',
-        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'Line: kanok_lp',
-        gender: 'male', realImg: 'kanok.jpg'
-      },
-      {
-        id: 5, type: 'committee', pos: 'รองประธานคนที่ 2', name: 'นายธีระพล สมพงษ์',
-        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'FB: Teerapol S.',
-        gender: 'male', realImg: 'teera.jpg'
-      },
-      {
-        id: 6, type: 'committee', pos: 'เลขานุการ', name: 'นางสาวทรายขวัญ วาปีโท',
-        major: 'สัตวบาล', year: 'ชั้นปีที่ 2', contact: 'IG: saikwan_wp',
-        gender: 'female', realImg: 'sai.jpg'
-      }
-    ];
-
-    function createCard(person) {
-      // สร้าง Avatar การ์ตูนสำหรับหน้า Card
-      const avatarSeed = person.gender === 'female' ? `&gender=female&seed=${person.id}` : `&seed=${person.id}`;
-      const cartoonUrl = `https://api.dicebear.com/7.x/avataaars/svg?mouth=smile${avatarSeed}`;
-
-      return `
-        <div class="card" onclick="openModal(${person.id})">
-          <div class="avatar-box">
-            <img src="${cartoonUrl}" alt="avatar">
-          </div>
-          <div class="name">${person.name}</div>
-          <div class="pos">${person.pos}</div>
-        </div>
-      `;
-    }
-
-    function renderAll() {
-      data.forEach(p => {
-        const html = createCard(p);
-        if(p.type === 'advisor') document.getElementById('advisor-grid').innerHTML += html;
-        else if(p.type === 'president') document.getElementById('president-grid').innerHTML += html;
-        else document.getElementById('committee-grid').innerHTML += html;
-      });
-    }
-
-    function openModal(id) {
-      const person = data.find(p => p.id === id);
-      document.getElementById('m-name').innerText = person.name;
-      document.getElementById('m-pos').innerText = person.pos;
-      document.getElementById('m-major').innerText = person.major;
-      document.getElementById('m-year').innerText = person.year;
-      document.getElementById('m-contact').innerText = person.contact;
-      
-      // แสดงรูปจริงใน Pop-up
-      document.getElementById('m-photo').innerHTML = `<img src="${person.realImg}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">`;
-      
-      document.getElementById('infoModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('infoModal').style.display = 'none';
-    }
-
-    window.onload = renderAll;
-  </script>
 </body>
 </html>
