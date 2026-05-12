@@ -3,184 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปฏิทินการศึกษา 2567-2569</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ระบบอยู่ระหว่างการปรับปรุง</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary-red: #e11d48;
-            --navy-blue: #0000aa;
-            --bg-light-cyan: #f0ffff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Kanit', sans-serif;
-            background-color: #ffffff;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .calendar-container {
+            font-family: 'Mitr', sans-serif;
+            background-color: #ffffff; /* พื้นหลังสีขาวตามโจทย์ */
+            height: 100vh;
             width: 100%;
-            max-width: 900px;
-        }
-
-        /* ส่วนหัวและปุ่มสลับปี */
-        .header-section {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .fire-icon { color: var(--primary-red); font-size: 32px; }
-
-        .year-title {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--primary-red);
-            margin: 0;
-        }
-
-        .year-selector {
-            margin-left: auto;
-            display: flex;
-            gap: 8px;
-        }
-
-        .year-btn {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Kanit', sans-serif;
-            transition: 0.2s;
-        }
-
-        .year-btn.active {
-            background: var(--primary-red);
-            color: white;
-            border-color: var(--primary-red);
-        }
-
-        /* โครงสร้างตารางตามภาพ */
-        .main-card {
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .term-header {
-            background-color: var(--navy-blue);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            font-size: 24px;
-            font-weight: 500;
-        }
-
-        .term-body {
-            background-color: var(--bg-light-cyan);
-            padding: 40px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        /* การ์ดภาคเรียน */
-        .semester-card {
-            background: white;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            border-radius: 4px;
-            text-decoration: none;
-            color: black;
-            transition: transform 0.2s;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
         }
 
-        .semester-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .book-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 20px;
-        }
-
-        .semester-name {
-            font-size: 22px;
+        /* คำว่า UPDATE ขนาดใหญ่ที่อยู่ตรงกลางพื้นหลัง */
+        .bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* ทำให้กึ่งกลางเป๊ะ */
+            font-size: 22vw; /* ขนาดตามความกว้างหน้าจอ */
             font-weight: 600;
+            color: #f8f9fa; /* สีเทาอ่อนมากเกือบขาว */
+            letter-spacing: -1vw;
+            z-index: 0;
+            user-select: none;
             white-space: nowrap;
         }
 
-        /* สีไอคอนแยกตามเทอม */
-        .icon-t1 { fill: #8b3a3a; } /* แดงเข้ม */
-        .icon-t2 { fill: #4a773c; } /* เขียว */
-        .icon-summer { fill: #8b5a8b; } /* ม่วง */
+        /* กล่องเนื้อหาหลัก */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+        }
 
-        @media (max-width: 600px) {
-            .term-body { grid-template-columns: 1fr; }
-            .header-section { flex-direction: column; align-items: flex-start; }
-            .year-selector { margin-left: 0; margin-top: 10px; }
+        .icon-wrapper {
+            margin-bottom: 1.5rem;
+        }
+
+        .main-icon {
+            width: 80px;
+            height: 80px;
+            color: #1a202c;
+            animation: rotate 8s infinite linear;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        p {
+            font-weight: 200;
+            font-size: 1.2rem;
+            color: #4a5568;
+            max-width: 450px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        /* แถบ Loading แบบเรียบหรู */
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: #edf2f7;
+            border-radius: 10px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 100%;
+            height: 100%;
+            background: #1a202c;
+            transform: translateX(-100%);
+            animation: loading 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive สำหรับมือถือ */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            p { font-size: 1rem; }
+            .bg-text { font-size: 30vw; }
         }
     </style>
 </head>
 <body>
 
-<div class="calendar-container">
-    <div class="header-section">
-        <span class="fire-icon">🔥</span>
-        <h1 class="year-title" id="displayYear">ปีการศึกษา 2567</h1>
+    <div class="bg-text">UPDATE</div>
+
+    <div class="content">
+        <div class="icon-wrapper">
+            <svg class="main-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        </div>
+
+        <h1>กำลังปรับปรุงระบบ</h1>
+        <p>เรากำลังอัพเดตข้อมูลเพื่อให้คุณใช้งานได้ดียิ่งขึ้น <br>ขออภัยในความไม่สะดวกครับ</p>
         
-        <div class="year-selector">
-            <button class="year-btn active" onclick="changeYear('2567', this)">2567</button>
-            <button class="year-btn" onclick="changeYear('2568', this)">2568</button>
-            <button class="year-btn" onclick="changeYear('2569', this)">2569</button>
+        <div class="loader-bar">
+            <div class="progress"></div>
         </div>
     </div>
-
-    <div class="main-card">
-        <div class="term-header">ภาคปกติ</div>
-        <div class="term-body">
-            
-            <a href="#" class="semester-card">
-                <svg class="book-icon icon-t1" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-                <div class="semester-name">ภาคเรียนที่ 1</div>
-            </a>
-
-            <a href="#" class="semester-card">
-                <svg class="book-icon icon-t2" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-                <div class="semester-name">ภาคเรียนที่ 2</div>
-            </a>
-
-            <a href="#" class="semester-card">
-                <svg class="book-icon icon-summer" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-                <div class="semester-name">ภาคฤดูร้อน</div>
-            </a>
-
-        </div>
-    </div>
-</div>
-
-<script>
-    function changeYear(year, btn) {
-        // เปลี่ยนข้อความหัวข้อ
-        document.getElementById('displayYear').innerText = 'ปีการศึกษา ' + year;
-        
-        // สลับ Class Active ของปุ่ม
-        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        // คุณสามารถเพิ่ม Logic การเปลี่ยน Link หรือข้อมูลตรงนี้ได้
-        console.log("เปลี่ยนข้อมูลเป็นปี: " + year);
-    }
-</script>
 
 </body>
 </html>
