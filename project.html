@@ -6,7 +6,7 @@
     <title>ระบบอยู่ระหว่างการปรับปรุง</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -17,113 +17,121 @@
 
         body {
             font-family: 'Mitr', sans-serif;
-            background-color: #ffffff;
+            background-color: #ffffff; /* พื้นหลังสีขาวตามโจทย์ */
             height: 100vh;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #2D3748;
             overflow: hidden;
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        /* ตกแต่งไอคอน */
-        .icon-box {
-            margin-bottom: 2rem;
-            display: inline-block;
             position: relative;
+        }
+
+        /* คำว่า UPDATE ขนาดใหญ่ที่อยู่ตรงกลางพื้นหลัง */
+        .bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* ทำให้กึ่งกลางเป๊ะ */
+            font-size: 22vw; /* ขนาดตามความกว้างหน้าจอ */
+            font-weight: 600;
+            color: #f8f9fa; /* สีเทาอ่อนมากเกือบขาว */
+            letter-spacing: -1vw;
+            z-index: 0;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        /* กล่องเนื้อหาหลัก */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .icon-wrapper {
+            margin-bottom: 1.5rem;
         }
 
         .main-icon {
-            width: 100px;
-            height: 100px;
-            color: #4A90E2; /* สีฟ้าโมเดิร์น */
-            animation: pulse 2s infinite ease-in-out;
+            width: 80px;
+            height: 80px;
+            color: #1a202c;
+            animation: rotate 8s infinite linear;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         h1 {
-            font-weight: 500;
-            font-size: 2rem;
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #1a202c;
             margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-            color: #1A202C;
+            letter-spacing: -1px;
         }
 
         p {
-            font-weight: 300;
-            font-size: 1.1rem;
-            color: #718096;
-            line-height: 1.8;
-            margin-bottom: 2.5rem;
+            font-weight: 200;
+            font-size: 1.2rem;
+            color: #4a5568;
+            max-width: 450px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
         }
 
-        /* แถบสถานะจำลอง */
-        .status-bar {
-            width: 250px;
-            height: 6px;
-            background-color: #EDF2F7;
+        /* แถบ Loading แบบเรียบหรู */
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: #edf2f7;
             border-radius: 10px;
             margin: 0 auto;
             overflow: hidden;
-            position: relative;
         }
 
-        .status-progress {
-            width: 40%;
+        .progress {
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 10px;
-            position: absolute;
-            animation: loading 2.5s infinite linear;
+            background: #1a202c;
+            transform: translateX(-100%);
+            animation: loading 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes loading {
-            0% { left: -40%; }
-            100% { left: 100%; }
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
         }
 
-        /* ลายตกแต่งพื้นหลังแบบจางๆ */
-        .bg-decoration {
-            position: absolute;
-            z-index: -1;
-            font-size: 20rem;
-            font-weight: 900;
-            color: #F7FAFC;
-            user-select: none;
-            bottom: -50px;
-            right: -50px;
+        /* Responsive สำหรับมือถือ */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            p { font-size: 1rem; }
+            .bg-text { font-size: 30vw; }
         }
-
     </style>
 </head>
 <body>
 
-    <div class="bg-decoration">UPDATE</div>
+    <div class="bg-text">UPDATE</div>
 
-    <div class="container">
-        <div class="icon-box">
+    <div class="content">
+        <div class="icon-wrapper">
             <svg class="main-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
         </div>
 
-        <h1>กำลังอัพเดตข้อมูลระบบ</h1>
-        <p>เรากำลังปรับปรุงหน้าเว็บไซต์เพื่อให้คุณได้รับประสบการณ์ที่ดียิ่งขึ้น <br>ระบบจะกลับมาใช้งานได้ตามปกติในเร็วๆ นี้</p>
+        <h1>กำลังปรับปรุงระบบ</h1>
+        <p>เรากำลังอัพเดตข้อมูลเพื่อให้คุณใช้งานได้ดียิ่งขึ้น <br>ขออภัยในความไม่สะดวกครับ</p>
         
-        <div class="status-bar">
-            <div class="status-progress"></div>
+        <div class="loader-bar">
+            <div class="progress"></div>
         </div>
     </div>
 
