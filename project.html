@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบอยู่ระหว่างการอัพเดตข้อมูล</title>
+    <style>
+        /* ตั้งค่าพื้นฐาน */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', 'Kanit', Tahoma, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            text-align: center;
+        }
+
+        /* กล่องเนื้อหาตรงกลาง */
+        .maintenance-container {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* ไอคอนตั้งค่า/ซ่อมบำรุง */
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            color: #007bff; /* เปลี่ยนสีไอคอนตรงนี้ได้ */
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* อนิเมชันโหลดวงกลม */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff; /* เปลี่ยนสีลูกศรโหลดตรงนี้ได้ */
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="maintenance-container">
+        <!-- ไอคอนรูปฟันเฟือง (SVG) -->
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        
+        <h1>ระบบอยู่ระหว่างการอัพเดตข้อมูล</h1>
+        <p>ขออภัยในความไม่สะดวก เรากำลังทำการปรับปรุงระบบเพื่อเพิ่มประสิทธิภาพให้ดียิ่งขึ้น กรุณากลับมาใช้งานใหม่อีกครั้งในภายหลัง</p>
+        
+        <!-- ตัวหมุนโหลด -->
+        <div class="loader"></div>
+    </div>
+
+</body>
+</html>
