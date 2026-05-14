@@ -6,8 +6,10 @@
 
     <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
 
+    <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
 
+    <!-- ICON -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -17,7 +19,6 @@
             --primary-neon:#00ff88;
             --ku-green:#006633;
             --text-dark:#0f172a;
-            --feedback-blue:#1e3a8a;
         }
 
         *{
@@ -29,7 +30,7 @@
         }
 
         body{
-            background-color:#ffffff;
+            background:#ffffff;
             color:var(--text-dark);
             min-height:100vh;
             overflow-x:hidden;
@@ -39,6 +40,10 @@
 
             background-size:40px 40px;
         }
+
+        /* ========================= */
+        /* BACKGROUND EFFECT */
+        /* ========================= */
 
         .bg-blob{
             position:fixed;
@@ -72,32 +77,6 @@
                 transform:
                     translate(100%, 50%)
                     scale(1.5);
-            }
-        }
-
-        .hero-header{
-            padding:120px 20px 60px;
-
-            text-align:center;
-
-            position:relative;
-
-            animation:
-                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        @keyframes fadeInUp{
-
-            from{
-                opacity:0;
-                transform:translateY(40px);
-                filter:blur(10px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-                filter:blur(0);
             }
         }
 
@@ -146,39 +125,33 @@
             }
         }
 
-        .main-title{
-            font-size:
-                clamp(3.5rem,10vw,6.8rem);
+        /* ========================= */
+        /* HERO */
+        /* ========================= */
 
-            font-weight:700;
+        .hero-header{
+            padding:120px 20px 60px;
 
-            letter-spacing:-4px;
+            text-align:center;
 
-            line-height:0.9;
+            position:relative;
 
-            color:var(--text-dark);
-
-            margin-bottom:30px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #0f172a,
-                    #006633,
-                    #0f172a
-                );
-
-            background-size:200% auto;
-
-            -webkit-background-clip:text;
-            background-clip:text;
-
-            animation:textFlow 10s linear infinite;
+            animation:
+                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
         }
 
-        @keyframes textFlow{
+        @keyframes fadeInUp{
+
+            from{
+                opacity:0;
+                transform:translateY(40px);
+                filter:blur(10px);
+            }
+
             to{
-                background-position:200% center;
+                opacity:1;
+                transform:translateY(0);
+                filter:blur(0);
             }
         }
 
@@ -206,23 +179,66 @@
             margin-bottom:20px;
         }
 
+        .main-title{
+            font-size:
+                clamp(3.5rem,10vw,6.8rem);
+
+            font-weight:700;
+
+            letter-spacing:-4px;
+
+            line-height:0.9;
+
+            margin-bottom:25px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0f172a,
+                    #006633,
+                    #0f172a
+                );
+
+            background-size:200% auto;
+
+            -webkit-background-clip:text;
+            background-clip:text;
+
+            -webkit-text-fill-color:transparent;
+
+            animation:textFlow 10s linear infinite;
+        }
+
+        @keyframes textFlow{
+            to{
+                background-position:200% center;
+            }
+        }
+
+        .hero-sub{
+            color:#64748b;
+            font-weight:300;
+            letter-spacing:4px;
+            font-size:1rem;
+            opacity:0.7;
+        }
+
+        /* ========================= */
+        /* COUNTDOWN */
+        /* ========================= */
+
         .countdown-section{
-            margin-top:30px;
+            margin-top:35px;
 
             display:flex;
             flex-direction:column;
             align-items:center;
-
-            animation:
-                fadeInUp 1.2s 0.4s both;
         }
 
         .countdown-project-label{
             font-size:1rem;
             font-weight:500;
             color:var(--ku-green);
-
-            letter-spacing:1px;
 
             margin-bottom:5px;
         }
@@ -232,14 +248,13 @@
             color:#64748b;
 
             margin-bottom:15px;
-
-            font-weight:300;
         }
 
         .countdown-grid{
             display:flex;
             gap:12px;
             justify-content:center;
+            flex-wrap:wrap;
         }
 
         .countdown-box{
@@ -248,9 +263,9 @@
             border-bottom:
                 3px solid var(--ku-green);
 
-            padding:12px;
+            padding:14px;
 
-            min-width:75px;
+            min-width:85px;
 
             backdrop-filter:blur(5px);
 
@@ -264,49 +279,45 @@
             font-size:1.8rem;
             font-weight:700;
 
-            color:var(--text-dark);
-
             line-height:1;
         }
 
         .countdown-unit{
-            display:block;
-
-            font-size:0.65rem;
+            font-size:0.7rem;
 
             color:#94a3b8;
 
             text-transform:uppercase;
 
-            margin-top:4px;
-
             letter-spacing:1px;
         }
 
+        /* ========================= */
+        /* KU86 BUTTON */
+        /* ========================= */
+
         .ku86-hero-wrap{
-            margin-top:28px;
+            margin-top:35px;
 
             display:flex;
             justify-content:center;
-
-            animation:
-                fadeInUp 1.2s 0.6s both;
         }
 
         .ku86-hero-btn{
             position:relative;
-            overflow:hidden;
 
-            display:inline-flex;
+            display:flex;
 
             align-items:center;
-            justify-content:center;
-
             gap:14px;
 
             width:min(520px,92%);
 
-            padding:18px 30px;
+            padding:20px 28px;
+
+            text-decoration:none;
+
+            color:var(--text-dark);
 
             background:
                 linear-gradient(
@@ -318,48 +329,19 @@
             border:
                 1px solid rgba(0,255,136,0.25);
 
-            text-decoration:none;
-
-            color:var(--text-dark);
-
             backdrop-filter:blur(10px);
 
-            transition:
-                0.45s cubic-bezier(0.2,1,0.2,1);
-
-            box-shadow:
-                0 10px 30px rgba(0,255,136,0.08),
-                inset 0 1px 0 rgba(255,255,255,0.4);
+            transition:0.4s;
         }
 
         .ku86-hero-btn:hover{
             transform:
-                translateY(-8px)
-                scale(1.01);
+                translateY(-8px);
         }
 
         .ku86-hero-btn i{
-            font-size:1.3rem;
+            font-size:1.4rem;
             color:var(--ku-green);
-        }
-
-        .ku86-hero-content{
-            display:flex;
-            flex-direction:column;
-            align-items:flex-start;
-            text-align:left;
-        }
-
-        .ku86-hero-title{
-            font-size:1.15rem;
-            font-weight:600;
-        }
-
-        .ku86-hero-sub{
-            font-size:0.82rem;
-            color:#64748b;
-            margin-top:2px;
-            font-weight:300;
         }
 
         .ku86-new-badge{
@@ -371,13 +353,25 @@
             background:#ff003c;
             color:#fff;
 
-            font-size:0.62rem;
+            font-size:0.65rem;
             font-weight:700;
 
-            letter-spacing:1px;
-
-            padding:5px 10px;
+            padding:4px 10px;
         }
+
+        .ku86-hero-title{
+            font-size:1.1rem;
+            font-weight:600;
+        }
+
+        .ku86-hero-sub{
+            font-size:0.82rem;
+            color:#64748b;
+        }
+
+        /* ========================= */
+        /* MAIN PORTAL */
+        /* ========================= */
 
         .main-portal{
             max-width:1250px;
@@ -401,42 +395,11 @@
 
             color:inherit;
 
-            position:relative;
-
-            opacity:0;
-
-            animation:
-                cardReveal 1s cubic-bezier(0.2,1,0.2,1)
-                forwards;
-        }
-
-        .card:nth-child(1){
-            animation-delay:0.3s;
-        }
-
-        .card:nth-child(2){
-            animation-delay:0.5s;
-        }
-
-        .card:nth-child(3){
-            animation-delay:0.7s;
-        }
-
-        @keyframes cardReveal{
-
-            from{
-                opacity:0;
-                transform:translateY(60px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
+            transition:0.5s;
         }
 
         .card:hover{
-            transform:translateY(-30px);
+            transform:translateY(-25px);
         }
 
         .image-wrapper{
@@ -449,8 +412,6 @@
             align-items:flex-end;
 
             margin-bottom:35px;
-
-            position:relative;
         }
 
         .image-wrapper img{
@@ -461,11 +422,9 @@
 
             filter:
                 grayscale(100%)
-                opacity(0.5)
-                brightness(1.1);
+                opacity(0.5);
 
-            transition:
-                0.8s cubic-bezier(0.2,1,0.2,1);
+            transition:0.6s;
         }
 
         .card:hover img{
@@ -474,80 +433,66 @@
                 opacity(1);
 
             transform:
-                scale(1.08)
-                translateY(-15px);
+                scale(1.05);
         }
 
         .card h3{
             font-size:1.7rem;
             font-weight:600;
 
-            color:var(--text-dark);
-
-            position:relative;
-
-            display:inline-block;
-
             transition:0.4s;
         }
 
         .card:hover h3{
             color:var(--ku-green);
-
-            letter-spacing:1.5px;
         }
 
         /* ========================= */
-        /* ✨ 9:16 BANNER */
+        /* ✨ SLIDER 16:9 */
         /* ========================= */
 
-        .banner-section{
+        .slider-section{
             max-width:1250px;
 
             margin:20px auto 80px;
 
             padding:0 20px;
-
-            display:flex;
-            justify-content:center;
         }
 
-        .banner-card{
+        .slider-container{
             position:relative;
 
             width:100%;
-            max-width:420px;
 
-            aspect-ratio:9/16;
+            aspect-ratio:16/9;
 
             overflow:hidden;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(0,255,136,0.08),
-                    rgba(0,102,51,0.04)
-                );
+            background:#f8fafc;
 
             border:
                 1px solid rgba(0,255,136,0.18);
 
-            backdrop-filter:blur(10px);
-
             box-shadow:
                 0 20px 50px rgba(0,0,0,0.05);
+        }
+
+        .slider-track{
+            display:flex;
+
+            width:100%;
+            height:100%;
 
             transition:
-                0.5s cubic-bezier(0.2,1,0.2,1);
+                transform 0.8s cubic-bezier(0.2,1,0.2,1);
         }
 
-        .banner-card:hover{
-            transform:
-                translateY(-10px)
-                scale(1.01);
+        .slide{
+            min-width:100%;
+            height:100%;
         }
 
-        .banner-card img{
+        .slide img{
             width:100%;
             height:100%;
 
@@ -556,12 +501,92 @@
             display:block;
         }
 
+        .slider-btn{
+            position:absolute;
+
+            top:50%;
+
+            transform:translateY(-50%);
+
+            width:50px;
+            height:50px;
+
+            border:none;
+
+            background:
+                rgba(255,255,255,0.2);
+
+            backdrop-filter:blur(10px);
+
+            color:#fff;
+
+            cursor:pointer;
+
+            z-index:10;
+
+            transition:0.3s;
+        }
+
+        .slider-btn:hover{
+            background:
+                rgba(0,255,136,0.7);
+
+            transform:
+                translateY(-50%)
+                scale(1.1);
+        }
+
+        .prev{
+            left:15px;
+        }
+
+        .next{
+            right:15px;
+        }
+
+        .slider-dots{
+            position:absolute;
+
+            bottom:18px;
+            left:50%;
+
+            transform:translateX(-50%);
+
+            display:flex;
+            gap:10px;
+
+            z-index:10;
+        }
+
+        .dot{
+            width:10px;
+            height:10px;
+
+            background:
+                rgba(255,255,255,0.5);
+
+            transition:0.3s;
+
+            cursor:pointer;
+        }
+
+        .dot.active{
+            width:30px;
+
+            background:
+                var(--primary-neon);
+        }
+
+        /* ========================= */
+        /* EXTRA SERVICES */
+        /* ========================= */
+
         .extra-services{
             max-width:1250px;
 
             margin:0 auto;
 
-            padding:0 20px 40px;
+            padding:0 20px 50px;
 
             display:grid;
 
@@ -575,8 +600,6 @@
             background:
                 rgba(255,255,255,0.6);
 
-            backdrop-filter:blur(10px);
-
             border:
                 1px solid rgba(226,232,240,0.8);
 
@@ -589,19 +612,17 @@
             display:flex;
 
             flex-direction:column;
-            justify-content:center;
             align-items:center;
+            justify-content:center;
 
             text-align:center;
 
-            transition:0.4s;
-
             min-height:140px;
+
+            transition:0.4s;
         }
 
         .mini-card:hover{
-            background:#ffffff;
-
             transform:translateY(-10px);
 
             border-color:var(--ku-green);
@@ -618,18 +639,19 @@
         .mini-card h4{
             font-size:1rem;
             font-weight:600;
-            line-height:1.4;
         }
 
         .mini-card span{
-            font-size:0.8rem;
+            font-size:0.82rem;
 
             color:#64748b;
 
             margin-top:5px;
-
-            font-weight:300;
         }
+
+        /* ========================= */
+        /* RESPONSIVE */
+        /* ========================= */
 
         @media(max-width:1024px){
 
@@ -640,10 +662,6 @@
 
             .extra-services{
                 grid-template-columns:1fr;
-            }
-
-            .banner-card{
-                max-width:100%;
             }
         }
 
@@ -656,90 +674,86 @@
 
     <div class="header-glow"></div>
 
+    <!-- HERO -->
+
     <header class="hero-header">
 
-        <div class="title-container">
+        <div class="subtitle-pill">
+            Department of Human and Community Resource Development
+        </div>
 
-            <div class="subtitle-pill">
-                Department of Human and Community Resource Development
+        <h1 class="main-title">
+            ชุมนุมฟาร์มนิสิต
+        </h1>
+
+        <p class="hero-sub">
+            FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
+        </p>
+
+        <!-- COUNTDOWN -->
+
+        <div class="countdown-section">
+
+            <div class="countdown-project-label">
+                โครงการเกษตรน้องใหม่หัวใจ EDS
             </div>
 
-            <h1 class="main-title">
-                ชุมนุมฟาร์มนิสิต
-            </h1>
+            <div class="countdown-date-label">
+                27 มิถุนายน 2569
+            </div>
 
-            <p style="
-                color:#64748b;
-                font-weight:300;
-                letter-spacing:4px;
-                font-size:1rem;
-                opacity:0.7;
-            ">
-                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
-            </p>
+            <div class="countdown-grid">
 
-            <div class="countdown-section">
-
-                <div class="countdown-project-label">
-                    โครงการเกษตรน้องใหม่หัวใจ EDS
+                <div class="countdown-box">
+                    <span class="countdown-num" id="d-days">00</span>
+                    <span class="countdown-unit">Days</span>
                 </div>
 
-                <div class="countdown-date-label">
-                    27 มิถุนายน 2569
+                <div class="countdown-box">
+                    <span class="countdown-num" id="d-hours">00</span>
+                    <span class="countdown-unit">Hours</span>
                 </div>
 
-                <div class="countdown-grid">
+                <div class="countdown-box">
+                    <span class="countdown-num" id="d-mins">00</span>
+                    <span class="countdown-unit">Mins</span>
+                </div>
 
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-days">00</span>
-                        <span class="countdown-unit">Days</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-hours">00</span>
-                        <span class="countdown-unit">Hours</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-mins">00</span>
-                        <span class="countdown-unit">Mins</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-secs">00</span>
-                        <span class="countdown-unit">Secs</span>
-                    </div>
-
+                <div class="countdown-box">
+                    <span class="countdown-num" id="d-secs">00</span>
+                    <span class="countdown-unit">Secs</span>
                 </div>
 
             </div>
 
-            <div class="ku86-hero-wrap">
+        </div>
 
-                <a href="ku86.html"
-                   class="ku86-hero-btn">
+        <!-- KU86 -->
 
-                    <div class="ku86-new-badge">
-                        NEW
+        <div class="ku86-hero-wrap">
+
+            <a href="ku86.html"
+               class="ku86-hero-btn">
+
+                <div class="ku86-new-badge">
+                    NEW
+                </div>
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <div>
+
+                    <div class="ku86-hero-title">
+                        นิสิตใหม่ KU86
                     </div>
 
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <div class="ku86-hero-content">
-
-                        <div class="ku86-hero-title">
-                            นิสิตใหม่ KU86
-                        </div>
-
-                        <div class="ku86-hero-sub">
-                            คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
-                        </div>
-
+                    <div class="ku86-hero-sub">
+                        คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
                     </div>
 
-                </a>
+                </div>
 
-            </div>
+            </a>
 
         </div>
 
@@ -781,13 +795,41 @@
 
     </div>
 
-    <!-- ✨ BANNER 9:16 -->
+    <!-- ✨ SLIDER -->
 
-    <div class="banner-section">
+    <div class="slider-section">
 
-        <div class="banner-card">
+        <div class="slider-container">
 
-            <img src="banner916.jpg" alt="Banner 9:16">
+            <div class="slider-track">
+
+                <div class="slide">
+                    <img src="banner1.jpg" alt="Banner 1">
+                </div>
+
+                <div class="slide">
+                    <img src="banner2.jpg" alt="Banner 2">
+                </div>
+
+                <div class="slide">
+                    <img src="banner3.jpg" alt="Banner 3">
+                </div>
+
+            </div>
+
+            <button class="slider-btn prev">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <button class="slider-btn next">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
 
         </div>
 
@@ -838,7 +880,11 @@
 
     </div>
 
+    <!-- SCRIPT -->
+
     <script>
+
+        /* COUNTDOWN */
 
         function startCountdown(){
 
@@ -913,13 +959,90 @@
                         .innerText =
                         secs.toString()
                         .padStart(2,'0');
-
                 }
 
             },1000);
         }
 
         startCountdown();
+
+        /* SLIDER */
+
+        const track =
+            document.querySelector('.slider-track');
+
+        const slides =
+            document.querySelectorAll('.slide');
+
+        const dots =
+            document.querySelectorAll('.dot');
+
+        const nextBtn =
+            document.querySelector('.next');
+
+        const prevBtn =
+            document.querySelector('.prev');
+
+        let currentSlide = 0;
+
+        function updateSlider(){
+
+            track.style.transform =
+                `translateX(-${currentSlide * 100}%)`;
+
+            dots.forEach(dot =>
+                dot.classList.remove('active')
+            );
+
+            dots[currentSlide]
+                .classList.add('active');
+        }
+
+        nextBtn.addEventListener('click',()=>{
+
+            currentSlide++;
+
+            if(currentSlide >= slides.length){
+                currentSlide = 0;
+            }
+
+            updateSlider();
+        });
+
+        prevBtn.addEventListener('click',()=>{
+
+            currentSlide--;
+
+            if(currentSlide < 0){
+                currentSlide =
+                    slides.length - 1;
+            }
+
+            updateSlider();
+        });
+
+        dots.forEach((dot,index)=>{
+
+            dot.addEventListener('click',()=>{
+
+                currentSlide = index;
+
+                updateSlider();
+            });
+
+        });
+
+        setInterval(()=>{
+
+            currentSlide++;
+
+            if(currentSlide >= slides.length){
+                currentSlide = 0;
+            }
+
+            updateSlider();
+
+        },5000);
 
     </script>
 
