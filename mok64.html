@@ -1,0 +1,237 @@
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Search, GraduationCap, BookOpenCheck, AlertCircle, CheckCircle2, Printer, Download, UserRound, BarChart3, LockKeyhole, LogOut, ShieldCheck } from "lucide-react";
+
+const curriculum = {
+  name: "ระบบตรวจสอบหลักสูตร",
+  program: "หลักสูตรวิทยาศาสตรบัณฑิต",
+  faculty: "คณะสิ่งแวดล้อม",
+  university: "มหาวิทยาลัยเกษตรศาสตร์",
+  totalCreditsRequired: 130,
+  groups: [
+    {
+      id: "GE",
+      name: "หมวดวิชาศึกษาทั่วไป",
+      requiredCredits: 30,
+      courses: [
+        { code: "01101101", name: "ภาษาไทยเพื่อการสื่อสาร", credit: 3, required: true },
+        { code: "01355101", name: "ภาษาอังกฤษพื้นฐาน", credit: 3, required: true },
+        { code: "01999111", name: "ศาสตร์แห่งแผ่นดิน", credit: 2, required: true },
+        { code: "01999021", name: "ภาษาและการสื่อสาร", credit: 3, required: false },
+      ],
+    },
+    {
+      id: "CORE",
+      name: "หมวดวิชาเฉพาะบังคับ",
+      requiredCredits: 60,
+      courses: [
+        { code: "01403111", name: "เคมีทั่วไป", credit: 3, required: true },
+        { code: "01403112", name: "ปฏิบัติการเคมีทั่วไป", credit: 1, required: true },
+        { code: "01417111", name: "คณิตศาสตร์", credit: 3, required: true },
+        { code: "01420111", name: "ฟิสิกส์ทั่วไป", credit: 3, required: true },
+        { code: "01424111", name: "หลักชีววิทยา", credit: 3, required: true },
+        { code: "01424112", name: "ปฏิบัติการชีววิทยา", credit: 1, required: true },
+      ],
+    },
+    {
+      id: "MAJOR",
+      name: "หมวดวิชาเอกเลือก",
+      requiredCredits: 24,
+      courses: [
+        { code: "02000001", name: "การจัดการสิ่งแวดล้อม", credit: 3, required: false },
+        { code: "02000002", name: "มลพิษทางน้ำ", credit: 3, required: false },
+        { code: "02000003", name: "มลพิษทางอากาศ", credit: 3, required: false },
+        { code: "02000004", name: "การประเมินผลกระทบสิ่งแวดล้อม", credit: 3, required: false },
+        { code: "02000005", name: "เทคโนโลยีสิ่งแวดล้อม", credit: 3, required: false },
+      ],
+    },
+    {
+      id: "FREE",
+      name: "หมวดวิชาเลือกเสรี",
+      requiredCredits: 6,
+      courses: [
+        { code: "03000001", name: "เลือกเสรี 1", credit: 3, required: false },
+        { code: "03000002", name: "เลือกเสรี 2", credit: 3, required: false },
+      ],
+    },
+  ],
+};
+
+const demoStudents = [
+  {
+    id: "66010001",
+    password: "1234",
+    name: "นิสิต ตัวอย่าง",
+    faculty: "คณะสิ่งแวดล้อม",
+    major: "วิทยาศาสตร์และเทคโนโลยีสิ่งแวดล้อม",
+    curriculumYear: "2569",
+    passedCourses: ["01101101", "01355101", "01999111", "01403111", "01403112", "01417111", "02000001"],
+  },
+  {
+    id: "66010002",
+    password: "1234",
+    name: "เกษตร รักษ์โลก",
+    faculty: "คณะสิ่งแวดล้อม",
+    major: "วิทยาศาสตร์และเทคโนโลยีสิ่งแวดล้อม",
+    curriculumYear: "2569",
+    passedCourses: ["01101101", "01355101", "01999111", "01999021", "01403111", "01403112", "01417111", "01420111", "01424111", "01424112", "02000001", "02000002", "03000001"],
+  },
+];
+
+const allCourses = curriculum.groups.flatMap((g) => g.courses.map((c) => ({ ...c, groupId: g.id, groupName: g.name })));
+
+function StatCard({ icon: Icon, label, value, sub }) {
+  return (
+    <div className="rounded-3xl bg-white/90 p-5 shadow-sm ring-1 ring-emerald-100">
+      <div className="flex items-center gap-3">
+        <div className="rounded-2xl bg-emerald-100 p-3 text-emerald-700"><Icon size={22} /></div>
+        <div><p className="text-sm text-slate-500">{label}</p><p className="text-2xl font-bold text-slate-900">{value}</p>{sub && <p className="text-xs text-slate-400">{sub}</p>}</div>
+      </div>
+    </div>
+  );
+}
+
+function LoginPage({ onLogin }) {
+  const [studentId, setStudentId] = useState("66010001");
+  const [password, setPassword] = useState("1234");
+  const [error, setError] = useState("");
+
+  const submit = (e) => {
+    e.preventDefault();
+    const found = demoStudents.find((s) => s.id === studentId && s.password === password);
+    if (!found) return setError("รหัสนิสิตหรือรหัสผ่านไม่ถูกต้อง");
+    setError("");
+    onLogin(found);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-lime-50 p-4 text-slate-800 md:p-8">
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-8 lg:grid-cols-2">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-[2rem] bg-gradient-to-r from-emerald-800 to-green-600 p-8 text-white shadow-xl">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm backdrop-blur"><ShieldCheck size={18} /> Secure Curriculum Audit</div>
+          <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">เข้าสู่ระบบตรวจสอบหลักสูตร</h1>
+          <p className="mt-4 max-w-xl text-emerald-50">นิสิตเข้าสู่ระบบด้วยรหัสนิสิต เพื่อดูข้อมูลรายบุคคล รายวิชาที่ผ่านแล้ว หน่วยกิตสะสม และรายวิชาที่ยังขาดตามหลักสูตร</p>
+          <div className="mt-8 rounded-3xl bg-white/15 p-5 text-sm backdrop-blur">
+            <p className="font-semibold">บัญชีทดลอง</p>
+            <p>รหัสนิสิต: 66010001 หรือ 66010002</p>
+            <p>รหัสผ่าน: 1234</p>
+          </div>
+        </motion.div>
+
+        <motion.form initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} onSubmit={submit} className="rounded-[2rem] bg-white p-7 shadow-xl ring-1 ring-emerald-100">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="rounded-2xl bg-emerald-100 p-3 text-emerald-700"><LockKeyhole /></div>
+            <div><h2 className="text-2xl font-bold">เข้าสู่ระบบนิสิต</h2><p className="text-sm text-slate-500">กรุณากรอกรหัสนิสิตและรหัสผ่าน</p></div>
+          </div>
+          <label className="text-sm font-semibold text-slate-600">รหัสนิสิต</label>
+          <input value={studentId} onChange={(e) => setStudentId(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-300" />
+          <label className="mt-4 block text-sm font-semibold text-slate-600">รหัสผ่าน</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-300" />
+          {error && <div className="mt-4 rounded-2xl bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+          <button className="mt-6 w-full rounded-2xl bg-emerald-700 px-4 py-3 font-semibold text-white hover:bg-emerald-800">เข้าสู่ระบบ</button>
+        </motion.form>
+      </div>
+    </div>
+  );
+}
+
+export default function CurriculumCheckerDesign() {
+  const [student, setStudent] = useState(null);
+  const [query, setQuery] = useState("");
+
+  if (!student) return <LoginPage onLogin={setStudent} />;
+
+  const selected = new Set(student.passedCourses);
+
+  const result = useMemo(() => {
+    let totalPassed = 0;
+    const missingRequired = [];
+    const groupResults = curriculum.groups.map((group) => {
+      let passed = 0;
+      const missing = [];
+      group.courses.forEach((course) => {
+        if (selected.has(course.code)) passed += course.credit;
+        if (course.required && !selected.has(course.code)) missing.push(course);
+      });
+      totalPassed += passed;
+      return { ...group, passed, missingCredits: Math.max(group.requiredCredits - passed, 0), missing };
+    });
+    groupResults.forEach((g) => missingRequired.push(...g.missing.map((c) => ({ ...c, groupName: g.name }))));
+    const missingTotal = Math.max(curriculum.totalCreditsRequired - totalPassed, 0);
+    const percent = Math.min(Math.round((totalPassed / curriculum.totalCreditsRequired) * 100), 100);
+    const completed = missingTotal === 0 && missingRequired.length === 0;
+    return { totalPassed, missingTotal, percent, groupResults, missingRequired, completed };
+  }, [student]);
+
+  const filteredCourses = allCourses.filter((c) => `${c.code} ${c.name} ${c.groupName}`.toLowerCase().includes(query.toLowerCase()));
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-lime-50 p-4 text-slate-800 md:p-8">
+      <div className="mx-auto max-w-7xl">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-6 overflow-hidden rounded-[2rem] bg-gradient-to-r from-emerald-800 to-green-600 p-7 text-white shadow-xl">
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm backdrop-blur"><GraduationCap size={18} /> Curriculum Audit System</div>
+              <h1 className="text-3xl font-extrabold tracking-tight md:text-5xl">{curriculum.name}</h1>
+              <p className="mt-3 max-w-2xl text-emerald-50">ข้อมูลรายบุคคลของ {student.name} แสดงตามผลการเรียนที่บันทึกไว้ในระบบ</p>
+            </div>
+            <button onClick={() => setStudent(null)} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white/15 px-5 py-3 font-semibold backdrop-blur hover:bg-white/20"><LogOut size={18} /> ออกจากระบบ</button>
+          </div>
+        </motion.div>
+
+        <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
+          <section className="space-y-6">
+            <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-emerald-100">
+              <h2 className="mb-5 flex items-center gap-2 text-xl font-bold"><UserRound className="text-emerald-700" /> ข้อมูลนิสิต</h2>
+              <div className="space-y-3 text-sm">
+                <p><span className="text-slate-500">รหัสนิสิต:</span> <strong>{student.id}</strong></p>
+                <p><span className="text-slate-500">ชื่อ-นามสกุล:</span> <strong>{student.name}</strong></p>
+                <p><span className="text-slate-500">คณะ:</span> <strong>{student.faculty}</strong></p>
+                <p><span className="text-slate-500">สาขา:</span> <strong>{student.major}</strong></p>
+                <p><span className="text-slate-500">ปีหลักสูตร:</span> <strong>{student.curriculumYear}</strong></p>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-emerald-100">
+              <h2 className="mb-5 flex items-center gap-2 text-xl font-bold"><BarChart3 className="text-emerald-700" /> สรุปผล</h2>
+              <div className="mb-4 flex items-center justify-between text-sm"><span>ความคืบหน้า</span><strong>{result.percent}%</strong></div>
+              <div className="h-4 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-emerald-600" style={{ width: `${result.percent}%` }} /></div>
+              <div className="mt-5 grid gap-3"><StatCard icon={BookOpenCheck} label="ผ่านแล้ว" value={`${result.totalPassed}`} sub="หน่วยกิต" /><StatCard icon={AlertCircle} label="ยังขาด" value={`${result.missingTotal}`} sub="หน่วยกิต" /></div>
+              <div className={`mt-5 rounded-3xl p-4 ${result.completed ? "bg-emerald-50 text-emerald-800" : "bg-orange-50 text-orange-800"}`}><div className="flex items-center gap-2 font-bold">{result.completed ? <CheckCircle2 /> : <AlertCircle />} {result.completed ? "ผ่านครบตามหลักสูตร" : "ยังไม่ครบตามหลักสูตร"}</div></div>
+              <div className="mt-5 flex gap-3"><button onClick={() => window.print()} className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 font-semibold text-white"><Printer size={18} /> พิมพ์</button><button onClick={() => window.print()} className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-4 py-3 font-semibold text-white"><Download size={18} /> PDF</button></div>
+            </div>
+          </section>
+
+          <main className="space-y-6">
+            <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-emerald-100">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <h2 className="flex items-center gap-2 text-xl font-bold"><BookOpenCheck className="text-emerald-700" /> รายวิชาของนิสิต</h2>
+                <div className="relative md:w-80"><Search className="absolute left-4 top-3.5 text-slate-400" size={18} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ค้นหารหัสวิชา / ชื่อวิชา" className="w-full rounded-2xl border border-slate-200 py-3 pl-11 pr-4 outline-none focus:ring-2 focus:ring-emerald-300" /></div>
+              </div>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {filteredCourses.map((course) => (
+                  <div key={course.code} className={`rounded-3xl border p-4 ${selected.has(course.code) ? "border-emerald-400 bg-emerald-50" : "border-slate-200 bg-white"}`}>
+                    <div className="mb-2 flex items-start justify-between gap-3"><div><p className="font-bold text-slate-900">{course.code}</p><p className="text-sm text-slate-600">{course.name}</p></div>{selected.has(course.code) ? <CheckCircle2 className="text-emerald-600" /> : <AlertCircle className="text-orange-500" />}</div>
+                    <div className="flex flex-wrap gap-2 text-xs"><span className="rounded-full bg-slate-100 px-3 py-1">{course.credit} หน่วยกิต</span><span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">{course.required ? "บังคับ" : "เลือก"}</span><span className={`rounded-full px-3 py-1 ${selected.has(course.code) ? "bg-emerald-600 text-white" : "bg-orange-100 text-orange-700"}`}>{selected.has(course.code) ? "ผ่านแล้ว" : "ยังไม่ผ่าน/ยังไม่ได้เรียน"}</span></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-emerald-100">
+                <h2 className="mb-4 text-xl font-bold">ผลตามหมวดวิชา</h2>
+                <div className="space-y-4">{result.groupResults.map((g) => { const p = Math.min(Math.round((g.passed / g.requiredCredits) * 100), 100); return <div key={g.id} className="rounded-3xl bg-slate-50 p-4"><div className="mb-2 flex justify-between gap-4"><strong>{g.name}</strong><span className="text-sm text-slate-500">{g.passed}/{g.requiredCredits} หน่วยกิต</span></div><div className="h-3 overflow-hidden rounded-full bg-white"><div className="h-full rounded-full bg-emerald-500" style={{ width: `${p}%` }} /></div><p className="mt-2 text-sm text-orange-700">ขาดอีก {g.missingCredits} หน่วยกิต</p></div>; })}</div>
+              </div>
+
+              <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-emerald-100">
+                <h2 className="mb-4 text-xl font-bold">รายวิชาบังคับที่ยังขาด</h2>
+                {result.missingRequired.length === 0 ? <div className="rounded-3xl bg-emerald-50 p-5 text-emerald-800">ไม่มีรายวิชาบังคับที่ขาด</div> : <div className="space-y-3">{result.missingRequired.map((c) => <div key={c.code} className="rounded-3xl border border-orange-100 bg-orange-50 p-4"><p className="font-bold text-slate-900">{c.code} {c.name}</p><p className="text-sm text-slate-500">{c.groupName} • {c.credit} หน่วยกิต</p></div>)}</div>}
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
