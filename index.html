@@ -6,10 +6,8 @@
 
     <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
 
-    <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
 
-    <!-- ICON -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -19,6 +17,7 @@
             --primary-neon:#00ff88;
             --ku-green:#006633;
             --text-dark:#0f172a;
+            --feedback-blue:#1e3a8a;
         }
 
         *{
@@ -30,7 +29,7 @@
         }
 
         body{
-            background:#ffffff;
+            background-color:#ffffff;
             color:var(--text-dark);
             min-height:100vh;
             overflow-x:hidden;
@@ -40,10 +39,6 @@
 
             background-size:40px 40px;
         }
-
-        /* ========================= */
-        /* BACKGROUND EFFECT */
-        /* ========================= */
 
         .bg-blob{
             position:fixed;
@@ -77,6 +72,32 @@
                 transform:
                     translate(100%, 50%)
                     scale(1.5);
+            }
+        }
+
+        .hero-header{
+            padding:120px 20px 60px;
+
+            text-align:center;
+
+            position:relative;
+
+            animation:
+                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
+        }
+
+        @keyframes fadeInUp{
+
+            from{
+                opacity:0;
+                transform:translateY(40px);
+                filter:blur(10px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+                filter:blur(0);
             }
         }
 
@@ -125,33 +146,39 @@
             }
         }
 
-        /* ========================= */
-        /* HERO */
-        /* ========================= */
+        .main-title{
+            font-size:
+                clamp(3.5rem,10vw,6.8rem);
 
-        .hero-header{
-            padding:120px 20px 60px;
+            font-weight:700;
 
-            text-align:center;
+            letter-spacing:-4px;
 
-            position:relative;
+            line-height:0.9;
 
-            animation:
-                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
+            color:var(--text-dark);
+
+            margin-bottom:30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0f172a,
+                    #006633,
+                    #0f172a
+                );
+
+            background-size:200% auto;
+
+            -webkit-background-clip:text;
+            background-clip:text;
+
+            animation:textFlow 10s linear infinite;
         }
 
-        @keyframes fadeInUp{
-
-            from{
-                opacity:0;
-                transform:translateY(40px);
-                filter:blur(10px);
-            }
-
+        @keyframes textFlow{
             to{
-                opacity:1;
-                transform:translateY(0);
-                filter:blur(0);
+                background-position:200% center;
             }
         }
 
@@ -179,66 +206,23 @@
             margin-bottom:20px;
         }
 
-        .main-title{
-            font-size:
-                clamp(3.5rem,10vw,6.8rem);
-
-            font-weight:700;
-
-            letter-spacing:-4px;
-
-            line-height:0.9;
-
-            margin-bottom:25px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #0f172a,
-                    #006633,
-                    #0f172a
-                );
-
-            background-size:200% auto;
-
-            -webkit-background-clip:text;
-            background-clip:text;
-
-            -webkit-text-fill-color:transparent;
-
-            animation:textFlow 10s linear infinite;
-        }
-
-        @keyframes textFlow{
-            to{
-                background-position:200% center;
-            }
-        }
-
-        .hero-sub{
-            color:#64748b;
-            font-weight:300;
-            letter-spacing:4px;
-            font-size:1rem;
-            opacity:0.7;
-        }
-
-        /* ========================= */
-        /* COUNTDOWN */
-        /* ========================= */
-
         .countdown-section{
-            margin-top:35px;
+            margin-top:30px;
 
             display:flex;
             flex-direction:column;
             align-items:center;
+
+            animation:
+                fadeInUp 1.2s 0.4s both;
         }
 
         .countdown-project-label{
             font-size:1rem;
             font-weight:500;
             color:var(--ku-green);
+
+            letter-spacing:1px;
 
             margin-bottom:5px;
         }
@@ -248,13 +232,14 @@
             color:#64748b;
 
             margin-bottom:15px;
+
+            font-weight:300;
         }
 
         .countdown-grid{
             display:flex;
             gap:12px;
             justify-content:center;
-            flex-wrap:wrap;
         }
 
         .countdown-box{
@@ -263,9 +248,9 @@
             border-bottom:
                 3px solid var(--ku-green);
 
-            padding:14px;
+            padding:12px;
 
-            min-width:85px;
+            min-width:75px;
 
             backdrop-filter:blur(5px);
 
@@ -279,45 +264,53 @@
             font-size:1.8rem;
             font-weight:700;
 
+            color:var(--text-dark);
+
             line-height:1;
         }
 
         .countdown-unit{
-            font-size:0.7rem;
+            display:block;
+
+            font-size:0.65rem;
 
             color:#94a3b8;
 
             text-transform:uppercase;
 
+            margin-top:4px;
+
             letter-spacing:1px;
         }
 
         /* ========================= */
-        /* KU86 BUTTON */
+        /* ✨ KU86 BUTTON */
         /* ========================= */
 
         .ku86-hero-wrap{
-            margin-top:35px;
+            margin-top:28px;
 
             display:flex;
             justify-content:center;
+
+            animation:
+                fadeInUp 1.2s 0.6s both;
         }
 
         .ku86-hero-btn{
             position:relative;
+            overflow:hidden;
 
-            display:flex;
+            display:inline-flex;
 
             align-items:center;
+            justify-content:center;
+
             gap:14px;
 
             width:min(520px,92%);
 
-            padding:20px 28px;
-
-            text-decoration:none;
-
-            color:var(--text-dark);
+            padding:18px 30px;
 
             background:
                 linear-gradient(
@@ -329,19 +322,81 @@
             border:
                 1px solid rgba(0,255,136,0.25);
 
+            text-decoration:none;
+
+            color:var(--text-dark);
+
             backdrop-filter:blur(10px);
 
-            transition:0.4s;
+            transition:
+                0.45s cubic-bezier(0.2,1,0.2,1);
+
+            box-shadow:
+                0 10px 30px rgba(0,255,136,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.4);
+        }
+
+        .ku86-hero-btn::before{
+            content:'';
+
+            position:absolute;
+            inset:0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent,
+                    rgba(255,255,255,0.35),
+                    transparent
+                );
+
+            transform:translateX(-120%);
+
+            transition:0.8s;
+        }
+
+        .ku86-hero-btn:hover::before{
+            transform:translateX(120%);
         }
 
         .ku86-hero-btn:hover{
             transform:
-                translateY(-8px);
+                translateY(-8px)
+                scale(1.01);
+
+            border-color:
+                rgba(0,255,136,0.45);
+
+            box-shadow:
+                0 25px 60px rgba(0,255,136,0.16),
+                0 10px 25px rgba(0,0,0,0.05);
         }
 
         .ku86-hero-btn i{
-            font-size:1.4rem;
+            font-size:1.3rem;
             color:var(--ku-green);
+        }
+
+        .ku86-hero-content{
+            display:flex;
+            flex-direction:column;
+            align-items:flex-start;
+            text-align:left;
+        }
+
+        .ku86-hero-title{
+            font-size:1.15rem;
+            font-weight:600;
+            line-height:1.2;
+        }
+
+        .ku86-hero-sub{
+            font-size:0.82rem;
+            color:#64748b;
+
+            margin-top:2px;
+
+            font-weight:300;
         }
 
         .ku86-new-badge{
@@ -353,25 +408,40 @@
             background:#ff003c;
             color:#fff;
 
-            font-size:0.65rem;
+            font-size:0.62rem;
             font-weight:700;
 
-            padding:4px 10px;
+            letter-spacing:1px;
+
+            padding:5px 10px;
+
+            animation:
+                pulseNew 1.8s infinite;
         }
 
-        .ku86-hero-title{
-            font-size:1.1rem;
-            font-weight:600;
-        }
+        @keyframes pulseNew{
 
-        .ku86-hero-sub{
-            font-size:0.82rem;
-            color:#64748b;
-        }
+            0%{
+                transform:scale(1);
 
-        /* ========================= */
-        /* MAIN PORTAL */
-        /* ========================= */
+                box-shadow:
+                    0 0 0 0 rgba(255,0,60,0.5);
+            }
+
+            70%{
+                transform:scale(1.05);
+
+                box-shadow:
+                    0 0 0 12px rgba(255,0,60,0);
+            }
+
+            100%{
+                transform:scale(1);
+
+                box-shadow:
+                    0 0 0 0 rgba(255,0,60,0);
+            }
+        }
 
         .main-portal{
             max-width:1250px;
@@ -395,11 +465,42 @@
 
             color:inherit;
 
-            transition:0.5s;
+            position:relative;
+
+            opacity:0;
+
+            animation:
+                cardReveal 1s cubic-bezier(0.2,1,0.2,1)
+                forwards;
+        }
+
+        .card:nth-child(1){
+            animation-delay:0.3s;
+        }
+
+        .card:nth-child(2){
+            animation-delay:0.5s;
+        }
+
+        .card:nth-child(3){
+            animation-delay:0.7s;
+        }
+
+        @keyframes cardReveal{
+
+            from{
+                opacity:0;
+                transform:translateY(60px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
         }
 
         .card:hover{
-            transform:translateY(-25px);
+            transform:translateY(-30px);
         }
 
         .image-wrapper{
@@ -412,6 +513,8 @@
             align-items:flex-end;
 
             margin-bottom:35px;
+
+            position:relative;
         }
 
         .image-wrapper img{
@@ -422,171 +525,77 @@
 
             filter:
                 grayscale(100%)
-                opacity(0.5);
+                opacity(0.5)
+                brightness(1.1);
 
-            transition:0.6s;
+            transition:
+                0.8s cubic-bezier(0.2,1,0.2,1);
         }
 
         .card:hover img{
             filter:
                 grayscale(0%)
-                opacity(1);
+                opacity(1)
+                drop-shadow(
+                    0 40px 60px rgba(0,0,0,0.15)
+                );
 
             transform:
-                scale(1.05);
+                scale(1.08)
+                translateY(-15px);
         }
 
         .card h3{
             font-size:1.7rem;
             font-weight:600;
 
+            color:var(--text-dark);
+
+            position:relative;
+
+            display:inline-block;
+
             transition:0.4s;
         }
 
         .card:hover h3{
             color:var(--ku-green);
+
+            letter-spacing:1.5px;
         }
 
-        /* ========================= */
-        /* ✨ SLIDER 16:9 */
-        /* ========================= */
+        .card h3::after{
+            content:'';
 
-        .slider-section{
-            max-width:1250px;
+            position:absolute;
 
-            margin:20px auto 80px;
+            bottom:-10px;
+            left:0;
 
-            padding:0 20px;
-        }
+            width:0;
+            height:4px;
 
-        .slider-container{
-            position:relative;
-
-            width:100%;
-
-            aspect-ratio:16/9;
-
-            overflow:hidden;
-
-            background:#f8fafc;
-
-            border:
-                1px solid rgba(0,255,136,0.18);
-
-            box-shadow:
-                0 20px 50px rgba(0,0,0,0.05);
-        }
-
-        .slider-track{
-            display:flex;
-
-            width:100%;
-            height:100%;
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary-neon),
+                    var(--ku-green)
+                );
 
             transition:
-                transform 0.8s cubic-bezier(0.2,1,0.2,1);
+                0.6s cubic-bezier(0.2,1,0.2,1);
         }
 
-        .slide{
-            min-width:100%;
-            height:100%;
-        }
-
-        .slide img{
+        .card:hover h3::after{
             width:100%;
-            height:100%;
-
-            object-fit:cover;
-
-            display:block;
         }
-
-        .slider-btn{
-            position:absolute;
-
-            top:50%;
-
-            transform:translateY(-50%);
-
-            width:50px;
-            height:50px;
-
-            border:none;
-
-            background:
-                rgba(255,255,255,0.2);
-
-            backdrop-filter:blur(10px);
-
-            color:#fff;
-
-            cursor:pointer;
-
-            z-index:10;
-
-            transition:0.3s;
-        }
-
-        .slider-btn:hover{
-            background:
-                rgba(0,255,136,0.7);
-
-            transform:
-                translateY(-50%)
-                scale(1.1);
-        }
-
-        .prev{
-            left:15px;
-        }
-
-        .next{
-            right:15px;
-        }
-
-        .slider-dots{
-            position:absolute;
-
-            bottom:18px;
-            left:50%;
-
-            transform:translateX(-50%);
-
-            display:flex;
-            gap:10px;
-
-            z-index:10;
-        }
-
-        .dot{
-            width:10px;
-            height:10px;
-
-            background:
-                rgba(255,255,255,0.5);
-
-            transition:0.3s;
-
-            cursor:pointer;
-        }
-
-        .dot.active{
-            width:30px;
-
-            background:
-                var(--primary-neon);
-        }
-
-        /* ========================= */
-        /* EXTRA SERVICES */
-        /* ========================= */
 
         .extra-services{
             max-width:1250px;
 
             margin:0 auto;
 
-            padding:0 20px 50px;
+            padding:0 20px 40px;
 
             display:grid;
 
@@ -594,11 +603,16 @@
                 repeat(auto-fit,minmax(220px,1fr));
 
             gap:20px;
+
+            animation:
+                fadeInUp 1s 1s both;
         }
 
         .mini-card{
             background:
                 rgba(255,255,255,0.6);
+
+            backdrop-filter:blur(10px);
 
             border:
                 1px solid rgba(226,232,240,0.8);
@@ -612,20 +626,25 @@
             display:flex;
 
             flex-direction:column;
-            align-items:center;
             justify-content:center;
+            align-items:center;
 
             text-align:center;
 
-            min-height:140px;
-
             transition:0.4s;
+
+            min-height:140px;
         }
 
         .mini-card:hover{
+            background:#ffffff;
+
             transform:translateY(-10px);
 
             border-color:var(--ku-green);
+
+            box-shadow:
+                0 20px 40px rgba(0,102,51,0.05);
         }
 
         .mini-card i{
@@ -634,24 +653,25 @@
             color:var(--ku-green);
 
             margin-bottom:12px;
+
+            opacity:0.7;
         }
 
         .mini-card h4{
             font-size:1rem;
             font-weight:600;
+            line-height:1.4;
         }
 
         .mini-card span{
-            font-size:0.82rem;
+            font-size:0.8rem;
 
             color:#64748b;
 
             margin-top:5px;
-        }
 
-        /* ========================= */
-        /* RESPONSIVE */
-        /* ========================= */
+            font-weight:300;
+        }
 
         @media(max-width:1024px){
 
@@ -674,86 +694,94 @@
 
     <div class="header-glow"></div>
 
-    <!-- HERO -->
-
     <header class="hero-header">
 
-        <div class="subtitle-pill">
-            Department of Human and Community Resource Development
-        </div>
+        <div class="title-container">
 
-        <h1 class="main-title">
-            ชุมนุมฟาร์มนิสิต
-        </h1>
-
-        <p class="hero-sub">
-            FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
-        </p>
-
-        <!-- COUNTDOWN -->
-
-        <div class="countdown-section">
-
-            <div class="countdown-project-label">
-                โครงการเกษตรน้องใหม่หัวใจ EDS
+            <div class="subtitle-pill">
+                Department of Human and Community Resource Development
             </div>
 
-            <div class="countdown-date-label">
-                27 มิถุนายน 2569
-            </div>
+            <h1 class="main-title">
+                ชุมนุมฟาร์มนิสิต
+            </h1>
 
-            <div class="countdown-grid">
+            <p style="
+                color:#64748b;
+                font-weight:300;
+                letter-spacing:4px;
+                font-size:1rem;
+                opacity:0.7;
+            ">
+                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
+            </p>
 
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-days">00</span>
-                    <span class="countdown-unit">Days</span>
+            <!-- COUNTDOWN -->
+
+            <div class="countdown-section">
+
+                <div class="countdown-project-label">
+                    โครงการเกษตรน้องใหม่หัวใจ EDS
                 </div>
 
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-hours">00</span>
-                    <span class="countdown-unit">Hours</span>
+                <div class="countdown-date-label">
+                    27 มิถุนายน 2569
                 </div>
 
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-mins">00</span>
-                    <span class="countdown-unit">Mins</span>
-                </div>
+                <div class="countdown-grid">
 
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-secs">00</span>
-                    <span class="countdown-unit">Secs</span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- KU86 -->
-
-        <div class="ku86-hero-wrap">
-
-            <a href="ku86.html"
-               class="ku86-hero-btn">
-
-                <div class="ku86-new-badge">
-                    NEW
-                </div>
-
-                <i class="fa-solid fa-user-graduate"></i>
-
-                <div>
-
-                    <div class="ku86-hero-title">
-                        นิสิตใหม่ KU86
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-days">00</span>
+                        <span class="countdown-unit">Days</span>
                     </div>
 
-                    <div class="ku86-hero-sub">
-                        คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-hours">00</span>
+                        <span class="countdown-unit">Hours</span>
+                    </div>
+
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-mins">00</span>
+                        <span class="countdown-unit">Mins</span>
+                    </div>
+
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="d-secs">00</span>
+                        <span class="countdown-unit">Secs</span>
                     </div>
 
                 </div>
 
-            </a>
+            </div>
+
+            <!-- ✨ KU86 BUTTON -->
+
+            <div class="ku86-hero-wrap">
+
+                <a href="ku86.html"
+                   class="ku86-hero-btn">
+
+                    <div class="ku86-new-badge">
+                        NEW
+                    </div>
+
+                    <i class="fa-solid fa-user-graduate"></i>
+
+                    <div class="ku86-hero-content">
+
+                        <div class="ku86-hero-title">
+                            นิสิตใหม่ KU86
+                        </div>
+
+                        <div class="ku86-hero-sub">
+                            คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
 
         </div>
 
@@ -771,15 +799,33 @@
 
             <h3>คณะกรรมการฟาร์ม</h3>
 
+            <p style="
+                font-size:0.9rem;
+                color:#64748b;
+                margin-top:10px;
+                font-weight:300;
+            ">
+                Team Excellence 2569
+            </p>
+
         </a>
 
-        <a href="close.html" class="card">
+        <a href="room.html" class="card">
 
             <div class="image-wrapper">
                 <img src="091.png" alt="Reservation">
             </div>
 
             <h3>จองห้องประชุม</h3>
+
+            <p style="
+                font-size:0.9rem;
+                color:#64748b;
+                margin-top:10px;
+                font-weight:300;
+            ">
+                Smart Space Booking
+            </p>
 
         </a>
 
@@ -791,47 +837,16 @@
 
             <h3>โครงการชุมนุม</h3>
 
+            <p style="
+                font-size:0.9rem;
+                color:#64748b;
+                margin-top:10px;
+                font-weight:300;
+            ">
+                Future Farm Initiatives
+            </p>
+
         </a>
-
-    </div>
-
-    <!-- ✨ SLIDER -->
-
-    <div class="slider-section">
-
-        <div class="slider-container">
-
-            <div class="slider-track">
-
-                <div class="slide">
-                    <img src="banner1.jpg" alt="Banner 1">
-                </div>
-
-                <div class="slide">
-                    <img src="banner2.jpg" alt="Banner 2">
-                </div>
-
-                <div class="slide">
-                    <img src="banner3.jpg" alt="Banner 3">
-                </div>
-
-            </div>
-
-            <button class="slider-btn prev">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-
-            <button class="slider-btn next">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-
-            <div class="slider-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-
-        </div>
 
     </div>
 
@@ -866,13 +881,20 @@
         </a>
 
         <a href="admin-approve.html"
-           class="mini-card">
+           class="mini-card"
+           style="
+            border-style:dashed;
+            background:rgba(0,102,51,0.03);
+           ">
 
             <i class="fa-solid fa-user-shield"></i>
 
             <h4>ระบบอนุมัติการจอง</h4>
 
-            <span>
+            <span style="
+                color:var(--ku-green);
+                font-weight:500;
+            ">
                 สำหรับ Admin
             </span>
 
@@ -880,11 +902,9 @@
 
     </div>
 
-    <!-- SCRIPT -->
+    <!-- COUNTDOWN SCRIPT -->
 
     <script>
-
-        /* COUNTDOWN */
 
         function startCountdown(){
 
@@ -959,90 +979,21 @@
                         .innerText =
                         secs.toString()
                         .padStart(2,'0');
+
+                }else{
+
+                    document
+                        .querySelector(
+                            '.countdown-section'
+                        )
+                        .innerHTML =
+                        "<div class='countdown-project-label'>เริ่มโครงการแล้ววันนี้! (27 มิ.ย. 69)</div>";
                 }
 
             },1000);
         }
 
         startCountdown();
-
-        /* SLIDER */
-
-        const track =
-            document.querySelector('.slider-track');
-
-        const slides =
-            document.querySelectorAll('.slide');
-
-        const dots =
-            document.querySelectorAll('.dot');
-
-        const nextBtn =
-            document.querySelector('.next');
-
-        const prevBtn =
-            document.querySelector('.prev');
-
-        let currentSlide = 0;
-
-        function updateSlider(){
-
-            track.style.transform =
-                `translateX(-${currentSlide * 100}%)`;
-
-            dots.forEach(dot =>
-                dot.classList.remove('active')
-            );
-
-            dots[currentSlide]
-                .classList.add('active');
-        }
-
-        nextBtn.addEventListener('click',()=>{
-
-            currentSlide++;
-
-            if(currentSlide >= slides.length){
-                currentSlide = 0;
-            }
-
-            updateSlider();
-        });
-
-        prevBtn.addEventListener('click',()=>{
-
-            currentSlide--;
-
-            if(currentSlide < 0){
-                currentSlide =
-                    slides.length - 1;
-            }
-
-            updateSlider();
-        });
-
-        dots.forEach((dot,index)=>{
-
-            dot.addEventListener('click',()=>{
-
-                currentSlide = index;
-
-                updateSlider();
-            });
-
-        });
-
-        setInterval(()=>{
-
-            currentSlide++;
-
-            if(currentSlide >= slides.length){
-                currentSlide = 0;
-            }
-
-            updateSlider();
-
-        },5000);
 
     </script>
 
