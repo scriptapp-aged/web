@@ -30,10 +30,8 @@ body{
   background:#ffffff;
   color:var(--dark);
   overflow-x:hidden;
-
   background-image:
     radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-
   background-size:40px 40px;
 }
 
@@ -243,7 +241,7 @@ body{
   font-weight:300;
 }
 
-/* ===== TRAVEL MAP SECTION ===== */
+/* ===== ROUTE SECTION ===== */
 
 .route-wrapper{
   max-width:1380px;
@@ -394,7 +392,7 @@ body{
   max-width:95%;
   max-height:90vh;
   object-fit:contain;
-  box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
   animation:popupShow .4s ease;
 }
 
@@ -438,7 +436,7 @@ body{
 
 .info-box a{
   display:inline-block;
-  margin-top:20px;
+  margin-top:15px;
   padding:12px 24px;
   background:#006633;
   color:white;
@@ -602,11 +600,7 @@ body{
     <div class="route-card">
       <div class="route-number">01</div>
       <h3>จุดลงทะเบียน</h3>
-      <p>
-        อาคารเรียนรวม 4
-        <br>
-        เวลา 07:30 น. เป็นต้นไป
-      </p>
+      <p>อาคารเรียนรวม 4<br>เวลา 07:30 น. เป็นต้นไป</p>
       <div class="route-icon">
         <i class="fa-solid fa-clipboard-check"></i>
       </div>
@@ -615,11 +609,7 @@ body{
     <div class="route-card">
       <div class="route-number">02</div>
       <h3>จุดปฐมนิเทศ</h3>
-      <p>
-        หอประชุมมหาวิทยาลัย
-        <br>
-        เวลา 09:00 น.
-      </p>
+      <p>หอประชุมมหาวิทยาลัย<br>เวลา 09:00 น.</p>
       <div class="route-icon">
         <i class="fa-solid fa-users"></i>
       </div>
@@ -628,11 +618,7 @@ body{
     <div class="route-card">
       <div class="route-number">03</div>
       <h3>กิจกรรมสาขา</h3>
-      <p>
-        อาคารภาควิชา AG-ED
-        <br>
-        เวลา 13:00 น.
-      </p>
+      <p>อาคารภาควิชา AG-ED<br>เวลา 13:00 น.</p>
       <div class="route-icon">
         <i class="fa-solid fa-seedling"></i>
       </div>
@@ -641,11 +627,7 @@ body{
     <div class="route-card">
       <div class="route-number">04</div>
       <h3>Freshy Night</h3>
-      <p>
-        ลานกิจกรรมกลางมหาวิทยาลัย
-        <br>
-        เวลา 18:00 น.
-      </p>
+      <p>ลานกิจกรรมกลางมหาวิทยาลัย<br>เวลา 18:00 น.</p>
       <div class="route-icon">
         <i class="fa-solid fa-music"></i>
       </div>
@@ -724,24 +706,46 @@ function openInfoPopup(type){
   const popup = document.getElementById("infoPopup");
   const content = document.getElementById("popupContent");
 
+  /* ===== REGISTER ===== */
+
   if(type === "register"){
 
     content.innerHTML = `
       <h2>ขึ้นทะเบียนนิสิต</h2>
 
       <p>
-        นิสิตใหม่ KU86 สามารถดำเนินการขึ้นทะเบียนนิสิต
-        ผ่านระบบออนไลน์ของมหาวิทยาลัย
-        เพื่อยืนยันสถานะการเป็นนิสิต
-        และตรวจสอบข้อมูลส่วนตัว
+
+        <strong>รอบที่ 1 (TCAS 1 - 2)</strong>
+        <br>
+        จ.25 พ.ค. - ศ.12 มิ.ย.69
+
+        <br><br>
+
+        <strong>รอบที่ 2 (TCAS 3 - 4)</strong>
+        <br>
+        ส.6 - ศ.12 มิ.ย.69
+
+        <br><br>
+
+        นิสิตใหม่สามารถดำเนินการขึ้นทะเบียนนิสิต
+        ผ่านระบบออนไลน์ของมหาวิทยาลัยเกษตรศาสตร์
+
       </p>
 
       <a href="https://admission.ku.ac.th" target="_blank">
         เข้าสู่ระบบขึ้นทะเบียน
       </a>
+
+      <br><br>
+
+      <a href="#" target="_blank">
+        คู่มือการขึ้นทะเบียนนิสิต
+      </a>
     `;
 
   }
+
+  /* ===== MYKU ===== */
 
   if(type === "myku"){
 
@@ -763,6 +767,8 @@ function openInfoPopup(type){
 
   popup.classList.add("active");
 }
+
+/* ===== CLOSE INFO POPUP ===== */
 
 function closeInfoPopup(){
   document.getElementById("infoPopup").classList.remove("active");
