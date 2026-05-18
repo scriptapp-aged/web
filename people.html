@@ -1,522 +1,181 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- COMMITTEE -->
 
-  <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
+<div class="committee-title">
+  คณะกรรมการฝ่ายบริหาร
+</div>
 
-  <!-- FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<div class="section">
 
-  <style>
+  <div class="card">
 
-    :root{
-      --ku-green:#006633;
-      --light-green:#0f766e;
-      --text-dark:#0f172a;
-      --text-gray:#64748b;
-      --bg:#f4f6f9;
-    }
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Mitr',sans-serif;
-      border-radius:0 !important;
-    }
-
-    body{
-      background:var(--bg);
-      color:var(--text-dark);
-      overflow-x:hidden;
-      padding:50px 20px;
-      background-image: radial-gradient(#dbe4ea 1px, transparent 1px);
-      background-size:30px 30px;
-    }
-
-    /* Background Glow */
-
-    .bg-glow{
-      position:fixed;
-      width:500px;
-      height:500px;
-      background:radial-gradient(circle,rgba(0,255,136,0.08),transparent 70%);
-      filter:blur(90px);
-      z-index:-1;
-      animation:moveGlow 15s infinite alternate;
-    }
-
-    @keyframes moveGlow{
-      from{
-        transform:translate(-10%,-10%) scale(1);
-      }
-      to{
-        transform:translate(80%,50%) scale(1.4);
-      }
-    }
-
-    /* Container */
-
-    .container{
-      max-width:1350px;
-      margin:auto;
-      background:rgba(255,255,255,0.92);
-      backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,0.6);
-      padding:60px 40px;
-      box-shadow:0 10px 40px rgba(0,0,0,0.06);
-    }
-
-    /* Header */
-
-    .header{
-      text-align:center;
-      margin-bottom:60px;
-    }
-
-    .header::after{
-      content:'';
-      width:140px;
-      height:4px;
-      background:linear-gradient(to right,var(--ku-green),#00ff88);
-      display:block;
-      margin:20px auto 0;
-    }
-
-    .header h1{
-      font-size:3rem;
-      font-weight:700;
-      color:var(--text-dark);
-      letter-spacing:-1px;
-    }
-
-    .header p{
-      margin-top:10px;
-      color:var(--text-gray);
-      font-size:1rem;
-      letter-spacing:2px;
-      font-weight:300;
-    }
-
-    /* Line */
-
-    .line{
-      width:4px;
-      height:45px;
-      background:linear-gradient(var(--ku-green),#00ff88);
-      margin:10px auto 40px;
-    }
-
-    /* Section */
-
-    .section{
-      display:flex;
-      justify-content:center;
-      gap:35px;
-      flex-wrap:wrap;
-      margin-bottom:30px;
-    }
-
-    /* Card */
-
-    .card{
-      width:270px;
-      background:#ffffff;
-      border:1px solid #e2e8f0;
-      border-top:6px solid var(--ku-green);
-      padding:30px 20px;
-      text-align:center;
-      transition:0.45s;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .card::before{
-      content:'';
-      position:absolute;
-      top:0;
-      left:-100%;
-      width:100%;
-      height:100%;
-      background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(0,255,136,0.08),
-        transparent
-      );
-      transition:0.7s;
-    }
-
-    .card:hover::before{
-      left:100%;
-    }
-
-    .card:hover{
-      transform:translateY(-12px);
-      box-shadow:0 18px 40px rgba(0,102,51,0.12);
-    }
-
-    /* President */
-
-    .president-card{
-      width:320px;
-      border-top:8px solid #14532d;
-    }
-
-    /* Photo */
-
-    .photo{
-      width:150px;
-      height:190px;
-      margin:auto;
-      margin-bottom:20px;
-      border:2px solid #d1d5db;
-      background:#f1f5f9;
-      overflow:hidden;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      position:relative;
-    }
-
-    .photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transition:0.4s;
-    }
-
-    .card:hover .photo img{
-      transform:scale(1.05);
-    }
-
-    /* Text */
-
-    .name{
-      font-size:1.2rem;
-      font-weight:600;
-      color:var(--text-dark);
-      margin-bottom:8px;
-    }
-
-    .position{
-      font-size:0.95rem;
-      color:var(--text-gray);
-      line-height:1.6;
-      font-weight:300;
-    }
-
-    .committee-title{
-      text-align:center;
-      margin-bottom:35px;
-      font-size:1.5rem;
-      color:var(--ku-green);
-      font-weight:600;
-      letter-spacing:1px;
-    }
-
-    /* Footer */
-
-    .footer{
-      margin-top:60px;
-      padding-top:20px;
-      border-top:1px solid #e2e8f0;
-      text-align:center;
-      color:var(--text-gray);
-      font-size:0.9rem;
-      letter-spacing:1px;
-      font-weight:300;
-    }
-
-    /* Responsive */
-
-    @media(max-width:768px){
-
-      .container{
-        padding:40px 20px;
-      }
-
-      .header h1{
-        font-size:2rem;
-      }
-
-      .card,
-      .president-card{
-        width:100%;
-        max-width:330px;
-      }
-
-      .photo{
-        width:140px;
-        height:180px;
-      }
-
-    }
-
-  </style>
-</head>
-
-<body>
-
-  <div class="bg-glow"></div>
-
-  <div class="container">
-
-    <!-- HEADER -->
-
-    <div class="header">
-
-      <h1>คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</h1>
-
-      <p>FARM COMMITTEE • ACADEMIC YEAR 2569</p>
-
+    <div class="photo">
+      <img src="images/member1.jpg" alt="กนกพล">
     </div>
 
-    <!-- อาจารย์ -->
-
-    <div class="section">
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="12.jpg" alt="teacher1">
-        </div>
-
-        <div class="name">
-          ผศ.ดร.นิรันดร์ ยิ่งยวด
-        </div>
-
-        <div class="position">
-          อาจารย์ที่ปรึกษา
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="web.jpg" alt="teacher2">
-        </div>
-
-        <div class="name">
-          อ.ดร.อรวรรณ บุญทัน
-        </div>
-
-        <div class="position">
-          อาจารย์ที่ปรึกษา
-        </div>
-
-      </div>
-
+    <div class="name">
+      นายกนกพล แซ่แต้
     </div>
 
-    <div class="line"></div>
-
-    <!-- PRESIDENT -->
-
-    <div class="section">
-
-      <div class="card president-card">
-
-        <div class="photo">
-          <img src="IMG" alt="ศุภเสกย์">
-        </div>
-
-        <div class="name">
-          นายศุภเสกย์ นิลเทพา
-        </div>
-
-        <div class="position">
-          ประธานชุมนุม
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="line"></div>
-
-    <!-- COMMITTEE -->
-
-    <div class="committee-title">
-      คณะกรรมการฝ่ายบริหาร
-    </div>
-
-    <div class="section">
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member1.jpg" alt="กนกพล">
-        </div>
-
-        <div class="name">
-          นายกนกพล แซ่แต้
-        </div>
-
-        <div class="position">
-          รองประธานชุมนุมคนที่ 1
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member2.jpg" alt="ธีระพล">
-        </div>
-
-        <div class="name">
-          นายธีระพล สมพงษ์
-        </div>
-
-        <div class="position">
-          รองประธานชุมนุมคนที่ 2
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member3.jpg" alt="ทรายขวัญ">
-        </div>
-
-        <div class="name">
-          นางสาวทรายขวัญ วาปีโท
-        </div>
-
-        <div class="position">
-          เลขานุการ
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="ดดด" alt="เมธี">
-        </div>
-
-        <div class="name">
-          นายเมธี ใจสุขดี
-        </div>
-
-        <div class="position">
-          เหรัญญิก
-        </div>
-
-      </div>
-
-      <!-- เพิ่มกรรมการ 6 คน -->
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member5.jpg" alt="พงศกร">
-        </div>
-
-        <div class="name">
-          นายพงศกร ศรีสวัสดิ์
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายกิจกรรม
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member6.jpg" alt="ณัฐชา">
-        </div>
-
-        <div class="name">
-          นางสาวณัฐชา บุญมี
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายประชาสัมพันธ์
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member7.jpg" alt="ธนพล">
-        </div>
-
-        <div class="name">
-          นายธนพล อินทร์แก้ว
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายสถานที่
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member8.jpg" alt="ปวีณา">
-        </div>
-
-        <div class="name">
-          นางสาวปวีณา จันทร์สุข
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายการเงิน
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member9.jpg" alt="สิรภพ">
-        </div>
-
-        <div class="name">
-          นายสิรภพ แก้วมณี
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายโสตทัศนูปกรณ์
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="photo">
-          <img src="images/member10.jpg" alt="กัญญารัตน์">
-        </div>
-
-        <div class="name">
-          นางสาวกัญญารัตน์ ทองดี
-        </div>
-
-        <div class="position">
-          กรรมการฝ่ายสวัสดิการ
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-      KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
+    <div class="position">
+      รองประธานชุมนุมคนที่ 1
     </div>
 
   </div>
 
-</body>
-</html>
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member2.jpg" alt="ธีระพล">
+    </div>
+
+    <div class="name">
+      นายธีระพล สมพงษ์
+    </div>
+
+    <div class="position">
+      รองประธานชุมนุมคนที่ 2
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member3.jpg" alt="ทรายขวัญ">
+    </div>
+
+    <div class="name">
+      นางสาวทรายขวัญ วาปีโท
+    </div>
+
+    <div class="position">
+      เลขานุการ
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="ดดด" alt="เมธี">
+    </div>
+
+    <div class="name">
+      นายเมธี ใจสุขดี
+    </div>
+
+    <div class="position">
+      เหรัญญิก
+    </div>
+
+  </div>
+
+</div>
+
+<div class="line"></div>
+
+<!-- กรรมการ -->
+
+<div class="committee-title">
+  กรรมการ
+</div>
+
+<div class="section">
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member5.jpg" alt="พงศกร">
+    </div>
+
+    <div class="name">
+      นายพงศกร ศรีสวัสดิ์
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายกิจกรรม
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member6.jpg" alt="ณัฐชา">
+    </div>
+
+    <div class="name">
+      นางสาวณัฐชา บุญมี
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายประชาสัมพันธ์
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member7.jpg" alt="ธนพล">
+    </div>
+
+    <div class="name">
+      นายธนพล อินทร์แก้ว
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายสถานที่
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member8.jpg" alt="ปวีณา">
+    </div>
+
+    <div class="name">
+      นางสาวปวีณา จันทร์สุข
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายการเงิน
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member9.jpg" alt="สิรภพ">
+    </div>
+
+    <div class="name">
+      นายสิรภพ แก้วมณี
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายโสตทัศนูปกรณ์
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="photo">
+      <img src="images/member10.jpg" alt="กัญญารัตน์">
+    </div>
+
+    <div class="name">
+      นางสาวกัญญารัตน์ ทองดี
+    </div>
+
+    <div class="position">
+      กรรมการฝ่ายสวัสดิการ
+    </div>
+
+  </div>
+
+</div>
