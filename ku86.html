@@ -118,6 +118,35 @@ body{
   opacity:.9;
 }
 
+/* ===== QUICK MENU ===== */
+
+.quick-menu{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:0 20px 70px;
+  flex-wrap:wrap;
+}
+
+.menu-btn{
+  border:none;
+  background:linear-gradient(135deg,#006633,#00ff88);
+  color:white;
+  padding:18px 38px;
+  font-size:1rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.4s ease;
+  box-shadow:0 20px 40px rgba(0,102,51,.18);
+}
+
+.menu-btn:hover{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 30px 60px rgba(0,102,51,.25);
+}
+
 /* ===== Banner Section ===== */
 
 .banner-section{
@@ -344,7 +373,7 @@ body{
   letter-spacing:1px;
 }
 
-/* ===== Popup ===== */
+/* ===== IMAGE POPUP ===== */
 
 .popup{
   position:fixed;
@@ -369,19 +398,73 @@ body{
   animation:popupShow .4s ease;
 }
 
-@keyframes popupShow{
-  from{ opacity:0; transform:scale(.8); }
-  to{ opacity:1; transform:scale(1); }
+/* ===== INFO POPUP ===== */
+
+.info-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.82);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+  padding:20px;
 }
 
+.info-popup.active{
+  display:flex;
+}
+
+.info-box{
+  position:relative;
+  width:min(95%,650px);
+  background:white;
+  padding:45px;
+  animation:popupShow .35s ease;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+
+.info-box h2{
+  color:#006633;
+  margin-bottom:18px;
+  font-size:2rem;
+}
+
+.info-box p{
+  color:#475569;
+  line-height:1.9;
+  font-size:1rem;
+}
+
+.info-box a{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 24px;
+  background:#006633;
+  color:white;
+  text-decoration:none;
+}
+
+.close-info,
 .close-popup{
   position:absolute;
-  top:30px;
-  right:40px;
+  top:25px;
+  right:30px;
   color:white;
   font-size:2rem;
   cursor:pointer;
   z-index:10000;
+}
+
+@keyframes popupShow{
+  from{
+    opacity:0;
+    transform:scale(.8);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
 }
 
 /* ===== Responsive ===== */
@@ -411,24 +494,19 @@ body{
 
   .banner-overlay h2{
     font-size:1.4rem;
-    line-height:1.1;
-  }
-
-  .banner-overlay p{
-    font-size:.8rem;
   }
 
   .map-overlay{
     padding:25px;
   }
 
-  .map-overlay-content h2{
-    font-size:1.6rem;
+  .menu-btn{
+    width:100%;
+    justify-content:center;
   }
 
-  .close-popup{
-    top:15px;
-    right:20px;
+  .info-box{
+    padding:30px 25px;
   }
 
 }
@@ -456,6 +534,22 @@ body{
     </div>
 
   </div>
+</section>
+
+<!-- ===== QUICK MENU ===== -->
+
+<section class="quick-menu">
+
+  <button class="menu-btn" onclick="openInfoPopup('register')">
+    <i class="fa-solid fa-user-plus"></i>
+    ขึ้นทะเบียนนิสิต
+  </button>
+
+  <button class="menu-btn" onclick="openInfoPopup('myku')">
+    <i class="fa-solid fa-desktop"></i>
+    ระบบ MYKU
+  </button>
+
 </section>
 
 <!-- ===== BANNERS ===== -->
@@ -494,7 +588,7 @@ body{
 
 </section>
 
-<!-- ===== TRAVEL MAP SECTION ===== -->
+<!-- ===== ROUTE SECTION ===== -->
 
 <section class="route-wrapper">
 
@@ -512,8 +606,6 @@ body{
         อาคารเรียนรวม 4
         <br>
         เวลา 07:30 น. เป็นต้นไป
-        <br><br>
-        รับเอกสาร ป้ายชื่อ และตรวจสอบรายชื่อก่อนเข้าร่วมกิจกรรม
       </p>
       <div class="route-icon">
         <i class="fa-solid fa-clipboard-check"></i>
@@ -527,8 +619,6 @@ body{
         หอประชุมมหาวิทยาลัย
         <br>
         เวลา 09:00 น.
-        <br><br>
-        กล่าวต้อนรับและแนะนำแนวทางการใช้ชีวิตในรั้วมหาวิทยาลัย
       </p>
       <div class="route-icon">
         <i class="fa-solid fa-users"></i>
@@ -542,8 +632,6 @@ body{
         อาคารภาควิชา AG-ED
         <br>
         เวลา 13:00 น.
-        <br><br>
-        พบอาจารย์ รุ่นพี่ และร่วมกิจกรรมสันทนาการของสาขา
       </p>
       <div class="route-icon">
         <i class="fa-solid fa-seedling"></i>
@@ -557,8 +645,6 @@ body{
         ลานกิจกรรมกลางมหาวิทยาลัย
         <br>
         เวลา 18:00 น.
-        <br><br>
-        ร่วมชมการแสดง ดนตรี และกิจกรรมต้อนรับนิสิตใหม่ KU86
       </p>
       <div class="route-icon">
         <i class="fa-solid fa-music"></i>
@@ -567,16 +653,16 @@ body{
 
   </div>
 
-  <!-- ===== MAP BANNER ===== -->
+  <!-- ===== MAP ===== -->
 
   <div class="map-banner" onclick="openPopup('map-ku86.png')">
 
-    <img src="map-ku86.png" alt="แผนผังการเดินทาง">
+    <img src="map-ku86.png" alt="Map">
 
     <div class="map-overlay">
       <div class="map-overlay-content">
         <h2>แผนผังการเดินทางกิจกรรม</h2>
-        <p>CLICK TO VIEW FULL MAP • KU86 FRESHY ACTIVITY</p>
+        <p>CLICK TO VIEW FULL MAP • KU86</p>
       </div>
     </div>
 
@@ -584,7 +670,7 @@ body{
 
 </section>
 
-<!-- ===== POPUP ===== -->
+<!-- ===== IMAGE POPUP ===== -->
 
 <div class="popup" id="popup">
 
@@ -596,7 +682,25 @@ body{
 
 </div>
 
+<!-- ===== INFO POPUP ===== -->
+
+<div class="info-popup" id="infoPopup">
+
+  <div class="info-box">
+
+    <span class="close-info" onclick="closeInfoPopup()">
+      <i class="fa-solid fa-xmark"></i>
+    </span>
+
+    <div id="popupContent"></div>
+
+  </div>
+
+</div>
+
 <script>
+
+/* ===== IMAGE POPUP ===== */
 
 function openPopup(imageSrc){
   document.getElementById("popup").classList.add("active");
@@ -610,6 +714,63 @@ function closePopup(){
 document.getElementById("popup").addEventListener("click", function(e){
   if(e.target.id === "popup"){
     closePopup();
+  }
+});
+
+/* ===== INFO POPUP ===== */
+
+function openInfoPopup(type){
+
+  const popup = document.getElementById("infoPopup");
+  const content = document.getElementById("popupContent");
+
+  if(type === "register"){
+
+    content.innerHTML = `
+      <h2>ขึ้นทะเบียนนิสิต</h2>
+
+      <p>
+        นิสิตใหม่ KU86 สามารถดำเนินการขึ้นทะเบียนนิสิต
+        ผ่านระบบออนไลน์ของมหาวิทยาลัย
+        เพื่อยืนยันสถานะการเป็นนิสิต
+        และตรวจสอบข้อมูลส่วนตัว
+      </p>
+
+      <a href="https://admission.ku.ac.th" target="_blank">
+        เข้าสู่ระบบขึ้นทะเบียน
+      </a>
+    `;
+
+  }
+
+  if(type === "myku"){
+
+    content.innerHTML = `
+      <h2>ระบบ MYKU</h2>
+
+      <p>
+        ระบบ MYKU ใช้สำหรับตรวจสอบตารางเรียน
+        ผลการเรียน ข่าวสารมหาวิทยาลัย
+        และบริการต่าง ๆ สำหรับนิสิตมหาวิทยาลัยเกษตรศาสตร์
+      </p>
+
+      <a href="https://my.ku.th" target="_blank">
+        เข้าสู่ระบบ MYKU
+      </a>
+    `;
+
+  }
+
+  popup.classList.add("active");
+}
+
+function closeInfoPopup(){
+  document.getElementById("infoPopup").classList.remove("active");
+}
+
+document.getElementById("infoPopup").addEventListener("click", function(e){
+  if(e.target.id === "infoPopup"){
+    closeInfoPopup();
   }
 });
 
