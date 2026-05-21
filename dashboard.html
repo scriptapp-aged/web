@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Dashboard - เช็คอิน</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Kanit', 'sans-serif'] },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-in': 'slideIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideIn: { '0%': { opacity: '0', transform: 'translateX(-20px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <header class="glass-header sticky top-0 z-40 border-b border-slate-200 shadow-sm px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-blue-600">
+                    <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                    <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                </svg>
+                ระบบแสดงผลเรียลไทม์
+            </h1>
+            <p class="text-sm text-slate-500 font-medium mt-1">โครงการปฐมนิเทศ 2569 "เกษตรและสิ่งแวดล้อมศึกษา"</p>
+        </div>
+        
+        <div class="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold border border-blue-100">
+            <div id="status-indicator" class="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse-fast"></div>
+            <span id="update-status">กำลังเชื่อมต่อระบบ...</span>
+        </div>
+    </header>
+
+    <main class="flex-grow p-6 max-w-7xl mx-auto w-full flex flex-col gap-6">
+        
+        <!-- การ์ดสถิติ (Stats) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- ยอดลงทะเบียน -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-slate-50 rounded-full opacity-50"></div>
+                <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center text-2xl shadow-inner z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                        <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
+                    </svg>
+                </div>
+                <div class="z-10">
+                    <p class="text-slate-500 font-medium text-sm">ผู้ลงทะเบียนทั้งหมด</p>
+                    <h2 class="text-4xl font-extrabold text-slate-800 tracking-tight mt-1" id="total-count">0 <span class="text-base font-medium text-slate-400">คน</span></h2>
+                </div>
+            </div>
+
+            <!-- ยอดเช็คอินแล้ว -->
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 shadow-md border border-blue-500 flex items-center gap-5 relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+                <div class="w-14 h-14 bg-white/20 text-white rounded-xl flex items-center justify-center text-2xl shadow-inner backdrop-blur-sm z-10 border border-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                        <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="z-10">
+                    <p class="text-blue-100 font-medium text-sm">ผู้เข้าร่วมที่เช็คอินแล้ว</p>
+                    <h2 class="text-4xl font-extrabold text-white tracking-tight mt-1" id="checked-in-count">0 <span class="text-base font-medium text-blue-200">คน</span></h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- รายชื่อผู้เช็คอิน (List) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[500px]">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                <h3 class="font-bold text-slate-700">รายชื่อผู้เช็คอินล่าสุด</h3>
+                <span class="text-xs font-semibold bg-emerald-100 text-emerald-700 py-1 px-3 rounded-full">อัปเดตอัตโนมัติ</span>
+            </div>
+            
+            <!-- พื้นที่แสดงรายชื่อแบบ Scroll -->
+            <div class="p-4 overflow-y-auto flex-grow" id="list-container">
+                <!-- ข้อมูลจะถูกแทรกที่นี่ด้วย JavaScript -->
+                <div class="flex flex-col items-center justify-center h-full text-slate-400 opacity-70">
+                    <svg class="animate-spin h-8 w-8 mb-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <p>กำลังโหลดข้อมูล...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // =======================================================
+        // ⚠️ นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้
+        // =======================================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/ใส่_ID_ของคุณตรงนี้/exec";
+        
+        // Element references
+        const totalCountEl = document.getElementById('total-count');
+        const checkedInCountEl = document.getElementById('checked-in-count');
+        const listContainer = document.getElementById('list-container');
+        const updateStatusEl = document.getElementById('update-status');
+        const statusIndicator = document.getElementById('status-indicator');
+
+        // ฟังก์ชันสำหรับแปลงวันที่สตริงเป็น Date Object เพื่อใช้เรียงลำดับ
+        function parseCustomDate(timeStr) {
+            try {
+                // รูปแบบจากแอปสคริปต์: "14/06/2026 09:00:00"
+                const parts = timeStr.split(' ');
+                const dateParts = parts[0].split('/');
+                const timeParts = parts[1].split(':');
+                // new Date(ปี, เดือน (เริ่ม 0), วัน, ชั่วโมง, นาที, วินาที)
+                return new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1], timeParts[2]).getTime();
+            } catch(e) {
+                return 0; // ถ้าแปลงไม่ได้ให้ค่าเป็น 0
+            }
+        }
+
+        // ฟังก์ชันดึงข้อมูลจาก API
+        async function fetchAttendanceData() {
+            // ถ้ายืนยันลืมใส่ URL
+            if(GOOGLE_SCRIPT_URL.includes("ใส่_ID_ของคุณตรงนี้")) {
+                updateStatusEl.innerText = "ยังไม่ได้ตั้งค่า API URL";
+                statusIndicator.className = "w-2.5 h-2.5 bg-rose-500 rounded-full";
+                return;
+            }
+
+            try {
+                updateStatusEl.innerText = "กำลังซิงค์...";
+                
+                // ใช้การแนบ parameter ?action=getAttendance ไปกับ URL เพื่อเรียกใช้ฟังก์ชันใน doGet
+                const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getAttendance");
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    renderDashboard(result);
+                    
+                    // สำเร็จ
+                    updateStatusEl.innerText = "อัปเดตล่าสุด " + new Date().toLocaleTimeString('th-TH');
+                    statusIndicator.className = "w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse-fast";
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                updateStatusEl.innerText = "การเชื่อมต่อขัดข้อง กำลังลองใหม่...";
+                statusIndicator.className = "w-2.5 h-2.5 bg-amber-500 rounded-full";
+            }
+        }
+
+        // ฟังก์ชันแสดงผลบนหน้าจอ
+        function renderDashboard(data) {
+            // อัปเดตตัวเลข
+            totalCountEl.innerHTML = `${data.total} <span class="text-base font-medium text-slate-400">คน</span>`;
+            checkedInCountEl.innerHTML = `${data.checkedIn} <span class="text-base font-medium text-blue-200">คน</span>`;
+
+            // ดึงอาร์เรย์รายชื่อออกมา และเรียงลำดับจากล่าสุดไปเก่าสุด
+            let checkInList = data.data;
+            checkInList.sort((a, b) => parseCustomDate(b.timeStr) - parseCustomDate(a.timeStr));
+
+            // ถ้าไม่มีคนเช็คอิน
+            if (checkInList.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-slate-400 opacity-70">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mb-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                        </svg>
+                        <p>ยังไม่มีผู้เช็คอินเข้าร่วมงาน</p>
+                    </div>`;
+                return;
+            }
+
+            // สร้าง HTML สำหรับรายชื่อ
+            let html = '<div class="flex flex-col gap-3">';
+            checkInList.forEach((person, index) => {
+                // เน้นรายการแรกสุดให้ดูเด่น (สมมติว่าเป็นคนเพิ่งสแกนเข้ามา)
+                let isLatest = index === 0;
+                let bgClass = isLatest ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100 hover:bg-slate-50';
+                let iconClass = isLatest ? 'text-blue-600 bg-blue-100' : 'text-slate-400 bg-slate-100';
+                let animClass = isLatest ? 'animate-slide-in' : '';
+
+                html += `
+                    <div class="flex items-center justify-between p-4 rounded-xl border ${bgClass} transition-colors ${animClass}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold ${iconClass}">
+                                ${person.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">${person.name}</h4>
+                                <p class="text-xs text-slate-500 font-medium flex items-center gap-1 mt-0.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                                    </svg>
+                                    เวลา: ${person.timeStr}
+                                </p>
+                            </div>
+                        </div>
+                        ${isLatest ? '<span class="text-xs font-bold text-blue-600 bg-blue-100 py-1 px-2.5 rounded-full">มาใหม่!</span>' : ''}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            listContainer.innerHTML = html;
+        }
+
+        // เริ่มต้นการทำงาน
+        window.onload = () => {
+            fetchAttendanceData(); // โหลดครั้งแรกทันที
+            
+            // ตั้งเวลาดึงข้อมูลใหม่ทุกๆ 5 วินาที (5000 milliseconds)
+            setInterval(fetchAttendanceData, 5000);
+        };
+    </script>
+</body>
+</html>
