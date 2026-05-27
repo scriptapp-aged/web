@@ -442,30 +442,133 @@
         }
 
         function processQRCode(qrData) {
-            scanning = false;
+            scanning = false; // หยุดสแกนชั่วคราว
             scanLine.style.display = "none";
-            showToast("loading", "กำลังซิงค์ข้อมูล...", "รอสักครู่");
+            
+            // เก็บค่า QR ไว้รอการยืนยัน
+            pendingQR = qrData;
+            
+            // แสดง Popup ให้กดยืนยันการส่งข้อมูล
+            document.getElementById('confirm-qr-text').innerText = qrData;
+            const modal = document.getElementById('confirm-modal');
+            const box = document.getElementById('confirm-box');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            
+            // Animation แสดง Modal
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+            }, 10);
+        }
 
+        // --- ฟังก์ชันยกเลิกการสแกน (กลับไปสแกนใหม่โดยไม่บันทึก) ---
+        function cancelScan() {
+            const modal = document.getElementById('confirm-modal');
+            const box = document.getElementById('confirm-box');
+            modal.classList.add('opacity-0');
+            box.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+                pendingQR = null;
+                resumeScanningAfterDelay(0); // กลับไปเปิดกล้องทันที
+            }, 300);
+        }
+
+        // --- ฟังก์ชันยืนยันและส่งข้อมูลเข้า Sheet (อัปเดต Dashboard) ---
+        function confirmScan() {
+            if (!pendingQR) return;
+            
+            // ปิด Modal ยืนยัน
+            const modal = document.getElementById('confirm-modal');
+            const box = document.getElementById('confirm-box');
+            modal.classList.add('opacity-0');
+            box.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); modal.style.display = 'none'; }, 300);
+
+            showToast("loading", "กำลังส่งข้อมูลเข้า Sheet...", "กำลังอัปเดตแดชบอร์ดเรียลไทม์");
             const staffName = sessionStorage.getItem('staff_name') || 'Unknown';
 
             // ส่งข้อมูลผ่าน fetch ไปยัง Backend
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ qrData: qrData, scannedBy: staffName })
+                body: JSON.stringify({ qrData: pendingQR, scannedBy: staffName })
             })
             .then(response => response.json())
             .then(res => {
                 showToast(res.status, res.message, res.name || "");
-                resumeScanningAfterDelay();
+                
+                // ถ้าสแกนสำเร็จ ให้บันทึกประวัติลงเครื่องและอัปเดตหน้าจอ
+                if (res.status === "success") {
+                    const timeNow = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+                    scannedHistory.unshift({ name: res.name || pendingQR, time: timeNow });
+                    sessionStorage.setItem('scanned_history', JSON.stringify(scannedHistory));
+                    updateStatsUI();
+                }
+                
+                pendingQR = null;
+                resumeScanningAfterDelay(3000); // หน่วงเวลา 3 วิเพื่อให้เห็นผลลัพธ์
             })
             .catch(error => {
                 showToast("error", "เครือข่ายขัดข้อง", "ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
-                resumeScanningAfterDelay();
+                pendingQR = null;
+                resumeScanningAfterDelay(3000);
             });
         }
 
-        function resumeScanningAfterDelay() {
+        // --- ฟังก์ชันอัปเดตตัวเลขสถิติและประวัติ (UI) ---
+        function updateStatsUI() {
+            document.getElementById('scan-count').innerText = scannedHistory.length;
+            
+            const listContainer = document.getElementById('history-list');
+            if (scannedHistory.length === 0) {
+                listContainer.innerHTML = '<div class="text-center text-slate-400 mt-10">ยังไม่มีข้อมูลการสแกน</div>';
+                return;
+            }
+            
+            let html = '<div class="flex flex-col gap-2">';
+            scannedHistory.forEach((item, index) => {
+                html += `
+                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">${scannedHistory.length - index}</div>
+                            <span class="font-medium text-slate-700">${item.name}</span>
+                        </div>
+                        <span class="text-xs text-slate-400 bg-white px-2 py-1 rounded-md shadow-sm border border-slate-100">${item.time}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            listContainer.innerHTML = html;
+        }
+
+        // --- เปิด/ปิด Modal ประวัติ ---
+        function openHistory() {
+            const modal = document.getElementById('history-modal');
+            const box = document.getElementById('history-box');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                box.classList.remove('translate-y-full');
+            }, 10);
+        }
+
+        function closeHistory() {
+            const modal = document.getElementById('history-modal');
+            const box = document.getElementById('history-box');
+            modal.classList.add('opacity-0');
+            box.classList.add('translate-y-full');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function resumeScanningAfterDelay(delayMs = 3000) {
             setTimeout(() => {
                 if (stream && stream.active && !scanning) {
                     hideToast();
@@ -473,7 +576,7 @@
                     scanning = true;
                     requestAnimationFrame(tick);
                 }
-            }, 3000);
+            }, delayMs);
         }
 
         function showToast(status, title, message) {
