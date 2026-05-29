@@ -3,50 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Dashboard - ระบบเช็คอิน</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Admin Dashboard - ระบบเช็คอิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Kanit', 'sans-serif'] },
-                    colors: { black: '#111111' },
-                    animation: { 
-                        'fade-in': 'fadeIn 0.4s ease-out forwards',
-                        'shake': 'shake 0.4s ease-in-out both'
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        shake: { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-5px)' }, '75%': { transform: 'translateX(5px)' } }
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Kanit', 'sans-serif'] }, colors: { black: '#111111' }, animation: { 'fade-in': 'fadeIn 0.4s ease-out forwards', 'shake': 'shake 0.4s ease-in-out both' }, keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }, shake: { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-5px)' }, '75%': { transform: 'translateX(5px)' } } } } } }
     </script>
-
     <style>
-        body { 
-            background-color: #ffffff;
-            color: #111111;
-            margin: 0; overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
-
+        body { background-color: #ffffff; color: #111111; margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
         .highlight-row { animation: highlightFade 3s ease-out forwards; }
-        @keyframes highlightFade {
-            0% { background-color: #f9fafb; }
-            100% { background-color: transparent; }
-        }
+        @keyframes highlightFade { 0% { background-color: #f9fafb; } 100% { background-color: transparent; } }
         .pin-input { letter-spacing: 0.7em; text-security: disc; -webkit-text-security: disc; }
     </style>
 </head>
@@ -55,350 +22,308 @@
     <!-- 1. LOGIN SCREEN -->
     <div id="login-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white transition-opacity duration-300">
         <div class="w-full max-w-sm flex flex-col items-center bg-white p-8 animate-fade-in">
-            <div class="mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-            </div>
-            
-            <div class="text-center mb-8">
-                <h1 class="text-lg font-semibold tracking-widest text-black mb-2">DASHBOARD ACCESS</h1>
-                <p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบ (Admin) เท่านั้น</p>
-            </div>
-
+            <div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div>
+            <div class="text-center mb-8"><h1 class="text-lg font-semibold tracking-widest text-black mb-2">DASHBOARD ACCESS</h1><p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบ (Admin) เท่านั้น</p></div>
             <div class="w-full relative mb-8" id="pin-container">
-                <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="ADMIN PIN" maxlength="6" 
-                    class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-widest">
-                
+                <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="ADMIN PIN" maxlength="6" class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-widest">
                 <p id="login-error" class="absolute -bottom-6 left-0 w-full text-center text-black text-xs opacity-0 transition-opacity font-medium"></p>
             </div>
-
-            <button id="btn-login" onclick="checkAdminLogin()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">
-                <span id="btn-login-text">LOGIN</span>
-            </button>
+            <button onclick="checkAdminLogin()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 active:scale-95 flex items-center justify-center gap-2"><span id="btn-login-text">LOGIN</span></button>
         </div>
     </div>
 
     <!-- 2. MAIN DASHBOARD -->
     <div id="dashboard-app" class="hidden flex-col min-h-screen">
-        <!-- Header -->
         <header class="pt-8 px-6 md:px-12 xl:px-24 z-10 animate-fade-in border-b border-gray-100 pb-6 bg-white sticky top-0">
             <div class="max-w-7xl mx-auto w-full">
                 <div class="flex justify-between items-start md:items-end mb-6">
                     <div>
                         <h1 class="text-sm font-semibold tracking-widest text-black uppercase mb-1">Live Dashboard</h1>
-                        <div class="flex items-center gap-2">
-                            <div id="status-indicator" class="w-2 h-2 rounded-full bg-black animate-pulse"></div>
-                            <span id="update-status" class="text-[10px] text-gray-400 font-medium tracking-widest uppercase">REAL-TIME SYNC</span>
-                        </div>
+                        <div class="flex items-center gap-2"><div id="status-indicator" class="w-2 h-2 rounded-full bg-black animate-pulse"></div><span id="update-status" class="text-[10px] text-gray-400 font-medium tracking-widest uppercase">REAL-TIME SYNC</span></div>
                     </div>
-                    
-                    <!-- Logout & Admin Info -->
                     <div class="flex flex-col items-end gap-2 md:flex-row md:items-center md:gap-4">
                         <span id="admin-name-display" class="text-[10px] text-gray-500 tracking-widest uppercase font-medium"></span>
-                        <button onclick="logout()" class="text-[10px] text-black font-semibold tracking-widest uppercase hover:bg-gray-100 border border-gray-200 px-4 py-1.5 rounded-full transition-colors">
-                            LOGOUT
-                        </button>
+                        <button onclick="logout()" class="text-[10px] text-black font-semibold tracking-widest uppercase hover:bg-gray-100 border border-gray-200 px-4 py-1.5 rounded-full">LOGOUT</button>
                     </div>
                 </div>
-
                 <div class="mb-4">
                     <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-1">โครงการปฐมนิเทศ 2569</p>
                     <h2 class="text-2xl md:text-3xl font-semibold text-black leading-tight mb-2">เกษตรและสิ่งแวดล้อมศึกษา</h2>
                     <p class="text-xs text-gray-400 font-light tracking-wide">14 มิถุนายน 2569</p>
                 </div>
+                
+                <!-- Tab Controls -->
+                <div class="flex gap-4 mt-6 overflow-x-auto hide-scrollbar">
+                    <button onclick="switchTab('stats')" id="tab-stats" class="text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-black text-black whitespace-nowrap">Overview</button>
+                    <button onclick="switchTab('staff')" id="tab-staff" class="text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-transparent text-gray-400 hover:text-black transition-colors whitespace-nowrap">Staff Manage</button>
+                    <button onclick="switchTab('sheet')" id="tab-sheet" class="text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-transparent text-gray-400 hover:text-black transition-colors whitespace-nowrap flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        Database (Sheet)
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Main Content -->
-        <main class="flex-grow px-6 md:px-12 xl:px-24 py-8 max-w-7xl mx-auto w-full flex flex-col gap-8 z-10">
+        <main class="flex-grow px-6 md:px-12 xl:px-24 py-8 max-w-7xl mx-auto w-full flex flex-col z-10">
             
-            <!-- Stats Overview -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-fade-in" style="animation-delay: 0.1s;">
-                <!-- Box 1: Total Registered -->
-                <div class="border border-gray-200 p-6 flex flex-col justify-between min-h-[140px]">
-                    <span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">Total Registered</span>
-                    <div class="flex items-baseline gap-2">
-                        <span id="total-count" class="text-5xl font-light tabular-nums text-black tracking-tight">0</span>
-                        <span class="text-sm text-gray-400 font-light">คน</span>
-                    </div>
+            <!-- Tab 1: STATS & LIST -->
+            <div id="view-stats" class="flex flex-col gap-8 flex-grow">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="border border-gray-200 p-6 flex flex-col justify-between min-h-[140px]"><span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">Total Registered</span><div class="flex items-baseline gap-2"><span id="total-count" class="text-5xl font-light tabular-nums text-black tracking-tight">0</span><span class="text-sm text-gray-400 font-light">คน</span></div></div>
+                    <div class="border border-black bg-black p-6 flex flex-col justify-between min-h-[140px] shadow-lg"><span class="text-[10px] text-gray-300 font-medium tracking-widest uppercase mb-4">Checked In</span><div class="flex items-baseline gap-2"><span id="checked-in-count" class="text-5xl font-semibold tabular-nums text-white tracking-tight">0</span><span class="text-sm text-gray-400 font-light">คน</span></div></div>
+                    <div class="border border-gray-200 p-6 flex flex-col justify-between min-h-[140px]"><span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">Pending (ยังไม่มา)</span><div class="flex items-baseline gap-2"><span id="pending-count" class="text-5xl font-light tabular-nums text-gray-400 tracking-tight">0</span><span class="text-sm text-gray-300 font-light">คน</span></div></div>
                 </div>
 
-                <!-- Box 2: Checked In -->
-                <div class="border border-black bg-black p-6 flex flex-col justify-between min-h-[140px] shadow-lg">
-                    <span class="text-[10px] text-gray-300 font-medium tracking-widest uppercase mb-4">Checked In</span>
-                    <div class="flex items-baseline gap-2">
-                        <span id="checked-in-count" class="text-5xl font-semibold tabular-nums text-white tracking-tight">0</span>
-                        <span class="text-sm text-gray-400 font-light">คน</span>
-                    </div>
-                </div>
-
-                <!-- Box 3: Pending -->
-                <div class="border border-gray-200 p-6 flex flex-col justify-between min-h-[140px]">
-                    <span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">Pending (ยังไม่มา)</span>
-                    <div class="flex items-baseline gap-2">
-                        <span id="pending-count" class="text-5xl font-light tabular-nums text-gray-400 tracking-tight">0</span>
-                        <span class="text-sm text-gray-300 font-light">คน</span>
+                <div class="flex-grow flex flex-col animate-fade-in mt-4" style="animation-delay: 0.2s;">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2"><h3 class="text-xs font-semibold tracking-widest text-black uppercase">Recent Check-ins</h3><span class="text-[10px] text-gray-400 tracking-widest uppercase">50 ล่าสุด</span></div>
+                    <div class="relative flex-grow min-h-[300px]">
+                        <div id="loading-state" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-20"><svg class="animate-spin w-6 h-6 text-gray-300 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-xs text-gray-400 font-light tracking-widest uppercase">Syncing Data...</p></div>
+                        <div id="list-content" class="space-y-0 h-full overflow-y-auto pr-2 pb-10"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Check-in List -->
-            <div class="flex-grow flex flex-col animate-fade-in mt-4" style="animation-delay: 0.2s;">
-                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-                    <h3 class="text-xs font-semibold tracking-widest text-black uppercase">Recent Check-ins</h3>
-                    <span class="text-[10px] text-gray-400 tracking-widest uppercase">50 ล่าสุด</span>
+            <!-- Tab 2: STAFF MANAGE -->
+            <div id="view-staff" class="hidden flex-col animate-fade-in">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xs font-semibold tracking-widest text-black uppercase">Staff Management</h3>
+                    <button onclick="fetchStaffData()" class="text-[10px] font-medium tracking-widest uppercase border border-gray-200 px-3 py-1 hover:bg-gray-50">Refresh</button>
                 </div>
-                
-                <div class="relative flex-grow min-h-[300px]">
-                    <!-- Loading State -->
-                    <div id="loading-state" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-20">
-                        <svg class="animate-spin w-6 h-6 text-gray-300 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        <p class="text-xs text-gray-400 font-light tracking-widest uppercase">Syncing Data...</p>
-                    </div>
-                    
-                    <!-- List Content -->
-                    <div id="list-content" class="space-y-0 h-full overflow-y-auto pr-2 pb-10"></div>
+                <div class="border border-gray-200 overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead><tr class="bg-gray-50 border-b border-gray-200 text-[10px] uppercase tracking-widest text-gray-500"><th class="p-4 font-medium">Name</th><th class="p-4 font-medium">Role</th><th class="p-4 font-medium">Current PIN</th><th class="p-4 font-medium text-right">Action</th></tr></thead>
+                        <tbody id="staff-table-body" class="divide-y divide-gray-100">
+                            <tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs font-light tracking-widest uppercase">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            <!-- Tab 3: DATABASE (SHEET EMBED) -->
+            <div id="view-sheet" class="hidden flex-col animate-fade-in flex-grow min-h-[500px]">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <h3 class="text-xs font-semibold tracking-widest text-black uppercase">Google Sheet Database</h3>
+                    <div class="flex w-full md:w-auto gap-2">
+                        <input type="text" id="sheet-url-input" placeholder="วางลิงก์แชร์ Google Sheet ที่นี่..." class="text-xs px-4 py-2 border border-gray-200 rounded w-full md:w-72 focus:outline-none focus:border-black placeholder:font-light">
+                        <button onclick="loadSheetIframe()" class="text-[10px] font-medium tracking-widest uppercase border border-black bg-black text-white px-4 py-2 hover:bg-gray-800 rounded whitespace-nowrap transition-colors">LOAD DATA</button>
+                    </div>
+                </div>
+                <div id="sheet-iframe-container" class="flex-grow border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden rounded shadow-inner">
+                    <div class="text-center px-4 py-8">
+                        <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">กรุณาวางลิงก์ Google Sheet ของคุณด้านบน</p>
+                        <p class="text-[10px] text-gray-400 font-light">(อย่าลืมตั้งค่าแชร์ชีตเป็น 'ทุกคนที่มีลิงก์' (Anyone with the link) ก่อนนะครับ)</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
+    </div>
+
+    <!-- Modal: Reset PIN -->
+    <div id="reset-modal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/80 backdrop-blur-md transition-opacity opacity-0">
+        <div class="bg-white p-8 w-full max-w-sm transform scale-95 transition-transform duration-300" id="reset-box">
+            <h3 class="text-lg font-semibold tracking-widest text-black uppercase mb-2">Reset PIN</h3>
+            <p class="text-xs text-gray-500 font-light mb-6">Staff: <span id="reset-staff-name" class="font-medium text-black"></span></p>
+            <input type="hidden" id="reset-row-index">
+            <input type="text" id="new-pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="NEW PIN (NUMBERS)" class="w-full bg-transparent border-b border-gray-300 text-center text-2xl font-light tracking-widest py-3 focus:outline-none focus:border-black transition-all mb-8 placeholder:text-gray-200">
+            <div class="flex gap-4">
+                <button onclick="closeResetModal()" class="flex-1 border border-black text-black font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-50">CANCEL</button>
+                <button onclick="saveNewPin()" id="btn-save-pin" class="flex-1 bg-black text-white font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-800">SAVE</button>
+            </div>
+        </div>
     </div>
 
     <script>
         // =======================================================
-        // ⚠️ นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้
+        // ⚠️ อย่าลืมใส่ URL ของ Google Apps Script ของคุณตรงนี้!
         // =======================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5t9-U10-PZ5L_mXk3a9w1sN3G2L_-vU3W5zH3B7_aA4L8wL9C_rV4X5P7X9Q4w/exec";
         
-        let currentTotal = 0;
-        let currentCheckedIn = 0;
-        let currentPending = 0;
-        let renderedRecords = new Set();
-        let isFirstLoad = true;
-        let pollingInterval = null;
+        let currentTotal = 0, currentCheckedIn = 0, currentPending = 0;
+        let renderedRecords = new Set(), isFirstLoad = true, pollingInterval = null;
 
-        const listContent = document.getElementById('list-content');
-        const loadingState = document.getElementById('loading-state');
-        const totalCountEl = document.getElementById('total-count');
-        const checkedInCountEl = document.getElementById('checked-in-count');
-        const pendingCountEl = document.getElementById('pending-count');
-        const statusIndicator = document.getElementById('status-indicator');
-        const updateStatusEl = document.getElementById('update-status');
+        const listContent = document.getElementById('list-content'), loadingState = document.getElementById('loading-state');
+        const updateStatusEl = document.getElementById('update-status'), statusIndicator = document.getElementById('status-indicator');
 
-        // --- ระบบ Authentication ---
         window.onload = () => {
             if (sessionStorage.getItem('dashboard_admin_logged_in') === 'true') {
-                const adminName = sessionStorage.getItem('dashboard_admin_name');
-                if(document.getElementById('admin-name-display')) {
-                    document.getElementById('admin-name-display').innerText = adminName;
-                }
+                document.getElementById('admin-name-display').innerText = "ADMIN: " + sessionStorage.getItem('dashboard_admin_name'); 
                 showDashboard();
+            }
+            
+            // โหลดลิงก์ Sheet เก่าที่เคยใส่ไว้
+            const savedSheet = localStorage.getItem('admin_sheet_url');
+            if (savedSheet) {
+                document.getElementById('sheet-url-input').value = savedSheet;
             }
         };
 
         async function checkAdminLogin() {
-            const pin = document.getElementById('pin-input').value;
-            const btnText = document.getElementById('btn-login-text');
-            const errorEl = document.getElementById('login-error');
-            const container = document.getElementById('pin-container');
-            
-            if (!pin || pin.length < 4) {
-                showLoginError("PIN 4 digits minimum");
-                return;
-            }
-
+            const pin = document.getElementById('pin-input').value, btnText = document.getElementById('btn-login-text'), errorEl = document.getElementById('login-error');
+            if (pin.length < 4) return showLoginError("PIN 4 digits minimum");
             btnText.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="ml-2">AUTHENTICATING...</span>';
             errorEl.classList.remove('opacity-100');
-
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "adminLogin", pin: pin }),
-                    redirect: 'follow'
-                });
-                
+                const response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "adminLogin", pin: pin }), redirect: 'follow' });
                 const res = await response.json();
                 if (res.status === "success") {
-                    sessionStorage.setItem('dashboard_admin_logged_in', 'true');
-                    sessionStorage.setItem('dashboard_admin_name', res.staffName);
-                    
-                    if(document.getElementById('admin-name-display')) {
-                        document.getElementById('admin-name-display').innerText = "Admin: " + res.staffName;
-                    }
-                    
-                    btnText.innerHTML = "SUCCESS";
-                    setTimeout(() => showDashboard(), 400);
-                } else {
-                    btnText.innerHTML = "LOGIN";
-                    showLoginError(res.message);
-                }
-            } catch (err) {
-                btnText.innerHTML = "LOGIN";
-                showLoginError("CONNECTION FAILED");
-            }
+                    sessionStorage.setItem('dashboard_admin_logged_in', 'true'); sessionStorage.setItem('dashboard_admin_name', res.staffName);
+                    document.getElementById('admin-name-display').innerText = "ADMIN: " + res.staffName; btnText.innerHTML = "SUCCESS"; setTimeout(() => showDashboard(), 400);
+                } else { btnText.innerHTML = "LOGIN"; showLoginError(res.message); }
+            } catch (err) { btnText.innerHTML = "LOGIN"; showLoginError("CONNECTION FAILED"); }
         }
 
         function showLoginError(msg) {
-            const errorEl = document.getElementById('login-error');
-            const container = document.getElementById('pin-container');
-            errorEl.innerText = msg;
-            errorEl.classList.add('opacity-100');
-            document.getElementById('pin-input').value = '';
-            container.classList.remove('animate-shake');
-            void container.offsetWidth; 
-            container.classList.add('animate-shake');
+            const errorEl = document.getElementById('login-error'); errorEl.innerText = msg; errorEl.classList.add('opacity-100');
+            document.getElementById('pin-input').value = ''; const container = document.getElementById('pin-container');
+            container.classList.remove('animate-shake'); void container.offsetWidth; container.classList.add('animate-shake');
         }
 
         function showDashboard() {
             document.getElementById('login-screen').classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard-app').classList.remove('hidden');
-                document.getElementById('dashboard-app').classList.add('flex');
+            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('dashboard-app').classList.remove('hidden'); document.getElementById('dashboard-app').classList.add('flex'); fetchAttendanceData(); pollingInterval = setInterval(fetchAttendanceData, 4000); }, 300);
+        }
+
+        function logout() { sessionStorage.removeItem('dashboard_admin_logged_in'); sessionStorage.removeItem('dashboard_admin_name'); clearInterval(pollingInterval); location.reload(); }
+
+        // --- Tabs ---
+        function switchTab(tabName) {
+            const tabs = ['stats', 'staff', 'sheet'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                const view = document.getElementById('view-' + t);
+                if (t === tabName) {
+                    btn.className = "text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-black text-black whitespace-nowrap";
+                    view.classList.remove('hidden'); view.classList.add('flex');
+                } else {
+                    btn.className = "text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-transparent text-gray-400 hover:text-black transition-colors whitespace-nowrap" + (t === 'sheet' ? ' flex items-center gap-1' : '');
+                    view.classList.add('hidden'); view.classList.remove('flex');
+                }
+            });
+
+            if (tabName === 'staff') fetchStaffData();
+            if (tabName === 'sheet') {
+                const url = document.getElementById('sheet-url-input').value;
+                const container = document.getElementById('sheet-iframe-container');
+                if (url && !container.innerHTML.includes('iframe')) loadSheetIframe();
+            }
+        }
+
+        // --- Sheet Iframe Embed ---
+        function loadSheetIframe() {
+            const url = document.getElementById('sheet-url-input').value.trim();
+            if(!url) return;
+            
+            // ดึง Sheet ID ออกมาจากลิงก์
+            const match = url.match(/\/d\/(.*?)(\/|$)/);
+            if (match && match[1]) {
+                const sheetId = match[1];
+                // แปลงเป็นลิงก์สำหรับฝัง (Embed)
+                const embedUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?widget=true&headers=true`;
                 
-                // เริ่มดึงข้อมูลเมื่อล็อกอินสำเร็จเท่านั้น
-                fetchAttendanceData();
-                pollingInterval = setInterval(fetchAttendanceData, 4000);
-            }, 300);
+                document.getElementById('sheet-iframe-container').innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0"></iframe>`;
+                localStorage.setItem('admin_sheet_url', url); // บันทึกไว้ใช้รอบหน้า
+            } else {
+                alert('รูปแบบลิงก์ Google Sheet ไม่ถูกต้องครับ (ต้องเป็นลิงก์ที่แชร์จาก Google Sheet)');
+            }
         }
 
-        function logout() {
-            sessionStorage.removeItem('dashboard_admin_logged_in');
-            sessionStorage.removeItem('dashboard_admin_name');
-            clearInterval(pollingInterval);
-            location.reload();
-        }
-
-        // --- ระบบ Dashboard Real-time ---
+        // --- Data Fetching ---
         function animateValue(obj, start, end, duration) {
             let startTimestamp = null;
             const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-                let current = Math.floor(start + (end - start) * easeOutExpo);
-                
-                if (current < start && start === 0) current = 0;
-                obj.innerHTML = current;
-                
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    obj.innerHTML = end;
-                }
+                if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                let current = Math.floor(start + (end - start) * (progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)));
+                if (current < start && start === 0) current = 0; obj.innerHTML = current;
+                if (progress < 1) { window.requestAnimationFrame(step); } else { obj.innerHTML = end; }
             };
             window.requestAnimationFrame(step);
         }
 
-        function parseCustomDate(timeStr) {
-            try {
-                const parts = timeStr.split(' ');
-                const dateParts = parts[0].split('/');
-                const timeParts = parts[1].split(':');
-                return new Date(dateParts[2] - 543, dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1], timeParts[2]).getTime();
-            } catch(e) {
-                return 0;
-            }
-        }
-
         function createRecordItem(person, indexNumber, isNew) {
-            const div = document.createElement('div');
-            const newClass = (isNew && !isFirstLoad) ? 'highlight-row' : '';
-            div.className = `flex items-start justify-between py-4 border-b border-gray-100 last:border-0 ${newClass}`;
-            
-            const displayId = person.studentId ? person.studentId : (person.name || '-');
-            const displayName = person.studentId ? person.name : '';
-            const timeOnly = person.timeStr.split(' ')[1] || person.timeStr;
-
-            div.innerHTML = `
-                <div class="flex items-start gap-4">
-                    <span class="text-gray-300 font-light text-sm w-8 pt-0.5">${indexNumber}.</span>
-                    <div class="flex flex-col">
-                        <span class="font-medium text-black text-sm tracking-wide uppercase">${displayId}</span>
-                        ${displayName && displayName !== 'ไม่พบชื่อในระบบ' ? `<span class="text-xs text-gray-500 font-light mt-0.5">${displayName}</span>` : ''}
-                        ${displayName === 'ไม่พบชื่อในระบบ' ? `<span class="text-[10px] text-gray-400 font-light mt-0.5 italic">ไม่พบชื่อในฐานข้อมูล</span>` : ''}
-                    </div>
-                </div>
-                <div class="flex flex-col items-end">
-                    <span class="text-[10px] text-gray-400 font-light tracking-widest pt-0.5 tabular-nums">${timeOnly}</span>
-                    ${isNew && !isFirstLoad ? '<span class="text-[8px] bg-black text-white px-2 py-0.5 mt-1.5 tracking-widest rounded-sm">NEW</span>' : ''}
-                </div>
-            `;
+            const div = document.createElement('div'); div.className = `flex items-start justify-between py-4 border-b border-gray-100 last:border-0 ${(isNew && !isFirstLoad) ? 'highlight-row' : ''}`;
+            const displayId = person.studentId ? person.studentId : (person.name || '-'); const displayName = person.studentId ? person.name : '';
+            div.innerHTML = `<div class="flex items-start gap-4"><span class="text-gray-300 font-light text-sm w-8 pt-0.5">${indexNumber}.</span><div class="flex flex-col"><span class="font-medium text-black text-sm tracking-wide uppercase">${displayId}</span>${displayName && displayName !== 'ไม่พบชื่อในระบบ' ? `<span class="text-xs text-gray-500 font-light mt-0.5">${displayName}</span>` : ''}${displayName === 'ไม่พบชื่อในระบบ' ? `<span class="text-[10px] text-gray-400 font-light mt-0.5 italic">ไม่พบชื่อในฐานข้อมูล</span>` : ''}</div></div><div class="flex flex-col items-end"><span class="text-[10px] text-gray-400 font-light tracking-widest pt-0.5 tabular-nums">${person.timeStr.split(' ')[1] || person.timeStr}</span>${isNew && !isFirstLoad ? '<span class="text-[8px] bg-black text-white px-2 py-0.5 mt-1.5 tracking-widest rounded-sm">NEW</span>' : ''}</div>`;
             return div;
         }
 
         async function fetchAttendanceData() {
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getAttendance");
-                const result = await response.json();
+            // หยุดดึงข้อมูลออโต้ถ้าอยู่หน้าอื่นที่ไม่ใช่ Overview เพื่อประหยัดเน็ต
+            if(document.getElementById('view-stats').classList.contains('hidden')) return;
 
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getAttendance"); const result = await response.json();
                 if (result.status === "success") {
-                    updateDashboard(result);
+                    if (loadingState) loadingState.style.display = 'none';
+                    if (result.total !== currentTotal) { animateValue(document.getElementById('total-count'), currentTotal, result.total, 800); currentTotal = result.total; }
+                    if (result.checkedIn !== currentCheckedIn) { animateValue(document.getElementById('checked-in-count'), currentCheckedIn, result.checkedIn, 800); currentCheckedIn = result.checkedIn; }
+                    const pendingCalc = Math.max(0, result.total - result.checkedIn);
+                    if (pendingCalc !== currentPending) { animateValue(document.getElementById('pending-count'), currentPending, pendingCalc, 800); currentPending = pendingCalc; }
                     
-                    updateStatusEl.innerText = "REAL-TIME SYNC";
-                    updateStatusEl.classList.remove('text-red-400');
-                    statusIndicator.className = "w-2 h-2 rounded-full bg-black animate-pulse";
+                    let checkInList = result.data; checkInList.sort((a, b) => {
+                        try{ const pA=a.timeStr.split(' '), dA=pA[0].split('/'), tA=pA[1].split(':'), pB=b.timeStr.split(' '), dB=pB[0].split('/'), tB=pB[1].split(':');
+                        return new Date(dB[2]-543, dB[1]-1, dB[0], tB[0], tB[1], tB[2]).getTime() - new Date(dA[2]-543, dA[1]-1, dA[0], tA[0], tA[1], tA[2]).getTime(); }catch(e){return 0;}
+                    });
+
+                    if (checkInList.length === 0) return listContent.innerHTML = `<div class="flex flex-col items-center justify-center h-[200px] text-center"><p class="text-xs text-gray-400 tracking-widest uppercase font-light">ยังไม่มีผู้ลงทะเบียนเช็คอิน</p></div>`;
+                    
+                    if (isFirstLoad) {
+                        listContent.innerHTML = ''; let firstLoadIndex = currentCheckedIn;
+                        checkInList.forEach(p => { renderedRecords.add(p.studentId + p.timeStr); listContent.appendChild(createRecordItem(p, firstLoadIndex, false)); firstLoadIndex--; });
+                    } else {
+                        for (let i = checkInList.length - 1; i >= 0; i--) {
+                            if (!renderedRecords.has(checkInList[i].studentId + checkInList[i].timeStr)) {
+                                renderedRecords.add(checkInList[i].studentId + checkInList[i].timeStr); listContent.prepend(createRecordItem(checkInList[i], currentCheckedIn, true));
+                            }
+                        }
+                    }
+                    isFirstLoad = false;
+                    updateStatusEl.innerText = "REAL-TIME SYNC"; updateStatusEl.classList.remove('text-red-400'); statusIndicator.className = "w-2 h-2 rounded-full bg-black animate-pulse";
                 }
-            } catch (error) {
-                updateStatusEl.innerText = "CONNECTION LOST";
-                updateStatusEl.classList.add('text-red-400');
-                statusIndicator.className = "w-2 h-2 rounded-full bg-red-500";
-            }
+            } catch (error) { updateStatusEl.innerText = "CONNECTION LOST"; updateStatusEl.classList.add('text-red-400'); statusIndicator.className = "w-2 h-2 rounded-full bg-red-500"; }
         }
 
-        function updateDashboard(data) {
-            if (loadingState) loadingState.style.display = 'none';
-
-            if (data.total !== currentTotal) {
-                animateValue(totalCountEl, currentTotal, data.total, 800);
-                currentTotal = data.total;
-            }
-            if (data.checkedIn !== currentCheckedIn) {
-                animateValue(checkedInCountEl, currentCheckedIn, data.checkedIn, 800);
-                currentCheckedIn = data.checkedIn;
-            }
-            
-            const pendingCalc = Math.max(0, data.total - data.checkedIn);
-            if (pendingCalc !== currentPending) {
-                animateValue(pendingCountEl, currentPending, pendingCalc, 800);
-                currentPending = pendingCalc;
-            }
-
-            let checkInList = data.data;
-            checkInList.sort((a, b) => parseCustomDate(b.timeStr) - parseCustomDate(a.timeStr));
-
-            if (checkInList.length === 0) {
-                listContent.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-[200px] text-center">
-                        <p class="text-xs text-gray-400 tracking-widest uppercase font-light">ยังไม่มีผู้ลงทะเบียนเช็คอิน</p>
-                    </div>`;
-                return;
-            }
-
-            let indexCounter = currentCheckedIn;
-
-            if (isFirstLoad) {
-                listContent.innerHTML = '';
-                let firstLoadIndex = currentCheckedIn;
-                checkInList.forEach(person => {
-                    const uid = person.studentId + person.timeStr;
-                    renderedRecords.add(uid);
-                    const itemElement = createRecordItem(person, firstLoadIndex, false);
-                    listContent.appendChild(itemElement);
-                    firstLoadIndex--;
-                });
-            } else {
-                for (let i = checkInList.length - 1; i >= 0; i--) {
-                    const person = checkInList[i];
-                    const uid = person.studentId + person.timeStr;
-                    if (!renderedRecords.has(uid)) {
-                        renderedRecords.add(uid);
-                        const itemElement = createRecordItem(person, currentCheckedIn, true);
-                        listContent.prepend(itemElement);
-                    }
+        // --- Staff Management ---
+        async function fetchStaffData() {
+            document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs tracking-widest uppercase font-light">Loading Data...</td></tr>';
+            try {
+                const r = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "getAdminData" }), redirect: 'follow' });
+                const res = await r.json();
+                if (res.status === "success") {
+                    let html = '';
+                    res.staffList.forEach(staff => {
+                        const badge = staff.role === 'Admin' ? '<span class="bg-black text-white px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Admin</span>' : '<span class="bg-gray-100 text-black border border-gray-200 px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Staff</span>';
+                        html += `
+                        <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-0 transition-colors">
+                            <td class="p-4 font-medium text-black text-sm">${staff.name}</td>
+                            <td class="p-4">${badge}</td>
+                            <td class="p-4 font-mono text-gray-500 tracking-widest text-sm">${staff.pin}</td>
+                            <td class="p-4 text-right"><button onclick="openResetModal('${staff.name}', ${staff.row})" class="text-[10px] uppercase tracking-widest font-medium border border-gray-300 text-black hover:bg-black hover:text-white px-3 py-1.5 transition-colors">RESET PIN</button></td>
+                        </tr>`;
+                    });
+                    document.getElementById('staff-table-body').innerHTML = html;
                 }
-            }
-            isFirstLoad = false;
+            } catch (err) { document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Failed to load data</td></tr>'; }
+        }
+
+        function openResetModal(name, row) {
+            document.getElementById('reset-staff-name').innerText = name; document.getElementById('reset-row-index').value = row; document.getElementById('new-pin-input').value = "";
+            const m = document.getElementById('reset-modal'), b = document.getElementById('reset-box');
+            m.classList.remove('hidden'); m.style.display = 'flex'; setTimeout(() => { m.classList.remove('opacity-0'); b.classList.remove('scale-95'); }, 10);
+        }
+        function closeResetModal() { const m = document.getElementById('reset-modal'), b = document.getElementById('reset-box'); m.classList.add('opacity-0'); b.classList.add('scale-95'); setTimeout(() => { m.classList.add('hidden'); m.style.display = 'none'; }, 300); }
+
+        async function saveNewPin() {
+            const newPin = document.getElementById('new-pin-input').value, rowIndex = document.getElementById('reset-row-index').value, btn = document.getElementById('btn-save-pin');
+            if (!newPin || newPin.length < 4) return alert("รหัสผ่านต้องมีอย่างน้อย 4 หลัก");
+            btn.innerText = "SAVING...";
+            try {
+                const r = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "updatePin", row: rowIndex, newPin: newPin }), redirect: 'follow' });
+                const res = await r.json();
+                if (res.status === "success") { closeResetModal(); fetchStaffData(); }
+            } catch (err) { alert("เกิดข้อผิดพลาด"); }
+            btn.innerText = "SAVE";
         }
     </script>
 </body>
