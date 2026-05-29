@@ -23,7 +23,7 @@
     <div id="login-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white transition-opacity duration-300">
         <div class="w-full max-w-sm flex flex-col items-center bg-white p-8 animate-fade-in">
             <div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div>
-            <div class="text-center mb-8"><h1 class="text-lg font-semibold tracking-widest text-black mb-2">DASHBOARD ACCESS</h1><p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบ (Admin) เท่านั้น</p></div>
+            <div class="text-center mb-8"><h1 class="text-lg font-semibold tracking-widest text-black mb-2">DASHBOARD ACCESS</h1><p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบ (เมธี) เท่านั้น</p></div>
             <div class="w-full relative mb-8" id="pin-container">
                 <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="ADMIN PIN" maxlength="6" class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-widest">
                 <p id="login-error" class="absolute -bottom-6 left-0 w-full text-center text-black text-xs opacity-0 transition-opacity font-medium"></p>
@@ -138,7 +138,7 @@
         // =======================================================
         // ⚠️ อย่าลืมใส่ URL ของ Google Apps Script ของคุณตรงนี้!
         // =======================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5t9-U10-PZ5L_mXk3a9w1sN3G2L_-vU3W5zH3B7_aA4L8wL9C_rV4X5P7X9Q4w/exec";
         
         let currentTotal = 0, currentCheckedIn = 0, currentPending = 0;
         let renderedRecords = new Set(), isFirstLoad = true, pollingInterval = null;
@@ -161,17 +161,23 @@
 
         async function checkAdminLogin() {
             const pin = document.getElementById('pin-input').value, btnText = document.getElementById('btn-login-text'), errorEl = document.getElementById('login-error');
-            if (pin.length < 4) return showLoginError("PIN 4 digits minimum");
+            
+            // ล็อกรหัสผ่านให้เป็น 1111 และเป็นชื่อ "เมธี" เท่านั้น
+            if (pin !== '1111') {
+                return showLoginError("รหัสไม่ถูกต้อง (สิทธิ์เฉพาะเมธี)");
+            }
+
             btnText.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="ml-2">AUTHENTICATING...</span>';
             errorEl.classList.remove('opacity-100');
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "adminLogin", pin: pin }), redirect: 'follow' });
-                const res = await response.json();
-                if (res.status === "success") {
-                    sessionStorage.setItem('dashboard_admin_logged_in', 'true'); sessionStorage.setItem('dashboard_admin_name', res.staffName);
-                    document.getElementById('admin-name-display').innerText = "ADMIN: " + res.staffName; btnText.innerHTML = "SUCCESS"; setTimeout(() => showDashboard(), 400);
-                } else { btnText.innerHTML = "LOGIN"; showLoginError(res.message); }
-            } catch (err) { btnText.innerHTML = "LOGIN"; showLoginError("CONNECTION FAILED"); }
+            
+            // เข้าสู่ระบบทันทีโดยไม่ต้องเช็คจาก Google Sheet (เพื่อความรวดเร็วและบล็อกสตาฟฟ์คนอื่น)
+            setTimeout(() => {
+                sessionStorage.setItem('dashboard_admin_logged_in', 'true'); 
+                sessionStorage.setItem('dashboard_admin_name', 'เมธี');
+                document.getElementById('admin-name-display').innerText = "ADMIN: เมธี"; 
+                btnText.innerHTML = "SUCCESS"; 
+                setTimeout(() => showDashboard(), 400);
+            }, 600);
         }
 
         function showLoginError(msg) {
@@ -292,19 +298,28 @@
                 const res = await r.json();
                 if (res.status === "success") {
                     let html = '';
-                    res.staffList.forEach(staff => {
-                        const badge = staff.role === 'Admin' ? '<span class="bg-black text-white px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Admin</span>' : '<span class="bg-gray-100 text-black border border-gray-200 px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Staff</span>';
-                        html += `
-                        <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-0 transition-colors">
-                            <td class="p-4 font-medium text-black text-sm">${staff.name}</td>
-                            <td class="p-4">${badge}</td>
-                            <td class="p-4 font-mono text-gray-500 tracking-widest text-sm">${staff.pin}</td>
-                            <td class="p-4 text-right"><button onclick="openResetModal('${staff.name}', ${staff.row})" class="text-[10px] uppercase tracking-widest font-medium border border-gray-300 text-black hover:bg-black hover:text-white px-3 py-1.5 transition-colors">RESET PIN</button></td>
-                        </tr>`;
-                    });
+                    if (res.staffList && res.staffList.length > 0) {
+                        res.staffList.forEach(staff => {
+                            const badge = staff.role === 'Admin' ? '<span class="bg-black text-white px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Admin</span>' : '<span class="bg-gray-100 text-black border border-gray-200 px-2 py-0.5 rounded-sm text-[10px] tracking-widest uppercase">Staff</span>';
+                            html += `
+                            <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-0 transition-colors">
+                                <td class="p-4 font-medium text-black text-sm">${staff.name}</td>
+                                <td class="p-4">${badge}</td>
+                                <td class="p-4 font-mono text-gray-500 tracking-widest text-sm">${staff.pin}</td>
+                                <td class="p-4 text-right"><button onclick="openResetModal('${staff.name}', ${staff.row})" class="text-[10px] uppercase tracking-widest font-medium border border-gray-300 text-black hover:bg-black hover:text-white px-3 py-1.5 transition-colors">RESET PIN</button></td>
+                            </tr>`;
+                        });
+                    } else {
+                        html = '<tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs font-light">ไม่พบข้อมูลสตาฟฟ์ในระบบ</td></tr>';
+                    }
                     document.getElementById('staff-table-body').innerHTML = html;
+                } else {
+                    document.getElementById('staff-table-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Error: ${res.message}</td></tr>`;
                 }
-            } catch (err) { document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Failed to load data</td></tr>'; }
+            } catch (err) { 
+                console.error(err);
+                document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Failed to load data (โปรด Deploy Google Script เป็น New Version)</td></tr>'; 
+            }
         }
 
         function openResetModal(name, row) {
