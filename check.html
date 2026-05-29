@@ -3,276 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ระบบเช็คอิน - Scanner</title>
+    <title>Modern Scanner - เช็คอิน</title>
     
-    <!-- Google Font -->
+    <!-- Google Font: Kanit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Kanit', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff', 100: '#dbeafe', 400: '#60a5fa',
+                            500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a',
+                        }
+                    },
                     animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-in': 'fadeIn 0.4s ease-out forwards',
-                        'slide-up': 'slideUp 0.4s ease-out forwards',
-                        'shake': 'shake 0.4s cubic-bezier(.36,.07,.19,.97) both',
+                        'scan-laser': 'scan 2.5s cubic-bezier(0.53, 0.04, 0.36, 1.03) infinite',
+                        'slide-down': 'slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pop-in': 'popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'fade-out-up': 'fadeOutUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        scan: {
+                            '0%': { top: '0%', opacity: '0' },
+                            '15%': { opacity: '1' },
+                            '85%': { opacity: '1' },
+                            '100%': { top: '100%', opacity: '0' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-150%) scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'translateY(0) scale(1)', opacity: '1' }
+                        },
+                        popIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(59, 130, 246, 0.4)' },
+                            '50%': { boxShadow: '0 0 20px 0 rgba(59, 130, 246, 0.8)' }
+                        },
                         shake: {
                             '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
                             '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
                             '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
                             '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        },
+                        fadeOutUp: {
+                            '0%': { transform: 'translateY(0)', opacity: '1' },
+                            '100%': { transform: 'translateY(-50px)', opacity: '0', visibility: 'hidden' }
                         }
-                    },
-                    boxShadow: { 'glass': '0 4px 20px -2px rgba(31, 38, 135, 0.1)' }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- jsQR library -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 
     <style>
-        body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        body { 
+            background-color: #f8fafc; 
+            overscroll-behavior-y: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        ::-webkit-scrollbar { display: none; }
         
-        .scan-line {
-            position: absolute; width: 100%; height: 3px;
-            background: linear-gradient(to right, transparent, #60a5fa, #3b82f6, #60a5fa, transparent);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
-            animation: scan 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-            display: none; z-index: 20;
+        .modern-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(219, 234, 254, 0.4), transparent 50%),
+                        radial-gradient(circle at 85% 30%, rgba(224, 231, 255, 0.5), transparent 50%);
         }
-        @keyframes scan {
-            0% { top: 5%; opacity: 0; } 15% { opacity: 1; }
-            85% { opacity: 1; } 100% { top: 95%; opacity: 0; }
+
+        .laser-beam {
+            position: absolute; left: 0; right: 0; height: 3px;
+            background: #fff;
+            box-shadow: 0 0 15px 4px #3b82f6, 0 0 30px 8px #60a5fa;
+            z-index: 30; display: none;
         }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
-        .header-bg { position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: linear-gradient(to bottom right, #93c5fd, #c7d2fe); filter: blur(60px); opacity: 0.5; z-index: -1; pointer-events: none; }
+
+        /* Fix 100vh issue on mobile */
+        .h-screen-dynamic { height: 100dvh; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col safe-area-inset overflow-hidden">
-    <div class="header-bg"></div>
+<body class="text-slate-800 antialiased overflow-hidden">
+    
+    <div class="modern-bg"></div>
 
-    <!-- 1. หน้าจอเข้าสู่ระบบ (Login Screen) -->
-    <div id="login-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-900/40 backdrop-blur-md px-6 transition-all duration-300">
-        <div id="login-box" class="w-full max-w-sm bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center text-center border border-white/50">
-            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 text-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+    <!-- ========================================== -->
+    <!-- 1. หน้าจอ Login (แสดงเป็นหน้าแรก) -->
+    <!-- ========================================== -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-900 px-6 transition-all duration-500">
+        <!-- เอฟเฟกต์แสงพื้นหลัง -->
+        <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-brand-900/50 to-transparent"></div>
+        <div class="absolute bottom-10 right-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/4 left-0 w-48 h-48 bg-brand-500/10 rounded-full blur-3xl"></div>
+
+        <!-- กล่อง Login -->
+        <div id="login-box" class="relative z-10 w-full max-w-sm bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] p-8 shadow-2xl flex flex-col items-center text-center">
+            
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
                     <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
                 </svg>
             </div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-1">เข้าสู่ระบบ</h2>
-            <p class="text-slate-500 text-sm mb-6">สำหรับ Admin / Staff</p>
+
+            <h2 class="text-2xl font-bold text-white mb-1 tracking-wide">เข้าสู่ระบบ</h2>
+            <p class="text-slate-300 text-sm mb-8">Staff Only - โครงการปฐมนิเทศ 2569</p>
 
             <div class="w-full relative mb-6">
-                <input type="password" id="pin-input" inputmode="numeric" placeholder="รหัส PIN 4 หลัก" 
-                    class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-center text-xl font-bold tracking-widest rounded-xl py-4 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all placeholder:tracking-normal placeholder:font-normal placeholder:text-base">
+                <input type="password" id="pin-input" inputmode="numeric" placeholder="ใส่รหัสผ่าน (PIN)" 
+                    class="w-full bg-slate-900/50 border border-slate-600 text-white text-center text-xl font-bold tracking-[0.5em] rounded-xl py-4 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-colors placeholder:text-slate-500 placeholder:tracking-normal placeholder:font-normal placeholder:text-base">
+                <p id="login-error" class="absolute -bottom-6 left-0 right-0 text-rose-400 text-xs font-medium hidden">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</p>
             </div>
-            <button onclick="checkLogin()" id="login-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-3.5 rounded-xl shadow-lg shadow-blue-500/30 transition-all active:scale-95">
-                ยืนยัน
+
+            <button onclick="checkLogin()" id="login-btn" class="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-emerald-500/25 transition-all active:scale-95 flex justify-center items-center gap-2">
+                ยืนยันการเข้าใช้งาน
             </button>
         </div>
     </div>
 
-    <!-- 2. หน้าจอหลักของแอป (Main App) -->
-    <main id="main-app" class="hidden flex-grow flex flex-col w-full max-w-md mx-auto p-4 relative h-screen items-stretch md:justify-center">
+    <!-- ========================================== -->
+    <!-- 2. หน้าจอแอปหลัก (ซ่อนไว้ก่อนจนกว่าจะล็อกอินผ่าน) -->
+    <!-- ========================================== -->
+    <main id="main-app" class="hidden h-screen-dynamic w-full max-w-md mx-auto flex flex-col relative px-5 py-6">
         
-        <header class="flex flex-col animate-fade-in z-10 mb-4 mt-2">
-            <!-- แถบบนสุด: ชื่อระบบ และชื่อผู้ล็อกอิน -->
-            <div class="flex justify-between items-center mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="p-1.5 bg-blue-100 text-blue-600 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                            <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h9a1.5 1.5 0 001.5-1.5V5.25a1.5 1.5 0 00-1.5-1.5h-9zM15 5.25a.75.75 0 00-1.5 0v5.25a.75.75 0 001.5 0V5.25zm-6 0a.75.75 0 00-1.5 0v5.25a.75.75 0 001.5 0V5.25z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <h1 class="text-lg font-bold text-slate-700">ระบบสแกนเช็คอิน</h1>
+        <!-- Header -->
+        <header class="flex flex-col gap-3 z-10 shrink-0">
+            <!-- Row 1: System Title & User Badge -->
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2.5 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
+                    <div class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></div>
+                    <span class="text-sm font-semibold tracking-wide text-slate-700">ระบบสแกนเช็คอิน</span>
                 </div>
+                
+                <!-- ขวา: ชื่อคนล็อกอิน + ปุ่มออก -->
                 <div class="flex items-center gap-2">
-                    <div class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-blue-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A9.948 9.948 0 0110 18a9.948 9.948 0 01-4.793-2.39A9.948 9.948 0 0010 12z" clip-rule="evenodd" />
+                    <!-- ป้ายชื่อพนักงาน -->
+                    <div class="bg-gradient-to-r from-brand-50 to-cyan-50 text-brand-700 text-[0.7rem] font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 border border-brand-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-brand-500">
+                            <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
                         </svg>
-                        <span id="staff-name-display">Staff</span>
+                        <span id="staff-name-display">กำลังโหลด...</span>
                     </div>
-                    <button onclick="logout()" class="p-1.5 bg-rose-50 text-rose-500 rounded-full hover:bg-rose-100 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                            <path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-1.048a.75.75 0 10-1.06-1.06l-2.3 2.3a.75.75 0 000 1.06l2.3 2.3a.75.75 0 101.06-1.06l-1.048-1.048H18.25A.75.75 0 0019 10z" clip-rule="evenodd" />
+                    
+                    <!-- ปุ่มออกจากระบบ -->
+                    <button onclick="logout()" class="bg-slate-900 hover:bg-slate-800 text-white text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-1.5 rounded-full shadow-md flex items-center transition-colors" title="ออกจากระบบ">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5 text-rose-400">
+                            <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
                         </svg>
                     </button>
                 </div>
             </div>
 
-            <!-- การ์ดข้อมูลโครงการ -->
-            <div class="glass-card rounded-2xl p-5 shadow-sm mb-3 relative overflow-hidden">
-                <h2 class="text-sm text-blue-800 font-medium tracking-wide uppercase opacity-70 mb-1">โครงการปฐมนิเทศ 2569</h2>
-                <h3 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-blue-700 to-indigo-700 mb-3 leading-tight">
-                    "เกษตรและสิ่งแวดล้อมศึกษา"
-                </h3>
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium text-slate-500">
-                    <span class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-blue-500"><path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" /><path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0117.25 3v1.5h1.375c.76 0 1.46.172 2.092.483l-.254-.096c-1.28-.487-2.71-.735-4.163-.735h-4.6c-1.453 0-2.883.248-4.163.735l-.254.096c.632-.311 1.333-.483 2.092-.483H6.75V3a.75.75 0 01.75-.75zM2.25 9.75v9a3 3 0 003 3h13.5a3 3 0 003-3v-9a3 3 0 00-3-3H5.25a3 3 0 00-3 3zm4.5-1.5a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM5.25 12A.75.75 0 004.5 12.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM7.5 14.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM10.5 8.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM9.75 12a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75.75h-.75zM12 14.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM13.5 8.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM12.75 12a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM14.25 14.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM16.5 8.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM15.75 12a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75zM18.75 8.25a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75z" clip-rule="evenodd" /></svg>
-                        วันอาทิตย์ที่ 14 มิถุนายน 2569
-                    </span>
-                    <span class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A9.948 9.948 0 0110 18a9.948 9.948 0 01-4.793-2.39A9.948 9.948 0 0010 12z" clip-rule="evenodd" /></svg>
-                        พบปัญหาติดต่อ <span class="font-bold text-blue-600">เมธี</span>
-                    </span>
+            <!-- Row 2: Project Title Card -->
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-[1.5rem] p-6 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] relative overflow-hidden group border border-slate-700/50">
+                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110"></div>
+                <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-brand-500/20 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-110"></div>
+                
+                <div class="relative z-10 flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2.5 w-2.5 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <p class="text-emerald-400 font-bold text-xs sm:text-sm tracking-widest uppercase shadow-black drop-shadow-sm">
+                            โครงการปฐมนิเทศ 2569
+                        </p>
+                    </div>
+                    
+                    <h1 class="text-[1.35rem] sm:text-[1.75rem] font-black text-white leading-tight mb-2 tracking-wide whitespace-nowrap">
+                        เกษตรและ<span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 drop-shadow-lg">สิ่งแวดล้อมศึกษา</span>
+                    </h1>
+                    
+                    <div class="inline-flex items-center gap-2 text-xs font-medium text-slate-300 bg-slate-800/80 backdrop-blur-md w-fit px-3 py-2 rounded-xl border border-slate-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-emerald-500">
+                            <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100 1.5.75.75 0 000-1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100 1.5.75.75 0 000-1.5z" />
+                            <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0117.25 3v1.5h1.375c.76 0 1.46.172 2.092.483l-.254-.096c-1.28-.487-2.71-.735-4.163-.735h-4.6c-1.453 0-2.883.248-4.163.735l-.254.096c.632-.311 1.333-.483 2.092-.483H6.75V3a.75.75 0 01.75-.75zM2.25 9.75v9a3 3 0 003 3h13.5a3 3 0 003-3v-9a3 3 0 00-3-3H5.25a3 3 0 00-3 3zm4.5-1.5a.75.75 0 00-.75.75v.75a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75h-.75z" clip-rule="evenodd" />
+                        </svg>
+                        อาทิตย์ 14 มิถุนายน 2569
+                    </div>
                 </div>
-            </div>
-
-            <!-- แสดงสถิติและประวัติการสแกน -->
-            <div class="flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-200 shadow-sm">
-                <div class="flex flex-col">
-                    <span class="text-xs text-slate-500 font-semibold">รอบการทำงานนี้</span>
-                    <span class="text-sm font-bold text-blue-700">สแกนสำเร็จ: <span id="scan-count" class="text-lg">0</span> คน</span>
-                </div>
-                <button onclick="openHistory()" class="flex items-center gap-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1.5 rounded-xl text-sm font-bold transition-colors shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                        <path fill-rule="evenodd" d="M2 3a1 1 0 00-1 1v1a1 1 0 001 1h16a1 1 0 001-1V4a1 1 0 00-1-1H2zm0 4.5h16A1.5 1.5 0 0119.5 9v6a1.5 1.5 0 01-1.5 1.5H2A1.5 1.5 0 01.5 15V9A1.5 1.5 0 012 7.5zm1.5 3a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h4a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-4zM3 13a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h4a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5H3z" clip-rule="evenodd" />
-                    </svg>
-                    ดูรายชื่อ
-                </button>
             </div>
         </header>
 
-        <!-- พื้นที่กล้องสแกน (Camera Section) -->
-        <section id="camera-section" class="flex-grow flex flex-col justify-center items-center relative w-full my-2 z-0 animate-slide-up" style="animation-delay: 0.2s;">
-            
-            <!-- กล่องแจ้งเตือนผลลัพธ์ (Toast/Result Popup) -->
-            <div id="result-wrapper" class="absolute top-4 inset-x-4 z-50 transition-all duration-300 transform scale-90 opacity-0 pointer-events-none">
-                <div id="result-box" class="glass-card p-4 rounded-2xl text-center shadow-xl flex flex-col items-center gap-2 border-0">
-                    <div id="result-icon" class="w-10 h-10 rounded-full flex items-center justify-center shadow-sm"></div>
-                    <h3 id="result-title" class="text-lg font-bold"></h3>
-                    <p id="result-message" class="text-sm font-medium opacity-90 leading-tight"></p>
+        <!-- Toast Notification (Dynamic Island Style) -->
+        <div id="toast-notification" class="absolute top-6 left-5 right-5 z-[100] hidden">
+            <div id="toast-box" class="bg-white rounded-2xl p-4 shadow-2xl flex items-center gap-4 border border-slate-100 transform transition-transform duration-300">
+                <div id="toast-icon" class="w-12 h-12 rounded-full flex items-center justify-center shrink-0"></div>
+                <div class="flex-grow">
+                    <h3 id="toast-title" class="text-base font-bold text-slate-800 leading-tight"></h3>
+                    <p id="toast-msg" class="text-sm font-medium text-slate-500 leading-tight mt-0.5"></p>
                 </div>
             </div>
+        </div>
 
-            <!-- ตัวกล้อง -->
-            <div id="video-container" class="relative w-full max-w-sm aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-4 border-white bg-slate-900 z-10">
-                <video id="video" playsinline autoplay muted class="w-full h-full object-cover transform scale-[1.02]"></video>
-                <div id="scan-line" class="scan-line"></div>
+        <!-- Camera Section (Modern Rounded) -->
+        <section class="flex-grow flex flex-col justify-center relative w-full my-4 z-0">
+            <div class="relative w-full aspect-[3/4] sm:aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] bg-slate-900 ring-4 ring-white">
+                
+                <video id="video" playsinline autoplay muted class="w-full h-full object-cover"></video>
                 <canvas id="canvas" hidden></canvas>
                 
-                <!-- กรอบ Viewfinder -->
+                <!-- Neon Laser -->
+                <div id="laser" class="laser-beam animate-scan-laser"></div>
+                
+                <!-- Advanced Viewfinder -->
                 <div id="viewfinder" class="absolute inset-0 pointer-events-none hidden">
-                    <div class="absolute inset-0 border-[1.5rem] border-slate-900/40 rounded-[1.75rem]"></div>
-                    <div class="absolute inset-[1.5rem] border-2 border-white/30 rounded-xl">
-                        <div class="absolute top-0 left-0 w-5 h-5 border-t-4 border-l-4 border-blue-400 rounded-tl-md"></div>
-                        <div class="absolute top-0 right-0 w-5 h-5 border-t-4 border-r-4 border-blue-400 rounded-tr-md"></div>
-                        <div class="absolute bottom-0 left-0 w-5 h-5 border-b-4 border-l-4 border-blue-400 rounded-bl-md"></div>
-                        <div class="absolute bottom-0 right-0 w-5 h-5 border-b-4 border-r-4 border-blue-400 rounded-br-md"></div>
+                    <div class="absolute inset-0 bg-slate-900/30"></div>
+                    <!-- Frame hole cutout trick using massive box-shadow -->
+                    <div class="absolute inset-[15%] rounded-3xl shadow-[0_0_0_9999px_rgba(15,23,42,0.4)]">
+                        <!-- Corners -->
+                        <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-2xl"></div>
+                        <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-2xl"></div>
+                        <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-2xl"></div>
+                        <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-2xl"></div>
                     </div>
+                    <p class="absolute bottom-[8%] w-full text-center text-white/90 text-sm font-medium tracking-wide drop-shadow-md">
+                        จัด QR Code ให้อยู่ในกรอบ
+                    </p>
                 </div>
                 
-                <!-- Placeholder ตอนยังไม่เปิดกล้อง -->
-                <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-800/90 backdrop-blur-sm">
-                    <div class="w-16 h-16 bg-slate-700/80 rounded-full flex items-center justify-center mb-3 shadow-inner animate-pulse-slow">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Standby State -->
+                <div id="camera-off-state" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800 backdrop-blur-md transition-opacity">
+                    <div class="w-20 h-20 bg-slate-700/50 rounded-[1.5rem] flex items-center justify-center mb-4 border border-slate-600/50 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-brand-500/20 translate-y-full transition-transform"></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
-                    <p class="font-medium text-slate-300">พร้อมสแกน</p>
+                    <p class="font-semibold text-white tracking-wide text-lg">กล้องแสตนด์บาย</p>
+                    <p class="text-slate-400 text-sm mt-1">กดปุ่มเริ่มด้านล่างเพื่อสแกน</p>
                 </div>
             </div>
         </section>
 
-        <!-- ส่วนควบคุมกล้อง -->
-        <footer class="flex flex-col items-center mt-auto pt-4 pb-2 z-20 animate-slide-up" style="animation-delay: 0.4s;">
-            <div class="w-full flex justify-center relative z-30">
-                <button id="btn-start" onclick="startCamera()" class="w-full max-w-xs bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold shadow-md transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95 flex justify-center items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" /><path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" /></svg>
-                    เปิดกล้องสแกน
+        <!-- Footer / Dock Controls -->
+        <footer class="mt-auto shrink-0">
+            <div class="bg-white p-2 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 flex flex-col gap-2">
+                <button id="btn-start" onclick="startCamera()" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 px-6 rounded-[1.5rem] font-bold text-lg shadow-md transition-all duration-200 transform active:scale-[0.98] flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd" />
+                    </svg>
+                    แตะเพื่อเริ่มสแกน
                 </button>
-                <button id="btn-stop" onclick="stopCamera()" class="hidden w-full max-w-xs bg-white text-slate-700 border border-slate-200 py-3 px-6 rounded-xl font-semibold shadow-sm hover:bg-slate-50 transition-all duration-200 transform active:scale-95 flex justify-center items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-slate-500"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" /></svg>
-                    ปิดกล้อง
+                
+                <button id="btn-stop" onclick="stopCamera()" class="hidden w-full bg-slate-100 text-slate-700 py-4 px-6 rounded-[1.5rem] font-bold text-lg transition-all duration-200 transform active:scale-[0.98] flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path d="M5.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75A.75.75 0 007.25 3h-1.5zM12.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75a.75.75 0 00-.75-.75h-1.5z" />
+                    </svg>
+                    พักหน้าจอ
                 </button>
+
+                <div class="flex items-center justify-center gap-2 py-2 text-xs font-medium text-slate-400">
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                    พบปัญหาติดต่อทีมซัพพอร์ต <span class="font-bold text-slate-600">คุณเมธี</span>
+                    <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                </div>
             </div>
         </footer>
-
-        <!-- Modal ยืนยันการส่งข้อมูลเข้า Sheet -->
-        <div id="confirm-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0">
-            <div class="bg-white rounded-[2rem] p-6 w-11/12 max-w-sm shadow-2xl transform scale-95 transition-transform" id="confirm-box">
-                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-amber-600">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-center text-slate-800 mb-2">ยืนยันการสแกน</h3>
-                <p class="text-center text-slate-500 text-sm mb-4">รหัสที่อ่านได้:</p>
-                <div class="bg-slate-100 p-3 rounded-xl text-center mb-6 border border-slate-200 shadow-inner overflow-hidden">
-                    <span id="confirm-qr-text" class="font-mono font-bold text-lg text-slate-700 break-words"></span>
-                </div>
-                <div class="flex gap-3">
-                    <button onclick="cancelScan()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition-colors border border-slate-200">ยกเลิก</button>
-                    <button onclick="confirmScan()" class="flex-[1.5] bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-colors">ส่งเข้า Sheet</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal ประวัติการสแกน -->
-        <div id="history-modal" class="fixed inset-0 z-[150] hidden flex-col justify-end bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0">
-            <div class="bg-white rounded-t-[2rem] p-6 w-full max-w-md mx-auto h-[70vh] flex flex-col shadow-2xl transform translate-y-full transition-transform" id="history-box">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold text-slate-800">รายชื่อที่สแกนแล้ว (รอบนี้)</h3>
-                    <button onclick="closeHistory()" class="p-2 bg-slate-100 text-slate-500 rounded-full hover:bg-slate-200 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" /></svg>
-                    </button>
-                </div>
-                <div class="flex-grow overflow-y-auto pr-2 pb-4" id="history-list">
-                    <div class="text-center text-slate-400 mt-10">ยังไม่มีข้อมูล</div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <script>
         // =======================================================
-        // ⚠️ นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้!
+        // ⚠️ ใส่ URL ของ Web App จาก Google Apps Script (ลงท้ายด้วย /exec)
         // =======================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/ใส่_ID_ของคุณตรงนี้/exec";
 
-        // ตัวแปรเก็บประวัติ
-        let scannedHistory = [];
-        let pendingQR = null;
-
-        // --- 1. จัดการการล็อกอิน ---
+        // โค้ดส่วนจัดการ Login
         document.addEventListener('DOMContentLoaded', () => {
+            // เช็คว่าเคยล็อกอินหรือยัง
             if (sessionStorage.getItem('staff_logged_in') === 'true') {
                 const staffName = sessionStorage.getItem('staff_name') || 'Staff';
                 document.getElementById('staff-name-display').innerText = staffName;
                 showApp();
             }
+            
             document.getElementById('pin-input').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') checkLogin();
             });
         });
 
+        // ฟังก์ชันล็อกอิน (Backend Verification)
         async function checkLogin() {
             const pin = document.getElementById('pin-input').value;
             const btn = document.getElementById('login-btn');
+            const error = document.getElementById('login-error');
             const box = document.getElementById('login-box');
+
             if (!pin) return;
 
+            error.classList.add('hidden');
             const originalBtnText = btn.innerHTML;
-            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> ตรวจสอบ...`;
+            
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> กำลังตรวจสอบ...`;
 
             try {
+                if (GOOGLE_SCRIPT_URL.includes("ใส่_ID_ของคุณตรงนี้") || GOOGLE_SCRIPT_URL.trim() === "") {
+                    throw new Error("MISSING_URL");
+                }
+
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -280,93 +317,113 @@
                     redirect: 'follow'
                 });
                 
-                if (!response.ok) throw new Error("CORS_ERROR");
+                if (!response.ok) throw new Error("NETWORK_ERROR");
                 
                 const res = await response.json();
+
                 if (res.status === "success") {
                     sessionStorage.setItem('staff_logged_in', 'true');
-                    sessionStorage.setItem('staff_name', res.staffName);
-                    document.getElementById('staff-name-display').innerText = res.staffName;
+                    sessionStorage.setItem('staff_name', res.staffName); 
+                    document.getElementById('staff-name-display').innerText = res.staffName; 
                     
-                    document.getElementById('login-screen').classList.add('opacity-0');
-                    setTimeout(() => { showApp(); }, 300);
+                    document.getElementById('login-screen').classList.add('animate-fade-out-up');
+                    setTimeout(() => { showApp(); }, 500);
                 } else {
+                    showLoginError(res.message || "รหัส PIN ไม่ถูกต้อง");
                     btn.innerHTML = originalBtnText;
-                    box.classList.remove('animate-shake');
-                    void box.offsetWidth; 
-                    box.classList.add('animate-shake');
-                    document.getElementById('pin-input').value = "";
                 }
             } catch (err) {
+                let errorMsg = "ระบบเครือข่ายขัดข้อง กรุณาลองใหม่";
+                if (err.message === "MISSING_URL") {
+                    errorMsg = "นักพัฒนา: ลืมใส่ URL Apps Script บรรทัด 207";
+                }
+                
+                showLoginError(errorMsg);
                 btn.innerHTML = originalBtnText;
-                alert("ระบบขัดข้อง: ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบ URL หรือสิทธิ์ Anyone");
             }
+        }
+
+        function showLoginError(msg) {
+            const error = document.getElementById('login-error');
+            const box = document.getElementById('login-box');
+            error.innerText = msg;
+            error.classList.remove('hidden');
+            
+            box.classList.remove('animate-shake');
+            void box.offsetWidth; 
+            box.classList.add('animate-shake');
+            document.getElementById('pin-input').value = "";
         }
 
         function showApp() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-app').classList.remove('hidden');
-            
-            scannedHistory = JSON.parse(sessionStorage.getItem('scanned_history') || '[]');
-            updateStatsUI();
+            document.getElementById('main-app').classList.add('animate-pop-in');
         }
 
         function logout() {
-            stopCamera();
-            sessionStorage.removeItem('staff_logged_in');
-            sessionStorage.removeItem('staff_name');
-            sessionStorage.removeItem('scanned_history');
-            scannedHistory = [];
-            location.reload();
+            if(confirm('ต้องการออกจากระบบใช่หรือไม่?')) {
+                stopCamera();
+                sessionStorage.removeItem('staff_logged_in');
+                sessionStorage.removeItem('staff_name');
+                location.reload(); 
+            }
         }
 
-        // --- 2. การทำงานของกล้องและการสแกน QR ---
+        // =======================================================
+        // โค้ดส่วนกล้องและสแกนเนอร์
+        // =======================================================
         const video = document.getElementById("video");
         const canvasElement = document.getElementById("canvas");
         const canvas = canvasElement.getContext("2d", { willReadFrequently: true });
         const btnStart = document.getElementById("btn-start");
         const btnStop = document.getElementById("btn-stop");
-        const scanLine = document.getElementById("scan-line");
-        const placeholder = document.getElementById("camera-placeholder");
+        const laser = document.getElementById("laser");
+        const placeholder = document.getElementById("camera-off-state");
         const viewfinder = document.getElementById("viewfinder");
         
-        const resultWrapper = document.getElementById("result-wrapper");
-        const resultBox = document.getElementById("result-box");
-        const resultIcon = document.getElementById("result-icon");
-        const resultTitle = document.getElementById("result-title");
-        const resultMessage = document.getElementById("result-message");
+        const toast = document.getElementById("toast-notification");
+        const toastBox = document.getElementById("toast-box");
+        const toastIcon = document.getElementById("toast-icon");
+        const toastTitle = document.getElementById("toast-title");
+        const toastMsg = document.getElementById("toast-msg");
 
         let scanning = false;
         let stream = null;
+        let toastTimeout = null;
 
         const icons = {
-            success: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>`,
-            duplicate: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 text-white"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>`,
-            error: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>`,
-            loading: `<svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`
+            success: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-emerald-600"><path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" /></svg>`,
+            duplicate: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-amber-600"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" /></svg>`,
+            error: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-rose-600"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" /></svg>`,
+            loading: `<svg class="animate-spin w-6 h-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`
         };
 
         async function startCamera() {
-            hideResult();
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            hideToast();
+
+            const ua = navigator.userAgent || window.opera;
             if (ua.indexOf("Line") > -1 || ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1) {
-                showResult("error", "โดนบล็อกกล้อง", "กรุณากดเปิดในเบราว์เซอร์ปกติ");
+                showToast("error", "พบการเปิดผ่านแอปแชท", "กรุณากด 'เปิดในเบราว์เซอร์' (Chrome/Safari) เพื่อใช้งานกล้อง");
                 return;
             }
             
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showResult("error", "ไม่รองรับ", "มือถือไม่รองรับ หรือไม่ได้ใช้ HTTPS");
+                showToast("error", "ไม่รองรับการเปิดกล้อง", "โปรดใช้งานบน HTTPS และเบราว์เซอร์ที่รองรับ");
                 return;
             }
 
+            btnStart.innerHTML = icons.loading + " <span class='text-white ml-2'>กำลังเปิดกล้อง...</span>";
+            
             try {
                 stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
             } catch (err) {
                 try {
                     stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 } catch (fallbackErr) {
-                    showResult("error", "เข้าถึงกล้องไม่ได้", "โปรดอนุญาตการเข้าถึงกล้องในการตั้งค่า");
-                    return; 
+                    showToast("error", "เข้าถึงกล้องไม่ได้", "โปรดอนุญาตสิทธิ์กล้อง หรือตรวจสอบอุปกรณ์");
+                    resetStartBtn();
+                    return;
                 }
             }
             
@@ -377,25 +434,37 @@
             video.onloadedmetadata = () => {
                  video.play().then(() => {
                      placeholder.style.display = "none";
-                     scanLine.style.display = "block";
+                     laser.style.display = "block";
                      viewfinder.classList.remove("hidden");
                      btnStart.classList.add("hidden");
                      btnStop.classList.remove("hidden");
+                     resetStartBtn();
                      scanning = true;
-                     requestAnimationFrame(tick); 
+                     requestAnimationFrame(tick);
+                 }).catch(e => {
+                      showToast("error", "วิดีโอถูกบล็อก", "ลองรีเฟรชหน้าเว็บอีกครั้ง");
+                      resetStartBtn();
                  });
             };
         }
 
+        function resetStartBtn() {
+            btnStart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd" /></svg> แตะเพื่อเริ่มสแกน`;
+        }
+
         function stopCamera() {
             scanning = false;
-            if (stream) { stream.getTracks().forEach(track => track.stop()); stream = null; }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
             video.srcObject = null;
-            scanLine.style.display = "none";
+            laser.style.display = "none";
             viewfinder.classList.add("hidden");
             placeholder.style.display = "flex";
             btnStart.classList.remove("hidden");
             btnStop.classList.add("hidden");
+            hideToast();
         }
 
         function tick() {
@@ -404,9 +473,9 @@
                 canvasElement.width = video.videoWidth;
                 canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
                 var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-                
-                // อัปเกรดประสิทธิภาพการสแกนให้หาโค้ดไวขึ้น
-                var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "attemptBoth" });
+                var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert", // Optimize for speed
+                });
 
                 if (code) {
                     processQRCode(code.data);
@@ -418,166 +487,82 @@
             }
         }
 
-        // --- 3. การแสดงผลและส่งข้อมูลเข้า API ---
         function processQRCode(qrData) {
             scanning = false; 
-            scanLine.style.display = "none";
-            pendingQR = qrData;
+            laser.style.display = "none";
+            viewfinder.style.opacity = "0.5";
             
-            document.getElementById('confirm-qr-text').innerText = qrData;
-            const modal = document.getElementById('confirm-modal');
-            const box = document.getElementById('confirm-box');
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                box.classList.remove('scale-95');
-            }, 10);
-        }
+            showToast("loading", "กำลังซิงค์ข้อมูล...", "รอสักครู่");
 
-        function cancelScan() {
-            const modal = document.getElementById('confirm-modal');
-            const box = document.getElementById('confirm-box');
-            modal.classList.add('opacity-0');
-            box.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-                pendingQR = null;
-                resumeScanningAfterDelay(0);
-            }, 300);
-        }
-
-        function confirmScan() {
-            if (!pendingQR) return;
-            
-            const modal = document.getElementById('confirm-modal');
-            const box = document.getElementById('confirm-box');
-            modal.classList.add('opacity-0');
-            box.classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); modal.style.display = 'none'; }, 300);
-
-            showResult("loading", "กำลังส่งข้อมูลเข้า Sheet...", "รอสักครู่");
             const staffName = sessionStorage.getItem('staff_name') || 'Unknown';
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ qrData: pendingQR, scannedBy: staffName }),
-                redirect: 'follow'
+                body: JSON.stringify({ qrData: qrData, scannedBy: staffName }) 
             })
             .then(response => response.json())
             .then(res => {
-                showResult(res.status, res.message, res.name || pendingQR);
-                
-                if (res.status === "success") {
-                    const timeNow = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-                    scannedHistory.unshift({ name: res.name || pendingQR, time: timeNow });
-                    sessionStorage.setItem('scanned_history', JSON.stringify(scannedHistory));
-                    updateStatsUI();
-                }
-                
-                pendingQR = null;
-                resumeScanningAfterDelay(3000);
+                showToast(res.status, res.message, res.name || qrData);
+                resumeScanningAfterDelay();
             })
             .catch(error => {
-                showResult("error", "ข้อผิดพลาด", "ไม่สามารถส่งข้อมูลเข้า Sheet ได้");
-                pendingQR = null;
-                resumeScanningAfterDelay(3000);
+                showToast("error", "ออฟไลน์ / ระบบขัดข้อง", "ไม่สามารถส่งข้อมูลเข้า Sheet ได้");
+                resumeScanningAfterDelay();
             });
         }
 
-        function resumeScanningAfterDelay(delayMs = 3000) {
+        function resumeScanningAfterDelay() {
             setTimeout(() => {
-                if (stream && stream.active && !scanning) { 
-                    hideResult();
-                    scanLine.style.display = "block";
+                if (stream && stream.active && !scanning) {
+                    hideToast();
+                    laser.style.display = "block";
+                    viewfinder.style.opacity = "1";
                     scanning = true;
                     requestAnimationFrame(tick);
                 }
-            }, delayMs);
+            }, 2500); 
         }
 
-        function updateStatsUI() {
-            document.getElementById('scan-count').innerText = scannedHistory.length;
-            const listContainer = document.getElementById('history-list');
-            if (scannedHistory.length === 0) {
-                listContainer.innerHTML = '<div class="text-center text-slate-400 mt-10">ยังไม่มีข้อมูลการสแกน</div>';
-                return;
-            }
+        function showToast(status, title, message) {
+            if(toastTimeout) clearTimeout(toastTimeout);
+
+            toast.classList.remove('hidden');
+            toast.classList.remove('animate-slide-down');
+            void toast.offsetWidth; 
+            toast.classList.add('animate-slide-down');
             
-            let html = '<div class="flex flex-col gap-2">';
-            scannedHistory.forEach((item, index) => {
-                html += `
-                    <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">${scannedHistory.length - index}</div>
-                            <span class="font-medium text-slate-700 truncate max-w-[150px]">${item.name}</span>
-                        </div>
-                        <span class="text-xs text-slate-400 bg-white px-2 py-1 rounded-md shadow-sm border border-slate-100">${item.time}</span>
-                    </div>`;
-            });
-            html += '</div>';
-            listContainer.innerHTML = html;
-        }
-
-        function openHistory() {
-            const modal = document.getElementById('history-modal');
-            const box = document.getElementById('history-box');
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                box.classList.remove('translate-y-full');
-            }, 10);
-        }
-
-        function closeHistory() {
-            const modal = document.getElementById('history-modal');
-            const box = document.getElementById('history-box');
-            modal.classList.add('opacity-0');
-            box.classList.add('translate-y-full');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        // --- 4. การจัดการ Popup แจ้งเตือน ---
-        function showResult(status, title, message) {
-            resultIcon.className = "w-10 h-10 rounded-full flex items-center justify-center shadow-sm";
-            resultBox.className = "glass-card p-4 rounded-2xl text-center shadow-xl flex flex-col items-center gap-2 border-0 transition-colors duration-300";
+            toastTitle.innerText = title;
+            toastMsg.innerText = message;
+            
+            toastIcon.className = "w-12 h-12 rounded-full flex items-center justify-center shrink-0 ";
+            toastBox.className = "bg-white rounded-2xl p-4 shadow-2xl flex items-center gap-4 border border-slate-100 transform transition-transform duration-300";
 
             if (status === "success") {
-                resultBox.classList.add('bg-emerald-500', 'text-white');
-                resultIcon.classList.add('bg-emerald-600/50');
-                resultIcon.innerHTML = icons.success;
+                toastIcon.classList.add('bg-emerald-100');
+                toastIcon.innerHTML = icons.success;
+                toastTitle.className = 'text-base font-bold text-emerald-700 leading-tight';
             } else if (status === "duplicate") {
-                resultBox.classList.add('bg-amber-500', 'text-white');
-                resultIcon.classList.add('bg-amber-600/50');
-                resultIcon.innerHTML = icons.duplicate;
+                toastIcon.classList.add('bg-amber-100');
+                toastIcon.innerHTML = icons.duplicate;
+                toastTitle.className = 'text-base font-bold text-amber-700 leading-tight';
             } else if (status === "notfound" || status === "error") {
-                resultBox.classList.add('bg-rose-500', 'text-white');
-                resultIcon.classList.add('bg-rose-600/50');
-                resultIcon.innerHTML = icons.error;
+                toastIcon.classList.add('bg-rose-100');
+                toastIcon.innerHTML = icons.error;
+                toastTitle.className = 'text-base font-bold text-rose-700 leading-tight';
             } else if (status === "loading") {
-                resultBox.classList.add('bg-blue-600', 'text-white');
-                resultIcon.classList.add('bg-blue-700/50');
-                resultIcon.innerHTML = icons.loading;
+                toastIcon.classList.add('bg-brand-50');
+                toastIcon.innerHTML = icons.loading;
+                toastTitle.className = 'text-base font-bold text-brand-700 leading-tight';
             }
-
-            resultTitle.innerText = title;
-            resultMessage.innerText = message;
-
-            resultWrapper.classList.remove('scale-90', 'opacity-0', 'pointer-events-none');
-            resultWrapper.classList.add('scale-100', 'opacity-100');
         }
 
-        function hideResult() {
-            resultWrapper.classList.remove('scale-100', 'opacity-100');
-            resultWrapper.classList.add('scale-90', 'opacity-0', 'pointer-events-none');
+        function hideToast() {
+            toast.classList.add('animate-fade-out-up');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('animate-fade-out-up');
+            }, 600);
         }
     </script>
 </body>
