@@ -16,14 +16,8 @@
                 extend: {
                     fontFamily: { sans: ['Kanit', 'sans-serif'] },
                     colors: { black: '#111111' },
-                    animation: {
-                        'fade-in': 'fadeIn 0.3s ease-out forwards',
-                        'shake': 'shake 0.4s ease-in-out both',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        shake: { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-5px)' }, '75%': { transform: 'translateX(5px)' } }
-                    }
+                    animation: { 'fade-in': 'fadeIn 0.3s ease-out forwards', 'shake': 'shake 0.4s ease-in-out both' },
+                    keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }, shake: { '0%, 100%': { transform: 'translateX(0)' }, '25%': { transform: 'translateX(-5px)' }, '75%': { transform: 'translateX(5px)' } } }
                 }
             }
         }
@@ -33,112 +27,59 @@
     <style>
         body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
-        
-        .scan-line {
-            position: absolute;
-            width: 100%; height: 1px;
-            background: rgba(17, 17, 17, 0.8);
-            box-shadow: 0 0 8px 1px rgba(17, 17, 17, 0.3);
-            animation: scan 2s ease-in-out infinite alternate;
-            z-index: 20;
-        }
+        .scan-line { position: absolute; width: 100%; height: 1px; background: rgba(17, 17, 17, 0.8); box-shadow: 0 0 8px 1px rgba(17, 17, 17, 0.3); animation: scan 2s ease-in-out infinite alternate; z-index: 20; }
         @keyframes scan { 0% { top: 5%; opacity: 0; } 10%, 90% { opacity: 1; } 100% { top: 95%; opacity: 0; } }
         .pin-input { letter-spacing: 0.7em; text-security: disc; -webkit-text-security: disc; }
     </style>
 </head>
 <body class="bg-white text-black min-h-screen flex flex-col safe-area-inset relative antialiased selection:bg-gray-200">
     
-    <!-- 1. LOGIN SCREEN -->
+    <!-- LOGIN SCREEN -->
     <div id="login-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white transition-opacity duration-300">
         <div class="w-full max-w-sm flex flex-col items-center bg-white p-8 animate-fade-in">
-            <div class="mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-            </div>
+            <div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div>
             
             <div class="text-center mb-8">
                 <h1 class="text-lg font-semibold tracking-widest text-black mb-2">STAFF ACCESS</h1>
                 <p class="text-gray-400 text-xs font-light mb-5">กรุณาใส่รหัสเพื่อเข้าสู่ระบบ</p>
                 
-                <!-- กล่องนับถอยหลัง (Countdown) รูปแบบใหม่ -->
                 <div id="countdown-wrapper" class="w-full flex flex-col items-center">
                     <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">เปิดระบบทดสอบในอีก</p>
                     <div class="flex justify-center items-center gap-2 mb-2">
-                        <!-- Days -->
-                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm">
-                            <span id="cd-days" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span>
-                            <span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Days</span>
-                        </div>
-                        <span class="text-gray-300 text-lg font-light mb-4">:</span>
-                        <!-- Hours -->
-                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm">
-                            <span id="cd-hours" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span>
-                            <span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Hrs</span>
-                        </div>
-                        <span class="text-gray-300 text-lg font-light mb-4">:</span>
-                        <!-- Minutes -->
-                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm">
-                            <span id="cd-mins" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span>
-                            <span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Min</span>
-                        </div>
-                        <span class="text-gray-300 text-lg font-light mb-4">:</span>
-                        <!-- Seconds -->
-                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm">
-                            <span id="cd-secs" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span>
-                            <span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Sec</span>
-                        </div>
+                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm"><span id="cd-days" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span><span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Days</span></div><span class="text-gray-300 text-lg font-light mb-4">:</span>
+                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm"><span id="cd-hours" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span><span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Hrs</span></div><span class="text-gray-300 text-lg font-light mb-4">:</span>
+                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm"><span id="cd-mins" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span><span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Min</span></div><span class="text-gray-300 text-lg font-light mb-4">:</span>
+                        <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm"><span id="cd-secs" class="text-xl font-semibold text-black tabular-nums tracking-tight">--</span><span class="text-[8px] text-gray-400 font-light tracking-widest uppercase mt-1">Sec</span></div>
                     </div>
                 </div>
             </div>
 
             <div class="w-full relative mb-8" id="pin-container">
-                <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="PIN" maxlength="6" 
-                    class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-normal placeholder:font-light">
-                
+                <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="PIN" maxlength="6" class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-normal placeholder:font-light">
                 <p id="login-error" class="absolute -bottom-6 left-0 w-full text-center text-black text-xs opacity-0 transition-opacity"></p>
             </div>
-
-            <button id="btn-login" onclick="checkLogin()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">
-                <span id="btn-login-text">LOGIN</span>
-            </button>
+            <button id="btn-login" onclick="checkLogin()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2"><span id="btn-login-text">LOGIN</span></button>
         </div>
     </div>
 
-    <!-- 2. MAIN APP -->
+    <!-- MAIN APP -->
     <main id="main-app" class="flex-grow flex flex-col w-full max-w-md mx-auto relative h-screen hidden">
-        
         <header class="pt-8 px-6 z-10 animate-fade-in">
             <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                 <h1 class="text-sm font-semibold tracking-widest text-black uppercase">Scanner</h1>
-                
-                <div class="flex items-center gap-4">
-                    <span class="text-xs font-medium text-gray-500" id="display-staff-name">Name</span>
-                    <div class="w-px h-3 bg-gray-300"></div>
-                    <button onclick="logout()" class="text-gray-400 hover:text-black transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
-                    </button>
-                </div>
+                <div class="flex items-center gap-4"><span class="text-xs font-medium text-gray-500" id="display-staff-name">Name</span><div class="w-px h-3 bg-gray-300"></div><button onclick="logout()" class="text-gray-400 hover:text-black transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg></button></div>
             </div>
-
             <div class="mb-8">
                 <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-1">โครงการปฐมนิเทศ 2569</p>
                 <h2 class="text-2xl font-semibold text-black leading-tight mb-2">เกษตรและสิ่งแวดล้อมศึกษา</h2>
                 <p class="text-xs text-gray-400 font-light tracking-wide">14 มิถุนายน 2569</p>
             </div>
-
             <div class="flex justify-between items-center px-4 py-3 border border-gray-200">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Scanned</span>
-                    <span class="text-base font-semibold text-black" id="scan-count">0</span>
-                </div>
-                <button onclick="openHistory()" class="text-xs font-medium text-gray-500 hover:text-black transition-colors underline underline-offset-4">
-                    HISTORY
-                </button>
+                <div class="flex items-center gap-2"><span class="text-xs text-gray-500 uppercase tracking-wider">Scanned</span><span class="text-base font-semibold text-black" id="scan-count">0</span></div>
+                <button onclick="openHistory()" class="text-xs font-medium text-gray-500 hover:text-black transition-colors underline underline-offset-4">HISTORY</button>
             </div>
         </header>
 
-        <!-- Minimal Toast (ลอยลงมาจากด้านบน) -->
         <div id="toast-wrapper" class="absolute top-8 inset-x-6 z-50 transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none shadow-xl">
             <div id="toast-box" class="bg-black text-white px-5 py-4 flex items-center gap-4">
                 <div id="toast-icon" class="shrink-0"></div>
@@ -154,348 +95,129 @@
                 <video id="video" playsinline autoplay muted class="w-full h-full object-cover"></video>
                 <div id="scan-line" class="scan-line hidden"></div>
                 <canvas id="canvas" hidden></canvas>
-                
-                <div id="viewfinder" class="absolute inset-0 pointer-events-none hidden flex items-center justify-center">
-                    <div class="w-48 h-48 border border-white/40 relative mix-blend-difference">
-                        <div class="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-white"></div>
-                        <div class="absolute -top-px -right-px w-4 h-4 border-t-2 border-r-2 border-white"></div>
-                        <div class="absolute -bottom-px -left-px w-4 h-4 border-b-2 border-l-2 border-white"></div>
-                        <div class="absolute -bottom-px -right-px w-4 h-4 border-b-2 border-r-2 border-white"></div>
-                    </div>
-                </div>
-                
-                <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10">
-                    <svg class="h-8 w-8 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    <p class="text-xs text-gray-400 font-light tracking-widest uppercase">Camera Ready</p>
-                </div>
+                <div id="viewfinder" class="absolute inset-0 pointer-events-none hidden flex items-center justify-center"><div class="w-48 h-48 border border-white/40 relative mix-blend-difference"><div class="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute -top-px -right-px w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute -bottom-px -left-px w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute -bottom-px -right-px w-4 h-4 border-b-2 border-r-2 border-white"></div></div></div>
+                <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10"><svg class="h-8 w-8 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg><p class="text-xs text-gray-400 font-light tracking-widest uppercase">Camera Ready</p></div>
             </div>
         </section>
 
         <footer class="mt-auto px-6 pb-8 pt-6 z-20 animate-fade-in">
-            <button id="btn-start" onclick="startCamera()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">
-                START SCANNING
-            </button>
-            <button id="btn-stop" onclick="stopCamera()" class="hidden w-full bg-white text-black border border-black font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">
-                PAUSE CAMERA
-            </button>
-            <div class="mt-6 text-center">
-                <span class="text-[10px] text-gray-400 font-light tracking-widest uppercase">SUPPORT: <span class="font-medium text-black">เมธี</span></span>
-            </div>
+            <button id="btn-start" onclick="startCamera()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">START SCANNING</button>
+            <button id="btn-stop" onclick="stopCamera()" class="hidden w-full bg-white text-black border border-black font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">PAUSE CAMERA</button>
+            <div class="mt-6 text-center"><span class="text-[10px] text-gray-400 font-light tracking-widest uppercase">SUPPORT: <span class="font-medium text-black">เมธี</span></span></div>
         </footer>
 
-        <!-- MODALS -->
+        <!-- History Modal -->
         <div id="history-modal" class="fixed inset-0 z-[200] hidden flex-col justify-end bg-white/90 backdrop-blur-sm transition-opacity opacity-0">
             <div id="history-box" class="bg-white w-full max-w-md mx-auto h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 border-t border-black shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-                <div class="px-6 pt-8 pb-6 flex justify-between items-center border-b border-gray-100">
-                    <h3 class="text-sm font-semibold tracking-widest text-black uppercase">Scan History</h3>
-                    <button onclick="closeHistory()" class="text-gray-400 hover:text-black">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
+                <div class="px-6 pt-8 pb-6 flex justify-between items-center border-b border-gray-100"><h3 class="text-sm font-semibold tracking-widest text-black uppercase">Scan History</h3><button onclick="closeHistory()" class="text-gray-400 hover:text-black"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button></div>
                 <div class="flex-grow overflow-y-auto px-6 py-4 space-y-0" id="history-list"></div>
             </div>
         </div>
 
-        <!-- กล่องสำหรับแจ้งเตือนกรณีสแกนซ้ำ หรือ Error -->
+        <!-- Result Modal -->
         <div id="result-modal" class="fixed inset-0 z-[150] hidden flex-col justify-end bg-black/80 backdrop-blur-md transition-opacity opacity-0">
             <div id="result-box" class="bg-white p-8 w-full max-w-md mx-auto transform translate-y-full transition-transform duration-300 flex flex-col items-center text-center">
                 <div id="rm-icon-bg" class="w-16 h-16 flex items-center justify-center mb-6"><div id="rm-icon"></div></div>
                 <h3 id="rm-title" class="text-xl font-medium text-black mb-1"></h3>
                 <p id="rm-name" class="text-lg font-semibold text-black mb-1"></p>
                 <p id="rm-desc" class="text-xs text-gray-500 mb-8 font-light"></p>
-                <button onclick="resumeScanFromModal()" class="w-full text-white font-medium tracking-widest uppercase py-4 transition-all text-sm border border-black bg-black">
-                    ACKNOWLEDGE
-                </button>
+                <button onclick="resumeScanFromModal()" class="w-full text-white font-medium tracking-widest uppercase py-4 transition-all text-sm border border-black bg-black">ACKNOWLEDGE</button>
             </div>
         </div>
-
     </main>
 
     <script>
         // =======================================================
-        // ⚠️ อย่าลืมใส่ URL ของ Google Apps Script ของคุณตรงนี้นะครับ
+        // ⚠️ นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้!
         // =======================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec"; 
 
-        // --- ระบบนับถอยหลัง (Countdown) ---
         const targetDate = new Date("June 12, 2026 11:00:00").getTime();
         const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+            const distance = targetDate - new Date().getTime();
             const wrapper = document.getElementById("countdown-wrapper");
-            
             if (!wrapper) return;
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                wrapper.innerHTML = '<div class="px-6 py-3 border border-black bg-black text-white text-[10px] tracking-widest uppercase font-medium rounded-full shadow-md">ระบบทดสอบเปิดแล้ว</div>';
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            const elDays = document.getElementById('cd-days');
-            const elHours = document.getElementById('cd-hours');
-            const elMins = document.getElementById('cd-mins');
-            const elSecs = document.getElementById('cd-secs');
-
-            if(elDays) elDays.innerText = String(days).padStart(2, '0');
-            if(elHours) elHours.innerText = String(hours).padStart(2, '0');
-            if(elMins) elMins.innerText = String(minutes).padStart(2, '0');
-            if(elSecs) elSecs.innerText = String(seconds).padStart(2, '0');
+            if (distance < 0) { clearInterval(countdownInterval); wrapper.innerHTML = '<div class="px-6 py-3 border border-black bg-black text-white text-[10px] tracking-widest uppercase font-medium rounded-full shadow-md">ระบบทดสอบเปิดแล้ว</div>'; return; }
+            if(document.getElementById('cd-days')) document.getElementById('cd-days').innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            if(document.getElementById('cd-hours')) document.getElementById('cd-hours').innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            if(document.getElementById('cd-mins')) document.getElementById('cd-mins').innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            if(document.getElementById('cd-secs')) document.getElementById('cd-secs').innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
         }, 1000);
 
-        let scanning = false;
-        let stream = null;
-        let scanHistory = []; 
+        let scanning = false; let stream = null; let scanHistory = []; 
+        const video = document.getElementById("video"); const canvasElement = document.getElementById("canvas"); const canvas = canvasElement.getContext("2d", { willReadFrequently: true });
+        const icons = { success: `<svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`, duplicate: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`, error: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" /></svg>`, loading: `<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>` };
 
-        const video = document.getElementById("video");
-        const canvasElement = document.getElementById("canvas");
-        const canvas = canvasElement.getContext("2d", { willReadFrequently: true });
-        
-        const icons = {
-            success: `<svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`,
-            duplicate: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`,
-            error: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" /></svg>`,
-            loading: `<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedStaff = sessionStorage.getItem('staff_logged_in');
-            const savedName = sessionStorage.getItem('staff_name');
-            if (savedStaff === 'true' && savedName) {
-                document.getElementById('display-staff-name').innerText = savedName;
-                showApp();
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => { if (sessionStorage.getItem('staff_logged_in') === 'true') { document.getElementById('display-staff-name').innerText = sessionStorage.getItem('staff_name'); showApp(); } });
 
         async function checkLogin() {
-            const pinInput = document.getElementById('pin-input');
-            const pin = pinInput.value;
-            const errorText = document.getElementById('login-error');
-            const btnText = document.getElementById('btn-login-text');
-            const container = document.getElementById('pin-container');
-
-            if (pin.length < 4) { showLoginError("PIN 4 digits minimum"); return; }
-
-            btnText.innerHTML = icons.loading + ' <span class="ml-2">AUTHENTICATING...</span>';
-            errorText.classList.remove('opacity-100');
-            
+            const pin = document.getElementById('pin-input').value; const btnText = document.getElementById('btn-login-text'); const errorText = document.getElementById('login-error');
+            if (pin.length < 4) return showLoginError("PIN 4 digits minimum");
+            btnText.innerHTML = icons.loading + ' <span class="ml-2">AUTHENTICATING...</span>'; errorText.classList.remove('opacity-100');
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "login", pin: pin })
-                });
-
-                if (!response.ok) throw new Error("Network error");
-                const res = await response.json();
-
-                if (res.status === "success") {
-                    sessionStorage.setItem('staff_logged_in', 'true');
-                    sessionStorage.setItem('staff_name', res.staffName);
-                    document.getElementById('display-staff-name').innerText = res.staffName;
-                    
-                    btnText.innerHTML = 'SUCCESS';
-                    setTimeout(() => showApp(), 400);
-                } else { showLoginError(res.message); btnText.innerHTML = 'LOGIN'; }
-            } catch (error) { showLoginError("Connection Failed"); btnText.innerHTML = 'LOGIN'; }
+                const r = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "login", pin: pin }) });
+                const res = await r.json();
+                if (res.status === "success") { sessionStorage.setItem('staff_logged_in', 'true'); sessionStorage.setItem('staff_name', res.staffName); document.getElementById('display-staff-name').innerText = res.staffName; btnText.innerHTML = 'SUCCESS'; setTimeout(() => showApp(), 400); } else { showLoginError(res.message); btnText.innerHTML = 'LOGIN'; }
+            } catch (err) { showLoginError("Connection Failed / หรือลืมเปลี่ยน URL ในโค้ด"); btnText.innerHTML = 'LOGIN'; }
         }
 
-        function showLoginError(msg) {
-            const errorText = document.getElementById('login-error');
-            const container = document.getElementById('pin-container');
-            errorText.innerText = msg; errorText.classList.add('opacity-100');
-            document.getElementById('pin-input').value = '';
-            container.classList.remove('animate-shake');
-            void container.offsetWidth; container.classList.add('animate-shake');
-        }
-
-        function showApp() {
-            document.getElementById('login-screen').classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('main-app').classList.remove('hidden');
-                scanHistory = JSON.parse(sessionStorage.getItem('scan_history') || '[]');
-                updateStatsUI();
-            }, 300);
-        }
-
-        function logout() {
-            stopCamera(); sessionStorage.removeItem('staff_logged_in'); sessionStorage.removeItem('staff_name'); 
-            sessionStorage.removeItem('scan_history'); scanHistory = []; document.getElementById('pin-input').value = '';
-            document.getElementById('main-app').classList.add('hidden');
-            document.getElementById('login-screen').classList.remove('hidden', 'opacity-0', 'pointer-events-none');
-        }
+        function showLoginError(msg) { const errEl = document.getElementById('login-error'); const box = document.getElementById('pin-container'); errEl.innerText = msg; errEl.classList.add('opacity-100'); document.getElementById('pin-input').value = ''; box.classList.remove('animate-shake'); void box.offsetWidth; box.classList.add('animate-shake'); }
+        function showApp() { document.getElementById('login-screen').classList.add('opacity-0', 'pointer-events-none'); setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('main-app').classList.remove('hidden'); scanHistory = JSON.parse(sessionStorage.getItem('scan_history') || '[]'); updateStatsUI(); }, 300); }
+        function logout() { stopCamera(); sessionStorage.removeItem('staff_logged_in'); sessionStorage.removeItem('staff_name'); sessionStorage.removeItem('scan_history'); scanHistory = []; document.getElementById('pin-input').value = ''; document.getElementById('main-app').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden', 'opacity-0', 'pointer-events-none'); }
 
         function updateStatsUI() {
-            document.getElementById('scan-count').innerText = scanHistory.length;
-            const listDiv = document.getElementById('history-list');
-            if (scanHistory.length === 0) {
-                listDiv.innerHTML = '<div class="text-center text-gray-400 mt-10 text-xs tracking-widest uppercase font-light">No records yet</div>'; return;
-            }
+            document.getElementById('scan-count').innerText = scanHistory.length; const listDiv = document.getElementById('history-list');
+            if (scanHistory.length === 0) return listDiv.innerHTML = '<div class="text-center text-gray-400 mt-10 text-xs tracking-widest uppercase font-light">No records yet</div>';
             let html = '';
             scanHistory.forEach((item, index) => {
-                // อัปเดตให้รองรับทั้งประวัติเก่า (มีแต่ชื่อ/รหัส) และประวัติใหม่ (แยกรหัสและชื่อชัดเจน)
-                const displayId = item.studentId ? item.studentId : (item.name || '-'); 
-                const displayName = item.studentId ? item.name : '';
-
-                html += `
-                <div class="flex items-start justify-between py-4 border-b border-gray-100 last:border-0">
-                    <div class="flex items-start gap-4">
-                        <span class="text-gray-300 font-light text-sm w-4 pt-0.5">${scanHistory.length - index}.</span>
-                        <div class="flex flex-col">
-                            <span class="font-medium text-black text-sm">${displayId}</span>
-                            ${displayName ? `<span class="text-xs text-gray-500 font-light mt-0.5">${displayName}</span>` : ''}
-                        </div>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-light tracking-wide pt-0.5">${item.time}</span>
-                </div>`;
+                const displayId = item.studentId ? item.studentId : (item.name || '-'); const displayName = item.studentId ? item.name : '';
+                html += `<div class="flex items-start justify-between py-4 border-b border-gray-100 last:border-0"><div class="flex items-start gap-4"><span class="text-gray-300 font-light text-sm w-4 pt-0.5">${scanHistory.length - index}.</span><div class="flex flex-col"><span class="font-medium text-black text-sm tracking-wide uppercase">${displayId}</span>${displayName && displayName !== 'ไม่พบชื่อในระบบ' ? `<span class="text-xs text-gray-500 font-light mt-0.5">${displayName}</span>` : ''}</div></div><span class="text-[10px] text-gray-400 font-light tracking-wide pt-0.5">${item.time}</span></div>`;
             });
             listDiv.innerHTML = html;
         }
 
-        function openHistory() {
-            const modal = document.getElementById('history-modal'); const box = document.getElementById('history-box');
-            modal.classList.remove('hidden'); modal.style.display = 'flex';
-            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('translate-y-full'); }, 10);
-        }
-
-        function closeHistory() {
-            const modal = document.getElementById('history-modal'); const box = document.getElementById('history-box');
-            box.classList.add('translate-y-full'); modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.add('hidden'); modal.style.display = 'none'; }, 300);
-        }
-
-        function showToast(status, title, msg) {
-            const wrapper = document.getElementById('toast-wrapper');
-            const icon = document.getElementById('toast-icon');
-            
-            document.getElementById('toast-title').innerText = title;
-            document.getElementById('toast-msg').innerText = msg;
-
-            if(status === 'loading') { 
-                icon.innerHTML = icons.loading; 
-            } else if(status === 'success') { 
-                icon.innerHTML = icons.success; 
-            }
-            
-            wrapper.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
-        }
-
+        function openHistory() { document.getElementById('history-modal').classList.remove('hidden'); document.getElementById('history-modal').style.display = 'flex'; setTimeout(() => { document.getElementById('history-modal').classList.remove('opacity-0'); document.getElementById('history-box').classList.remove('translate-y-full'); }, 10); }
+        function closeHistory() { document.getElementById('history-box').classList.add('translate-y-full'); document.getElementById('history-modal').classList.add('opacity-0'); setTimeout(() => { document.getElementById('history-modal').classList.add('hidden'); document.getElementById('history-modal').style.display = 'none'; }, 300); }
+        function showToast(status, title, msg) { const w = document.getElementById('toast-wrapper'); document.getElementById('toast-title').innerText = title; document.getElementById('toast-msg').innerText = msg; document.getElementById('toast-icon').innerHTML = status === 'loading' ? icons.loading : icons.success; w.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none'); }
         function hideToast() { document.getElementById('toast-wrapper').classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none'); }
-
+        
         function showResultModal(status, title, name, desc) {
-            const modal = document.getElementById('result-modal'); const box = document.getElementById('result-box');
-            const iconBg = document.getElementById('rm-icon-bg'); const icon = document.getElementById('rm-icon');
-            
-            document.getElementById('rm-title').innerText = title;
-            document.getElementById('rm-name').innerText = name;
-            document.getElementById('rm-desc').innerText = desc;
-
-            if (status === "duplicate") {
-                iconBg.className = "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-gray-100 text-black";
-                icon.innerHTML = icons.duplicate;
-            } else {
-                iconBg.className = "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-white text-black";
-                icon.innerHTML = icons.error;
-            }
-            modal.classList.remove('hidden'); modal.style.display = 'flex';
-            requestAnimationFrame(() => { modal.classList.remove('opacity-0'); box.classList.remove('translate-y-full'); });
+            const m = document.getElementById('result-modal'); const b = document.getElementById('result-box'); const ib = document.getElementById('rm-icon-bg');
+            document.getElementById('rm-title').innerText = title; document.getElementById('rm-name').innerText = name; document.getElementById('rm-desc').innerText = desc;
+            ib.className = status === "duplicate" ? "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-gray-100 text-black" : "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-white text-black";
+            document.getElementById('rm-icon').innerHTML = status === "duplicate" ? icons.duplicate : icons.error;
+            m.classList.remove('hidden'); m.style.display = 'flex'; requestAnimationFrame(() => { m.classList.remove('opacity-0'); b.classList.remove('translate-y-full'); });
         }
-
-        function resumeScanFromModal() {
-            const modal = document.getElementById('result-modal'); const box = document.getElementById('result-box');
-            box.classList.add('translate-y-full'); modal.classList.add('opacity-0');
-            setTimeout(() => { 
-                modal.classList.add('hidden'); modal.style.display = 'none'; 
-                if (stream && stream.active) { document.getElementById("scan-line").style.display = "block"; scanning = true; requestAnimationFrame(tick); }
-            }, 300);
-        }
+        function resumeScanFromModal() { document.getElementById('result-box').classList.add('translate-y-full'); document.getElementById('result-modal').classList.add('opacity-0'); setTimeout(() => { document.getElementById('result-modal').classList.add('hidden'); document.getElementById('result-modal').style.display = 'none'; if (stream && stream.active) { document.getElementById("scan-line").style.display = "block"; scanning = true; requestAnimationFrame(tick); } }, 300); }
 
         async function startCamera() {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            if (ua.indexOf("Line") > -1 || ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1) { alert("Please open in Safari or Chrome"); return; }
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { alert("Browser not supported"); return; }
-            try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }); } 
-            catch (err) { try { stream = await navigator.mediaDevices.getUserMedia({ video: true }); } catch (e) { alert("Camera Error: " + e.message); return; } }
-            
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return alert("Browser not supported");
+            try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }); } catch (err) { try { stream = await navigator.mediaDevices.getUserMedia({ video: true }); } catch (e) { return alert("Camera Error"); } }
             video.srcObject = stream; video.setAttribute("playsinline", true);
-            video.onloadedmetadata = () => {
-                video.play().then(() => {
-                    document.getElementById("camera-placeholder").style.display = "none";
-                    document.getElementById("scan-line").style.display = "block";
-                    document.getElementById("viewfinder").classList.remove("hidden");
-                    document.getElementById("btn-start").classList.add("hidden");
-                    document.getElementById("btn-stop").classList.remove("hidden");
-                    scanning = true; requestAnimationFrame(tick);
-                });
-            };
+            video.onloadedmetadata = () => { video.play().then(() => { document.getElementById("camera-placeholder").style.display = "none"; document.getElementById("scan-line").style.display = "block"; document.getElementById("viewfinder").classList.remove("hidden"); document.getElementById("btn-start").classList.add("hidden"); document.getElementById("btn-stop").classList.remove("hidden"); scanning = true; requestAnimationFrame(tick); }); };
         }
-
-        function stopCamera() {
-            scanning = false; if (stream) { stream.getTracks().forEach(track => track.stop()); stream = null; }
-            video.srcObject = null; document.getElementById("scan-line").style.display = "none";
-            document.getElementById("viewfinder").classList.add("hidden"); document.getElementById("camera-placeholder").style.display = "flex";
-            document.getElementById("btn-start").classList.remove("hidden"); document.getElementById("btn-stop").classList.add("hidden");
-        }
+        function stopCamera() { scanning = false; if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; } video.srcObject = null; document.getElementById("scan-line").style.display = "none"; document.getElementById("viewfinder").classList.add("hidden"); document.getElementById("camera-placeholder").style.display = "flex"; document.getElementById("btn-start").classList.remove("hidden"); document.getElementById("btn-stop").classList.add("hidden"); }
 
         function tick() {
             if (video.readyState === video.HAVE_ENOUGH_DATA && scanning) {
-                canvasElement.height = video.videoHeight; canvasElement.width = video.videoWidth;
-                canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-                var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-                var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
-
+                canvasElement.height = video.videoHeight; canvasElement.width = video.videoWidth; canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                var imgData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height); var code = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "dontInvert" });
                 if (code) { processQRCode(code.data); } else { requestAnimationFrame(tick); }
             } else if (scanning) { requestAnimationFrame(tick); }
         }
 
         function processQRCode(qrData) {
-            scanning = false; document.getElementById("scan-line").style.display = "none";
-            showToast("loading", "PROCESSING", "Please wait...");
-            
-            const staffName = sessionStorage.getItem('staff_name') || 'Unknown';
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ qrData: qrData, scannedBy: staffName })
-            })
-            .then(response => response.json())
-            .then(res => {
+            scanning = false; document.getElementById("scan-line").style.display = "none"; showToast("loading", "PROCESSING", "Please wait...");
+            fetch(GOOGLE_SCRIPT_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ qrData: qrData, scannedBy: sessionStorage.getItem('staff_name') || 'Unknown' }) })
+            .then(r => r.json()).then(res => {
                 if (res.status === "success") {
-                    const timeNow = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-                    
-                    // บันทึกทั้ง รหัสนิสิต(studentId) และ ชื่อ(name)
-                    scanHistory.unshift({ 
-                        studentId: res.studentId || qrData,
-                        name: res.name || 'ไม่พบรายชื่อ', 
-                        time: timeNow 
-                    });
-                    
-                    sessionStorage.setItem('scan_history', JSON.stringify(scanHistory));
-                    updateStatsUI();
-                    
-                    const idText = res.studentId ? `รหัส: ${res.studentId}` : `REF: ${qrData}`;
-                    showToast("success", "SUCCESS", `${idText} | ${res.name}`);
-                    
-                    setTimeout(() => {
-                        hideToast();
-                        if (stream && stream.active) {
-                            document.getElementById("scan-line").style.display = "block";
-                            scanning = true; requestAnimationFrame(tick);
-                        }
-                    }, 2000);
-                    
-                } else if (res.status === "duplicate") {
-                    hideToast(); showResultModal("duplicate", "ALREADY CHECKED-IN", res.name, res.message);
-                } else {
-                    hideToast(); showResultModal("error", "ERROR", qrData, res.message);
-                }
-            }).catch(error => {
-                hideToast(); showResultModal("error", "CONNECTION FAILED", "Unable to reach database", error.message);
-            });
+                    scanHistory.unshift({ studentId: res.studentId || qrData, name: res.name || 'ไม่พบรายชื่อ', time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) });
+                    sessionStorage.setItem('scan_history', JSON.stringify(scanHistory)); updateStatsUI();
+                    showToast("success", "SUCCESS", `${res.studentId ? `รหัส: ${res.studentId}` : `REF: ${qrData}`} | ${res.name}`);
+                    setTimeout(() => { hideToast(); if (stream && stream.active) { document.getElementById("scan-line").style.display = "block"; scanning = true; requestAnimationFrame(tick); } }, 2000);
+                } else if (res.status === "duplicate") { hideToast(); showResultModal("duplicate", "ALREADY CHECKED-IN", res.name, res.message); } 
+                else { hideToast(); showResultModal("error", "ERROR", qrData, res.message); }
+            }).catch(e => { hideToast(); showResultModal("error", "CONNECTION FAILED", "Unable to reach database", e.message); });
         }
     </script>
 </body>
