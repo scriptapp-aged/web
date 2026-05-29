@@ -19,11 +19,11 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans relative selection:bg-gray-200">
 
-    <!-- 1. LOGIN SCREEN -->
+    <!-- LOGIN SCREEN -->
     <div id="login-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white transition-opacity duration-300">
         <div class="w-full max-w-sm flex flex-col items-center bg-white p-8 animate-fade-in">
             <div class="mb-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div>
-            <div class="text-center mb-8"><h1 class="text-lg font-semibold tracking-widest text-black mb-2">ADMIN DASHBOARD</h1><p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบเท่านั้น</p></div>
+            <div class="text-center mb-8"><h1 class="text-lg font-semibold tracking-widest text-black mb-2">DASHBOARD ACCESS</h1><p class="text-gray-400 text-xs font-light mb-5">เฉพาะผู้ดูแลระบบ (เมธี) เท่านั้น</p></div>
             <div class="w-full relative mb-8" id="pin-container">
                 <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="ADMIN PIN" maxlength="6" class="pin-input w-full bg-transparent border-b border-gray-300 text-black text-center text-3xl font-light py-4 focus:outline-none focus:border-black transition-colors placeholder:text-gray-200 placeholder:tracking-widest">
                 <p id="login-error" class="absolute -bottom-6 left-0 w-full text-center text-black text-xs opacity-0 transition-opacity font-medium"></p>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <!-- 2. MAIN DASHBOARD -->
+    <!-- MAIN DASHBOARD -->
     <div id="dashboard-app" class="hidden flex-col min-h-screen">
         <header class="pt-8 px-6 md:px-12 xl:px-24 z-10 animate-fade-in border-b border-gray-100 pb-6 bg-white sticky top-0">
             <div class="max-w-7xl mx-auto w-full">
@@ -87,7 +87,10 @@
             <div id="view-staff" class="hidden flex-col animate-fade-in">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xs font-semibold tracking-widest text-black uppercase">Staff Management</h3>
-                    <button onclick="fetchStaffData()" class="text-[10px] font-medium tracking-widest uppercase border border-gray-200 px-3 py-1 hover:bg-gray-50">Refresh</button>
+                    <div class="flex gap-2">
+                        <button onclick="openAddStaffModal()" class="text-[10px] font-medium tracking-widest uppercase border border-black bg-black text-white px-3 py-1 hover:bg-gray-800 transition-colors">Add Staff</button>
+                        <button onclick="fetchStaffData()" class="text-[10px] font-medium tracking-widest uppercase border border-gray-200 px-3 py-1 hover:bg-gray-50 transition-colors">Refresh</button>
+                    </div>
                 </div>
                 <div class="border border-gray-200 overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -116,7 +119,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </div>
 
@@ -130,6 +132,36 @@
             <div class="flex gap-4">
                 <button onclick="closeResetModal()" class="flex-1 border border-black text-black font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-50">CANCEL</button>
                 <button onclick="saveNewPin()" id="btn-save-pin" class="flex-1 bg-black text-white font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-800">SAVE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add Staff -->
+    <div id="add-staff-modal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/80 backdrop-blur-md transition-opacity opacity-0">
+        <div class="bg-white p-8 w-full max-w-sm transform scale-95 transition-transform duration-300" id="add-staff-box">
+            <h3 class="text-lg font-semibold tracking-widest text-black uppercase mb-6">Add New Staff</h3>
+            
+            <div class="space-y-4 mb-8">
+                <div>
+                    <label class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 block">Staff Name</label>
+                    <input type="text" id="add-staff-name" placeholder="ชื่อ-นามสกุล หรือชื่อจุดสแกน" class="w-full bg-transparent border-b border-gray-300 text-sm font-medium py-2 focus:outline-none focus:border-black transition-all">
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 block">Role (ระดับสิทธิ์)</label>
+                    <select id="add-staff-role" class="w-full bg-transparent border-b border-gray-300 text-sm font-medium py-2 focus:outline-none focus:border-black transition-all cursor-pointer">
+                        <option value="Staff">Staff (สำหรับสแกนเข้างาน)</option>
+                        <option value="Admin">Admin (สำหรับดูยอดสรุป)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 block">PIN (4-6 digits)</label>
+                    <input type="text" id="add-staff-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="ตั้งรหัสตัวเลขล้วน" class="w-full bg-transparent border-b border-gray-300 text-sm font-mono py-2 focus:outline-none focus:border-black transition-all placeholder:font-sans">
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="closeAddStaffModal()" class="flex-1 border border-black text-black font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-50 transition-colors">CANCEL</button>
+                <button onclick="saveNewStaff()" id="btn-save-staff" class="flex-1 bg-black text-white font-medium text-xs tracking-widest uppercase py-3 hover:bg-gray-800 transition-colors">ADD STAFF</button>
             </div>
         </div>
     </div>
@@ -152,30 +184,22 @@
                 showDashboard();
             }
             
-            // โหลดลิงก์ Sheet เก่าที่เคยใส่ไว้
             const savedSheet = localStorage.getItem('admin_sheet_url');
-            if (savedSheet) {
-                document.getElementById('sheet-url-input').value = savedSheet;
-            }
+            if (savedSheet) document.getElementById('sheet-url-input').value = savedSheet;
         };
 
         async function checkAdminLogin() {
             const pin = document.getElementById('pin-input').value, btnText = document.getElementById('btn-login-text'), errorEl = document.getElementById('login-error');
             
-            // ล็อกรหัสผ่านให้เป็น 1111 และเป็นชื่อ "เมธี" เท่านั้น
-            if (pin !== '1111') {
-                return showLoginError("รหัสไม่ถูกต้อง (สิทธิ์เฉพาะเมธี)");
-            }
+            // Bypass ด้วยรหัส 1111 (เมธี)
+            if (pin !== '1111') return showLoginError("รหัสไม่ถูกต้อง (สิทธิ์เฉพาะเมธี)");
 
             btnText.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="ml-2">AUTHENTICATING...</span>';
             errorEl.classList.remove('opacity-100');
             
-            // เข้าสู่ระบบทันทีโดยไม่ต้องเช็คจาก Google Sheet (เพื่อความรวดเร็วและบล็อกสตาฟฟ์คนอื่น)
             setTimeout(() => {
-                sessionStorage.setItem('dashboard_admin_logged_in', 'true'); 
-                sessionStorage.setItem('dashboard_admin_name', 'เมธี');
-                document.getElementById('admin-name-display').innerText = "ADMIN: เมธี"; 
-                btnText.innerHTML = "SUCCESS"; 
+                sessionStorage.setItem('dashboard_admin_logged_in', 'true'); sessionStorage.setItem('dashboard_admin_name', 'เมธี');
+                document.getElementById('admin-name-display').innerText = "ADMIN: เมธี"; btnText.innerHTML = "SUCCESS"; 
                 setTimeout(() => showDashboard(), 400);
             }, 600);
         }
@@ -197,8 +221,7 @@
         function switchTab(tabName) {
             const tabs = ['stats', 'staff', 'sheet'];
             tabs.forEach(t => {
-                const btn = document.getElementById('tab-' + t);
-                const view = document.getElementById('view-' + t);
+                const btn = document.getElementById('tab-' + t), view = document.getElementById('view-' + t);
                 if (t === tabName) {
                     btn.className = "text-sm font-semibold tracking-widest uppercase pb-2 border-b-2 border-black text-black whitespace-nowrap";
                     view.classList.remove('hidden'); view.classList.add('flex');
@@ -207,32 +230,19 @@
                     view.classList.add('hidden'); view.classList.remove('flex');
                 }
             });
-
             if (tabName === 'staff') fetchStaffData();
-            if (tabName === 'sheet') {
-                const url = document.getElementById('sheet-url-input').value;
-                const container = document.getElementById('sheet-iframe-container');
-                if (url && !container.innerHTML.includes('iframe')) loadSheetIframe();
-            }
+            if (tabName === 'sheet') { const url = document.getElementById('sheet-url-input').value; const container = document.getElementById('sheet-iframe-container'); if (url && !container.innerHTML.includes('iframe')) loadSheetIframe(); }
         }
 
         // --- Sheet Iframe Embed ---
         function loadSheetIframe() {
             const url = document.getElementById('sheet-url-input').value.trim();
             if(!url) return;
-            
-            // ดึง Sheet ID ออกมาจากลิงก์
             const match = url.match(/\/d\/(.*?)(\/|$)/);
             if (match && match[1]) {
-                const sheetId = match[1];
-                // แปลงเป็นลิงก์สำหรับฝัง (Embed)
-                const embedUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?widget=true&headers=true`;
-                
-                document.getElementById('sheet-iframe-container').innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0"></iframe>`;
-                localStorage.setItem('admin_sheet_url', url); // บันทึกไว้ใช้รอบหน้า
-            } else {
-                alert('รูปแบบลิงก์ Google Sheet ไม่ถูกต้องครับ (ต้องเป็นลิงก์ที่แชร์จาก Google Sheet)');
-            }
+                document.getElementById('sheet-iframe-container').innerHTML = `<iframe src="https://docs.google.com/spreadsheets/d/${match[1]}/htmlembed?widget=true&headers=true" class="w-full h-full border-0"></iframe>`;
+                localStorage.setItem('admin_sheet_url', url); 
+            } else { alert('รูปแบบลิงก์ Google Sheet ไม่ถูกต้องครับ'); }
         }
 
         // --- Data Fetching ---
@@ -255,9 +265,7 @@
         }
 
         async function fetchAttendanceData() {
-            // หยุดดึงข้อมูลออโต้ถ้าอยู่หน้าอื่นที่ไม่ใช่ Overview เพื่อประหยัดเน็ต
             if(document.getElementById('view-stats').classList.contains('hidden')) return;
-
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getAttendance"); const result = await response.json();
                 if (result.status === "success") {
@@ -273,7 +281,6 @@
                     });
 
                     if (checkInList.length === 0) return listContent.innerHTML = `<div class="flex flex-col items-center justify-center h-[200px] text-center"><p class="text-xs text-gray-400 tracking-widest uppercase font-light">ยังไม่มีผู้ลงทะเบียนเช็คอิน</p></div>`;
-                    
                     if (isFirstLoad) {
                         listContent.innerHTML = ''; let firstLoadIndex = currentCheckedIn;
                         checkInList.forEach(p => { renderedRecords.add(p.studentId + p.timeStr); listContent.appendChild(createRecordItem(p, firstLoadIndex, false)); firstLoadIndex--; });
@@ -309,17 +316,10 @@
                                 <td class="p-4 text-right"><button onclick="openResetModal('${staff.name}', ${staff.row})" class="text-[10px] uppercase tracking-widest font-medium border border-gray-300 text-black hover:bg-black hover:text-white px-3 py-1.5 transition-colors">RESET PIN</button></td>
                             </tr>`;
                         });
-                    } else {
-                        html = '<tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs font-light">ไม่พบข้อมูลสตาฟฟ์ในระบบ</td></tr>';
-                    }
+                    } else { html = '<tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs font-light">ไม่พบข้อมูลสตาฟฟ์ในระบบ</td></tr>'; }
                     document.getElementById('staff-table-body').innerHTML = html;
-                } else {
-                    document.getElementById('staff-table-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Error: ${res.message}</td></tr>`;
-                }
-            } catch (err) { 
-                console.error(err);
-                document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Failed to load data (โปรด Deploy Google Script เป็น New Version)</td></tr>'; 
-            }
+                } else { document.getElementById('staff-table-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Error: ${res.message}</td></tr>`; }
+            } catch (err) { document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-500 text-xs tracking-widest uppercase">Failed to load data (โปรด Deploy Google Script เป็น New Version)</td></tr>'; }
         }
 
         function openResetModal(name, row) {
@@ -339,6 +339,28 @@
                 if (res.status === "success") { closeResetModal(); fetchStaffData(); }
             } catch (err) { alert("เกิดข้อผิดพลาด"); }
             btn.innerText = "SAVE";
+        }
+
+        // --- Add Staff Functions ---
+        function openAddStaffModal() {
+            document.getElementById('add-staff-name').value = ""; document.getElementById('add-staff-role').value = "Staff"; document.getElementById('add-staff-pin').value = "";
+            const m = document.getElementById('add-staff-modal'), b = document.getElementById('add-staff-box');
+            m.classList.remove('hidden'); m.style.display = 'flex'; setTimeout(() => { m.classList.remove('opacity-0'); b.classList.remove('scale-95'); }, 10);
+        }
+        function closeAddStaffModal() { const m = document.getElementById('add-staff-modal'), b = document.getElementById('add-staff-box'); m.classList.add('opacity-0'); b.classList.add('scale-95'); setTimeout(() => { m.classList.add('hidden'); m.style.display = 'none'; }, 300); }
+
+        async function saveNewStaff() {
+            const name = document.getElementById('add-staff-name').value.trim(); const role = document.getElementById('add-staff-role').value; const pin = document.getElementById('add-staff-pin').value.trim(); const btn = document.getElementById('btn-save-staff');
+            if (!name) return alert("กรุณาระบุชื่อสตาฟฟ์");
+            if (!pin || pin.length < 4) return alert("รหัสผ่านต้องมีอย่างน้อย 4 หลัก");
+            
+            btn.innerText = "SAVING...";
+            try {
+                const r = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "addStaff", name: name, role: role, pin: pin }), redirect: 'follow' });
+                const res = await r.json();
+                if (res.status === "success") { closeAddStaffModal(); fetchStaffData(); } else { alert(res.message); }
+            } catch (err) { alert("เกิดข้อผิดพลาดในการเชื่อมต่อ"); }
+            btn.innerText = "ADD STAFF";
         }
     </script>
 </body>
