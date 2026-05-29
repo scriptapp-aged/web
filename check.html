@@ -15,9 +15,7 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Kanit', 'sans-serif'] },
-                    colors: {
-                        black: '#111111', // Pure premium black
-                    },
+                    colors: { black: '#111111' },
                     animation: {
                         'fade-in': 'fadeIn 0.3s ease-out forwards',
                         'shake': 'shake 0.4s ease-in-out both',
@@ -36,7 +34,6 @@
         body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
         
-        /* Clean Monochrome Scanner Line */
         .scan-line {
             position: absolute;
             width: 100%; height: 1px;
@@ -45,35 +42,25 @@
             animation: scan 2s ease-in-out infinite alternate;
             z-index: 20;
         }
-        @keyframes scan { 
-            0% { top: 5%; opacity: 0; } 
-            10%, 90% { opacity: 1; } 
-            100% { top: 95%; opacity: 0; } 
-        }
-
-        /* Minimal input styling */
-        .pin-input {
-            letter-spacing: 0.7em;
-            text-security: disc;
-            -webkit-text-security: disc;
-        }
+        @keyframes scan { 0% { top: 5%; opacity: 0; } 10%, 90% { opacity: 1; } 100% { top: 95%; opacity: 0; } }
+        .pin-input { letter-spacing: 0.7em; text-security: disc; -webkit-text-security: disc; }
     </style>
 </head>
 <body class="bg-white text-black min-h-screen flex flex-col safe-area-inset relative antialiased selection:bg-gray-200">
     
-    <!-- ========================================== -->
     <!-- 1. LOGIN SCREEN -->
-    <!-- ========================================== -->
     <div id="login-screen" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white transition-opacity duration-300">
         <div class="w-full max-w-sm flex flex-col items-center bg-white p-8 animate-fade-in">
-            <div class="mb-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-12 h-12 text-black mx-auto">
+            <div class="mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-10 h-10 text-black mx-auto">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
             </div>
             
-            <h1 class="text-xl font-medium tracking-wide text-black mb-1">STAFF ACCESS</h1>
-            <p class="text-gray-400 text-sm mb-10 font-light">กรุณาใส่รหัสเพื่อเข้าสู่ระบบ</p>
+            <div class="text-center mb-10">
+                <h1 class="text-lg font-semibold tracking-widest text-black mb-2">STAFF ACCESS</h1>
+                <p class="text-gray-400 text-xs font-light">กรุณาใส่รหัสเพื่อเข้าสู่ระบบ</p>
+            </div>
 
             <div class="w-full relative mb-8" id="pin-container">
                 <input type="password" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="PIN" maxlength="6" 
@@ -88,18 +75,13 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
     <!-- 2. MAIN APP -->
-    <!-- ========================================== -->
     <main id="main-app" class="flex-grow flex flex-col w-full max-w-md mx-auto relative h-screen hidden">
         
-        <!-- Header Section -->
         <header class="pt-8 px-6 z-10 animate-fade-in">
-            <!-- Top Bar -->
             <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
                 <h1 class="text-sm font-semibold tracking-widest text-black uppercase">Scanner</h1>
                 
-                <!-- User Pill -->
                 <div class="flex items-center gap-4">
                     <span class="text-xs font-medium text-gray-500" id="display-staff-name">Name</span>
                     <div class="w-px h-3 bg-gray-300"></div>
@@ -109,14 +91,12 @@
                 </div>
             </div>
 
-            <!-- Minimal Project Title -->
             <div class="mb-8">
                 <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-1">โครงการปฐมนิเทศ 2569</p>
                 <h2 class="text-2xl font-semibold text-black leading-tight mb-2">เกษตรและสิ่งแวดล้อมศึกษา</h2>
                 <p class="text-xs text-gray-400 font-light tracking-wide">14 มิถุนายน 2569</p>
             </div>
 
-            <!-- Minimal Stats -->
             <div class="flex justify-between items-center px-4 py-3 border border-gray-200">
                 <div class="flex items-center gap-2">
                     <span class="text-xs text-gray-500 uppercase tracking-wider">Scanned</span>
@@ -128,26 +108,23 @@
             </div>
         </header>
 
-        <!-- Minimal Toast -->
-        <div id="toast-wrapper" class="absolute top-8 inset-x-6 z-50 transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none">
+        <!-- Minimal Toast (ลอยลงมาจากด้านบน) -->
+        <div id="toast-wrapper" class="absolute top-8 inset-x-6 z-50 transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none shadow-xl">
             <div id="toast-box" class="bg-black text-white px-5 py-4 flex items-center gap-4">
                 <div id="toast-icon" class="shrink-0"></div>
                 <div class="flex-grow">
                     <h4 id="toast-title" class="text-sm font-medium"></h4>
-                    <p id="toast-msg" class="text-[11px] text-gray-400 mt-0.5 truncate max-w-[200px]"></p>
+                    <p id="toast-msg" class="text-[11px] text-gray-400 mt-0.5 max-w-[200px]"></p>
                 </div>
             </div>
         </div>
 
-        <!-- Camera Section -->
         <section id="camera-section" class="flex-grow flex flex-col justify-center items-center px-6 relative z-0 animate-fade-in mt-4">
             <div class="relative w-full aspect-[3/4] max-h-[55vh] overflow-hidden bg-gray-50 border border-gray-200">
-                <!-- เอาคลาส grayscale และ opacity-90 ออก เพื่อให้กล้องเป็นสีปกติและชัดเจน -->
                 <video id="video" playsinline autoplay muted class="w-full h-full object-cover"></video>
                 <div id="scan-line" class="scan-line hidden"></div>
                 <canvas id="canvas" hidden></canvas>
                 
-                <!-- Ultra Minimal Viewfinder -->
                 <div id="viewfinder" class="absolute inset-0 pointer-events-none hidden flex items-center justify-center">
                     <div class="w-48 h-48 border border-white/40 relative mix-blend-difference">
                         <div class="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-white"></div>
@@ -157,7 +134,6 @@
                     </div>
                 </div>
                 
-                <!-- Placeholder -->
                 <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10">
                     <svg class="h-8 w-8 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     <p class="text-xs text-gray-400 font-light tracking-widest uppercase">Camera Ready</p>
@@ -165,7 +141,6 @@
             </div>
         </section>
 
-        <!-- Controls Section -->
         <footer class="mt-auto px-6 pb-8 pt-6 z-20 animate-fade-in">
             <button id="btn-start" onclick="startCamera()" class="w-full bg-black hover:bg-gray-800 text-white font-medium tracking-wide py-4 transition-colors active:scale-95 flex items-center justify-center gap-2">
                 START SCANNING
@@ -178,11 +153,7 @@
             </div>
         </footer>
 
-        <!-- ========================================== -->
         <!-- MODALS -->
-        <!-- ========================================== -->
-        
-        <!-- Minimal History -->
         <div id="history-modal" class="fixed inset-0 z-[200] hidden flex-col justify-end bg-white/90 backdrop-blur-sm transition-opacity opacity-0">
             <div id="history-box" class="bg-white w-full max-w-md mx-auto h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 border-t border-black">
                 <div class="px-6 pt-8 pb-6 flex justify-between items-center border-b border-gray-100">
@@ -195,20 +166,15 @@
             </div>
         </div>
 
-        <!-- Minimal Result -->
+        <!-- กล่องสำหรับแจ้งเตือนกรณีสแกนซ้ำ หรือ Error (ยังคงเก็บไว้เผื่อมีปัญหา) -->
         <div id="result-modal" class="fixed inset-0 z-[150] hidden flex-col justify-end bg-black/80 backdrop-blur-md transition-opacity opacity-0">
             <div id="result-box" class="bg-white p-8 w-full max-w-md mx-auto transform translate-y-full transition-transform duration-300 flex flex-col items-center text-center">
-                
-                <div id="rm-icon-bg" class="w-16 h-16 flex items-center justify-center mb-6">
-                    <div id="rm-icon"></div>
-                </div>
-                
+                <div id="rm-icon-bg" class="w-16 h-16 flex items-center justify-center mb-6"><div id="rm-icon"></div></div>
                 <h3 id="rm-title" class="text-xl font-medium text-black mb-1"></h3>
                 <p id="rm-name" class="text-lg font-semibold text-black mb-1"></p>
                 <p id="rm-desc" class="text-xs text-gray-500 mb-8 font-light"></p>
-                
-                <button onclick="resumeScan()" id="btn-resume-scan" class="w-full text-white font-medium tracking-widest uppercase py-4 transition-all text-sm border border-black bg-black">
-                    CONTINUE
+                <button onclick="resumeScanFromModal()" class="w-full text-white font-medium tracking-widest uppercase py-4 transition-all text-sm border border-black bg-black">
+                    ACKNOWLEDGE
                 </button>
             </div>
         </div>
@@ -217,7 +183,7 @@
 
     <script>
         // =======================================================
-        // ⚠️ เปลี่ยนเป็น URL ของ Google Apps Script ของคุณ
+        // ⚠️ ใส่ URL ของคุณ
         // =======================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec"; 
 
@@ -229,9 +195,8 @@
         const canvasElement = document.getElementById("canvas");
         const canvas = canvasElement.getContext("2d", { willReadFrequently: true });
         
-        // Strict B&W Icons
         const icons = {
-            success: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 13l4 4L19 7" /></svg>`,
+            success: `<svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`,
             duplicate: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`,
             error: `<svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" /></svg>`,
             loading: `<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`
@@ -253,20 +218,18 @@
             const btnText = document.getElementById('btn-login-text');
             const container = document.getElementById('pin-container');
 
-            if (pin.length < 4) { showLoginError("กรุณากรอกรหัสอย่างน้อย 4 หลัก"); return; }
-            if (GOOGLE_SCRIPT_URL.includes("ใส่_ID")) { showLoginError("⚠️ ลิงก์ URL ไม่ถูกต้อง"); return; }
+            if (pin.length < 4) { showLoginError("PIN 4 digits minimum"); return; }
 
             btnText.innerHTML = icons.loading + ' <span class="ml-2">AUTHENTICATING...</span>';
             errorText.classList.remove('opacity-100');
             
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', redirect: 'follow',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: "login", pin: pin })
                 });
 
-                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.ok) throw new Error("Network error");
                 const res = await response.json();
 
                 if (res.status === "success") {
@@ -276,25 +239,17 @@
                     
                     btnText.innerHTML = 'SUCCESS';
                     setTimeout(() => showApp(), 400);
-                } else {
-                    showLoginError(res.message || "รหัสไม่ถูกต้อง");
-                    btnText.innerHTML = 'LOGIN';
-                }
-            } catch (error) {
-                showLoginError("ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
-                btnText.innerHTML = 'LOGIN';
-            }
+                } else { showLoginError(res.message); btnText.innerHTML = 'LOGIN'; }
+            } catch (error) { showLoginError("Connection Failed"); btnText.innerHTML = 'LOGIN'; }
         }
 
         function showLoginError(msg) {
             const errorText = document.getElementById('login-error');
             const container = document.getElementById('pin-container');
-            errorText.innerText = msg;
-            errorText.classList.add('opacity-100');
+            errorText.innerText = msg; errorText.classList.add('opacity-100');
             document.getElementById('pin-input').value = '';
             container.classList.remove('animate-shake');
-            void container.offsetWidth; 
-            container.classList.add('animate-shake');
+            void container.offsetWidth; container.classList.add('animate-shake');
         }
 
         function showApp() {
@@ -308,9 +263,8 @@
         }
 
         function logout() {
-            stopCamera();
-            sessionStorage.removeItem('staff_logged_in'); sessionStorage.removeItem('staff_name'); sessionStorage.removeItem('scan_history');
-            scanHistory = []; document.getElementById('pin-input').value = '';
+            stopCamera(); sessionStorage.removeItem('staff_logged_in'); sessionStorage.removeItem('staff_name'); 
+            sessionStorage.removeItem('scan_history'); scanHistory = []; document.getElementById('pin-input').value = '';
             document.getElementById('main-app').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden', 'opacity-0', 'pointer-events-none');
         }
@@ -323,44 +277,34 @@
             }
             let html = '';
             scanHistory.forEach((item, index) => {
-                html += `
-                <div class="flex items-center justify-between py-4 border-b border-gray-100 last:border-0">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-300 font-light text-sm w-4">${scanHistory.length - index}.</span>
-                        <span class="font-medium text-black text-sm">${item.name}</span>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-light tracking-wide">${item.time}</span>
-                </div>`;
+                html += `<div class="flex items-center justify-between py-4 border-b border-gray-100 last:border-0"><div class="flex items-center gap-4"><span class="text-gray-300 font-light text-sm w-4">${scanHistory.length - index}.</span><span class="font-medium text-black text-sm">${item.name}</span></div><span class="text-[10px] text-gray-400 font-light tracking-wide">${item.time}</span></div>`;
             });
             listDiv.innerHTML = html;
         }
 
         function openHistory() {
-            const modal = document.getElementById('history-modal');
-            const box = document.getElementById('history-box');
+            const modal = document.getElementById('history-modal'); const box = document.getElementById('history-box');
             modal.classList.remove('hidden'); modal.style.display = 'flex';
             setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('translate-y-full'); }, 10);
         }
 
         function closeHistory() {
-            const modal = document.getElementById('history-modal');
-            const box = document.getElementById('history-box');
+            const modal = document.getElementById('history-modal'); const box = document.getElementById('history-box');
             box.classList.add('translate-y-full'); modal.classList.add('opacity-0');
             setTimeout(() => { modal.classList.add('hidden'); modal.style.display = 'none'; }, 300);
         }
 
         function showToast(status, title, msg) {
             const wrapper = document.getElementById('toast-wrapper');
-            const box = document.getElementById('toast-box');
             const icon = document.getElementById('toast-icon');
             
             document.getElementById('toast-title').innerText = title;
             document.getElementById('toast-msg').innerText = msg;
 
             if(status === 'loading') { 
-                icon.innerHTML = `<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`; 
-            } else if(status === 'error') { 
-                icon.innerHTML = `<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`; 
+                icon.innerHTML = icons.loading; 
+            } else if(status === 'success') { 
+                icon.innerHTML = icons.success; 
             }
             
             wrapper.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
@@ -369,40 +313,26 @@
         function hideToast() { document.getElementById('toast-wrapper').classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none'); }
 
         function showResultModal(status, title, name, desc) {
-            const modal = document.getElementById('result-modal');
-            const box = document.getElementById('result-box');
-            const iconBg = document.getElementById('rm-icon-bg');
-            const icon = document.getElementById('rm-icon');
-            const btn = document.getElementById('btn-resume-scan');
+            const modal = document.getElementById('result-modal'); const box = document.getElementById('result-box');
+            const iconBg = document.getElementById('rm-icon-bg'); const icon = document.getElementById('rm-icon');
             
             document.getElementById('rm-title').innerText = title;
             document.getElementById('rm-name').innerText = name;
             document.getElementById('rm-desc').innerText = desc;
 
-            if (status === "success") {
-                iconBg.className = "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-white text-black";
-                icon.innerHTML = icons.success;
-                btn.className = "w-full bg-black hover:bg-gray-800 text-white font-medium tracking-widest py-4 transition-colors text-xs";
-                btn.innerText = "CONTINUE SCANNING";
-            } else if (status === "duplicate") {
+            if (status === "duplicate") {
                 iconBg.className = "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-gray-100 text-black";
                 icon.innerHTML = icons.duplicate;
-                btn.className = "w-full bg-black hover:bg-gray-800 text-white font-medium tracking-widest py-4 transition-colors text-xs";
-                btn.innerText = "ACKNOWLEDGE";
             } else {
                 iconBg.className = "w-20 h-20 border border-black rounded-full flex items-center justify-center mb-4 bg-white text-black";
                 icon.innerHTML = icons.error;
-                btn.className = "w-full bg-white border border-black hover:bg-gray-50 text-black font-medium tracking-widest py-4 transition-colors text-xs";
-                btn.innerText = "TRY AGAIN";
             }
-
             modal.classList.remove('hidden'); modal.style.display = 'flex';
             requestAnimationFrame(() => { modal.classList.remove('opacity-0'); box.classList.remove('translate-y-full'); });
         }
 
-        function resumeScan() {
-            const modal = document.getElementById('result-modal');
-            const box = document.getElementById('result-box');
+        function resumeScanFromModal() {
+            const modal = document.getElementById('result-modal'); const box = document.getElementById('result-box');
             box.classList.add('translate-y-full'); modal.classList.add('opacity-0');
             setTimeout(() => { 
                 modal.classList.add('hidden'); modal.style.display = 'none'; 
@@ -432,12 +362,9 @@
 
         function stopCamera() {
             scanning = false; if (stream) { stream.getTracks().forEach(track => track.stop()); stream = null; }
-            video.srcObject = null;
-            document.getElementById("scan-line").style.display = "none";
-            document.getElementById("viewfinder").classList.add("hidden");
-            document.getElementById("camera-placeholder").style.display = "flex";
-            document.getElementById("btn-start").classList.remove("hidden");
-            document.getElementById("btn-stop").classList.add("hidden");
+            video.srcObject = null; document.getElementById("scan-line").style.display = "none";
+            document.getElementById("viewfinder").classList.add("hidden"); document.getElementById("camera-placeholder").style.display = "flex";
+            document.getElementById("btn-start").classList.remove("hidden"); document.getElementById("btn-stop").classList.add("hidden");
         }
 
         function tick() {
@@ -454,6 +381,7 @@
         function processQRCode(qrData) {
             scanning = false; document.getElementById("scan-line").style.display = "none";
             showToast("loading", "PROCESSING", "Please wait...");
+            
             const staffName = sessionStorage.getItem('staff_name') || 'Unknown';
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -461,17 +389,33 @@
             })
             .then(response => response.json())
             .then(res => {
-                hideToast();
                 if (res.status === "success") {
                     const timeNow = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
                     scanHistory.unshift({ name: res.name || qrData, time: timeNow });
                     sessionStorage.setItem('scan_history', JSON.stringify(scanHistory));
                     updateStatsUI();
-                    showResultModal("success", "CHECK-IN SUCCESSFUL", res.name, `REF: ${qrData}`);
-                } 
-                else if (res.status === "duplicate") { showResultModal("duplicate", "ALREADY CHECKED-IN", res.name, res.message); }
-                else { showResultModal("error", "ERROR", qrData, res.message); }
-            }).catch(error => { hideToast(); showResultModal("error", "CONNECTION FAILED", "Unable to reach database", error.message); });
+                    
+                    // แสดง Toast แค่ 2 วินาที (รหัสนิสิต และ ชื่อ)
+                    const idText = res.studentId ? `รหัส: ${res.studentId}` : `REF: ${qrData}`;
+                    showToast("success", "SUCCESS", `${idText} | ${res.name}`);
+                    
+                    // กลับมาสแกนอัตโนมัติ ไม่ต้องให้คนกด
+                    setTimeout(() => {
+                        hideToast();
+                        if (stream && stream.active) {
+                            document.getElementById("scan-line").style.display = "block";
+                            scanning = true; requestAnimationFrame(tick);
+                        }
+                    }, 2000);
+                    
+                } else if (res.status === "duplicate") {
+                    hideToast(); showResultModal("duplicate", "ALREADY CHECKED-IN", res.name, res.message);
+                } else {
+                    hideToast(); showResultModal("error", "ERROR", qrData, res.message);
+                }
+            }).catch(error => {
+                hideToast(); showResultModal("error", "CONNECTION FAILED", "Unable to reach database", error.message);
+            });
         }
     </script>
 </body>
