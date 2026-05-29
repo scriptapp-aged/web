@@ -142,7 +142,8 @@
         <!-- Camera Section -->
         <section id="camera-section" class="flex-grow flex flex-col justify-center items-center px-6 relative z-0 animate-fade-in mt-4">
             <div class="relative w-full aspect-[3/4] max-h-[55vh] overflow-hidden bg-gray-50 border border-gray-200">
-                <video id="video" playsinline autoplay muted class="w-full h-full object-cover grayscale opacity-90"></video>
+                <!-- เอาคลาส grayscale และ opacity-90 ออก เพื่อให้กล้องเป็นสีปกติและชัดเจน -->
+                <video id="video" playsinline autoplay muted class="w-full h-full object-cover"></video>
                 <div id="scan-line" class="scan-line hidden"></div>
                 <canvas id="canvas" hidden></canvas>
                 
@@ -218,7 +219,7 @@
         // =======================================================
         // ⚠️ เปลี่ยนเป็น URL ของ Google Apps Script ของคุณ
         // =======================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5t9-U10-PZ5L_mXk3a9w1sN3G2L_-vU3W5zH3B7_aA4L8wL9C_rV4X5P7X9Q4w/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec"; 
 
         let scanning = false;
         let stream = null;
