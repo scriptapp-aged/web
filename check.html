@@ -187,6 +187,34 @@
         // =======================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec"; 
 
+        // --- ระบบนับถอยหลัง (Countdown) ---
+        const targetDate = new Date("June 12, 2026 11:00:00").getTime();
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const timerObj = document.getElementById("countdown-timer");
+            
+            if (!timerObj) return;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                timerObj.innerHTML = "ระบบทดสอบเปิดแล้ว";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const d = String(days).padStart(2, '0');
+            const h = String(hours).padStart(2, '0');
+            const m = String(minutes).padStart(2, '0');
+            const s = String(seconds).padStart(2, '0');
+
+            timerObj.innerHTML = `${d} วัน ${h}:${m}:${s}`;
+        }, 1000);
+
         let scanning = false;
         let stream = null;
         let scanHistory = []; 
