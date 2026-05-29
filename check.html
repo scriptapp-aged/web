@@ -63,7 +63,7 @@
                 
                 <!-- กล่องนับถอยหลัง (Countdown) รูปแบบใหม่ -->
                 <div id="countdown-wrapper" class="w-full flex flex-col items-center">
-                    <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">เปิดระบบทดสอบ 12 มิถุนายน 2569 11:00 น.</p>
+                    <p class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mb-4">เปิดระบบทดสอบในอีก</p>
                     <div class="flex justify-center items-center gap-2 mb-2">
                         <!-- Days -->
                         <div class="flex flex-col items-center justify-center bg-gray-50/80 border border-gray-100 w-14 h-16 rounded-xl shadow-sm">
@@ -185,7 +185,7 @@
 
         <!-- MODALS -->
         <div id="history-modal" class="fixed inset-0 z-[200] hidden flex-col justify-end bg-white/90 backdrop-blur-sm transition-opacity opacity-0">
-            <div id="history-box" class="bg-white w-full max-w-md mx-auto h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 border-t border-black">
+            <div id="history-box" class="bg-white w-full max-w-md mx-auto h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 border-t border-black shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
                 <div class="px-6 pt-8 pb-6 flex justify-between items-center border-b border-gray-100">
                     <h3 class="text-sm font-semibold tracking-widest text-black uppercase">Scan History</h3>
                     <button onclick="closeHistory()" class="text-gray-400 hover:text-black">
@@ -338,7 +338,21 @@
             }
             let html = '';
             scanHistory.forEach((item, index) => {
-                html += `<div class="flex items-center justify-between py-4 border-b border-gray-100 last:border-0"><div class="flex items-center gap-4"><span class="text-gray-300 font-light text-sm w-4">${scanHistory.length - index}.</span><span class="font-medium text-black text-sm">${item.name}</span></div><span class="text-[10px] text-gray-400 font-light tracking-wide">${item.time}</span></div>`;
+                // อัปเดตให้รองรับทั้งประวัติเก่า (มีแต่ชื่อ/รหัส) และประวัติใหม่ (แยกรหัสและชื่อชัดเจน)
+                const displayId = item.studentId ? item.studentId : (item.name || '-'); 
+                const displayName = item.studentId ? item.name : '';
+
+                html += `
+                <div class="flex items-start justify-between py-4 border-b border-gray-100 last:border-0">
+                    <div class="flex items-start gap-4">
+                        <span class="text-gray-300 font-light text-sm w-4 pt-0.5">${scanHistory.length - index}.</span>
+                        <div class="flex flex-col">
+                            <span class="font-medium text-black text-sm">${displayId}</span>
+                            ${displayName ? `<span class="text-xs text-gray-500 font-light mt-0.5">${displayName}</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-light tracking-wide pt-0.5">${item.time}</span>
+                </div>`;
             });
             listDiv.innerHTML = html;
         }
@@ -452,15 +466,20 @@
             .then(res => {
                 if (res.status === "success") {
                     const timeNow = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-                    scanHistory.unshift({ name: res.name || qrData, time: timeNow });
+                    
+                    // บันทึกทั้ง รหัสนิสิต(studentId) และ ชื่อ(name)
+                    scanHistory.unshift({ 
+                        studentId: res.studentId || qrData,
+                        name: res.name || 'ไม่พบรายชื่อ', 
+                        time: timeNow 
+                    });
+                    
                     sessionStorage.setItem('scan_history', JSON.stringify(scanHistory));
                     updateStatsUI();
                     
-                    // แสดง Toast แค่ 2 วินาที (รหัสนิสิต และ ชื่อ)
                     const idText = res.studentId ? `รหัส: ${res.studentId}` : `REF: ${qrData}`;
                     showToast("success", "SUCCESS", `${idText} | ${res.name}`);
                     
-                    // กลับมาสแกนอัตโนมัติ ไม่ต้องให้คนกด
                     setTimeout(() => {
                         hideToast();
                         if (stream && stream.active) {
