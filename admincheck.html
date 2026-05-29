@@ -183,15 +183,12 @@
                 document.getElementById('admin-name-display').innerText = "ADMIN: " + sessionStorage.getItem('dashboard_admin_name'); 
                 showDashboard();
             }
-            
             const savedSheet = localStorage.getItem('admin_sheet_url');
             if (savedSheet) document.getElementById('sheet-url-input').value = savedSheet;
         };
 
         async function checkAdminLogin() {
             const pin = document.getElementById('pin-input').value, btnText = document.getElementById('btn-login-text'), errorEl = document.getElementById('login-error');
-            
-            // Bypass ด้วยรหัส 1111 (เมธี)
             if (pin !== '1111') return showLoginError("รหัสไม่ถูกต้อง (สิทธิ์เฉพาะเมธี)");
 
             btnText.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="ml-2">AUTHENTICATING...</span>';
@@ -217,7 +214,6 @@
 
         function logout() { sessionStorage.removeItem('dashboard_admin_logged_in'); sessionStorage.removeItem('dashboard_admin_name'); clearInterval(pollingInterval); location.reload(); }
 
-        // --- Tabs ---
         function switchTab(tabName) {
             const tabs = ['stats', 'staff', 'sheet'];
             tabs.forEach(t => {
@@ -234,7 +230,6 @@
             if (tabName === 'sheet') { const url = document.getElementById('sheet-url-input').value; const container = document.getElementById('sheet-iframe-container'); if (url && !container.innerHTML.includes('iframe')) loadSheetIframe(); }
         }
 
-        // --- Sheet Iframe Embed ---
         function loadSheetIframe() {
             const url = document.getElementById('sheet-url-input').value.trim();
             if(!url) return;
@@ -245,7 +240,6 @@
             } else { alert('รูปแบบลิงก์ Google Sheet ไม่ถูกต้องครับ'); }
         }
 
-        // --- Data Fetching ---
         function animateValue(obj, start, end, duration) {
             let startTimestamp = null;
             const step = (timestamp) => {
@@ -297,7 +291,6 @@
             } catch (error) { updateStatusEl.innerText = "CONNECTION LOST"; updateStatusEl.classList.add('text-red-400'); statusIndicator.className = "w-2 h-2 rounded-full bg-red-500"; }
         }
 
-        // --- Staff Management ---
         async function fetchStaffData() {
             document.getElementById('staff-table-body').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-400 text-xs tracking-widest uppercase font-light">Loading Data...</td></tr>';
             try {
@@ -341,7 +334,6 @@
             btn.innerText = "SAVE";
         }
 
-        // --- Add Staff Functions ---
         function openAddStaffModal() {
             document.getElementById('add-staff-name').value = ""; document.getElementById('add-staff-role').value = "Staff"; document.getElementById('add-staff-pin').value = "";
             const m = document.getElementById('add-staff-modal'), b = document.getElementById('add-staff-box');
