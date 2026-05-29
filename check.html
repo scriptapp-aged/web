@@ -288,7 +288,7 @@
         // =======================================================
         // ⚠️ เปลี่ยนเป็น URL ของ Google Apps Script ของคุณ
         // =======================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5t9-U10-PZ5L_mXk3a9w1sN3G2L_-vU3W5zH3B7_aA4L8wL9C_rV4X5P7X9Q4w/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8eTkS7dM96oQ-yqKKk1zRCDioQkw5w8N7UpoCBZ8AI0QVecuMItd3AaCIBX-lPwyX/exec"; 
 
         // State Variables
         let scanning = false;
@@ -329,18 +329,24 @@
                 return;
             }
 
+            // 🌟 เพิ่มระบบดักจับ: เช็คว่าลืมเปลี่ยน URL เป็นของตัวเองหรือไม่
+            if (GOOGLE_SCRIPT_URL.includes("AKfycby5t9-U10-PZ5L_mXk3a9w1sN3G2L_")) {
+                showLoginError("⚠️ คุณยังไม่ได้เอา URL ของตัวเองมาใส่ในโค้ด (บรรทัดที่ ~296)");
+                return;
+            }
+
             btnText.innerHTML = icons.loading + ' <span class="text-blue-600 font-bold ml-1">กำลังตรวจสอบ...</span>';
             errorText.classList.remove('opacity-100');
             
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    redirect: 'follow',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    redirect: 'follow', // ป้องกันปัญหา CORS
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // ต้องเป็น text/plain
                     body: JSON.stringify({ action: "login", pin: pin })
                 });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) throw new Error("PERMISSION_ERROR");
                 const res = await response.json();
 
                 if (res.status === "success") {
@@ -356,7 +362,12 @@
                 }
             } catch (error) {
                 console.error("Login Error:", error);
-                showLoginError("เครือข่ายขัดข้อง/URL ไม่ถูกต้อง (" + error.message + ")");
+                // 🌟 เพิ่มระบบดักจับ: เช็คว่าลืมตั้งค่าสิทธิ์ Anyone หรือไม่
+                if (error.message.includes("Failed to fetch") || error.message.includes("PERMISSION_ERROR")) {
+                    showLoginError("⚠️ เข้าถึง Sheet ไม่ได้! ต้องเลือกสิทธิ์ 'ทุกคน (Anyone)' ตอน Deploy");
+                } else {
+                    showLoginError("เครือข่ายขัดข้อง: " + error.message);
+                }
                 btnText.innerHTML = 'เข้าสู่ระบบ';
             }
         }
