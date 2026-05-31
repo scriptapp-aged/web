@@ -1,0 +1,693 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { ShoppingCart, LayoutDashboard, CheckCircle, Package, Users, DollarSign, Clock, ShieldAlert, Copy, AlertCircle } from 'lucide-react';
+
+export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.hash);
+
+  useEffect(() => {
+    const onLocationChange = () => {
+      setCurrentPath(window.location.hash);
+    };
+    window.addEventListener('hashchange', onLocationChange);
+    return () => window.removeEventListener('hashchange', onLocationChange);
+  }, []);
+  
+  // สถานะจำลองข้อมูล
+  const [orders, setOrders] = useState([
+    { id: 'ORD-1698745', date: '2026-06-01 09:30', name: 'สมชาย ใจดี', studentId: '67010001', year: '1', phone: '0812345678', shirtType: 'tshirt', size: 'L', qty: 1, amount: 200, status: 'รอตรวจสอบ' },
+    { id: 'ORD-1698746', date: '2026-06-01 10:15', name: 'สมหญิง รักเรียน', studentId: '66010025', year: '2', phone: '0898765432', shirtType: 'jeans', size: 'พิเศษ (3XL อก 46")', qty: 2, amount: 740, status: 'ยืนยันแล้ว' },
+  ]);
+
+  const getTshirtPrice = (isCustom) => isCustom ? 220 : 200;
+  const getJeansPrice = (isCustom) => isCustom ? 370 : 350;
+
+  const TSHIRT_SIZES = [
+    { value: 'S', label: 'อก 36"' },
+    { value: 'M', label: 'อก 38"' },
+    { value: 'L', label: 'อก 40"' },
+    { value: 'XL', label: 'อก 42"' },
+    { value: '2XL', label: 'อก 44"' },
+    { value: '3XL', label: 'อก 46"' }
+  ];
+
+  const JEANS_SIZES = [
+    { value: 'S', label: 'อก 36"' },
+    { value: 'M', label: 'อก 38"' },
+    { value: 'L', label: 'อก 40"' },
+    { value: 'XL', label: 'อก 42"' },
+    { value: '2XL', label: 'อก 44"' }
+  ];
+
+  // --- Components สำหรับหน้าสั่งซื้อ (User) ---
+  const UserView = () => {
+    const [formData, setFormData] = useState({ 
+      name: '', 
+      studentId: '', 
+      year: '1',
+      phone: '',
+      tshirt: { isCustom: false, size: 'M', customSize: '', customChest: '', qty: 0 }, 
+      jeans: { isCustom: false, size: 'M', customSize: '', customChest: '', qty: 0 }, 
+      slip: null 
+    });
+    
+    const [submitted, setSubmitted] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    // ระบบนับถอยหลัง (ตั้งเป้าหมาย: 21 มิถุนายน 2026 เวลา 23:59:59)
+    const targetDate = useMemo(() => new Date('2026-06-21T23:59:59').getTime(), []);
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        } else {
+          setTimeLeft({
+            days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+            seconds: Math.floor((distance % (1000 * 60)) / 1000)
+          });
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }, [targetDate]);
+
+    const handleCopy = () => {
+      const tempInput = document.createElement("input");
+      tempInput.value = "012-3-45678-9";
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    };
+
+    const totalAmount = (formData.tshirt.qty * getTshirtPrice(formData.tshirt.isCustom)) +
+                        (formData.jeans.qty * getJeansPrice(formData.jeans.isCustom));
+
+    const getFinalSize = (item) => {
+      if (item.isCustom) {
+        return `พิเศษ (${item.customSize} อก ${item.customChest}")`;
+      }
+      return item.size;
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setErrorMsg('');
+      
+      if (formData.tshirt.qty === 0 && formData.jeans.qty === 0) {
+        setErrorMsg("กรุณาระบุจำนวนเสื้อที่ต้องการสั่งจองอย่างน้อย 1 ตัว");
+        return;
+      }
+
+      // ตรวจสอบความถูกต้องของไซส์พิเศษ
+      if (formData.tshirt.qty > 0 && formData.tshirt.isCustom) {
+        if (!formData.tshirt.customSize || !formData.tshirt.customChest) {
+          setErrorMsg("กรุณาระบุชื่อไซส์และรอบอก สำหรับเสื้อยืดไซส์พิเศษ");
+          return;
+        }
+      }
+      if (formData.jeans.qty > 0 && formData.jeans.isCustom) {
+        if (!formData.jeans.customSize || !formData.jeans.customChest) {
+          setErrorMsg("กรุณาระบุชื่อไซส์และรอบอก สำหรับเสื้อยีนส์ไซส์พิเศษ");
+          return;
+        }
+      }
+
+      const baseId = `ORD-${Math.floor(Math.random() * 1000000)}`;
+      const dateStr = new Date().toLocaleString('th-TH').slice(0, 16);
+      const newOrders = [];
+
+      if (formData.tshirt.qty > 0) {
+        newOrders.push({
+          id: baseId,
+          date: dateStr,
+          name: formData.name,
+          studentId: formData.studentId,
+          year: formData.year,
+          phone: formData.phone,
+          shirtType: 'tshirt',
+          size: getFinalSize(formData.tshirt),
+          qty: parseInt(formData.tshirt.qty),
+          amount: parseInt(formData.tshirt.qty) * getTshirtPrice(formData.tshirt.isCustom),
+          status: 'รอตรวจสอบ'
+        });
+      }
+
+      if (formData.jeans.qty > 0) {
+        newOrders.push({
+          id: baseId,
+          date: dateStr,
+          name: formData.name,
+          studentId: formData.studentId,
+          year: formData.year,
+          phone: formData.phone,
+          shirtType: 'jeans',
+          size: getFinalSize(formData.jeans),
+          qty: parseInt(formData.jeans.qty),
+          amount: parseInt(formData.jeans.qty) * getJeansPrice(formData.jeans.isCustom),
+          status: 'รอตรวจสอบ'
+        });
+      }
+
+      setOrders([...orders, ...newOrders]);
+      setSubmitted(true);
+    };
+
+    if (submitted) {
+      return (
+        <div className="max-w-md mx-auto mt-16 bg-white p-10 rounded-xl border border-gray-200 shadow-sm text-center" style={{ fontFamily: "'Mali', cursive" }}>
+          <style>
+            {`@import url('https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap');`}
+          </style>
+          <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-black" />
+          </div>
+          <h2 className="text-2xl font-bold text-black mb-3">สั่งจองสำเร็จ</h2>
+          <p className="text-gray-500 mb-8 text-sm">ข้อมูลการสั่งจองและหลักฐานการโอนเงิน<br/>ถูกส่งเข้าระบบเรียบร้อยแล้ว</p>
+          <button onClick={() => {
+            setSubmitted(false); 
+            setFormData({ name: '', studentId: '', year: '1', phone: '', tshirt: { isCustom: false, size: 'M', customSize: '', customChest: '', qty: 0 }, jeans: { isCustom: false, size: 'M', customSize: '', customChest: '', qty: 0 }, slip: null });
+          }} className="px-8 py-3 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition w-full">
+            ทำรายการสั่งจองใหม่
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-[#F9FAFB] flex flex-col text-gray-900" style={{ fontFamily: "'Mali', cursive" }}>
+        {/* ดึงฟอนต์ Mali มาใช้งาน */}
+        <style>
+          {`@import url('https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap');`}
+        </style>
+        
+        <nav className="bg-white border-b border-gray-200">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-center md:justify-start">
+              <span className="font-bold text-xl tracking-tight text-black">SCI-LAB <span className="text-gray-400 font-normal">SHOP</span></span>
+            </div>
+          </div>
+        </nav>
+
+        <div className="flex-grow p-4 sm:p-6 lg:p-8">
+          <div className="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-xl border border-gray-200 shadow-sm">
+            
+            {}
+            <div className="mb-12 text-center">
+              {/* กรอบสำหรับใส่ตราสาขา (ถ้ามีรูป ให้นำ URL ไปใส่แทน ./images/logo.png) */}
+              <div className="w-24 h-24 mx-auto mb-6 bg-gray-50 rounded-full flex items-center justify-center border border-gray-200 overflow-hidden relative shadow-sm">
+                <img src="./images/logo.png" alt="ตราสาขา" className="w-full h-full object-cover relative z-10" onError={(e)=>{e.target.style.opacity='0'}} />
+                <span className="text-xs text-gray-400 font-medium absolute inset-0 flex items-center justify-center">ตราสาขา</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-bold text-black tracking-tight leading-snug mb-2">
+                แบบสั่งจองเสื้อปฏิบัติการ<br/>
+                <span className="text-lg sm:text-xl text-gray-600 mt-1 block">"เกษตรและสิ่งแวดล้อมศึกษา"</span>
+              </h2>
+              
+              <div className="inline-flex items-center justify-center px-4 py-2 bg-gray-50 border border-gray-200 rounded-full mb-8">
+                <span className="text-gray-600 text-sm font-medium">
+                  เปิดระบบ 14 มิถุนายน 2569 <span className="mx-2 text-gray-300">|</span> ปิดระบบ 21 มิถุนายน 2569
+                </span>
+              </div>
+
+              {/* กล่องนับถอยหลัง (Countdown Timer) */}
+              <div className="inline-block bg-white border border-gray-200 rounded-2xl px-6 py-5 shadow-sm">
+                <p className="text-xs font-bold text-gray-500 mb-4 uppercase tracking-widest border-b border-gray-100 pb-2">เหลือเวลาสั่งเสื้ออีก</p>
+                <div className="flex gap-4 sm:gap-6 justify-center text-center">
+                  <div className="flex flex-col min-w-[3rem]">
+                    <span className="text-3xl sm:text-4xl font-bold text-black">{timeLeft.days}</span>
+                    <span className="text-[10px] text-gray-400 uppercase font-bold mt-1 tracking-wider">วัน</span>
+                  </div>
+                  <span className="text-3xl font-bold text-gray-200 mt-1">:</span>
+                  <div className="flex flex-col min-w-[3rem]">
+                    <span className="text-3xl sm:text-4xl font-bold text-black">{timeLeft.hours.toString().padStart(2, '0')}</span>
+                    <span className="text-[10px] text-gray-400 uppercase font-bold mt-1 tracking-wider">ชั่วโมง</span>
+                  </div>
+                  <span className="text-3xl font-bold text-gray-200 mt-1">:</span>
+                  <div className="flex flex-col min-w-[3rem]">
+                    <span className="text-3xl sm:text-4xl font-bold text-black">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+                    <span className="text-[10px] text-gray-400 uppercase font-bold mt-1 tracking-wider">นาที</span>
+                  </div>
+                  <span className="text-3xl font-bold text-gray-200 mt-1">:</span>
+                  <div className="flex flex-col min-w-[3rem]">
+                    <span className="text-3xl sm:text-4xl font-bold text-black">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+                    <span className="text-[10px] text-gray-400 uppercase font-bold mt-1 tracking-wider">วินาที</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-8">
+              
+              {/* ข้อมูลส่วนตัว */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">ชื่อ-นามสกุล</label>
+                  <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none transition-all text-sm" placeholder="นายสมชาย ใจดี" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">รหัสนิสิต</label>
+                  <input required type="text" value={formData.studentId} onChange={e => setFormData({...formData, studentId: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none transition-all text-sm" placeholder="670xxxxxx" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">ชั้นปี</label>
+                  <select value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none transition-all text-sm appearance-none cursor-pointer">
+                    <option value="1">ชั้นปีที่ 1</option>
+                    <option value="2">ชั้นปีที่ 2</option>
+                    <option value="3">ชั้นปีที่ 3</option>
+                    <option value="4">ชั้นปีที่ 4</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">เบอร์โทรศัพท์</label>
+                  <input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none transition-all text-sm" placeholder="08x-xxx-xxxx" />
+                </div>
+              </div>
+
+              {/* เลือกสินค้า */}
+              <div className="space-y-6">
+                <div className="border-b border-gray-100 pb-2">
+                  <label className="block text-sm font-semibold text-gray-900">เลือกประเภทเสื้อและจำนวน</label>
+                  <p className="text-xs text-gray-500 mt-1">หากไม่ต้องการสั่งจองประเภทใด ให้ระบุจำนวนเป็น 0</p>
+                </div>
+                
+                {/* ส่วนเสื้อยืด */}
+                <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
+                  <div className="flex items-center justify-between mb-5 border-b border-gray-100 pb-4">
+                    <span className="font-bold text-lg text-black">👕 เสื้อยืดปฏิบัติการ</span>
+                  </div>
+                  
+                  <div className="animate-in fade-in">
+                    
+                    {/* ภาพตัวอย่างเสื้อยืด (2 ภาพ) */}
+                    <div className="flex gap-4 mb-6">
+                      <div className="flex-1 aspect-[4/3] bg-gray-50 rounded-xl border border-gray-200 overflow-hidden relative group">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                          <span className="text-sm font-medium text-gray-500">ภาพด้านหน้า</span>
+                        </div>
+                        {/* URL ภาพเสื้อยืดด้านหน้า สำหรับ GitHub Pages */}
+                        <img src="./images/tshirt-front.png" alt="เสื้อยืดด้านหน้า" className="w-full h-full object-cover relative z-10 transition-transform duration-300 group-hover:scale-105" onError={(e)=>{e.target.style.opacity='0'}} />
+                      </div>
+                      <div className="flex-1 aspect-[4/3] bg-gray-50 rounded-xl border border-gray-200 overflow-hidden relative group">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                          <span className="text-sm font-medium text-gray-500">ภาพด้านหลัง</span>
+                        </div>
+                        {/* URL ภาพเสื้อยืดด้านหลัง สำหรับ GitHub Pages */}
+                        <img src="./images/tshirt-back.png" alt="เสื้อยืดด้านหลัง" className="w-full h-full object-cover relative z-10 transition-transform duration-300 group-hover:scale-105" onError={(e)=>{e.target.style.opacity='0'}} />
+                      </div>
+                    </div>
+
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">เลือกไซส์เสื้อยืด</label>
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {TSHIRT_SIZES.map(s => (
+                        <button
+                          key={`ts-${s.value}`}
+                          type="button"
+                          onClick={() => setFormData({...formData, tshirt: {...formData.tshirt, isCustom: false, size: s.value, qty: formData.tshirt.qty === 0 ? 1 : formData.tshirt.qty}})}
+                          className={`flex-1 min-w-[3.5rem] py-2 px-1 border rounded-lg text-center transition-all ${
+                            !formData.tshirt.isCustom && formData.tshirt.size === s.value && formData.tshirt.qty > 0
+                              ? 'bg-black text-white border-black'
+                              : 'bg-white text-gray-500 border-gray-200 hover:border-gray-900 hover:text-black'
+                          }`}
+                        >
+                          <div className="font-bold text-base">{s.value}</div>
+                          <div className="text-[10px] mt-0.5 opacity-80">{s.label}</div>
+                          <div className="text-[11px] mt-1 font-bold border-t border-current pt-1 w-3/4 mx-auto opacity-90">฿200</div>
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, tshirt: {...formData.tshirt, isCustom: true, qty: formData.tshirt.qty === 0 ? 1 : formData.tshirt.qty}})}
+                        className={`flex-[2] min-w-[5rem] py-2 px-2 border rounded-lg text-center transition-all flex flex-col items-center justify-center ${
+                          formData.tshirt.isCustom && formData.tshirt.qty > 0
+                            ? 'bg-black text-white border-black'
+                            : 'bg-white text-gray-500 border-gray-200 hover:border-gray-900 hover:text-black'
+                        }`}
+                      >
+                        <div className="font-bold text-sm">ไซส์พิเศษ</div>
+                        <div className="text-[10px] mt-0.5 opacity-80">ระบุเอง</div>
+                        <div className="text-[11px] mt-1 font-bold border-t border-current pt-1 w-3/4 mx-auto opacity-90">฿220</div>
+                      </button>
+                    </div>
+
+                    {/* ข้อมูลไซส์พิเศษ */}
+                    {formData.tshirt.isCustom ? (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mb-4 animate-in fade-in">
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">ระบุไซส์ (เช่น 3XL)</label>
+                          <input type="text" value={formData.tshirt.customSize} onChange={e => setFormData({...formData, tshirt: {...formData.tshirt, customSize: e.target.value}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm" placeholder="ระบุไซส์" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">รอบอก (นิ้ว)</label>
+                          <input type="number" value={formData.tshirt.customChest} onChange={e => setFormData({...formData, tshirt: {...formData.tshirt, customChest: e.target.value}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm" placeholder="เช่น 46" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">จำนวน (ตัว)</label>
+                          <input type="number" min="0" max="10" value={formData.tshirt.qty} onChange={e => setFormData({...formData, tshirt: {...formData.tshirt, qty: parseInt(e.target.value) || 0}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm text-center font-bold text-black" />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-full md:w-1/3">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">จำนวน (ตัว)</label>
+                        <input type="number" min="0" max="10" value={formData.tshirt.qty} onChange={e => setFormData({...formData, tshirt: {...formData.tshirt, qty: parseInt(e.target.value) || 0}})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none text-center font-semibold text-lg text-black" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* ส่วนเสื้อยีนส์ */}
+                <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
+                  <div className="flex items-center justify-between mb-5 border-b border-gray-100 pb-4">
+                    <span className="font-bold text-lg text-black">🧥 เสื้อยีนส์ (ช็อป)</span>
+                  </div>
+                  
+                  <div className="animate-in fade-in">
+                    
+                    {/* ภาพตัวอย่างเสื้อยีนส์ (1 ภาพ) */}
+                    <div className="flex gap-4 mb-6">
+                      <div className="w-full md:w-1/2 aspect-[4/3] bg-gray-50 rounded-xl border border-gray-200 overflow-hidden relative group">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                          <span className="text-sm font-medium text-gray-500">ภาพตัวอย่างเสื้อยีนส์</span>
+                        </div>
+                        {/* URL ภาพเสื้อยีนส์ สำหรับ GitHub Pages */}
+                        <img src="./images/jeans.png" alt="เสื้อยีนส์" className="w-full h-full object-cover relative z-10 transition-transform duration-300 group-hover:scale-105" onError={(e)=>{e.target.style.opacity='0'}} />
+                      </div>
+                    </div>
+
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">เลือกไซส์เสื้อยีนส์</label>
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {JEANS_SIZES.map(s => (
+                        <button
+                          key={`jn-${s.value}`}
+                          type="button"
+                          onClick={() => setFormData({...formData, jeans: {...formData.jeans, isCustom: false, size: s.value, qty: formData.jeans.qty === 0 ? 1 : formData.jeans.qty}})}
+                          className={`flex-1 min-w-[3.5rem] py-2 px-1 border rounded-lg text-center transition-all ${
+                            !formData.jeans.isCustom && formData.jeans.size === s.value && formData.jeans.qty > 0
+                              ? 'bg-black text-white border-black'
+                              : 'bg-white text-gray-500 border-gray-200 hover:border-gray-900 hover:text-black'
+                          }`}
+                        >
+                          <div className="font-bold text-base">{s.value}</div>
+                          <div className="text-[10px] mt-0.5 opacity-80">{s.label}</div>
+                          <div className="text-[11px] mt-1 font-bold border-t border-current pt-1 w-3/4 mx-auto opacity-90">฿350</div>
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, jeans: {...formData.jeans, isCustom: true, qty: formData.jeans.qty === 0 ? 1 : formData.jeans.qty}})}
+                        className={`flex-[2] min-w-[5rem] py-2 px-2 border rounded-lg text-center transition-all flex flex-col items-center justify-center ${
+                          formData.jeans.isCustom && formData.jeans.qty > 0
+                            ? 'bg-black text-white border-black'
+                            : 'bg-white text-gray-500 border-gray-200 hover:border-gray-900 hover:text-black'
+                        }`}
+                      >
+                        <div className="font-bold text-sm">ไซส์พิเศษ</div>
+                        <div className="text-[10px] mt-0.5 opacity-80">ระบุเอง</div>
+                        <div className="text-[11px] mt-1 font-bold border-t border-current pt-1 w-3/4 mx-auto opacity-90">฿370</div>
+                      </button>
+                    </div>
+
+                    {/* ข้อมูลไซส์พิเศษ */}
+                    {formData.jeans.isCustom ? (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mb-4 animate-in fade-in">
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">ระบุไซส์ (เช่น 3XL)</label>
+                          <input type="text" value={formData.jeans.customSize} onChange={e => setFormData({...formData, jeans: {...formData.jeans, customSize: e.target.value}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm" placeholder="ระบุไซส์" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">รอบอก (นิ้ว)</label>
+                          <input type="number" value={formData.jeans.customChest} onChange={e => setFormData({...formData, jeans: {...formData.jeans, customChest: e.target.value}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm" placeholder="เช่น 46" />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-500 mb-2">จำนวน (ตัว)</label>
+                          <input type="number" min="0" max="10" value={formData.jeans.qty} onChange={e => setFormData({...formData, jeans: {...formData.jeans, qty: parseInt(e.target.value) || 0}})} className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black outline-none text-sm text-center font-bold text-black" />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-full md:w-1/3">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">จำนวน (ตัว)</label>
+                        <input type="number" min="0" max="10" value={formData.jeans.qty} onChange={e => setFormData({...formData, jeans: {...formData.jeans, qty: parseInt(e.target.value) || 0}})} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-black focus:border-black outline-none text-center font-semibold text-lg text-black" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* สรุปยอดเงิน */}
+              <div className="bg-gray-50 p-6 rounded-xl flex justify-between items-center border border-gray-200">
+                <span className="font-semibold text-gray-600 uppercase tracking-wider text-sm">ยอดชำระทั้งหมด</span>
+                <span className="text-3xl font-bold text-black tracking-tight">฿{totalAmount.toLocaleString()}</span>
+              </div>
+
+              {/* ข้อมูลการโอนเงิน */}
+              <div className="border border-gray-200 p-6 md:p-8 rounded-xl">
+                <h3 className="font-bold text-black mb-6 uppercase tracking-widest text-sm border-b border-gray-100 pb-3">การชำระเงิน</h3>
+                
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-white rounded-full border border-gray-200 flex items-center justify-center shadow-sm overflow-hidden p-1">
+                      <img src="https://upload.wikimedia.org/wikipedia/th/thumb/f/f6/Kasikornbank_Logo.svg/120px-Kasikornbank_Logo.svg.png" alt="KBank" className="object-contain" onError={(e)=>{e.target.style.display='none'}} />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900">ธนาคารกสิกรไทย</p>
+                      <p className="text-sm text-gray-500">สาขาวิชาวิทยาศาสตร์</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center bg-gray-50 rounded-lg border border-gray-200 p-1">
+                    <span className="font-mono text-lg font-bold px-4 text-black tracking-widest">012-3-45678-9</span>
+                    <button type="button" onClick={handleCopy} className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-md transition-all ${copied ? 'bg-black text-white' : 'bg-white text-gray-800 border border-gray-200 hover:bg-gray-100'}`}>
+                      {copied ? '✓ คัดลอกแล้ว' : <><Copy className="w-3 h-3"/> คัดลอก</>}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">แนบหลักฐานการโอน (สลิป)</label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50/50 hover:bg-gray-50 transition-colors text-center cursor-pointer relative">
+                      <input required type="file" accept="image/*" onChange={e => setFormData({...formData, slip: e.target.files[0]})} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                      <div className="text-sm text-gray-600 font-medium py-4">
+                        {formData.slip ? (
+                          <span className="text-black font-bold">✓ ไฟล์แนบ: {formData.slip.name}</span>
+                        ) : (
+                          "คลิก หรือ ลากไฟล์รูปภาพมาวางที่นี่"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ข้อความแจ้งเตือนเมื่อกรอกข้อมูลไม่ครบ */}
+              {errorMsg && (
+                <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-200 text-sm font-medium flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+                  {errorMsg}
+                </div>
+              )}
+
+              <button type="submit" className="w-full py-4 px-4 bg-black hover:bg-gray-800 text-white font-bold rounded-xl shadow-lg shadow-gray-200 transition-all active:scale-[0.98]">
+                ยืนยันการสั่งจองสินค้า
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="text-center py-8 text-gray-400 text-xs mt-auto border-t border-gray-200 bg-white">
+          <p>&copy; 2026 ScienceLab Shop. All rights reserved.</p>
+          <a href="#admin" className="hover:text-black transition-colors mt-2 inline-block">System Admin Access</a>
+        </footer>
+      </div>
+    );
+  };
+
+  // --- Components สำหรับหน้าแดชบอร์ด (Admin) ---
+  const AdminView = () => {
+    const stats = useMemo(() => {
+      let totalShirts = 0;
+      let totalRevenue = 0;
+      const sizeCountTshirt = { S: 0, M: 0, L: 0, XL: 0, '2XL': 0 };
+      const sizeCountJeans = { S: 0, M: 0, L: 0, XL: 0, '2XL': 0 };
+      let pendingCount = 0;
+
+      orders.forEach(order => {
+        totalShirts += order.qty;
+        totalRevenue += order.amount;
+        
+        // สำหรับเสื้อยืด
+        if (order.shirtType === 'tshirt') {
+          if (sizeCountTshirt[order.size] === undefined) {
+             sizeCountTshirt[order.size] = 0; // รองรับไซส์พิเศษให้บวกเข้าหมวดหมู่ใหม่
+          }
+          sizeCountTshirt[order.size] += order.qty;
+        }
+        
+        // สำหรับเสื้อยีนส์
+        if (order.shirtType === 'jeans') {
+           if (sizeCountJeans[order.size] === undefined) {
+             sizeCountJeans[order.size] = 0; 
+          }
+          sizeCountJeans[order.size] += order.qty;
+        }
+
+        if(order.status === 'รอตรวจสอบ') pendingCount++;
+      });
+
+      return { totalShirts, totalRevenue, sizeCountTshirt, sizeCountJeans, pendingCount };
+    }, [orders]);
+
+    return (
+      <div className="min-h-screen bg-gray-100 flex flex-col text-gray-900" style={{ fontFamily: "'Mali', cursive" }}>
+        <style>
+          {`@import url('https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap');`}
+        </style>
+        
+        <nav className="bg-black text-white shadow-md">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center">
+              <ShieldAlert className="w-5 h-5 mr-3 text-gray-300" />
+              <span className="font-bold text-sm tracking-widest uppercase">Admin Panel</span>
+            </div>
+          </div>
+        </nav>
+
+        <div className="flex-grow p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto mt-2">
+            
+            <div className="flex justify-between items-end mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-black tracking-tight">Overview Dashboard</h2>
+                <p className="text-gray-500 text-sm mt-1">ภาพรวมการสั่งจองทั้งหมด</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ยอดสั่งจอง (ตัว)</p>
+                <p className="text-3xl font-bold text-black">{stats.totalShirts}</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ยอดเงินรวม (บาท)</p>
+                <p className="text-3xl font-bold text-black">{stats.totalRevenue.toLocaleString()}</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">รอตรวจสอบ (บิล)</p>
+                <p className="text-3xl font-bold text-black">{stats.pendingCount}</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ผู้สั่งจอง (คน)</p>
+                <p className="text-3xl font-bold text-black">{new Set(orders.map(o => o.studentId)).size}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* ตารางคำสั่งซื้อ */}
+              <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="px-6 py-5 border-b border-gray-200">
+                  <h3 className="font-bold text-black">รายการสั่งจองล่าสุด</h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead className="text-xs font-semibold text-gray-500 uppercase bg-gray-50 border-b border-gray-200">
+                      <tr>
+                        <th className="px-6 py-4">ออเดอร์</th>
+                        <th className="px-6 py-4">ข้อมูลนิสิต</th>
+                        <th className="px-6 py-4">สินค้า / ไซส์</th>
+                        <th className="px-6 py-4">สถานะ</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {orders.map((order, idx) => (
+                        <tr key={idx} className="bg-white hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4">
+                            <div className="font-mono text-black font-bold">{order.id}</div>
+                            <div className="text-xs text-gray-400 mt-1">{order.date}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="font-bold text-gray-900">{order.name}</div>
+                            <div className="text-gray-500 text-xs mt-1">รหัส: {order.studentId} (ปี {order.year})</div>
+                            <div className="text-gray-500 text-xs mt-0.5">โทร: {order.phone}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="font-bold text-black">{order.shirtType === 'tshirt' ? 'เสื้อยืด' : 'เสื้อยีนส์'}</span>
+                            <div className="text-sm text-gray-500 mt-1">
+                              ไซส์ <span className={`font-bold ${order.size.includes('พิเศษ') ? 'text-black' : ''}`}>{order.size}</span> &times; {order.qty}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${order.status === 'ยืนยันแล้ว' ? 'bg-gray-100 text-black border-gray-300' : 'bg-white text-gray-600 border-gray-300'}`}>
+                              {order.status === 'ยืนยันแล้ว' && <span className="w-1.5 h-1.5 rounded-full bg-black mr-1.5"></span>}
+                              {order.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* สรุปไซส์เสื้อ */}
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col">
+                <div className="px-6 py-5 border-b border-gray-200">
+                  <h3 className="font-bold text-black">สรุปจำนวนผลิต</h3>
+                </div>
+                <div className="p-6 flex-grow overflow-y-auto max-h-[600px]">
+                  
+                  <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">เสื้อยืดปฏิบัติการ</h4>
+                  <div className="space-y-2 mb-8">
+                    {Object.entries(stats.sizeCountTshirt).map(([size, count]) => (
+                      <div key={'ts-'+size} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100">
+                        <div className="flex items-center max-w-[70%]">
+                          <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-3 text-xs border ${size.includes('พิเศษ') ? 'bg-black text-white border-black' : 'bg-gray-50 text-black border-gray-200'}`}>
+                            {size.includes('พิเศษ') ? 'SP' : size}
+                          </div>
+                          <span className="text-sm text-gray-700 truncate" title={size}>{size}</span>
+                        </div>
+                        <span className="font-bold text-black text-lg">{count} <span className="text-xs text-gray-400 font-normal ml-1">ตัว</span></span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider border-t border-gray-100 pt-6">เสื้อยีนส์ (ช็อป)</h4>
+                  <div className="space-y-2">
+                    {Object.entries(stats.sizeCountJeans).map(([size, count]) => (
+                      <div key={'j-'+size} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100">
+                        <div className="flex items-center max-w-[70%]">
+                          <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-3 text-xs border ${size.includes('พิเศษ') ? 'bg-black text-white border-black' : 'bg-gray-50 text-black border-gray-200'}`}>
+                            {size.includes('พิเศษ') ? 'SP' : size}
+                          </div>
+                          <span className="text-sm text-gray-700 truncate" title={size}>{size}</span>
+                        </div>
+                        <span className="font-bold text-black text-lg">{count} <span className="text-xs text-gray-400 font-normal ml-1">ตัว</span></span>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer className="text-center py-6 text-gray-400 text-xs border-t border-gray-200">
+          <a href="#" className="hover:text-black transition-colors uppercase font-bold tracking-widest">Return to Shop</a>
+        </footer>
+      </div>
+    );
+  };
+
+  return currentPath === '#admin' ? <AdminView /> : <UserView />;
+}
