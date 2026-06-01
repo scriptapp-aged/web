@@ -3,137 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบอยู่ระหว่างการปรับปรุง</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>โครงการชุมนุมฟาร์มนิสิต 2569</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Mitr', sans-serif;
-            background-color: #ffffff; /* พื้นหลังสีขาวตามโจทย์ */
-            height: 100vh;
-            width: 100%;
+            font-family: 'Prompt', sans-serif;
+            background-color: #09090b; /* Zinc 950 */
+            color: #ffffff;
+            margin: 0;
+            overflow: hidden; /* ป้องกันการ Scroll นอกหน้า */
+        }
+
+        .container-panels {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            .container-panels {
+                flex-direction: column;
+            }
+        }
+
+        .panel {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            cursor: pointer;
+            flex: 1; /* เริ่มต้นแบ่งพื้นที่เท่าๆ กัน */
+            transition: flex 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
             overflow: hidden;
-            position: relative;
+            /* ทำให้รูปเป็นขาวดำตอนที่ไม่ได้เลือก */
+            filter: grayscale(100%) brightness(0.5); 
         }
 
-        /* คำว่า UPDATE ขนาดใหญ่ที่อยู่ตรงกลางพื้นหลัง */
-        .bg-text {
+        .panel.active {
+            flex: 4; /* ขยายพื้นที่เมื่อถูกคลิก */
+            cursor: default;
+            /* คืนสีสันเมื่อถูกเลือก */
+            filter: grayscale(0%) brightness(1);
+        }
+
+        @media (max-width: 768px) {
+            .panel.active {
+                flex: 5;
+            }
+        }
+
+        /* Gradient Overlay สำหรับให้อ่านตัวหนังสือได้ชัดเจน */
+        .panel-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* ทำให้กึ่งกลางเป๊ะ */
-            font-size: 22vw; /* ขนาดตามความกว้างหน้าจอ */
-            font-weight: 600;
-            color: #f8f9fa; /* สีเทาอ่อนมากเกือบขาว */
-            letter-spacing: -1vw;
-            z-index: 0;
-            user-select: none;
-            white-space: nowrap;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
+            transition: opacity 0.8s ease;
         }
 
-        /* กล่องเนื้อหาหลัก */
-        .content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 20px;
+        .panel.active .panel-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.2) 100%);
         }
 
-        .icon-wrapper {
-            margin-bottom: 1.5rem;
+        .content-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .main-icon {
-            width: 80px;
-            height: 80px;
-            color: #1a202c;
-            animation: rotate 8s infinite linear;
+        @media (min-width: 768px) {
+            .content-box {
+                padding: 4rem;
+            }
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        h1 {
-            font-weight: 600;
-            font-size: 2.5rem;
-            color: #1a202c;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        p {
+        .project-number {
+            font-size: 3rem;
             font-weight: 200;
-            font-size: 1.2rem;
-            color: #4a5568;
-            max-width: 450px;
-            margin: 0 auto 2rem auto;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            opacity: 0.7;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            white-space: nowrap;
+            margin-bottom: 0;
+            transition: margin 0.8s ease;
+        }
+
+        @media (min-width: 768px) {
+            .project-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        .project-detail {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #d4d4d8; /* Zinc 300 */
+            font-weight: 300;
             line-height: 1.6;
         }
 
-        /* แถบ Loading แบบเรียบหรู */
-        .loader-bar {
-            width: 200px;
-            height: 4px;
-            background: #edf2f7;
-            border-radius: 10px;
-            margin: 0 auto;
-            overflow: hidden;
+        /* State เมื่อ Panel เปิด */
+        .panel.active .project-number {
+            transform: translateY(-10px);
+            opacity: 1;
         }
 
-        .progress {
+        .panel.active .project-title {
+            margin-bottom: 1.5rem;
+            white-space: normal; /* อนุญาตให้ตัดบรรทัดได้เมื่อขยาย */
+        }
+
+        .panel.active .project-detail {
+            opacity: 1;
+            max-height: 300px; /* ความสูงที่เพียงพอสำหรับเนื้อหา */
+            transform: translateY(0);
+            transition-delay: 0.2s; /* ดีเลย์ให้ขยายก่อนค่อยโชว์ text */
+        }
+
+        /* Header / Logo Style */
+        .modern-header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            background: #1a202c;
-            transform: translateX(-100%);
-            animation: loading 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none; /* ไม่ให้กั้นการคลิก panel */
         }
 
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Responsive สำหรับมือถือ */
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            p { font-size: 1rem; }
-            .bg-text { font-size: 30vw; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="bg-text">UPDATE</div>
-
-    <div class="content">
-        <div class="icon-wrapper">
-            <svg class="main-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
+    <header class="modern-header">
+        <div class="text-white">
+            <h1 class="text-xl md:text-2xl font-light tracking-wide">
+                ฟาร์มนิสิต <span class="font-medium">๒๕๖๙</span>
+            </h1>
         </div>
+        <div class="hidden md:block">
+            <p class="text-xs tracking-[0.3em] text-zinc-400 uppercase">
+                Student Farm Projects . 2026
+            </p>
+        </div>
+    </header>
 
-        <h1>กำลังปรับปรุงระบบ</h1>
-        <p>เรากำลังอัพเดตข้อมูลเพื่อให้คุณใช้งานได้ดียิ่งขึ้น <br>ขออภัยในความไม่สะดวกครับ</p>
+    <main class="container-panels" id="panel-container">
         
-        <div class="loader-bar">
-            <div class="progress"></div>
+        <!-- โครงการ 1 -->
+        <div class="panel active" style="background-image: url('https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=2000&auto=format&fit=crop');">
+            <div class="panel-overlay"></div>
+            <div class="content-box">
+                <div class="project-number">01</div>
+                <h2 class="project-title">โครงการปลูกผักอินทรีย์</h2>
+                <div class="project-detail max-w-xl">
+                    <p class="mb-4">
+                        เรียนรู้และลงมือปฏิบัติจริงในทุกขั้นตอนของการทำเกษตรอินทรีย์อัจฉริยะ (Smart Organic) ตั้งแต่การวิเคราะห์สภาพดิน การเพาะกล้า ไปจนถึงการจัดการระบบน้ำด้วยเทคโนโลยีสมัยใหม่
+                    </p>
+                    <p>
+                        มุ่งเน้นการสร้างแหล่งอาหารที่ปลอดภัย ปราศจากสารเคมี และสามารถตรวจสอบย้อนกลับได้ เพื่อคุณภาพชีวิตที่ดีและสิ่งแวดล้อมที่ยั่งยืน
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
 
+        <!-- โครงการ 2 -->
+        <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=2000&auto=format&fit=crop');">
+            <div class="panel-overlay"></div>
+            <div class="content-box">
+                <div class="project-number">02</div>
+                <h2 class="project-title">โครงการปศุสัตว์ขนาดย่อม</h2>
+                <div class="project-detail max-w-xl">
+                    <p class="mb-4">
+                        บริหารจัดการฟาร์มปศุสัตว์แนวใหม่ด้วยหลักการสวัสดิภาพสัตว์ (Animal Welfare) ศึกษาการเลี้ยงสัตว์ในพื้นที่จำกัดให้เกิดประสิทธิภาพสูงสุด
+                    </p>
+                    <p>
+                        เรียนรู้การบูรณาการระบบนิเวศ เช่น การนำมูลสัตว์มาหมุนเวียนเป็นพลังงานหรือปุ๋ย สร้างระบบฟาร์มปิดที่ลดผลกระทบต่อชุมชนโดยรอบ
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- โครงการ 3 -->
+        <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1589923188900-85dae523342b?q=80&w=2000&auto=format&fit=crop');">
+            <div class="panel-overlay"></div>
+            <div class="content-box">
+                <div class="project-number">03</div>
+                <h2 class="project-title">โครงการแปรรูปผลผลิต</h2>
+                <div class="project-detail max-w-xl">
+                    <p class="mb-4">
+                        สร้างมูลค่าเพิ่ม (Value Added) ให้กับผลผลิตทางการเกษตรด้วยนวัตกรรมอาหารและกระบวนการแปรรูปที่ได้มาตรฐานความสะอาด
+                    </p>
+                    <p>
+                        ฝึกทักษะตั้งแต่การคิดค้นสูตร การออกแบบบรรจุภัณฑ์ที่เป็นมิตรต่อสิ่งแวดล้อม ไปจนถึงการวางแผนการตลาดและการสร้างแบรนด์สินค้าเกษตรยุคใหม่
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ฟังก์ชันสำหรับจัดการการขยาย Panel
+        const panels = document.querySelectorAll('.panel');
+
+        panels.forEach(panel => {
+            panel.addEventListener('click', () => {
+                // ลบ class 'active' ออกจาก panel ทั้งหมด
+                removeActiveClasses();
+                // เพิ่ม class 'active' ให้กับ panel ที่ถูกคลิก
+                panel.classList.add('active');
+            });
+        });
+
+        function removeActiveClasses() {
+            panels.forEach(panel => {
+                panel.classList.remove('active');
+            });
+        }
+    </script>
 </body>
 </html>
