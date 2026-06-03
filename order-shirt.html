@@ -282,40 +282,49 @@
     font-weight: 400;
   }
 
-  /* product images — hardcoded src only, no upload UI */
+  /* product images placeholder */
   .product-images {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
     overflow-x: auto;
     padding-bottom: 0.25rem;
   }
   .img-slot {
     flex-shrink: 0;
-    width: 280px;
-    height: 340px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--gray-100);
+    width: 220px;
+    height: 260px;
+    border: 1px dashed var(--gray-400);
+    border-radius: var(--radius);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    cursor: default;
+    gap: 0.4rem;
+    background: var(--white);
+    overflow: hidden;
     position: relative;
   }
   .img-slot img {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    display: none;
   }
-  .img-slot .no-img-ph {
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    position: absolute; inset: 0; justify-content: center;
+  .img-slot img.loaded { display: block; }
+  .img-slot .upload-label {
+    font-size: 0.72rem;
+    color: var(--gray-400);
+    text-align: center;
+    padding: 0 0.75rem;
+    line-height: 1.4;
   }
-  .img-slot .no-img-ph .ph-icon { font-size: 2.5rem; opacity: 0.15; }
-  .img-slot .no-img-ph .ph-text {
-    font-size: 0.68rem; color: var(--gray-400);
-    text-align: center; padding: 0 1rem; line-height: 1.5;
+  .img-slot .upload-icon { font-size: 2rem; opacity: 0.3; }
+  .img-slot input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
   }
 
   /* Size selector */
@@ -650,7 +659,7 @@
 
 <!-- Config: ใส่ URL ของ Google Apps Script ที่นี่ -->
 <script>
-  const GAS_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec";
   const BANK_ACCOUNT = "xxx-x-xxxxx-x"; // ← ใส่เลขบัญชีที่นี่
   const BANK_HOLDER  = "ชื่อเจ้าของบัญชี";  // ← ใส่ชื่อเจ้าของบัญชีที่นี่
 </script>
@@ -710,20 +719,19 @@
         <span class="product-price-tag">ราคา 240 บาท / ตัว</span>
       </div>
 
-      <!-- ══ รูปเสื้อยืดตัวอย่าง — แก้ไข src ในโค้ดเท่านั้น ══
-           tshirt-img-1 = ด้านหน้า  |  tshirt-img-2 = ด้านหลัง
-           วิธีเปลี่ยนรูป: แก้ค่า src="..." ด้านล่างแล้ว commit ขึ้น GitHub
-      ══════════════════════════════════════════════════════ -->
+      <!-- รูปเสื้อ (2 ช่อง) -->
       <div class="product-images">
-        <div class="img-slot">
-          <img id="หน้า.png"
-               src="https://via.placeholder.com/280x340/f4f4f4/b0b0b0?text=เสื้อยืดด้านหน้า"
-               alt="เสื้อยืดด้านหน้า" />
+        <div class="img-slot" title="คลิกเพื่ออัปโหลดรูปเสื้อ 1">
+          <span class="upload-icon">🖼</span>
+          <span class="upload-label">รูปเสื้อด้านหน้า</span>
+          <input type="file" accept="image/*" onchange="previewProductImg(this,'tshirt-img-1')" />
+          <img id="tshirt-img-1" alt="เสื้อยืดด้านหน้า" />
         </div>
-        <div class="img-slot">
-          <img id="หลัง.png"
-               src="https://via.placeholder.com/280x340/f4f4f4/b0b0b0?text=เสื้อยืดด้านหลัง"
-               alt="เสื้อยืดด้านหลัง" />
+        <div class="img-slot" title="คลิกเพื่ออัปโหลดรูปเสื้อ 2">
+          <span class="upload-icon">🖼</span>
+          <span class="upload-label">รูปเสื้อด้านหลัง</span>
+          <input type="file" accept="image/*" onchange="previewProductImg(this,'tshirt-img-2')" />
+          <img id="tshirt-img-2" alt="เสื้อยืดด้านหลัง" />
         </div>
       </div>
 
@@ -762,8 +770,15 @@
         <div class="field"><label>จำนวน</label><input type="number" id="ts-special-qty" placeholder="1" min="1" /></div>
       </div>
 
-      <!-- จำนวนเสื้อยืด: คงที่ 1 ตัว (ไม่แสดงให้ผู้ซื้อเห็น) -->
-      <input type="hidden" id="tshirtQty" value="1" />
+      <div class="qty-row">
+        <span class="qty-label">จำนวน</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('tshirtQty',-1)">−</button>
+          <input type="number" class="qty-val" id="tshirtQty" value="0" min="0" onchange="calcTotal()" />
+          <button class="qty-btn" onclick="changeQty('tshirtQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="tshirt-subtotal">฿0</span>
+      </div>
     </div>
   </section>
 
@@ -776,14 +791,13 @@
         <span class="product-price-tag">ราคา 420 บาท / ตัว</span>
       </div>
 
-      <!-- ══ รูปเสื้อยีนส์ตัวอย่าง — แก้ไข src ในโค้ดเท่านั้น ══
-           วิธีเปลี่ยนรูป: แก้ค่า src="..." ด้านล่างแล้ว commit ขึ้น GitHub
-      ══════════════════════════════════════════════════════ -->
+      <!-- รูปเสื้อ (1 ช่อง) -->
       <div class="product-images">
-        <div class="img-slot">
-          <img id="ยีนส์.png"
-               src="https://via.placeholder.com/280x340/f4f4f4/b0b0b0?text=เสื้อยีนส์"
-               alt="เสื้อยีนส์" />
+        <div class="img-slot" title="คลิกเพื่ออัปโหลดรูปเสื้อยีนส์">
+          <span class="upload-icon">🖼</span>
+          <span class="upload-label">รูปเสื้อยีนส์</span>
+          <input type="file" accept="image/*" onchange="previewProductImg(this,'jeans-img-1')" />
+          <img id="jeans-img-1" alt="เสื้อยีนส์" />
         </div>
       </div>
 
@@ -817,8 +831,15 @@
         <div class="field"><label>จำนวน</label><input type="number" id="js-special-qty" placeholder="1" min="1" /></div>
       </div>
 
-      <!-- จำนวนเสื้อยีนส์: คงที่ 1 ตัว (ไม่แสดงให้ผู้ซื้อเห็น) -->
-      <input type="hidden" id="jeansQty" value="1" />
+      <div class="qty-row">
+        <span class="qty-label">จำนวน</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('jeansQty',-1)">−</button>
+          <input type="number" class="qty-val" id="jeansQty" value="0" min="0" onchange="calcTotal()" />
+          <button class="qty-btn" onclick="changeQty('jeansQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="jeans-subtotal">฿0</span>
+      </div>
     </div>
   </section>
 
@@ -826,13 +847,10 @@
   <section class="section">
     <p class="section-title">04 — การชำระเงิน</p>
 
-    <!-- ยอดรวม — คงที่ 660 บาท (เสื้อยืด 240 + เสื้อยีนส์ 420) -->
+    <!-- ยอดรวม -->
     <div class="total-box">
-      <div>
-        <div class="total-label">ยอดชำระทั้งหมด</div>
-        <div style="font-size:0.72rem;color:var(--gray-600);margin-top:0.25rem;">เสื้อยืด ฿240 + เสื้อยีนส์ ฿420</div>
-      </div>
-      <span class="total-amount">฿660</span>
+      <span class="total-label">ยอดชำระทั้งหมด</span>
+      <span class="total-amount" id="totalDisplay">฿0</span>
     </div>
 
     <!-- บัญชีธนาคาร -->
@@ -919,9 +937,27 @@
 
 <script>
 // ── Init ──────────────────────────────────────────────────────
-document.getElementById('bankAccDisplay').textContent    = BANK_ACCOUNT;
+document.getElementById('bankAccDisplay').textContent   = BANK_ACCOUNT;
 document.getElementById('bankHolderDisplay').textContent = BANK_HOLDER;
-// จำนวนเสื้อทั้งสองชนิดคงที่ที่ 1 (hidden inputs)
+
+// ── Qty Control ───────────────────────────────────────────────
+function changeQty(id, delta) {
+  const el = document.getElementById(id);
+  const v = Math.max(0, (parseInt(el.value) || 0) + delta);
+  el.value = v;
+  calcTotal();
+}
+
+// ── Calc Total ────────────────────────────────────────────────
+function calcTotal() {
+  const tq = parseInt(document.getElementById('tshirtQty').value) || 0;
+  const jq = parseInt(document.getElementById('jeansQty').value) || 0;
+  const ts = tq * 240;
+  const js = jq * 420;
+  document.getElementById('tshirt-subtotal').textContent = '฿' + ts.toLocaleString();
+  document.getElementById('jeans-subtotal').textContent  = '฿' + js.toLocaleString();
+  document.getElementById('totalDisplay').textContent    = '฿' + (ts + js).toLocaleString();
+}
 
 // ── Toggle Special Size ───────────────────────────────────────
 function toggleSpecial(id, btn) {
@@ -930,7 +966,22 @@ function toggleSpecial(id, btn) {
   btn.textContent = open ? '− ปิดไซส์พิเศษ' : '+ ไซส์พิเศษ (ระบุเอง)';
 }
 
-// ── รูปเสื้อฝังตรงใน src attribute ของ <img> แก้ไขได้จากโค้ดเท่านั้น ──
+// ── Preview Product Image ─────────────────────────────────────
+function previewProductImg(input, imgId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.classList.add('loaded');
+    // hide placeholder inside parent
+    const slot = img.closest('.img-slot');
+    slot.querySelector('.upload-icon').style.display = 'none';
+    slot.querySelector('.upload-label').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
 
 // ── Handle Proof File ─────────────────────────────────────────
 function handleProof(input) {
