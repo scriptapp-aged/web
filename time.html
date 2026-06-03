@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>นับถอยหลังเปิดระบบสั่งซื้อเสื้อ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .countdown-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            border-top: 5px solid #006633; /* สีเขียว KU */
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #006633;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .countdown-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px 15px;
+            min-width: 100px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .countdown-num {
+            display: block;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .countdown-unit {
+            display: block;
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .status-message {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #f59e0b; /* สีส้มเตือน */
+            height: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .countdown-grid {
+                gap: 10px;
+            }
+            .countdown-box {
+                min-width: 70px;
+                padding: 15px 10px;
+            }
+            .countdown-num {
+                font-size: 2rem;
+            }
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="countdown-container">
+        <h1 class="title">เตรียมพบกับระบบสั่งซื้อเสื้อปฏิบัติการฟาร์ม</h1>
+        <p class="subtitle">ระบบจะเปิดอัตโนมัติในวันที่ 14 มิถุนายน 2569 เวลา 10:00 น.</p>
+
+        <div class="countdown-grid" id="timer-grid">
+            <div class="countdown-box">
+                <span class="countdown-num" id="days">00</span>
+                <span class="countdown-unit">วัน</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="hours">00</span>
+                <span class="countdown-unit">ชั่วโมง</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="mins">00</span>
+                <span class="countdown-unit">นาที</span>
+            </div>
+            <div class="countdown-box">
+                <span class="countdown-num" id="secs">00</span>
+                <span class="countdown-unit">วินาที</span>
+            </div>
+        </div>
+
+        <div class="status-message" id="status-text">กำลังนับถอยหลัง...</div>
+    </div>
+
+    <script>
+        // กำหนดวันที่และเวลาเปิดระบบ (14 มิถุนายน 2569 เวลา 10:00:00 น.)
+        // เดือนใน JavaScript เริ่มจาก 0 (June = เดือน 5) แต่วิธีระบุเป็น String สามารถใช้ "June 14, 2026 10:00:00" ได้เลย
+        const countDownDate = new Date("June 14, 2026 10:00:00").getTime();
+        
+        // ลิงก์ที่ต้องการให้ไปเมื่อถึงเวลา
+        const redirectUrl = "https://scriptapp-aged.github.io/web/lorder-shirt.html";
+
+        // อัปเดตเวลาทุกๆ 1 วินาที
+        const x = setInterval(function() {
+
+            // หาเวลาปัจจุบัน
+            const now = new Date().getTime();
+            
+            // คำนวณระยะห่างระหว่างเวลาปัจจุบันและเวลาเปิดระบบ
+            const distance = countDownDate - now;
+            
+            // คำนวณ วัน, ชั่วโมง, นาที, วินาที
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // นำค่าไปแสดงผล (ใช้ padStart เพื่อเติม 0 ข้างหน้าถ้าตัวเลขหลักเดียว)
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = seconds.toString().padStart(2, '0');
+            
+            // หากหมดเวลา (ถึงเวลาเปิดระบบ)
+            if (distance <= 0) {
+                clearInterval(x); // หยุดการนับถอยหลัง
+                
+                // เซ็ตตัวเลขเป็น 00 ให้หมด
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("mins").innerText = "00";
+                document.getElementById("secs").innerText = "00";
+                
+                // เปลี่ยนข้อความแจ้งเตือน
+                document.getElementById("status-text").innerHTML = "เปิดระบบแล้ว! กำลังพาท่านไปยังหน้าสั่งซื้อ...";
+                document.getElementById("status-text").style.color = "#006633";
+                
+                // เปลี่ยนหน้าไปยัง URL ที่กำหนดทันที
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
