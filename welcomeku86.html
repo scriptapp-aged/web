@@ -27,15 +27,19 @@
 }
 
 body{
-  background:#ffffff;
-  color:var(--dark);
-  overflow-x:hidden;
-  background-image:
-    radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-  background-size:40px 40px;
+  /* ตั้งค่าภาพพื้นหลัง และดรอปสีให้จางลง (Fade) ด้วย linear-gradient */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+    url('image_5.png'); /* เปลี่ยนเป็นชื่อไฟล์ภาพพื้นหลังจางที่คุณต้องการที่นี่ */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--dark);
+  overflow-x: hidden;
 }
 
-/* ===== Background Glow ===== */
+/* ===== Background Glow (ปรับให้เข้ากับพื้นหลังใหม่) ===== */
 
 .bg-blob{
   position:fixed;
@@ -44,7 +48,7 @@ body{
   background:
     radial-gradient(
       circle,
-      rgba(0,255,136,.14) 0%,
+      rgba(0,255,136,.15) 0%,
       transparent 70%
     );
   filter:blur(100px);
@@ -72,27 +76,29 @@ body{
 
 .hero-content{
   max-width:1100px;
+  position: relative; /* จำเป็นสำหรับการจัดตำแหน่ง absolute ด้านใน */
 }
 
 .tag{
   display:inline-block;
   padding:12px 30px;
-  background:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.7);
   border:1px solid #e2e8f0;
   backdrop-filter:blur(10px);
   color:var(--ku-green);
   letter-spacing:2px;
   font-size:.9rem;
   margin-bottom:25px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* --- สไตล์สำหรับคำว่า "ยินดีต้อนรับ" ที่เพิ่มใหม่ --- */
+/* --- สไตล์สำหรับคำต้อนรับ (แทรกระหว่าง Tag และ Title) --- */
 .hero-welcome {
   color: var(--ku-green);
   font-size: clamp(1.8rem, 5vw, 3rem); /* ปรับขนาดตามหน้าจอ */
   font-weight: 500;
   letter-spacing: 5px; /* เพิ่มช่องว่างระหว่างตัวอักษร */
-  margin-bottom: 10px; /* ระยะห่างจากหัวข้อหลัก h1 */
+  margin-bottom: 10px; /* ระยะห่างเล็กน้อยจากหัวข้อหลัก h1 */
   opacity: 0.9;
 }
 
@@ -111,6 +117,7 @@ body{
   -webkit-background-clip:text;
   color:transparent;
   animation:textFlow 10s linear infinite;
+  /* เราไม่ได้กำหนด Margin เพิ่มเติมเพื่อคงตำแหน่งเดิม */
 }
 
 @keyframes textFlow{
@@ -122,8 +129,9 @@ body{
   color:var(--ku-green);
   font-size:1.05rem;
   letter-spacing:4px;
-  font-weight:500;
+  font-weight:700;
   opacity:.9;
+  text-shadow: 0 2px 4px rgba(255,255,255,0.8);
 }
 
 /* ===== QUICK MENU ===== */
@@ -317,8 +325,7 @@ body{
 @media(max-width:768px){
 
   .hero{
-    min-height:45vh;
-    padding:100px 20px 20px;
+    padding:80px 20px 20px;
   }
 
   .menu-btn{
@@ -351,12 +358,12 @@ body{
   <div class="hero-content">
 
     <div class="tag">
-      ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน
+      KASETSART UNIVERSITY KAMPHAENG SAEN
     </div>
 
     <div class="hero-welcome">ยินดีต้อนรับ</div>
 
-    <h1>นิสิตใหม่ AG-ED57</h1>
+    <h1>นิสิตใหม่ KU86</h1>
 
     <div class="hero-subtitle">
       KU86 • EDS26 • AG-ED57
