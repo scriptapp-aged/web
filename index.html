@@ -686,7 +686,7 @@
         }
 
         /* ========================= */
-        /* ✨ ORDER SHIRT BANNER (เพิ่มใหม่) */
+        /* ✨ ORDER SHIRT BANNER */
         /* ========================= */
         .order-banner-wrap{
             max-width:1250px;
@@ -728,10 +728,36 @@
             gap: 25px;
         }
 
+        /* ปรับดีไซน์ใหม่ให้สมูทและพรีเมียมขึ้นแบบ Glassmorphism เหลี่ยมคมชัด */
         .order-banner-icon{
-            font-size: 2.8rem;
-            color: var(--primary-neon);
-            animation: breathing 4s infinite alternate;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height: 90px;
+            font-size: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(0,255,136,0.1);
+            animation: floatSmooth 5s ease-in-out infinite;
+        }
+
+        /* ไล่เฉดสีในตัวไอคอน */
+        .order-banner-icon i {
+            background: linear-gradient(135deg, var(--primary-neon), var(--ku-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 8px 12px rgba(0, 255, 136, 0.4));
+        }
+
+        /* แอนิเมชันลอยตัวแบบสมูท */
+        @keyframes floatSmooth {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .order-banner-text{
@@ -906,7 +932,7 @@
                     <p>ปีการศึกษา 2569 (เปิดรับออเดอร์แล้ววันนี้)</p>
                 </div>
             </div>
-            <a href="order-shirt.html" class="order-banner-btn">
+            <a href="time.html" class="order-banner-btn">
                 สั่งซื้อตอนนี้ <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
