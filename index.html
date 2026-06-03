@@ -3,1143 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เตรียมเปิดระบบสั่งซื้อเสื้อ</title>
 
-    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
     <style>
-
-        :root{
-            --primary-neon:#00ff88;
-            --ku-green:#006633;
-            --text-dark:#0f172a;
-            --feedback-blue:#1e3a8a;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mitr', sans-serif;
+            border-radius: 0 !important; /* คงคอนเซปต์ไร้ความโค้งมน */
         }
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Mitr',sans-serif;
-            border-radius:0 !important;
-        }
-
-        body{
-            background-color:#ffffff;
-            color:var(--text-dark);
-            min-height:100vh;
-            overflow-x:hidden;
-
-            background-image:
-                radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-
-            background-size:40px 40px;
-        }
-
-        .bg-blob{
-            position:fixed;
-
-            width:500px;
-            height:500px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(0,255,136,0.1) 0%,
-                    transparent 70%
-                );
-
-            filter:blur(80px);
-
-            z-index:-1;
-
-            animation:moveBlob 20s infinite alternate;
-        }
-
-        @keyframes moveBlob{
-
-            0%{
-                transform:
-                    translate(-10%, -10%)
-                    scale(1);
-            }
-
-            100%{
-                transform:
-                    translate(100%, 50%)
-                    scale(1.5);
-            }
-        }
-
-        .hero-header{
-            padding:120px 20px 60px;
-
-            text-align:center;
-
-            position:relative;
-
-            animation:
-                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        @keyframes fadeInUp{
-
-            from{
-                opacity:0;
-                transform:translateY(40px);
-                filter:blur(10px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-                filter:blur(0);
-            }
-        }
-
-        .header-glow{
-            position:absolute;
-
-            top:40%;
-            left:50%;
-
-            transform:translate(-50%,-50%);
-
-            width:500px;
-            height:500px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(0,255,136,0.15) 0%,
-                    transparent 70%
-                );
-
-            filter:blur(100px);
-
-            z-index:0;
-
-            animation:
-                breathing 5s ease-in-out infinite;
-        }
-
-        @keyframes breathing{
-
-            0%,100%{
-                transform:
-                    translate(-50%,-50%)
-                    scale(1);
-
-                opacity:0.4;
-            }
-
-            50%{
-                transform:
-                    translate(-50%,-50%)
-                    scale(1.15);
-
-                opacity:0.7;
-            }
-        }
-
-        .main-title{
-            font-size:
-                clamp(3.5rem,10vw,6.8rem);
-
-            font-weight:700;
-
-            letter-spacing:-4px;
-
-            line-height:0.9;
-
-            color:var(--text-dark);
-
-            margin-bottom:30px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #0f172a,
-                    #006633,
-                    #0f172a
-                );
-
-            background-size:200% auto;
-
-            -webkit-background-clip:text;
-            background-clip:text;
-
-            animation:textFlow 10s linear infinite;
-        }
-
-        @keyframes textFlow{
-            to{
-                background-position:200% center;
-            }
-        }
-
-        .subtitle-pill{
-            display:inline-block;
-
-            background:
-                rgba(241,245,249,0.6);
-
-            backdrop-filter:blur(10px);
-
-            padding:12px 32px;
-
-            font-size:0.9rem;
-
-            font-weight:600;
-
-            color:var(--ku-green);
-
-            letter-spacing:2px;
-
-            border:
-                1px solid rgba(226,232,240,0.8);
-
-            margin-bottom:20px;
-        }
-
-        .countdown-section{
-            margin-top:30px;
-
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-
-            animation:
-                fadeInUp 1.2s 0.4s both;
-        }
-
-        .countdown-project-label{
-            font-size:1rem;
-            font-weight:500;
-            color:var(--ku-green);
-
-            letter-spacing:1px;
-
-            margin-bottom:5px;
-        }
-
-        .countdown-date-label{
-            font-size:0.85rem;
-            color:#64748b;
-
-            margin-bottom:15px;
-
-            font-weight:300;
-        }
-
-        .countdown-grid{
-            display:flex;
-            gap:12px;
-            justify-content:center;
-        }
-
-        .countdown-box{
-            background:rgba(255,255,255,0.5);
-
-            border-bottom:
-                3px solid var(--ku-green);
-
-            padding:12px;
-
-            min-width:75px;
-
-            backdrop-filter:blur(5px);
-
-            box-shadow:
-                0 4px 15px rgba(0,0,0,0.03);
-        }
-
-        .countdown-num{
-            display:block;
-
-            font-size:1.8rem;
-            font-weight:700;
-
-            color:var(--text-dark);
-
-            line-height:1;
-        }
-
-        .countdown-unit{
-            display:block;
-
-            font-size:0.65rem;
-
-            color:#94a3b8;
-
-            text-transform:uppercase;
-
-            margin-top:4px;
-
-            letter-spacing:1px;
-        }
-
-        /* ========================= */
-        /* ✨ KU86 BUTTON */
-        /* ========================= */
-
-        .ku86-hero-wrap{
-            margin-top:28px;
-
-            display:flex;
-            justify-content:center;
-
-            animation:
-                fadeInUp 1.2s 0.6s both;
-        }
-
-        .ku86-hero-btn{
-            position:relative;
-            overflow:hidden;
-
-            display:inline-flex;
-
-            align-items:center;
-            justify-content:center;
-
-            gap:14px;
-
-            width:min(520px,92%);
-
-            padding:18px 30px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(0,255,136,0.10),
-                    rgba(0,102,51,0.08)
-                );
-
-            border:
-                1px solid rgba(0,255,136,0.25);
-
-            text-decoration:none;
-
-            color:var(--text-dark);
-
-            backdrop-filter:blur(10px);
-
-            transition:
-                0.45s cubic-bezier(0.2,1,0.2,1);
-
-            box-shadow:
-                0 10px 30px rgba(0,255,136,0.08),
-                inset 0 1px 0 rgba(255,255,255,0.4);
-        }
-
-        .ku86-hero-btn::before{
-            content:'';
-
-            position:absolute;
-            inset:0;
-
-            background:
-                linear-gradient(
-                    120deg,
-                    transparent,
-                    rgba(255,255,255,0.35),
-                    transparent
-                );
-
-            transform:translateX(-120%);
-
-            transition:0.8s;
-        }
-
-        .ku86-hero-btn:hover::before{
-            transform:translateX(120%);
-        }
-
-        .ku86-hero-btn:hover{
-            transform:
-                translateY(-8px)
-                scale(1.01);
-
-            border-color:
-                rgba(0,255,136,0.45);
-
-            box-shadow:
-                0 25px 60px rgba(0,255,136,0.16),
-                0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .ku86-hero-btn i{
-            font-size:1.3rem;
-            color:var(--ku-green);
-        }
-
-        .ku86-hero-content{
-            display:flex;
-            flex-direction:column;
-            align-items:flex-start;
-            text-align:left;
-        }
-
-        .ku86-hero-title{
-            font-size:1.15rem;
-            font-weight:600;
-            line-height:1.2;
-        }
-
-        .ku86-hero-sub{
-            font-size:0.82rem;
-            color:#64748b;
-
-            margin-top:2px;
-
-            font-weight:300;
-        }
-
-        .ku86-new-badge{
-            position:absolute;
-
-            top:12px;
-            right:14px;
-
-            background:#ff003c;
-            color:#fff;
-
-            font-size:0.62rem;
-            font-weight:700;
-
-            letter-spacing:1px;
-
-            padding:5px 10px;
-
-            animation:
-                pulseNew 1.8s infinite;
-        }
-
-        @keyframes pulseNew{
-
-            0%{
-                transform:scale(1);
-
-                box-shadow:
-                    0 0 0 0 rgba(255,0,60,0.5);
-            }
-
-            70%{
-                transform:scale(1.05);
-
-                box-shadow:
-                    0 0 0 12px rgba(255,0,60,0);
-            }
-
-            100%{
-                transform:scale(1);
-
-                box-shadow:
-                    0 0 0 0 rgba(255,0,60,0);
-            }
-        }
-
-        .main-portal{
-            max-width:1250px;
-
-            margin:0 auto;
-
-            padding:0 20px 60px;
-
-            display:grid;
-
-            grid-template-columns:
-                repeat(3,1fr);
-
-            gap:60px;
-        }
-
-        .card{
-            text-align:center;
-
-            text-decoration:none;
-
-            color:inherit;
-
-            position:relative;
-
-            opacity:0;
-
-            animation:
-                cardReveal 1s cubic-bezier(0.2,1,0.2,1)
-                forwards;
-        }
-
-        .card:nth-child(1){
-            animation-delay:0.3s;
-        }
-
-        .card:nth-child(2){
-            animation-delay:0.5s;
-        }
-
-        .card:nth-child(3){
-            animation-delay:0.7s;
-        }
-
-        @keyframes cardReveal{
-
-            from{
-                opacity:0;
-                transform:translateY(60px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-        }
-
-        .card:hover{
-            transform:translateY(-30px);
-        }
-
-        .image-wrapper{
-            width:100%;
-            height:400px;
-
-            display:flex;
-
-            justify-content:center;
-            align-items:flex-end;
-
-            margin-bottom:35px;
-
-            position:relative;
-        }
-
-        .image-wrapper img{
-            max-width:100%;
-            max-height:100%;
-
-            object-fit:contain;
-
-            filter:
-                grayscale(100%)
-                opacity(0.5)
-                brightness(1.1);
-
-            transition:
-                0.8s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        .card:hover img{
-            filter:
-                grayscale(0%)
-                opacity(1)
-                drop-shadow(
-                    0 40px 60px rgba(0,0,0,0.15)
-                );
-
-            transform:
-                scale(1.08)
-                translateY(-15px);
-        }
-
-        .card h3{
-            font-size:1.7rem;
-            font-weight:600;
-
-            color:var(--text-dark);
-
-            position:relative;
-
-            display:inline-block;
-
-            transition:0.4s;
-        }
-
-        .card:hover h3{
-            color:var(--ku-green);
-
-            letter-spacing:1.5px;
-        }
-
-        .card h3::after{
-            content:'';
-
-            position:absolute;
-
-            bottom:-10px;
-            left:0;
-
-            width:0;
-            height:4px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--primary-neon),
-                    var(--ku-green)
-                );
-
-            transition:
-                0.6s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        .card:hover h3::after{
-            width:100%;
-        }
-
-        .extra-services{
-            max-width:1250px;
-
-            margin:0 auto;
-
-            padding:0 20px 40px;
-
-            display:grid;
-
-            grid-template-columns:
-                repeat(auto-fit,minmax(220px,1fr));
-
-            gap:20px;
-
-            animation:
-                fadeInUp 1s 1s both;
-        }
-
-        .mini-card{
-            background:
-                rgba(255,255,255,0.6);
-
-            backdrop-filter:blur(10px);
-
-            border:
-                1px solid rgba(226,232,240,0.8);
-
-            padding:25px;
-
-            text-decoration:none;
-
-            color:inherit;
-
-            display:flex;
-
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-
-            text-align:center;
-
-            transition:0.4s;
-
-            min-height:140px;
-        }
-
-        .mini-card:hover{
-            background:#ffffff;
-
-            transform:translateY(-10px);
-
-            border-color:var(--ku-green);
-
-            box-shadow:
-                0 20px 40px rgba(0,102,51,0.05);
-        }
-
-        .mini-card i{
-            font-size:1.5rem;
-
-            color:var(--ku-green);
-
-            margin-bottom:12px;
-
-            opacity:0.7;
-        }
-
-        .mini-card h4{
-            font-size:1rem;
-            font-weight:600;
-            line-height:1.4;
-        }
-
-        .mini-card span{
-            font-size:0.8rem;
-
-            color:#64748b;
-
-            margin-top:5px;
-
-            font-weight:300;
-        }
-
-        @media(max-width:1024px){
-
-            .main-portal{
-                grid-template-columns:1fr;
-                gap:100px;
-            }
-
-            .extra-services{
-                grid-template-columns:1fr;
-            }
-        }
-
-        /* ========================= */
-        /* ✨ ORDER SHIRT BANNER */
-        /* ========================= */
-        .order-banner-wrap{
-            max-width:1250px;
-            margin: 0 auto 60px auto;
-            padding: 0 20px;
-            animation: fadeInUp 1.2s 0.8s both;
-        }
-
-        .order-banner{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, var(--text-dark), #1e293b);
-            padding: 30px 40px;
-            color: #ffffff;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-            position: relative;
-            overflow: hidden;
-            border-left: 6px solid var(--primary-neon);
-        }
-
-        .order-banner::before{
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -5%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0,255,136,0.15) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .order-banner-content{
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        /* ปรับดีไซน์ใหม่ให้สมูทและพรีเมียมขึ้นแบบ Glassmorphism เหลี่ยมคมชัด */
-        .order-banner-icon{
-            position: relative;
+        body {
+            background-color: #ffffff;
+            color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 90px;
-            height: 90px;
-            font-size: 3rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            box-shadow: 
-                0 15px 35px rgba(0,0,0,0.2),
-                inset 0 0 20px rgba(0,255,136,0.1);
-            animation: floatSmooth 5s ease-in-out infinite;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
         }
 
-        /* ไล่เฉดสีในตัวไอคอน */
-        .order-banner-icon i {
-            background: linear-gradient(135deg, var(--primary-neon), var(--ku-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 8px 12px rgba(0, 255, 136, 0.4));
+        .wrapper {
+            max-width: 900px;
+            width: 100%;
+            padding: 0 20px;
+            animation: fadeIn 1.5s ease-out;
         }
 
-        /* แอนิเมชันลอยตัวแบบสมูท */
-        @keyframes floatSmooth {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .order-banner-text{
-            text-align: left;
+        .title {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
-        .order-banner-text h2{
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-
-        .order-banner-text p{
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .order-banner-btn{
-            position: relative;
-            z-index: 1;
-            display: inline-flex;
-            align-items: center;
-            background: var(--primary-neon);
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 14px 32px;
-            font-weight: 600;
+        .subtitle {
             font-size: 1rem;
-            transition: 0.3s;
-            border: 2px solid var(--primary-neon);
+            color: #888888;
+            font-weight: 300;
+            margin-bottom: 60px;
+            letter-spacing: 0.5px;
         }
 
-        .order-banner-btn i{
-            margin-left: 10px;
-            transition: 0.3s;
+        .countdown-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
         }
 
-        .order-banner-btn:hover{
-            background: transparent;
-            color: var(--primary-neon);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
         }
 
-        .order-banner-btn:hover i{
-            transform: translateX(5px);
+        .countdown-num {
+            font-size: 6rem;
+            font-weight: 200;
+            line-height: 1;
+            color: #111111;
+            margin-bottom: 15px;
+            font-variant-numeric: tabular-nums; /* ให้ตัวเลขขยับไม่กระตุก */
         }
 
-        @media(max-width:768px){
-            .order-banner{
-                flex-direction: column;
-                text-align: center;
-                padding: 30px 20px;
-                gap: 20px;
+        .countdown-unit {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .separator {
+            font-size: 4rem;
+            font-weight: 200;
+            color: #e5e5e5;
+            margin-top: -30px;
+        }
+
+        #redirect-message {
+            display: none;
+            margin-top: 50px;
+            font-size: 1.1rem;
+            color: #111111;
+            font-weight: 300;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .countdown-row {
+                gap: 10px;
             }
-            .order-banner-content{
-                flex-direction: column;
-                gap: 15px;
+            .countdown-num {
+                font-size: 3.5rem;
             }
-            .order-banner-text{
-                text-align: center;
+            .separator {
+                font-size: 2.5rem;
+                margin-top: -20px;
+            }
+            .countdown-item {
+                min-width: 70px;
+            }
+            .title {
+                font-size: 1.6rem;
             }
         }
-
     </style>
 </head>
-
 <body>
 
-    <div class="bg-blob"></div>
+    <div class="wrapper">
+        <h1 class="title">เตรียมพบกับระบบสั่งซื้อเสื้อปฏิบัติการฟาร์ม</h1>
+        <p class="subtitle" id="date-text">ระบบจะเปิดอัตโนมัติในวันที่ 14 มิถุนายน 2569 เวลา 10:00 น.</p>
 
-    <div class="header-glow"></div>
+        <div class="countdown-row" id="timer-grid">
+            <div class="countdown-item">
+                <span class="countdown-num" id="days">00</span>
+                <span class="countdown-unit">วัน</span>
+            </div>
+            
+            <div class="separator">:</div>
 
-    <header class="hero-header">
-
-        <div class="title-container">
-
-            <div class="subtitle-pill">
-                Department of Human and Community Resource Development
+            <div class="countdown-item">
+                <span class="countdown-num" id="hours">00</span>
+                <span class="countdown-unit">ชั่วโมง</span>
             </div>
 
-            <h1 class="main-title">
-                ชุมนุมฟาร์มนิสิต
-            </h1>
+            <div class="separator">:</div>
 
-            <p style="
-                color:#64748b;
-                font-weight:300;
-                letter-spacing:4px;
-                font-size:1rem;
-                opacity:0.7;
-            ">
-                FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
-            </p>
-
-            <div class="countdown-section">
-
-                <div class="countdown-project-label">
-                    โครงการเกษตรน้องใหม่หัวใจ EDS
-                </div>
-
-                <div class="countdown-date-label">
-                    28 มิถุนายน 2569
-                </div>
-
-                <div class="countdown-grid">
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-days">00</span>
-                        <span class="countdown-unit">Days</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-hours">00</span>
-                        <span class="countdown-unit">Hours</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-mins">00</span>
-                        <span class="countdown-unit">Mins</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-secs">00</span>
-                        <span class="countdown-unit">Secs</span>
-                    </div>
-
-                </div>
-
+            <div class="countdown-item">
+                <span class="countdown-num" id="mins">00</span>
+                <span class="countdown-unit">นาที</span>
             </div>
 
-            <div class="ku86-hero-wrap">
+            <div class="separator">:</div>
 
-                <a href="ku86.html"
-                   class="ku86-hero-btn">
-
-                    <div class="ku86-new-badge">
-                        NEW
-                    </div>
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <div class="ku86-hero-content">
-
-                        <div class="ku86-hero-title">
-                            นิสิตใหม่ KU86
-                        </div>
-
-                        <div class="ku86-hero-sub">
-                            คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
-                        </div>
-
-                    </div>
-
-                </a>
-
+            <div class="countdown-item">
+                <span class="countdown-num" id="secs">00</span>
+                <span class="countdown-unit">วินาที</span>
             </div>
-
         </div>
 
-    </header>
-
-    <div class="order-banner-wrap">
-        <div class="order-banner">
-            <div class="order-banner-content">
-                <div class="order-banner-icon">
-                    <i class="fa-solid fa-shirt"></i>
-                </div>
-                <div class="order-banner-text">
-                    <h2>สั่งซื้อเสื้อปฏิบัติการฟาร์ม</h2>
-                    <p>ปีการศึกษา 2569 (14 - 21 มิถุนายน 2569)</p>
-                </div>
-            </div>
-            <a href="time.html" class="order-banner-btn">
-                สั่งซื้อตอนนี้ <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="main-portal">
-
-        <a href="people.html" class="card">
-
-            <div class="image-wrapper">
-                <img src="090.png" alt="Committee">
-            </div>
-
-            <h3>คณะกรรมการฟาร์ม</h3>
-
-            <p style="
-                font-size:0.9rem;
-                color:#64748b;
-                margin-top:10px;
-                font-weight:300;
-            ">
-                Team Excellence 2569
-            </p>
-
-        </a>
-
-        <a href="close.html" class="card">
-
-            <div class="image-wrapper">
-                <img src="091.png" alt="Reservation">
-            </div>
-
-            <h3>จองห้องประชุม</h3>
-
-            <p style="
-                font-size:0.9rem;
-                color:#64748b;
-                margin-top:10px;
-                font-weight:300;
-            ">
-                Smart Space Booking
-            </p>
-
-        </a>
-
-        <a href="project.html" class="card">
-
-            <div class="image-wrapper">
-                <img src="092.png" alt="Projects">
-            </div>
-
-            <h3>โครงการชุมนุม</h3>
-
-            <p style="
-                font-size:0.9rem;
-                color:#64748b;
-                margin-top:10px;
-                font-weight:300;
-            ">
-                Future Farm Initiatives
-            </p>
-
-        </a>
-
-    </div>
-
-    <div class="extra-services">
-
-        <a href="academic-calendar.html"
-           class="mini-card">
-
-            <i class="fa-solid fa-calendar-days"></i>
-
-            <h4>ปฏิทินการศึกษา</h4>
-
-            <span>
-                กำหนดการเรียนและสอบ
-            </span>
-
-        </a>
-
-        <a href="schedule.html"
-           class="mini-card">
-
-            <i class="fa-solid fa-calendar-check"></i>
-
-            <h4>ตารางจองห้องประชุม</h4>
-
-            <span>
-                เช็คสถานะการใช้งานเรียลไทม์
-            </span>
-
-        </a>
-
-        <a href="admin-approve.html"
-           class="mini-card"
-           style="
-            border-style:dashed;
-            background:rgba(0,102,51,0.03);
-           ">
-
-            <i class="fa-solid fa-user-shield"></i>
-
-            <h4>ระบบอนุมัติการจอง</h4>
-
-            <span style="
-                color:var(--ku-green);
-                font-weight:500;
-            ">
-                สำหรับ Admin
-            </span>
-
-        </a>
-
+        <div id="redirect-message">กำลังเข้าสู่ระบบสั่งซื้อ...</div>
     </div>
 
     <script>
+        const countDownDate = new Date("June 14, 2026 10:00:00").getTime();
+        const redirectUrl = "https://scriptapp-aged.github.io/web/lorder-shirt.html";
 
-        function startCountdown(){
-
-            const target =
-                new Date(
-                    "June 28, 2026 00:00:00"
-                ).getTime();
-
-            setInterval(()=>{
-
-                const now =
-                    new Date().getTime();
-
-                const diff =
-                    target - now;
-
-                if(diff > 0){
-
-                    const days =
-                        Math.floor(
-                            diff /
-                            (1000*60*60*24)
-                        );
-
-                    const hours =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60*60*24)
-                            ) /
-                            (1000*60*60)
-                        );
-
-                    const mins =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60*60)
-                            ) /
-                            (1000*60)
-                        );
-
-                    const secs =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60)
-                            ) /
-                            1000
-                        );
-
-                    document
-                        .getElementById('d-days')
-                        .innerText =
-                        days.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-hours')
-                        .innerText =
-                        hours.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-mins')
-                        .innerText =
-                        mins.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-secs')
-                        .innerText =
-                        secs.toString()
-                        .padStart(2,'0');
-
-                }else{
-
-                    document
-                        .querySelector(
-                            '.countdown-section'
-                        )
-                        .innerHTML =
-                        "<div class='countdown-project-label'>เริ่มโครงการแล้ววันนี้! (28 มิ.ย. 69)</div>";
-                }
-
-            },1000);
-        }
-
-        startCountdown();
-
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = seconds.toString().padStart(2, '0');
+            
+            if (distance <= 0) {
+                clearInterval(timer);
+                
+                // ตั้งค่าตัวเลขเป็น 00 ทั้งหมด
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("mins").innerText = "00";
+                document.getElementById("secs").innerText = "00";
+                
+                // ซ่อนวันที่ และแสดงข้อความพาเข้าสู่ระบบ
+                document.getElementById("date-text").style.opacity = "0";
+                document.getElementById("redirect-message").style.display = "block";
+                
+                // ทำการ Redirect
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
     </script>
 
 </body>
