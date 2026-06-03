@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เตรียมเปิดระบบสั่งซื้อเสื้อ</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -13,149 +13,161 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Mitr', sans-serif;
-            border-radius: 0 !important; /* เน้นความมินิมอลด้วยขอบเหลี่ยมคมชัด */
+            border-radius: 0 !important; /* คงคอนเซปต์ไร้ความโค้งมน */
         }
 
         body {
-            background-color: #fcfcfc;
-            color: #111111;
+            background-color: #ffffff;
+            color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
         }
 
-        .countdown-container {
-            background: #ffffff;
-            padding: 60px 50px;
-            text-align: center;
-            max-width: 650px;
-            width: 90%;
-            border: 1px solid #e5e5e5;
-            box-shadow: 10px 10px 0px #111111;
+        .wrapper {
+            max-width: 900px;
+            width: 100%;
+            padding: 0 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #111111;
-            margin-bottom: 12px;
+            font-size: 2.2rem;
+            font-weight: 400;
             letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
             font-size: 1rem;
-            color: #737373;
-            margin-bottom: 45px;
+            color: #888888;
             font-weight: 300;
+            margin-bottom: 60px;
+            letter-spacing: 0.5px;
         }
 
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .countdown-box {
-            background: #ffffff;
-            border: 1px solid #111111;
-            padding: 25px 10px;
+        .countdown-row {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: 0.3s ease;
+            gap: 20px;
         }
 
-        .countdown-box:hover {
-            background: #111111;
-            color: #ffffff;
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
         }
 
         .countdown-num {
-            display: block;
-            font-size: 3rem;
-            font-weight: 500;
+            font-size: 6rem;
+            font-weight: 200;
             line-height: 1;
-            margin-bottom: 10px;
-            color: inherit;
+            color: #111111;
+            margin-bottom: 15px;
+            font-variant-numeric: tabular-nums; /* ให้ตัวเลขขยับไม่กระตุก */
         }
 
         .countdown-unit {
-            display: block;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 400;
+            color: #aaaaaa;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: inherit;
+            letter-spacing: 2px;
         }
 
-        .countdown-box:hover .countdown-unit {
-            color: #cccccc;
+        .separator {
+            font-size: 4rem;
+            font-weight: 200;
+            color: #e5e5e5;
+            margin-top: -30px;
         }
 
-        .status-message {
+        #redirect-message {
+            display: none;
+            margin-top: 50px;
             font-size: 1.1rem;
-            font-weight: 400;
-            color: #555555;
-            height: 30px;
-            border-top: 1px dashed #e5e5e5;
-            padding-top: 30px;
+            color: #111111;
+            font-weight: 300;
+            animation: pulse 2s infinite;
         }
 
-        @media (max-width: 600px) {
-            .countdown-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            .countdown-container {
-                padding: 40px 30px;
-            }
-            .title {
-                font-size: 1.5rem;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .countdown-row {
+                gap: 10px;
             }
             .countdown-num {
+                font-size: 3.5rem;
+            }
+            .separator {
                 font-size: 2.5rem;
+                margin-top: -20px;
+            }
+            .countdown-item {
+                min-width: 70px;
+            }
+            .title {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="countdown-container">
+    <div class="wrapper">
         <h1 class="title">เตรียมพบกับระบบสั่งซื้อเสื้อปฏิบัติการฟาร์ม</h1>
-        <p class="subtitle">ระบบจะเปิดอัตโนมัติในวันที่ 14 มิถุนายน 2569 เวลา 10:00 น.</p>
+        <p class="subtitle" id="date-text">ระบบจะเปิดอัตโนมัติในวันที่ 14 มิถุนายน 2569 เวลา 10:00 น.</p>
 
-        <div class="countdown-grid" id="timer-grid">
-            <div class="countdown-box">
+        <div class="countdown-row" id="timer-grid">
+            <div class="countdown-item">
                 <span class="countdown-num" id="days">00</span>
                 <span class="countdown-unit">วัน</span>
             </div>
-            <div class="countdown-box">
+            
+            <div class="separator">:</div>
+
+            <div class="countdown-item">
                 <span class="countdown-num" id="hours">00</span>
                 <span class="countdown-unit">ชั่วโมง</span>
             </div>
-            <div class="countdown-box">
+
+            <div class="separator">:</div>
+
+            <div class="countdown-item">
                 <span class="countdown-num" id="mins">00</span>
                 <span class="countdown-unit">นาที</span>
             </div>
-            <div class="countdown-box">
+
+            <div class="separator">:</div>
+
+            <div class="countdown-item">
                 <span class="countdown-num" id="secs">00</span>
                 <span class="countdown-unit">วินาที</span>
             </div>
         </div>
 
-        <div class="status-message" id="status-text">กำลังนับถอยหลัง...</div>
+        <div id="redirect-message">กำลังเข้าสู่ระบบสั่งซื้อ...</div>
     </div>
 
     <script>
         const countDownDate = new Date("June 14, 2026 10:00:00").getTime();
-        
         const redirectUrl = "https://scriptapp-aged.github.io/web/lorder-shirt.html";
 
-        const x = setInterval(function() {
-
+        const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
             
@@ -170,17 +182,19 @@
             document.getElementById("secs").innerText = seconds.toString().padStart(2, '0');
             
             if (distance <= 0) {
-                clearInterval(x);
+                clearInterval(timer);
                 
+                // ตั้งค่าตัวเลขเป็น 00 ทั้งหมด
                 document.getElementById("days").innerText = "00";
                 document.getElementById("hours").innerText = "00";
                 document.getElementById("mins").innerText = "00";
                 document.getElementById("secs").innerText = "00";
                 
-                document.getElementById("status-text").innerHTML = "เปิดระบบแล้ว! กำลังพาท่านไปยังหน้าสั่งซื้อ...";
-                document.getElementById("status-text").style.color = "#111111";
-                document.getElementById("status-text").style.fontWeight = "500";
+                // ซ่อนวันที่ และแสดงข้อความพาเข้าสู่ระบบ
+                document.getElementById("date-text").style.opacity = "0";
+                document.getElementById("redirect-message").style.display = "block";
                 
+                // ทำการ Redirect
                 window.location.href = redirectUrl;
             }
         }, 1000);
