@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Admin — ระบบสั่งซื้อเสื้อปฏิบัติการ 2569</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- SheetJS for Excel/CSV export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -12,11 +14,11 @@
   --gray-400:#b0b0b0;--gray-600:#5a5a5a;--gray-800:#2a2a2a;--border:#e0e0e0;
   --radius:4px;--font:'Kanit',sans-serif;
   --green:#1b5e20;--green-bg:#e8f5e9;--amber:#e65100;--amber-bg:#fff3e0;
-  --red:#b71c1c;--red-bg:#ffebee;
+  --red:#b71c1c;--red-bg:#ffebee;--blue:#1565c0;--blue-bg:#e3f2fd;
 }
 body{font-family:var(--font);background:var(--gray-100);color:var(--black);font-weight:300;min-height:100vh}
 
-/* LOGIN */
+/* ── LOGIN ────────────────────────────────────────────────── */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
 .login-box{background:var(--white);padding:2.5rem 2rem;width:100%;max-width:360px;border-radius:6px}
 .login-box .brand{font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
@@ -32,85 +34,108 @@ body{font-family:var(--font);background:var(--gray-100);color:var(--black);font-
 .login-btn:hover{opacity:.85}
 .login-err{font-size:.78rem;color:var(--red);margin-top:.75rem;display:none}
 
-/* ADMIN LAYOUT */
+/* ── ADMIN LAYOUT ─────────────────────────────────────────── */
 .admin-wrap{display:none;min-height:100vh;flex-direction:column}
 .admin-header{background:var(--black);color:var(--white);height:56px;display:flex;align-items:center;
   justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100}
 .admin-header .hlogo{font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase}
-.admin-header .hright{display:flex;align-items:center;gap:1rem}
-.admin-header .hadmin{font-size:.75rem;color:var(--gray-400)}
+.admin-header .hright{display:flex;align-items:center;gap:.75rem}
+.hadmin-role{font-size:.68rem;color:var(--gray-400)}
+.hadmin-name{font-size:.75rem;color:var(--white);font-weight:500}
+.role-badge{font-size:.6rem;font-weight:600;letter-spacing:.08em;padding:.15rem .5rem;border-radius:3px;text-transform:uppercase}
+.role-admin{background:#2a2a2a;color:var(--gray-400);border:1px solid #444}
+.role-viewer{background:#1a2a3a;color:#64b5f6;border:1px solid #1565c0}
 .logout-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.08em;padding:.35rem .9rem;
   background:transparent;color:var(--gray-400);border:1px solid #444;border-radius:var(--radius);cursor:pointer;transition:all .2s}
 .logout-btn:hover{border-color:var(--white);color:var(--white)}
 .admin-content{padding:2rem 1.5rem;max-width:1200px;margin:0 auto;width:100%}
 
-/* Dashboard cards */
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+/* ── VIEWER NOTICE ────────────────────────────────────────── */
+.viewer-notice{background:var(--blue-bg);border:1px solid #90caf9;border-radius:6px;
+  padding:.75rem 1rem;margin-bottom:1.25rem;font-size:.8rem;color:var(--blue);display:none}
+
+/* ── DASHBOARD CARDS ──────────────────────────────────────── */
+.section-hd{font-size:.62rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gray-400);margin-bottom:.9rem;margin-top:.25rem}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem;margin-bottom:1.5rem}
 .dash-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
-.dash-card .dc-label{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
+.dash-card .dc-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
 .dash-card .dc-val{font-size:1.9rem;font-weight:700;line-height:1}
 .dash-card .dc-sub{font-size:.7rem;color:var(--gray-600);margin-top:.35rem}
 .dc-approved .dc-val{color:var(--green)}
-.dc-pending .dc-val{color:var(--amber)}
+.dc-pending  .dc-val{color:var(--amber)}
 .dc-rejected .dc-val{color:var(--red)}
-.dc-revenue .dc-val{font-size:1.4rem}
+.dc-revenue  .dc-val{font-size:1.4rem}
 
-/* Size summary */
+/* ── SIZE SUMMARY ─────────────────────────────────────────── */
 .size-summary-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
 @media(max-width:640px){.size-summary-wrap{grid-template-columns:1fr}}
 .size-summary-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
-.size-summary-card h4{font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
-.size-rows{display:flex;flex-direction:column;gap:.4rem}
+.size-summary-card h4{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.size-rows{display:flex;flex-direction:column;gap:.45rem}
 .size-row{display:flex;align-items:center;gap:.75rem}
-.size-row .sz-label{font-size:.8rem;font-weight:600;min-width:40px}
+.size-row .sz-label{font-size:.8rem;font-weight:600;min-width:42px}
 .size-row .sz-bar-wrap{flex:1;height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
 .size-row .sz-bar{height:100%;background:var(--black);border-radius:4px;transition:width .4s ease;min-width:2px}
-.size-row .sz-count{font-size:.78rem;font-weight:500;min-width:24px;text-align:right}
+.size-row .sz-count{font-size:.78rem;font-weight:600;min-width:24px;text-align:right}
 
-/* Toolbar */
+/* ── EXPORT BAR ───────────────────────────────────────────── */
+.export-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;
+  background:var(--white);border:1px solid var(--border);border-radius:6px;
+  padding:.85rem 1.1rem;margin-bottom:1rem}
+.export-label{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gray-400);margin-right:.25rem}
+.export-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.06em;
+  padding:.4rem .9rem;border-radius:var(--radius);cursor:pointer;border:1px solid var(--border);
+  background:var(--white);color:var(--gray-800);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:.35rem}
+.export-btn:hover{background:var(--black);color:var(--white);border-color:var(--black)}
+.export-btn.btn-print{background:var(--black);color:var(--white);border-color:var(--black)}
+.export-btn.btn-print:hover{opacity:.8}
+.export-sep{width:1px;height:24px;background:var(--border);margin:0 .15rem}
+
+/* ── TOOLBAR ──────────────────────────────────────────────── */
 .table-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
 .search-input{font-family:var(--font);font-size:.85rem;font-weight:300;padding:.55rem .9rem;
-  border:1px solid var(--border);border-radius:var(--radius);outline:none;flex:1;min-width:160px;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;flex:1;min-width:150px;
   transition:border-color .2s;background:var(--white)}
 .search-input:focus{border-color:var(--black)}
 .filter-select{font-family:var(--font);font-size:.82rem;font-weight:300;padding:.55rem .9rem;
   border:1px solid var(--border);border-radius:var(--radius);background:var(--white);outline:none;cursor:pointer}
-.refresh-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:.55rem 1.1rem;
-  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;
-  transition:opacity .2s;white-space:nowrap}
+.refresh-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:.55rem 1rem;
+  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s;white-space:nowrap}
 .refresh-btn:hover{opacity:.8}
 
-/* Table */
+/* ── TABLE ────────────────────────────────────────────────── */
 .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.82rem}
 thead th{background:var(--black);color:var(--white);padding:.75rem .8rem;text-align:left;
-  font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+  font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 tbody tr{border-bottom:1px solid var(--border)}
 tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:var(--gray-100)}
 tbody td{padding:.7rem .8rem;vertical-align:middle}
 .name-cell{font-weight:500}
 
-.badge{display:inline-block;font-size:.65rem;font-weight:500;letter-spacing:.06em;padding:.2rem .65rem;border-radius:20px;white-space:nowrap}
-.badge-pending{background:var(--amber-bg);color:var(--amber)}
+.badge{display:inline-block;font-size:.62rem;font-weight:500;letter-spacing:.06em;padding:.2rem .65rem;border-radius:20px;white-space:nowrap}
+.badge-pending {background:var(--amber-bg);color:var(--amber)}
 .badge-approved{background:var(--green-bg);color:var(--green)}
-.badge-rejected{background:var(--red-bg);color:var(--red)}
+.badge-rejected{background:var(--red-bg);  color:var(--red)}
 
 .proof-link{font-size:.72rem;color:var(--gray-600);text-decoration:none}
 .proof-link:hover{color:var(--black);text-decoration:underline}
 
-/* Action buttons */
-.action-group{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center}
-.act-btn{font-family:var(--font);font-size:.68rem;font-weight:500;letter-spacing:.06em;
-  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer;border:none;transition:opacity .2s;white-space:nowrap}
+/* ── ACTION BUTTONS ───────────────────────────────────────── */
+.action-group{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
+.act-btn{font-family:var(--font);font-size:.65rem;font-weight:500;letter-spacing:.06em;
+  padding:.28rem .65rem;border-radius:var(--radius);cursor:pointer;border:none;transition:opacity .2s;white-space:nowrap}
 .act-btn:hover{opacity:.8}
 .btn-approve{background:var(--green);color:var(--white)}
-.btn-reject{background:var(--red);color:var(--white)}
-.btn-reset{background:var(--gray-200);color:var(--gray-800)}
-.btn-delete{background:transparent;color:var(--gray-400);border:1px solid var(--border);font-size:.8rem;padding:.28rem .55rem}
+.btn-reject {background:var(--red);  color:var(--white)}
+.btn-reset  {background:var(--gray-200);color:var(--gray-800)}
+.btn-delete {background:transparent;color:var(--gray-400);border:1px solid var(--border);font-size:.78rem;padding:.26rem .5rem}
 .btn-delete:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
 
-/* Reject modal */
+/* ── REJECT MODAL ─────────────────────────────────────────── */
 .rmodal-overlay{display:none;position:fixed;inset:0;background:rgba(13,13,13,.75);z-index:300;
   align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .rmodal-overlay.show{display:flex}
@@ -125,8 +150,7 @@ tbody td{padding:.7rem .8rem;vertical-align:middle}
 .rmodal-body{padding:1.5rem}
 .rmodal-label{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.5rem}
 .rmodal-textarea{width:100%;font-family:var(--font);font-size:.88rem;font-weight:300;padding:.7rem .9rem;
-  border:1px solid var(--border);border-radius:var(--radius);outline:none;resize:vertical;min-height:90px;
-  transition:border-color .2s}
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;resize:vertical;min-height:90px;transition:border-color .2s}
 .rmodal-textarea:focus{border-color:var(--black)}
 .rmodal-footer{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
 .rmodal-save-btn{font-family:var(--font);font-size:.8rem;font-weight:600;letter-spacing:.08em;padding:.6rem 1.5rem;
@@ -135,7 +159,7 @@ tbody td{padding:.7rem .8rem;vertical-align:middle}
 .rmodal-cancel-btn{font-family:var(--font);font-size:.8rem;font-weight:500;padding:.6rem 1rem;
   background:var(--gray-200);color:var(--gray-800);border:none;border-radius:var(--radius);cursor:pointer}
 
-/* Loading / Toast */
+/* ── LOADING / TOAST ──────────────────────────────────────── */
 .loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,250,250,.85);z-index:500;
   align-items:center;justify-content:center;flex-direction:column;gap:1rem}
 .loading-overlay.show{display:flex}
@@ -144,29 +168,60 @@ tbody td{padding:.7rem .8rem;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
   background:var(--black);color:var(--white);padding:.75rem 1.5rem;border-radius:4px;
-  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
+  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.success{background:var(--green)}.toast.error{background:var(--red)}
 .empty-state{text-align:center;padding:3rem;color:var(--gray-400);font-size:.85rem}
-.section-hd{font-size:.62rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
-  color:var(--gray-400);margin-bottom:.9rem;margin-top:.25rem}
+
+/* ── PRINT STYLES ─────────────────────────────────────────── */
+@media print{
+  .admin-header,.export-bar,.table-toolbar,.action-group,.loading-overlay,.toast,
+  .rmodal-overlay,.viewer-notice{display:none!important}
+  body{background:white;font-size:11pt}
+  .admin-content{padding:0;max-width:100%}
+  .dash-grid{grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:1rem}
+  .dash-card{border:1px solid #ccc;padding:.6rem .8rem;border-radius:3px}
+  .dash-card .dc-val{font-size:1.4rem}
+  .size-summary-wrap{grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem;page-break-inside:avoid}
+  .size-summary-card{border:1px solid #ccc}
+  .table-wrap{border:1px solid #ccc;border-radius:0;overflow:visible}
+  table{font-size:9pt;width:100%}
+  thead th{background:#1a1a1a!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:8pt;padding:.4rem .5rem}
+  tbody td{padding:.4rem .5rem}
+  tbody tr:nth-child(even){background:#f9f9f9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .badge{border:1px solid #ccc;background:white!important;color:#333!important}
+  .print-header{display:block!important}
+  .section-hd{font-size:8pt;margin-bottom:.4rem}
+  @page{margin:15mm;size:A4 landscape}
+}
+.print-header{display:none;text-align:center;margin-bottom:1rem;border-bottom:2px solid var(--black);padding-bottom:.75rem}
+.print-header h1{font-size:14pt;font-weight:700}
+.print-header p{font-size:9pt;color:#666;margin-top:.25rem}
 </style>
 </head>
 <body>
 
 <script>
-const GAS_URL     = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec"; // ← URL เดียวกับ index.html
+// ══ CONFIG ══════════════════════════════════════════════════════
+const GAS_URL     = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec";
 const ADMIN_TOKEN = "ADMIN_METEE_552728";
+
+// บัญชีผู้ใช้งาน: { user, pass, role: 'admin'|'viewer' }
+const ACCOUNTS = [
+  { user: 'เมธี',    pass: '552728', role: 'admin',  displayName: 'คุณเมธี' },
+  { user: 'ศุภเสกย์', pass: '202548', role: 'viewer', displayName: 'ประธานศุภเสกย์' }
+];
+// ════════════════════════════════════════════════════════════════
 </script>
 
 <!-- LOGIN -->
 <div class="login-wrap" id="loginWrap">
   <div class="login-box">
-    <p class="brand">เกษตรและสิ่งแวดล้อมศึกษา</p>
-    <h2>Admin Login</h2>
+    <p class="brand">เกษตรและสิ่งแวดล้อมศึกษา 2569</p>
+    <h2>เข้าสู่ระบบ</h2>
     <div class="login-field">
       <label>ชื่อผู้ใช้งาน</label>
-      <input type="text" id="loginUser" placeholder="เมธี" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <input type="text" id="loginUser" placeholder="ชื่อผู้ใช้" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
     <div class="login-field">
       <label>รหัสผ่าน</label>
@@ -180,20 +235,33 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
 <!-- ADMIN PANEL -->
 <div class="admin-wrap" id="adminWrap">
   <header class="admin-header">
-    <span class="hlogo">Admin — เสื้อปฏิบัติการ 2569</span>
+    <span class="hlogo">ระบบสั่งซื้อเสื้อปฏิบัติการ 2569</span>
     <div class="hright">
-      <span class="hadmin" id="adminName">—</span>
+      <span class="role-badge" id="roleBadge"></span>
+      <span class="hadmin-name" id="adminName">—</span>
       <button class="logout-btn" onclick="doLogout()">ออกจากระบบ</button>
     </div>
   </header>
 
   <div class="admin-content">
 
+    <!-- Print Header (พิมพ์เท่านั้น) -->
+    <div class="print-header">
+      <h1>รายงานคำสั่งซื้อเสื้อปฏิบัติการ</h1>
+      <p>สาขาเกษตรและสิ่งแวดล้อมศึกษา — ปีการศึกษา 2569</p>
+      <p id="printDate"></p>
+    </div>
+
+    <!-- Viewer Notice -->
+    <div class="viewer-notice" id="viewerNotice">
+      🔍 คุณเข้าสู่ระบบในฐานะ <strong>ผู้ดูระบบ</strong> — สามารถดูข้อมูลและส่งออกได้เท่านั้น ไม่สามารถอนุมัติหรือแก้ไขข้อมูลได้
+    </div>
+
     <!-- Dashboard -->
-    <p class="section-hd">ภาพรวม</p>
+    <p class="section-hd">ภาพรวมคำสั่งซื้อ</p>
     <div class="dash-grid">
       <div class="dash-card">
-        <div class="dc-label">คำสั่งซื้อทั้งหมด</div>
+        <div class="dc-label">ทั้งหมด</div>
         <div class="dc-val" id="stat-total">—</div>
         <div class="dc-sub">รายการ</div>
       </div>
@@ -213,30 +281,51 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
         <div class="dc-sub">รายการ</div>
       </div>
       <div class="dash-card dc-revenue">
-        <div class="dc-label">ยอดเงินรวม (อนุมัติแล้ว)</div>
+        <div class="dc-label">ยอดเงิน (อนุมัติ)</div>
         <div class="dc-val" id="stat-revenue">—</div>
         <div class="dc-sub">บาท</div>
       </div>
     </div>
 
-    <!-- Size summary -->
+    <!-- Size Summary -->
     <p class="section-hd">ยอดสั่งซื้อแยกตามไซส์</p>
     <div class="size-summary-wrap">
       <div class="size-summary-card">
         <h4>เสื้อยืด</h4>
-        <div class="size-rows" id="tshirt-size-rows">—</div>
+        <div class="size-rows" id="tshirt-size-rows"><span style="font-size:.78rem;color:var(--gray-400)">กำลังโหลด...</span></div>
       </div>
       <div class="size-summary-card">
         <h4>เสื้อยีนส์</h4>
-        <div class="size-rows" id="jeans-size-rows">—</div>
+        <div class="size-rows" id="jeans-size-rows"><span style="font-size:.78rem;color:var(--gray-400)">กำลังโหลด...</span></div>
       </div>
     </div>
 
-    <!-- Toolbar -->
+    <!-- Export Bar -->
     <p class="section-hd">รายการสั่งซื้อ</p>
+    <div class="export-bar">
+      <span class="export-label">ส่งออก</span>
+      <button class="export-btn" onclick="exportExcel()" title="ส่งออกเป็น Excel">
+        <span>📊</span> Excel
+      </button>
+      <button class="export-btn" onclick="exportCSV()" title="ส่งออกเป็น CSV">
+        <span>📋</span> CSV
+      </button>
+      <button class="export-btn" onclick="exportWord()" title="ส่งออกเป็น Word (HTML)">
+        <span>📝</span> Word
+      </button>
+      <button class="export-btn" onclick="exportPDF()" title="ส่งออกเป็น PDF">
+        <span>📄</span> PDF
+      </button>
+      <div class="export-sep"></div>
+      <button class="export-btn btn-print" onclick="printReport()" title="พิมพ์รายงาน">
+        <span>🖨</span> พิมพ์รายงาน
+      </button>
+    </div>
+
+    <!-- Toolbar -->
     <div class="table-toolbar">
       <input class="search-input" id="searchName" placeholder="ค้นหาชื่อ..." oninput="renderTable()"/>
-      <input class="search-input" id="searchId"   placeholder="รหัสนิสิต..." oninput="renderTable()" style="max-width:160px"/>
+      <input class="search-input" id="searchId" placeholder="รหัสนิสิต..." oninput="renderTable()" style="max-width:155px"/>
       <select class="filter-select" id="filterYear" onchange="renderTable()">
         <option value="">ทุกชั้นปี</option>
         <option value="1">ปี 1</option><option value="2">ปี 2</option>
@@ -253,7 +342,7 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
 
     <!-- Table -->
     <div class="table-wrap">
-      <table>
+      <table id="mainTable">
         <thead>
           <tr>
             <th>#</th>
@@ -266,11 +355,12 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
             <th>ราคา</th>
             <th>หลักฐาน</th>
             <th>สถานะ</th>
-            <th>จัดการ</th>
+            <th>เวลาอนุมัติ / โดย</th>
+            <th class="no-print admin-only-col">จัดการ</th>
           </tr>
         </thead>
         <tbody id="orderTableBody">
-          <tr><td colspan="11" class="empty-state">กำลังโหลด...</td></tr>
+          <tr><td colspan="12" class="empty-state">กำลังโหลด...</td></tr>
         </tbody>
       </table>
     </div>
@@ -285,7 +375,7 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
       <button class="rmodal-close" onclick="closeRejectModal()">✕</button>
     </div>
     <div class="rmodal-body">
-      <p class="rmodal-label">หมายเหตุ (จะส่งไปในอีเมลแจ้งลูกค้า)</p>
+      <p class="rmodal-label">หมายเหตุ (จะส่งในอีเมลแจ้งลูกค้า)</p>
       <textarea class="rmodal-textarea" id="rejectNote" placeholder="เช่น หลักฐานการโอนไม่ชัดเจน, ยอดเงินไม่ครบ..."></textarea>
       <div class="rmodal-footer">
         <button class="rmodal-cancel-btn" onclick="closeRejectModal()">ยกเลิก</button>
@@ -299,32 +389,49 @@ const ADMIN_TOKEN = "ADMIN_METEE_552728";
 <div class="toast" id="toast"></div>
 
 <script>
-let allOrders       = [];
-let rejectRowIndex  = null;
+let allOrders      = [];
+let rejectRowIndex = null;
+let currentRole    = null;   // 'admin' | 'viewer'
+let currentUser    = null;
 
-// ── Login ─────────────────────────────────────────────────────
+// ── LOGIN ──────────────────────────────────────────────────────
 function doLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value.trim();
-  if (user === 'เมธี' && pass === '552728') {
-    document.getElementById('loginErr').style.display = 'none';
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('adminWrap').style.display = 'flex';
-    document.getElementById('adminName').textContent = user;
-    loadOrders();
-  } else {
-    document.getElementById('loginErr').style.display = 'block';
+  const acct = ACCOUNTS.find(a => a.user === user && a.pass === pass);
+  if (!acct) {
+    document.getElementById('loginErr').style.display = 'block'; return;
   }
+  document.getElementById('loginErr').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminWrap').style.display = 'flex';
+  document.getElementById('adminName').textContent   = acct.displayName;
+
+  currentRole = acct.role;
+  currentUser = acct.user;
+
+  const badge = document.getElementById('roleBadge');
+  if (acct.role === 'admin') {
+    badge.textContent = 'ADMIN';
+    badge.className   = 'role-badge role-admin';
+    document.getElementById('viewerNotice').style.display = 'none';
+  } else {
+    badge.textContent = 'VIEWER';
+    badge.className   = 'role-badge role-viewer';
+    document.getElementById('viewerNotice').style.display = 'block';
+  }
+  loadOrders();
 }
+
 function doLogout() {
   document.getElementById('adminWrap').style.display = 'none';
   document.getElementById('loginWrap').style.display = 'flex';
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
-  allOrders = [];
+  allOrders = []; currentRole = null; currentUser = null;
 }
 
-// ── Load Orders ───────────────────────────────────────────────
+// ── LOAD ORDERS ────────────────────────────────────────────────
 async function loadOrders() {
   showLoading(true);
   try {
@@ -336,29 +443,27 @@ async function loadOrders() {
       updateDash(data.summary);
       updateSizeSummary();
       renderTable();
-    } else { showToast(data.message||'โหลดข้อมูลไม่ได้','error'); }
-  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+    } else { showToast(data.message || 'โหลดข้อมูลไม่ได้', 'error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้', 'error'); }
 }
 
-// ── Dashboard ─────────────────────────────────────────────────
+// ── DASHBOARD ──────────────────────────────────────────────────
 function updateDash(s) {
   document.getElementById('stat-total').textContent    = s.total.toLocaleString();
   document.getElementById('stat-approved').textContent = s.approved.toLocaleString();
   document.getElementById('stat-pending').textContent  = s.pending.toLocaleString();
-  document.getElementById('stat-rejected').textContent = (s.rejected||0).toLocaleString();
-  document.getElementById('stat-revenue').textContent  = '฿'+s.revenue.toLocaleString();
+  document.getElementById('stat-rejected').textContent = (s.rejected || 0).toLocaleString();
+  document.getElementById('stat-revenue').textContent  = '฿' + s.revenue.toLocaleString();
 }
 
-// ── Size Summary ──────────────────────────────────────────────
+// ── SIZE SUMMARY ───────────────────────────────────────────────
 function updateSizeSummary() {
   const tMap = {}, jMap = {};
   allOrders.forEach(o => {
-    if (o.tshirtSize && o.tshirtSize !== '-') {
-      tMap[o.tshirtSize] = (tMap[o.tshirtSize]||0) + (Number(o.tshirtQty)||1);
-    }
-    if (o.jeansSize && o.jeansSize !== '-') {
-      jMap[o.jeansSize] = (jMap[o.jeansSize]||0) + (Number(o.jeansQty)||1);
-    }
+    if (o.tshirtSize && o.tshirtSize !== '-')
+      tMap[o.tshirtSize] = (tMap[o.tshirtSize] || 0) + (Number(o.tshirtQty) || 1);
+    if (o.jeansSize && o.jeansSize !== '-')
+      jMap[o.jeansSize] = (jMap[o.jeansSize] || 0) + (Number(o.jeansQty) || 1);
   });
   renderSizeRows('tshirt-size-rows', tMap, ['S','M','L','XL','2XL','3XL']);
   renderSizeRows('jeans-size-rows',  jMap, ['S','M','L','XL','2XL']);
@@ -366,13 +471,11 @@ function updateSizeSummary() {
 function renderSizeRows(elId, map, order) {
   const el   = document.getElementById(elId);
   const all  = Object.keys(map);
-  const keys = [...order.filter(k => all.includes(k) || map[k]),
-                 ...all.filter(k => !order.includes(k))];
-  if (keys.length === 0) { el.innerHTML = '<span style="font-size:.78rem;color:var(--gray-400)">ยังไม่มีข้อมูล</span>'; return; }
-  const max  = Math.max(...keys.map(k => map[k]||0), 1);
+  const keys = [...order.filter(k => map[k] > 0), ...all.filter(k => !order.includes(k) && map[k] > 0)];
+  if (!keys.length) { el.innerHTML = '<span style="font-size:.78rem;color:var(--gray-400)">ยังไม่มีข้อมูล</span>'; return; }
+  const max = Math.max(...keys.map(k => map[k] || 0), 1);
   el.innerHTML = keys.map(k => {
-    const cnt = map[k]||0;
-    const pct = Math.round((cnt/max)*100);
+    const cnt = map[k] || 0, pct = Math.round((cnt/max)*100);
     return `<div class="size-row">
       <span class="sz-label">${k}</span>
       <div class="sz-bar-wrap"><div class="sz-bar" style="width:${pct}%"></div></div>
@@ -381,80 +484,91 @@ function renderSizeRows(elId, map, order) {
   }).join('');
 }
 
-// ── Render Table ──────────────────────────────────────────────
-function renderTable() {
+// ── RENDER TABLE ───────────────────────────────────────────────
+function getFilteredOrders() {
   const sName   = document.getElementById('searchName').value.toLowerCase();
   const sId     = document.getElementById('searchId').value.toLowerCase();
   const fYear   = document.getElementById('filterYear').value;
   const fStatus = document.getElementById('filterStatus').value;
+  return allOrders.filter(o => {
+    return (!sName   || String(o.fullName).toLowerCase().includes(sName))
+        && (!sId     || String(o.studentId).toLowerCase().includes(sId))
+        && (!fYear   || String(o.year) === fYear)
+        && (!fStatus || o.status === fStatus);
+  });
+}
 
-  const filtered = allOrders.filter(o => {
-    const mName   = !sName   || String(o.fullName).toLowerCase().includes(sName);
-    const mId     = !sId     || String(o.studentId).toLowerCase().includes(sId);
-    const mYear   = !fYear   || String(o.year) === fYear;
-    const mStatus = !fStatus || o.status === fStatus;
-    return mName && mId && mYear && mStatus;
+function renderTable() {
+  const filtered = getFilteredOrders();
+  const isAdmin  = currentRole === 'admin';
+  const tbody    = document.getElementById('orderTableBody');
+
+  // hide/show admin-only column header
+  document.querySelectorAll('.admin-only-col').forEach(el => {
+    el.style.display = isAdmin ? '' : 'none';
   });
 
-  const tbody = document.getElementById('orderTableBody');
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">ไม่พบข้อมูล</td></tr>`; return;
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="${isAdmin?12:11}" class="empty-state">ไม่พบข้อมูล</td></tr>`; return;
   }
 
-  tbody.innerHTML = filtered.map((o,i) => {
-    const ts  = `${o.tshirtSize}${o.tshirtChest&&o.tshirtChest!=='-'?' ('+o.tshirtChest+'")'  :''} × ${o.tshirtQty}`;
-    const js  = `${o.jeansSize}${o.jeansChest&&o.jeansChest!=='-'  ?' ('+o.jeansChest+'")'  :''} × ${o.jeansQty}`;
-    const bc  = o.status==='อนุมัติแล้ว' ? 'badge-approved' : o.status==='ปฏิเสธ' ? 'badge-rejected' : 'badge-pending';
+  tbody.innerHTML = filtered.map((o, i) => {
+    const ts = `${o.tshirtSize}${o.tshirtChest && o.tshirtChest !== '-' ? ' (' + o.tshirtChest + '")'  : ''} × ${o.tshirtQty}`;
+    const js = `${o.jeansSize}${o.jeansChest  && o.jeansChest  !== '-' ? ' (' + o.jeansChest  + '")'  : ''} × ${o.jeansQty}`;
+    const bc = o.status === 'อนุมัติแล้ว' ? 'badge-approved' : o.status === 'ปฏิเสธ' ? 'badge-rejected' : 'badge-pending';
     const proof = o.proofUrl
       ? `<a href="${o.proofUrl}" target="_blank" class="proof-link">ดูหลักฐาน ↗</a>`
       : '<span style="color:var(--gray-400);font-size:.72rem">ไม่มี</span>';
-    const dateFmt = o.timestamp ? new Date(o.timestamp).toLocaleDateString('th-TH') : '—';
-    const noteHtml = o.note ? `<div style="font-size:.68rem;color:var(--amber);margin-top:.2rem">📌 ${o.note}</div>` : '';
+    const orderDate = o.timestamp ? new Date(o.timestamp).toLocaleDateString('th-TH') : '—';
+    const noteHtml  = o.note ? `<div style="font-size:.65rem;color:var(--amber);margin-top:.2rem">📌 ${o.note}</div>` : '';
+
+    // วันเวลาที่อนุมัติ + ผู้อนุมัติ
+    const approveInfo = (o.approvedAt || o.approvedBy)
+      ? `<div style="font-size:.72rem;line-height:1.5">
+           ${o.approvedAt ? '<div>'+new Date(o.approvedAt).toLocaleString('th-TH')+'</div>' : ''}
+           ${o.approvedBy ? '<div style="color:var(--gray-600)">โดย: '+o.approvedBy+'</div>' : ''}
+         </div>`
+      : `<span style="font-size:.7rem;color:var(--gray-400)">—</span>`;
+
+    const actionCol = isAdmin ? `<td class="admin-only-col">
+      <div class="action-group">
+        ${o.status !== 'อนุมัติแล้ว' ? `<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>` : ''}
+        ${o.status !== 'ปฏิเสธ'      ? `<button class="act-btn btn-reject"  onclick="openRejectModal(${o.rowIndex})">✕ ไม่อนุมัติ</button>` : ''}
+        ${o.status !== 'รอการอนุมัติ' ? `<button class="act-btn btn-reset"   onclick="doReset(${o.rowIndex})">↺</button>` : ''}
+        <button class="act-btn btn-delete" onclick="doDelete(${o.rowIndex},'${o.fullName.replace(/'/g,"\\'")}')">🗑</button>
+      </div></td>` : '';
 
     return `<tr>
       <td style="color:var(--gray-400);font-size:.75rem">${i+1}</td>
-      <td>
-        <div class="name-cell">${o.fullName}</div>
-        <div style="font-size:.7rem;color:var(--gray-400)">${dateFmt}</div>
-      </td>
+      <td><div class="name-cell">${o.fullName}</div><div style="font-size:.68rem;color:var(--gray-400)">${orderDate}</div></td>
       <td style="font-size:.8rem">${o.studentId}</td>
       <td>ปี ${o.year}</td>
-      <td>
-        <div style="font-size:.78rem">${o.phone}</div>
-        <div style="font-size:.7rem;color:var(--gray-400)">${o.email||'—'}</div>
-      </td>
+      <td><div style="font-size:.78rem">${o.phone}</div><div style="font-size:.68rem;color:var(--gray-400)">${o.email||'—'}</div></td>
       <td style="font-size:.78rem">${ts}</td>
       <td style="font-size:.78rem">${js}</td>
       <td style="font-weight:600;white-space:nowrap">฿${Number(o.totalPrice).toLocaleString()}</td>
       <td>${proof}</td>
-      <td>
-        <span class="badge ${bc}">${o.status}</span>
-        ${noteHtml}
-      </td>
-      <td>
-        <div class="action-group">
-          ${o.status !== 'อนุมัติแล้ว' ? `<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>` : ''}
-          ${o.status !== 'ปฏิเสธ'      ? `<button class="act-btn btn-reject"  onclick="openRejectModal(${o.rowIndex})">✕ ไม่อนุมัติ</button>` : ''}
-          ${o.status !== 'รอการอนุมัติ' ? `<button class="act-btn btn-reset"   onclick="doReset(${o.rowIndex})">↺</button>` : ''}
-          <button class="act-btn btn-delete" onclick="doDelete(${o.rowIndex},'${o.fullName.replace(/'/g,"\\'")}')">🗑</button>
-        </div>
-      </td>
+      <td><span class="badge ${bc}">${o.status}</span>${noteHtml}</td>
+      <td>${approveInfo}</td>
+      ${actionCol}
     </tr>`;
   }).join('');
 }
 
-// ── Approve ───────────────────────────────────────────────────
+// ── APPROVE / REJECT / RESET ───────────────────────────────────
+function guardAdmin() {
+  if (currentRole !== 'admin') { showToast('ไม่มีสิทธิ์ดำเนินการนี้', 'error'); return false; } return true;
+}
 async function doApprove(rowIndex) {
+  if (!guardAdmin()) return;
   await callUpdateStatus(rowIndex, 'อนุมัติแล้ว', '');
 }
-
-// ── Reset ─────────────────────────────────────────────────────
 async function doReset(rowIndex) {
+  if (!guardAdmin()) return;
   await callUpdateStatus(rowIndex, 'รอการอนุมัติ', '');
 }
-
-// ── Open Reject Modal ─────────────────────────────────────────
 function openRejectModal(rowIndex) {
+  if (!guardAdmin()) return;
   rejectRowIndex = rowIndex;
   document.getElementById('rejectNote').value = '';
   document.getElementById('rejectModal').classList.add('show');
@@ -470,46 +584,154 @@ async function confirmReject() {
   await callUpdateStatus(rejectRowIndex, 'ปฏิเสธ', note);
 }
 
-// ── Update Status API ─────────────────────────────────────────
 async function callUpdateStatus(rowIndex, status, note) {
   showLoading(true);
   try {
-    const res  = await fetch(GAS_URL, { method:'POST',
-      body: JSON.stringify({ action:'updateStatus', token:ADMIN_TOKEN, rowIndex, status, note }) });
+    const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({
+      action: 'updateStatus', token: ADMIN_TOKEN,
+      rowIndex, status, note,
+      approvedBy: currentUser,
+      approvedAt: new Date().toISOString()
+    })});
     const data = await res.json();
     showLoading(false);
     if (data.success) {
-      showToast(status==='อนุมัติแล้ว' ? '✅ อนุมัติและส่งอีเมลแล้ว'
-               : status==='ปฏิเสธ'     ? '❌ ไม่อนุมัติและส่งอีเมลแล้ว'
-               : '↺ รีเซ็ตสถานะแล้ว', 'success');
+      showToast(
+        status === 'อนุมัติแล้ว' ? '✅ อนุมัติและส่งอีเมลแล้ว' :
+        status === 'ปฏิเสธ'      ? '❌ ไม่อนุมัติและส่งอีเมลแล้ว' : '↺ รีเซ็ตสถานะแล้ว', 'success');
       loadOrders();
-    } else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
-  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+    } else { showToast(data.message || 'เกิดข้อผิดพลาด', 'error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้', 'error'); }
 }
 
-// ── Delete ────────────────────────────────────────────────────
+// ── DELETE ─────────────────────────────────────────────────────
 async function doDelete(rowIndex, name) {
+  if (!guardAdmin()) return;
   if (!confirm(`ยืนยันการลบคำสั่งซื้อของ "${name}"?\n\nข้อมูลจะถูกลบออกจาก Google Sheet ถาวร`)) return;
   showLoading(true);
   try {
-    const res  = await fetch(GAS_URL, { method:'POST',
-      body: JSON.stringify({ action:'deleteOrder', token:ADMIN_TOKEN, rowIndex }) });
+    const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action:'deleteOrder', token:ADMIN_TOKEN, rowIndex }) });
     const data = await res.json();
     showLoading(false);
-    if (data.success) { showToast('ลบคำสั่งซื้อเรียบร้อย','success'); loadOrders(); }
-    else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
-  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+    if (data.success) { showToast('ลบคำสั่งซื้อเรียบร้อย', 'success'); loadOrders(); }
+    else { showToast(data.message || 'เกิดข้อผิดพลาด', 'error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้', 'error'); }
 }
 
-// ── Helpers ───────────────────────────────────────────────────
-function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show',v); }
-function showToast(msg,type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast'+(type?' '+type:'');
-  setTimeout(()=>t.classList.add('show'),10);
-  setTimeout(()=>t.classList.remove('show'),3500);
+// ── EXPORT DATA (ใช้ข้อมูลที่กรองแล้ว) ────────────────────────
+function getExportRows() {
+  return getFilteredOrders().map((o, i) => ({
+    '#': i + 1,
+    'ชื่อ-นามสกุล': o.fullName,
+    'รหัสนิสิต': o.studentId,
+    'ชั้นปี': 'ปี ' + o.year,
+    'เบอร์โทร': o.phone,
+    'อีเมล': o.email || '',
+    'ไซส์เสื้อยืด': o.tshirtSize,
+    'รอบอก (เสื้อยืด)': o.tshirtChest || '',
+    'จำนวนเสื้อยืด': o.tshirtQty,
+    'ไซส์เสื้อยีนส์': o.jeansSize,
+    'รอบอก (เสื้อยีนส์)': o.jeansChest || '',
+    'จำนวนเสื้อยีนส์': o.jeansQty,
+    'ราคารวม': o.totalPrice,
+    'สถานะ': o.status,
+    'หมายเหตุ': o.note || '',
+    'เวลาอนุมัติ': o.approvedAt ? new Date(o.approvedAt).toLocaleString('th-TH') : '',
+    'อนุมัติโดย': o.approvedBy || '',
+    'วันที่สั่ง': o.timestamp ? new Date(o.timestamp).toLocaleString('th-TH') : ''
+  }));
 }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeRejectModal(); });
+
+// Excel (.xlsx)
+function exportExcel() {
+  const rows = getExportRows();
+  if (!rows.length) { showToast('ไม่มีข้อมูลในการส่งออก', 'error'); return; }
+  const ws = XLSX.utils.json_to_sheet(rows);
+  // Style header row width
+  ws['!cols'] = Object.keys(rows[0]).map(k => ({ wch: Math.max(k.length + 2, 12) }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'คำสั่งซื้อ');
+  XLSX.writeFile(wb, `shirt-orders-2569-${datestamp()}.xlsx`);
+  showToast('ส่งออก Excel เรียบร้อย ✓', 'success');
+}
+
+// CSV
+function exportCSV() {
+  const rows = getExportRows();
+  if (!rows.length) { showToast('ไม่มีข้อมูลในการส่งออก', 'error'); return; }
+  const ws  = XLSX.utils.json_to_sheet(rows);
+  const csv = XLSX.utils.sheet_to_csv(ws);
+  // BOM for Thai characters in Excel
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  triggerDownload(blob, `shirt-orders-2569-${datestamp()}.csv`);
+  showToast('ส่งออก CSV เรียบร้อย ✓', 'success');
+}
+
+// Word (.doc via HTML)
+function exportWord() {
+  const rows = getExportRows();
+  if (!rows.length) { showToast('ไม่มีข้อมูลในการส่งออก', 'error'); return; }
+  const headers = Object.keys(rows[0]);
+  const thHtml  = headers.map(h => `<th style="background:#1a1a1a;color:#fff;padding:6px 10px;font-size:10pt">${h}</th>`).join('');
+  const tdRows  = rows.map(r =>
+    `<tr>${headers.map((h,j) => `<td style="padding:5px 10px;border:1px solid #ddd;font-size:10pt${j===12?' font-weight:bold;':''}">${r[h]}</td>`).join('')}</tr>`
+  ).join('');
+
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
+    xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset="UTF-8">
+  <style>
+    body{font-family:'Cordia New',sans-serif;font-size:12pt}
+    h1{font-size:14pt;text-align:center;margin-bottom:4pt}
+    p{text-align:center;font-size:11pt;color:#555;margin-bottom:12pt}
+    table{border-collapse:collapse;width:100%}
+    th{background:#1a1a1a;color:white}
+    tr:nth-child(even){background:#f9f9f9}
+  </style></head>
+  <body>
+  <h1>รายงานคำสั่งซื้อเสื้อปฏิบัติการ</h1>
+  <p>สาขาเกษตรและสิ่งแวดล้อมศึกษา — ปีการศึกษา 2569 | พิมพ์เมื่อ: ${new Date().toLocaleString('th-TH')}</p>
+  <table border="1"><thead><tr>${thHtml}</tr></thead><tbody>${tdRows}</tbody></table>
+  </body></html>`;
+
+  const blob = new Blob(['\ufeff' + html], { type: 'application/msword;charset=utf-8' });
+  triggerDownload(blob, `shirt-orders-2569-${datestamp()}.doc`);
+  showToast('ส่งออก Word เรียบร้อย ✓', 'success');
+}
+
+// PDF (ผ่าน print dialog + เลือก Save as PDF)
+function exportPDF() {
+  showToast('เปิด print dialog → เลือก "Save as PDF"', '');
+  printReport();
+}
+
+// Print Report
+function printReport() {
+  document.getElementById('printDate').textContent =
+    'พิมพ์เมื่อ: ' + new Date().toLocaleString('th-TH') + ' | ผู้ออกรายงาน: ' + (currentUser || '—');
+  window.print();
+}
+
+// ── HELPERS ────────────────────────────────────────────────────
+function datestamp() {
+  const d = new Date();
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a   = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show', v); }
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' ' + type : '');
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRejectModal(); });
 </script>
 </body>
 </html>
