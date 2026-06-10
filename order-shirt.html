@@ -1,658 +1,198 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>สั่งซื้อเสื้อปฏิบัติการ — เกษตรและสิ่งแวดล้อมศึกษา 2569</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-  /* ── Reset & Base ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0d0d0d;--white:#fafafa;--gray-100:#f4f4f4;--gray-200:#e8e8e8;
+  --gray-400:#b0b0b0;--gray-600:#5a5a5a;--gray-800:#2a2a2a;
+  --border:#e0e0e0;--radius:4px;--font:'Kanit',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--white);color:var(--black);font-weight:300;line-height:1.6;min-height:100vh}
 
-  :root {
-    --black: #0d0d0d;
-    --white: #fafafa;
-    --gray-100: #f4f4f4;
-    --gray-200: #e8e8e8;
-    --gray-400: #b0b0b0;
-    --gray-600: #5a5a5a;
-    --gray-800: #2a2a2a;
-    --accent: #1a1a1a;
-    --border: #e0e0e0;
-    --radius: 4px;
-    --font: 'Kanit', sans-serif;
-  }
+/* Header */
+.site-header{background:var(--black);color:var(--white);padding:0 2rem;position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;height:56px;border-bottom:1px solid #2a2a2a}
+.site-header .logo{font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;opacity:.9}
+.header-check-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.1em;
+  padding:.4rem 1rem;background:transparent;color:var(--white);border:1px solid #555;border-radius:var(--radius);
+  cursor:pointer;transition:all .2s;white-space:nowrap}
+.header-check-btn:hover{background:var(--white);color:var(--black);border-color:var(--white)}
 
-  html { scroll-behavior: smooth; }
+/* Hero */
+.hero{background:var(--black);color:var(--white);padding:4rem 2rem 3rem;text-align:center}
+.hero-label{font-size:.7rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:.75rem}
+.hero-sub{font-size:.9rem;color:var(--gray-400);font-weight:300}
+.hero-date{display:inline-block;margin-top:1.25rem;padding:.4rem 1.2rem;border:1px solid #444;font-size:.78rem;letter-spacing:.1em;color:var(--gray-400)}
 
-  body {
-    font-family: var(--font);
-    background: var(--white);
-    color: var(--black);
-    font-weight: 300;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+/* Layout */
+.container{max-width:840px;margin:0 auto;padding:0 1.5rem}
+.section{padding:2.5rem 0;border-bottom:1px solid var(--border)}
+.section-title{font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1.5rem}
 
-  /* ── Header ── */
-  .site-header {
-    background: var(--black);
-    color: var(--white);
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-    border-bottom: 1px solid #2a2a2a;
-  }
-  .site-header .logo {
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0.9;
-  }
-  .nav-link {
-    font-size: 0.78rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--gray-400);
-    cursor: pointer;
-    text-decoration: none;
-    transition: color 0.2s;
-    background: none;
-    border: none;
-    font-family: var(--font);
-  }
-  .nav-link:hover { color: var(--white); }
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:540px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.72rem;font-weight:500;letter-spacing:.08em;color:var(--gray-600);text-transform:uppercase}
+.field input,.field select{font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);background:var(--white);color:var(--black);border-radius:var(--radius);
+  outline:none;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--black)}
+.field input::placeholder{color:var(--gray-400)}
+.field-full{grid-column:1/-1}
 
-  .header-check-btn {
-    font-family: var(--font);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    padding: 0.4rem 1rem;
-    background: transparent;
-    color: var(--white);
-    border: 1px solid #555;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .header-check-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+/* Product block */
+.product-block{background:var(--gray-100);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1rem}
+.product-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.25rem}
+.product-name{font-size:1rem;font-weight:600}
+.product-price-tag{font-size:.75rem;color:var(--gray-600)}
 
-  /* ── Status Modal ── */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(13,13,13,0.7);
-    z-index: 200;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 80px;
-    backdrop-filter: blur(2px);
-  }
-  .modal-overlay.show { display: flex; }
-  .modal-box {
-    background: var(--white);
-    width: 100%;
-    max-width: 480px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    animation: modalIn 0.2s ease;
-    margin: 0 1rem;
-  }
-  @keyframes modalIn { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
-  .modal-header {
-    background: var(--black);
-    color: var(--white);
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .modal-header h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; }
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--gray-400);
-    font-size: 1.2rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0;
-    transition: color 0.2s;
-  }
-  .modal-close:hover { color: var(--white); }
-  .modal-body { padding: 1.5rem; }
-  .modal-check-row {
-    display: flex;
-    gap: 0.6rem;
-    margin-bottom: 1rem;
-  }
-  .modal-check-row input {
-    flex: 1;
-    font-family: var(--font);
-    font-size: 0.92rem;
-    font-weight: 300;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    outline: none;
-    background: var(--white);
-    color: var(--black);
-    transition: border-color 0.2s;
-  }
-  .modal-check-row input:focus { border-color: var(--black); }
-  .modal-check-row .check-btn {
-    font-family: var(--font);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    padding: 0.65rem 1.25rem;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
-  }
-  .modal-check-row .check-btn:hover { opacity: 0.8; }
+/* ══ รูปเสื้อ — แก้ไขได้จาก src="" ในโค้ดเท่านั้น ══ */
+.product-images{display:flex;gap:1rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:.5rem}
+.img-slot{flex-shrink:0;width:360px;height:440px;border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;background:var(--white);display:flex;align-items:center;justify-content:center}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:600px){.img-slot{width:260px;height:320px}}
 
-  /* ── Hero ── */
-  .hero {
-    background: var(--black);
-    color: var(--white);
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    border-bottom: 1px solid #1a1a1a;
-  }
-  .hero-label {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 1rem;
-  }
-  .hero h1 {
-    font-size: clamp(1.6rem, 4vw, 2.6rem);
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-  }
-  .hero-sub {
-    font-size: 0.9rem;
-    color: var(--gray-400);
-    font-weight: 300;
-  }
-  .hero-date {
-    display: inline-block;
-    margin-top: 1.25rem;
-    padding: 0.4rem 1.2rem;
-    border: 1px solid #444;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    color: var(--gray-400);
-  }
+/* Size grid */
+.size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.5rem;margin-bottom:1rem}
+.size-option{position:relative}
+.size-option input[type="radio"]{position:absolute;opacity:0}
+.size-option label{display:block;text-align:center;padding:.5rem .25rem .35rem;border:1px solid var(--border);
+  border-radius:var(--radius);cursor:pointer;background:var(--white);transition:all .15s}
+.size-option label .sz{font-size:.88rem;font-weight:600;display:block}
+.size-option label .chest{font-size:.6rem;color:var(--gray-600);display:block}
+.size-option input:checked+label{background:var(--black);color:var(--white);border-color:var(--black)}
+.size-option input:checked+label .chest{color:var(--gray-400)}
 
-  /* ── Main Layout ── */
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
+/* Special size */
+.special-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.08em;color:var(--gray-600);
+  background:none;border:1px dashed var(--gray-400);border-radius:var(--radius);padding:.4rem .9rem;
+  cursor:pointer;transition:all .15s;margin-bottom:.75rem}
+.special-btn:hover{border-color:var(--black);color:var(--black)}
+.special-fields{display:none;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.75rem;
+  padding:.9rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white)}
+.special-fields.open{display:grid}
+@media(max-width:480px){.special-fields{grid-template-columns:1fr}}
 
-  /* ── Section ── */
-  .section {
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-title {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 1.5rem;
-  }
+/* Qty row */
+.qty-row{display:flex;align-items:center;gap:1rem;margin-top:.9rem;flex-wrap:wrap}
+.qty-label{font-size:.78rem;color:var(--gray-600)}
+.qty-control{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.qty-btn{font-family:var(--font);width:36px;height:36px;background:var(--white);border:none;font-size:1.1rem;
+  cursor:pointer;color:var(--black);transition:background .15s}
+.qty-btn:hover{background:var(--gray-100)}
+.qty-val{width:48px;height:36px;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);
+  text-align:center;font-family:var(--font);font-size:.92rem;font-weight:600;background:var(--white);color:var(--black)}
+.qty-price{font-size:.82rem;color:var(--gray-600);margin-left:auto}
 
-  /* ── Form Fields ── */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .form-grid.full { grid-template-columns: 1fr; }
-  @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+/* Total */
+.total-box{background:var(--black);color:var(--white);padding:1.25rem 1.5rem;border-radius:6px;
+  display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0}
+.total-label{font-size:.78rem;font-weight:400;letter-spacing:.1em;color:var(--gray-400)}
+.total-amount{font-size:1.6rem;font-weight:700}
 
-  .field { display: flex; flex-direction: column; gap: 0.4rem; }
-  .field label {
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--gray-600);
-    text-transform: uppercase;
-  }
-  .field input, .field select {
-    font-family: var(--font);
-    font-size: 0.92rem;
-    font-weight: 300;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid var(--border);
-    background: var(--white);
-    color: var(--black);
-    border-radius: var(--radius);
-    outline: none;
-    transition: border-color 0.2s;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-  .field input:focus, .field select:focus { border-color: var(--black); }
-  .field input::placeholder { color: var(--gray-400); }
+/* Bank */
+.bank-box{border:1px solid var(--border);border-radius:6px;padding:1.25rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.bank-info .bank-name{font-size:.72rem;color:var(--gray-600);letter-spacing:.08em;text-transform:uppercase}
+.bank-info .bank-acc{font-size:1.2rem;font-weight:600;letter-spacing:.06em;margin-top:.2rem}
+.bank-info .bank-holder{font-size:.8rem;color:var(--gray-600);margin-top:.1rem}
+.copy-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.1em;padding:.5rem 1.2rem;
+  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.copy-btn:hover{opacity:.8}
+.copy-btn.copied{background:#2e7d32}
 
-  /* ── Product Section ── */
-  .product-block {
-    background: var(--gray-100);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .product-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 1.25rem;
-  }
-  .product-name {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-  .product-price-tag {
-    font-size: 0.75rem;
-    color: var(--gray-600);
-    font-weight: 400;
-  }
+/* Proof upload */
+.proof-upload{border:1px dashed var(--gray-400);border-radius:6px;padding:2rem;text-align:center;
+  cursor:pointer;transition:border-color .2s,background .2s;position:relative;background:var(--white)}
+.proof-upload:hover{border-color:var(--black);background:var(--gray-100)}
+.proof-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.proof-upload .upload-icon{font-size:2rem;margin-bottom:.5rem}
+.proof-upload .upload-text{font-size:.82rem;color:var(--gray-600)}
+.proof-preview{display:none;margin-top:.75rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.proof-preview img{width:100%;max-height:200px;object-fit:cover;display:block}
 
-  /* product images — hardcoded src only, no upload UI */
-  .product-images {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-  .img-slot {
-    flex-shrink: 0;
-    width: 360px;
-    height: 440px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--gray-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
-    position: relative;
-  }
-  .img-slot img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .img-slot .no-img-ph {
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    position: absolute; inset: 0; justify-content: center;
-  }
-  .img-slot .no-img-ph .ph-icon { font-size: 2.5rem; opacity: 0.15; }
-  .img-slot .no-img-ph .ph-text {
-    font-size: 0.68rem; color: var(--gray-400);
-    text-align: center; padding: 0 1rem; line-height: 1.5;
-  }
+/* Submit */
+.submit-btn{width:100%;font-family:var(--font);font-size:.95rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:1rem;background:var(--black);color:var(--white);border:none;
+  border-radius:var(--radius);cursor:pointer;transition:opacity .2s;margin-top:.5rem}
+.submit-btn:hover{opacity:.85}
+.submit-btn:disabled{opacity:.4;cursor:not-allowed}
 
-  /* Size selector */
-  .size-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  .size-option { position: relative; }
-  .size-option input[type="radio"] { position: absolute; opacity: 0; }
-  .size-option label {
-    display: block;
-    text-align: center;
-    padding: 0.5rem 0.25rem 0.35rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    cursor: pointer;
-    background: var(--white);
-    transition: all 0.15s;
-  }
-  .size-option label .sz { font-size: 0.85rem; font-weight: 600; display: block; }
-  .size-option label .chest { font-size: 0.6rem; color: var(--gray-600); display: block; }
-  .size-option input:checked + label {
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
-  }
-  .size-option input:checked + label .chest { color: var(--gray-400); }
+/* Status Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,13,13,.75);z-index:200;
+  align-items:flex-start;justify-content:center;padding-top:80px;backdrop-filter:blur(3px)}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--white);width:100%;max-width:500px;border-radius:8px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .2s ease;margin:0 1rem}
+@keyframes mIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{background:var(--black);color:var(--white);padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:.88rem;font-weight:600;letter-spacing:.06em}
+.modal-close{background:none;border:none;color:var(--gray-400);font-size:1.2rem;cursor:pointer;padding:0;transition:color .2s}
+.modal-close:hover{color:var(--white)}
+.modal-body{padding:1.5rem}
+.modal-check-row{display:flex;gap:.6rem;margin-bottom:1rem}
+.modal-check-row input{flex:1;font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s}
+.modal-check-row input:focus{border-color:var(--black)}
+.modal-check-row .check-btn{font-family:var(--font);font-size:.8rem;font-weight:500;letter-spacing:.08em;
+  padding:.65rem 1.25rem;background:var(--black);color:var(--white);border:none;border-radius:var(--radius);
+  cursor:pointer;transition:opacity .2s;white-space:nowrap}
+.modal-check-row .check-btn:hover{opacity:.8}
 
-  /* Special size toggle */
-  .special-btn {
-    font-family: var(--font);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--gray-600);
-    background: none;
-    border: 1px dashed var(--gray-400);
-    border-radius: var(--radius);
-    padding: 0.4rem 0.9rem;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-bottom: 0.75rem;
-  }
-  .special-btn:hover { border-color: var(--black); color: var(--black); }
+/* Status card */
+.status-card{display:none;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:.5rem}
+.status-card-header{padding:1rem 1.25rem;background:var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+.status-card-name{font-weight:600;font-size:.95rem}
+.status-badge{font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px}
+.badge-pending{background:#fff3e0;color:#e65100}
+.badge-approved{background:#e8f5e9;color:#1b5e20}
+.badge-rejected{background:#ffebee;color:#b71c1c}
+.status-card-body{padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:480px){.status-card-body{grid-template-columns:1fr}}
+.status-item .si-label{font-size:.68rem;color:var(--gray-600);letter-spacing:.08em;text-transform:uppercase}
+.status-item .si-val{font-size:.9rem;font-weight:500;margin-top:.15rem}
+.status-note{grid-column:1/-1;background:#fff3e0;border-radius:4px;padding:.6rem .9rem;font-size:.8rem;color:#e65100}
 
-  .special-fields {
-    display: none;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-    padding: 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--white);
-  }
-  .special-fields.open { display: grid; }
-  @media (max-width: 480px) { .special-fields { grid-template-columns: 1fr; } }
+/* Loading */
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,250,250,.85);z-index:500;
+  align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+.loading-overlay.show{display:flex}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--black);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:.82rem;color:var(--gray-600)}
 
-  /* Qty row */
-  .qty-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.75rem;
-  }
-  .qty-label { font-size: 0.78rem; color: var(--gray-600); font-weight: 400; }
-  .qty-control {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .qty-btn {
-    font-family: var(--font);
-    width: 34px; height: 34px;
-    background: var(--white);
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    color: var(--black);
-    transition: background 0.15s;
-  }
-  .qty-btn:hover { background: var(--gray-100); }
-  .qty-val {
-    width: 42px; height: 34px;
-    border: none;
-    border-left: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    text-align: center;
-    font-family: var(--font);
-    font-size: 0.9rem;
-    font-weight: 500;
-    background: var(--white);
-    color: var(--black);
-  }
-  .qty-price { font-size: 0.8rem; color: var(--gray-600); margin-left: auto; }
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--black);color:var(--white);padding:.75rem 1.5rem;border-radius:4px;
+  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:#1b5e20}
+.toast.error{background:#b71c1c}
 
-  /* ── Total Box ── */
-  .total-box {
-    background: var(--black);
-    color: var(--white);
-    padding: 1.25rem 1.5rem;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1.5rem 0;
-  }
-  .total-label { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.1em; color: var(--gray-400); }
-  .total-amount { font-size: 1.5rem; font-weight: 600; }
-
-  /* ── Bank Section ── */
-  .bank-box {
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .bank-info .bank-name { font-size: 0.72rem; color: var(--gray-600); letter-spacing: 0.08em; text-transform: uppercase; }
-  .bank-info .bank-acc { font-size: 1.2rem; font-weight: 600; letter-spacing: 0.06em; margin-top: 0.2rem; }
-  .bank-info .bank-holder { font-size: 0.8rem; color: var(--gray-600); margin-top: 0.1rem; }
-  .copy-btn {
-    font-family: var(--font);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 1.2rem;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .copy-btn:hover { opacity: 0.8; }
-  .copy-btn.copied { background: #2e7d32; }
-
-  /* ── Proof Upload ── */
-  .proof-upload {
-    border: 1px dashed var(--gray-400);
-    border-radius: 6px;
-    padding: 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-    background: var(--white);
-  }
-  .proof-upload:hover { border-color: var(--black); background: var(--gray-100); }
-  .proof-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .proof-upload .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-  .proof-upload .upload-text { font-size: 0.82rem; color: var(--gray-600); }
-  .proof-preview {
-    display: none;
-    margin-top: 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .proof-preview img { width: 100%; max-height: 200px; object-fit: cover; display: block; }
-
-  /* ── Submit Button ── */
-  .submit-btn {
-    width: 100%;
-    font-family: var(--font);
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 1rem;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: opacity 0.2s;
-    margin-top: 0.5rem;
-  }
-  .submit-btn:hover { opacity: 0.85; }
-  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* ── Status Check ── */
-  .status-section {
-    padding: 2.5rem 0 3rem;
-  }
-  .status-title {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 1.5rem;
-  }
-  .check-row {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .check-row input {
-    flex: 1;
-    min-width: 180px;
-    font-family: var(--font);
-    font-size: 0.92rem;
-    font-weight: 300;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    outline: none;
-    background: var(--white);
-    color: var(--black);
-    transition: border-color 0.2s;
-  }
-  .check-row input:focus { border-color: var(--black); }
-  .check-btn {
-    font-family: var(--font);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    padding: 0.65rem 1.5rem;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
-  }
-  .check-btn:hover { opacity: 0.8; }
-
-  .status-card {
-    display: none;
-    margin-top: 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .status-card-header {
-    padding: 1rem 1.25rem;
-    background: var(--gray-100);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .status-card-name { font-weight: 600; font-size: 0.95rem; }
-  .status-badge {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-  }
-  .badge-pending { background: #fff3e0; color: #e65100; }
-  .badge-approved { background: #e8f5e9; color: #1b5e20; }
-  .badge-rejected { background: #ffebee; color: #b71c1c; }
-
-  .status-card-body {
-    padding: 1.25rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-  }
-  @media (max-width: 480px) { .status-card-body { grid-template-columns: 1fr; } }
-  .status-item .si-label { font-size: 0.68rem; color: var(--gray-600); letter-spacing: 0.08em; text-transform: uppercase; }
-  .status-item .si-val { font-size: 0.9rem; font-weight: 500; margin-top: 0.15rem; }
-
-  /* ── Toast ── */
-  .toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--black);
-    color: var(--white);
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    font-size: 0.82rem;
-    font-weight: 400;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 999;
-    white-space: nowrap;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-  .toast.success { background: #1b5e20; }
-  .toast.error { background: #b71c1c; }
-
-  /* ── Loading ── */
-  .loading-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(250,250,250,0.85);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .loading-overlay.show { display: flex; }
-  .spinner {
-    width: 32px; height: 32px;
-    border: 2px solid var(--border);
-    border-top-color: var(--black);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { font-size: 0.82rem; color: var(--gray-600); }
-
-  /* ── Footer ── */
-  footer {
-    background: var(--black);
-    color: var(--gray-600);
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-  }
-
-  /* ── Divider ── */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+footer{background:var(--black);color:var(--gray-600);text-align:center;padding:1.5rem;font-size:.72rem;letter-spacing:.06em}
 </style>
 </head>
 <body>
 
-<!-- Config: ใส่ URL ของ Google Apps Script ที่นี่ -->
 <script>
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec";
-  const BANK_ACCOUNT = "xxx-x-xxxxx-x"; // ← ใส่เลขบัญชีที่นี่
-  const BANK_HOLDER  = "ชื่อเจ้าของบัญชี";  // ← ใส่ชื่อเจ้าของบัญชีที่นี่
+// ══════════════════════════════════════════════════════════════
+//  ⚙️  CONFIG — แก้ไขค่าด้านล่างนี้เท่านั้น
+// ══════════════════════════════════════════════════════════════
+const GAS_URL      = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec";
+const BANK_ACCOUNT = "xxx-x-xxxxx-x";       // ← เลขบัญชีจริง
+const BANK_HOLDER  = "ชื่อเจ้าของบัญชี";    // ← ชื่อเจ้าของบัญชี
+// ══════════════════════════════════════════════════════════════
 </script>
 
 <!-- Header -->
@@ -669,179 +209,148 @@
   <span class="hero-date">14 มิถุนายน — 21 มิถุนายน 2569</span>
 </div>
 
-<!-- Main Form -->
 <main class="container">
 
-  <!-- ── 01 ข้อมูลผู้สั่ง ── -->
+  <!-- 01 ข้อมูลผู้สั่ง -->
   <section class="section">
     <p class="section-title">01 — ข้อมูลผู้สั่งซื้อ</p>
     <div class="form-grid">
       <div class="field">
         <label>ชื่อ-นามสกุล *</label>
-        <input type="text" id="fullName" placeholder="ชื่อ นามสกุล" required />
+        <input type="text" id="fullName" placeholder="ชื่อ นามสกุล"/>
       </div>
       <div class="field">
         <label>รหัสนิสิต *</label>
-        <input type="text" id="studentId" placeholder="65XXXXXXX" maxlength="10" required />
+        <input type="text" id="studentId" placeholder="65XXXXXXX" maxlength="10"/>
       </div>
       <div class="field">
         <label>ชั้นปี *</label>
-        <select id="year" required>
+        <select id="year">
           <option value="" disabled selected>เลือกชั้นปี</option>
-          <option value="1">ปี 1</option>
-          <option value="2">ปี 2</option>
-          <option value="3">ปี 3</option>
-          <option value="4">ปี 4</option>
+          <option value="1">ปี 1</option><option value="2">ปี 2</option>
+          <option value="3">ปี 3</option><option value="4">ปี 4</option>
         </select>
       </div>
       <div class="field">
         <label>เบอร์โทรศัพท์ *</label>
-        <input type="tel" id="phone" placeholder="08XXXXXXXX" maxlength="10" required />
+        <input type="tel" id="phone" placeholder="08XXXXXXXX" maxlength="10"/>
       </div>
-      <div class="field" style="grid-column: 1 / -1;">
-        <label>อีเมล * <span style="font-weight:300;font-size:0.68rem;color:var(--gray-400)">(ใช้รับการแจ้งผลอนุมัติ)</span></label>
-        <input type="email" id="email" placeholder="example@ku.th" required />
+      <div class="field field-full">
+        <label>อีเมล * <span style="font-weight:300;font-size:.68rem;color:var(--gray-400)">(ใช้รับการแจ้งผลอนุมัติ)</span></label>
+        <input type="email" id="email" placeholder="example@ku.th"/>
       </div>
     </div>
   </section>
 
-  <!-- ── 02 เสื้อยืด ── -->
+  <!-- 02 เสื้อยืด -->
   <section class="section">
-    <p class="section-title">02 — เสื้อยืด</p>
+    <p class="section-title">02 — เสื้อยืด · ราคา 240 บาท/ตัว</p>
     <div class="product-block">
-      <div class="product-header">
-        <span class="product-name">เสื้อยืด</span>
-        <span class="product-price-tag">ราคา 240 บาท / ตัว</span>
-      </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           รูปเสื้อยืดตัวอย่าง — แก้ไขได้จากในโค้ดเท่านั้น
-           ► เปลี่ยนรูป: แก้ค่า src="URL_รูปภาพ" แล้ว commit ขึ้น GitHub
-           tshirt-img-1 = ด้านหน้า  |  tshirt-img-2 = ด้านหลัง
-      ══════════════════════════════════════════════════════════ -->
+      <!--
+      ══════════════════════════════════════════════════════════
+      รูปเสื้อยืดตัวอย่าง — แก้ไขได้จากในโค้ดเท่านั้น
+      ► เปลี่ยนรูป: แก้ค่า src="..." ด้านล่าง แล้ว commit ขึ้น GitHub
+      tshirt-front = ด้านหน้า  |  tshirt-back = ด้านหลัง
+      ══════════════════════════════════════════════════════════
+      -->
       <div class="product-images">
         <div class="img-slot">
-          <img id="tshirt-img-1"
-               src="https://via.placeholder.com/360x440/f4f4f4/b0b0b0?text=เสื้อยืด+ด้านหน้า"
-               alt="เสื้อยืดด้านหน้า" />
+          <img id="tshirt-front"
+               src="https://placehold.co/360x440/f4f4f4/b0b0b0?text=เสื้อยืด+ด้านหน้า"
+               alt="เสื้อยืดด้านหน้า"/>
         </div>
         <div class="img-slot">
-          <img id="tshirt-img-2"
-               src="https://via.placeholder.com/360x440/f4f4f4/b0b0b0?text=เสื้อยืด+ด้านหลัง"
-               alt="เสื้อยืดด้านหลัง" />
-        </div>
-      </div>
-
-      <!-- ไซส์ -->
-      <div class="size-grid" id="tshirt-sizes">
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-S" value="S" />
-          <label for="ts-S"><span class="sz">S</span><span class="chest">อก 32"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-M" value="M" />
-          <label for="ts-M"><span class="sz">M</span><span class="chest">อก 36"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-L" value="L" />
-          <label for="ts-L"><span class="sz">L</span><span class="chest">อก 40"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-XL" value="XL" />
-          <label for="ts-XL"><span class="sz">XL</span><span class="chest">อก 44"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-2XL" value="2XL" />
-          <label for="ts-2XL"><span class="sz">2XL</span><span class="chest">อก 48"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="tshirtSize" id="ts-3XL" value="3XL" />
-          <label for="ts-3XL"><span class="sz">3XL</span><span class="chest">—</span></label>
-        </div>
-      </div>
-
-      <button class="special-btn" onclick="toggleSpecial('tshirt-special', this)">+ ไซส์พิเศษ (ระบุเอง)</button>
-      <div class="special-fields" id="tshirt-special">
-        <div class="field"><label>ไซส์</label><input type="text" id="ts-special-size" placeholder="เช่น 4XL" /></div>
-        <div class="field"><label>รอบอก (นิ้ว)</label><input type="number" id="ts-special-chest" placeholder="52" /></div>
-        <div class="field"><label>จำนวน</label><input type="number" id="ts-special-qty" placeholder="1" min="1" /></div>
-      </div>
-
-      <!-- จำนวนเสื้อยืด: คงที่ 1 ตัว (ไม่แสดงให้ผู้ซื้อเห็น) -->
-      <input type="hidden" id="tshirtQty" value="1" />
-    </div>
-  </section>
-
-  <!-- ── 03 เสื้อยีนส์ ── -->
-  <section class="section">
-    <p class="section-title">03 — เสื้อยีนส์</p>
-    <div class="product-block">
-      <div class="product-header">
-        <span class="product-name">เสื้อยีนส์</span>
-        <span class="product-price-tag">ราคา 420 บาท / ตัว</span>
-      </div>
-
-      <!-- ══════════════════════════════════════════════════════════
-           รูปเสื้อยีนส์ตัวอย่าง — แก้ไขได้จากในโค้ดเท่านั้น
-           ► เปลี่ยนรูป: แก้ค่า src="URL_รูปภาพ" แล้ว commit ขึ้น GitHub
-      ══════════════════════════════════════════════════════════ -->
-      <div class="product-images">
-        <div class="img-slot">
-          <img id="jeans-img-1"
-               src="https://via.placeholder.com/360x440/f4f4f4/b0b0b0?text=เสื้อยีนส์"
-               alt="เสื้อยีนส์" />
+          <img id="tshirt-back"
+               src="https://placehold.co/360x440/f4f4f4/b0b0b0?text=เสื้อยืด+ด้านหลัง"
+               alt="เสื้อยืดด้านหลัง"/>
         </div>
       </div>
 
       <div class="size-grid">
-        <div class="size-option">
-          <input type="radio" name="jeansSize" id="js-S" value="S" />
-          <label for="js-S"><span class="sz">S</span><span class="chest">อก 38"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="jeansSize" id="js-M" value="M" />
-          <label for="js-M"><span class="sz">M</span><span class="chest">อก 40"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="jeansSize" id="js-L" value="L" />
-          <label for="js-L"><span class="sz">L</span><span class="chest">อก 42"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="jeansSize" id="js-XL" value="XL" />
-          <label for="js-XL"><span class="sz">XL</span><span class="chest">อก 44"</span></label>
-        </div>
-        <div class="size-option">
-          <input type="radio" name="jeansSize" id="js-2XL" value="2XL" />
-          <label for="js-2XL"><span class="sz">2XL</span><span class="chest">อก 46"</span></label>
-        </div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-S"   value="S">  <label for="ts-S">  <span class="sz">S</span>  <span class="chest">อก 32"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-M"   value="M">  <label for="ts-M">  <span class="sz">M</span>  <span class="chest">อก 36"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-L"   value="L">  <label for="ts-L">  <span class="sz">L</span>  <span class="chest">อก 40"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-XL"  value="XL"> <label for="ts-XL"> <span class="sz">XL</span> <span class="chest">อก 44"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-2XL" value="2XL"><label for="ts-2XL"><span class="sz">2XL</span><span class="chest">อก 48"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-3XL" value="3XL"><label for="ts-3XL"><span class="sz">3XL</span><span class="chest">—</span></label></div>
       </div>
 
-      <button class="special-btn" onclick="toggleSpecial('jeans-special', this)">+ ไซส์พิเศษ (ระบุเอง)</button>
-      <div class="special-fields" id="jeans-special">
-        <div class="field"><label>ไซส์</label><input type="text" id="js-special-size" placeholder="เช่น 3XL" /></div>
-        <div class="field"><label>รอบอก (นิ้ว)</label><input type="number" id="js-special-chest" placeholder="48" /></div>
-        <div class="field"><label>จำนวน</label><input type="number" id="js-special-qty" placeholder="1" min="1" /></div>
+      <button class="special-btn" onclick="toggleSpecial('ts-special',this)">+ ไซส์พิเศษ (ระบุเอง)</button>
+      <div class="special-fields" id="ts-special">
+        <div class="field"><label>ไซส์</label><input type="text" id="ts-sp-size" placeholder="เช่น 4XL"/></div>
+        <div class="field"><label>รอบอก (นิ้ว)</label><input type="number" id="ts-sp-chest" placeholder="52"/></div>
       </div>
 
-      <!-- จำนวนเสื้อยีนส์: คงที่ 1 ตัว (ไม่แสดงให้ผู้ซื้อเห็น) -->
-      <input type="hidden" id="jeansQty" value="1" />
+      <div class="qty-row">
+        <span class="qty-label">จำนวน (ตัว)</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('tshirtQty',-1)">−</button>
+          <input class="qty-val" type="number" id="tshirtQty" value="1" min="1" max="99" readonly/>
+          <button class="qty-btn" onclick="changeQty('tshirtQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="ts-subtotal">฿240</span>
+      </div>
     </div>
   </section>
 
-  <!-- ── 04 ชำระเงิน ── -->
+  <!-- 03 เสื้อยีนส์ -->
+  <section class="section">
+    <p class="section-title">03 — เสื้อยีนส์ · ราคา 420 บาท/ตัว</p>
+    <div class="product-block">
+
+      <!--
+      ══════════════════════════════════════════════════════════
+      รูปเสื้อยีนส์ตัวอย่าง — แก้ไขได้จากในโค้ดเท่านั้น
+      ► เปลี่ยนรูป: แก้ค่า src="..." ด้านล่าง แล้ว commit ขึ้น GitHub
+      ══════════════════════════════════════════════════════════
+      -->
+      <div class="product-images">
+        <div class="img-slot">
+          <img id="jeans-front"
+               src="https://placehold.co/360x440/f4f4f4/b0b0b0?text=เสื้อยีนส์"
+               alt="เสื้อยีนส์"/>
+        </div>
+      </div>
+
+      <div class="size-grid">
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-S"   value="S">  <label for="js-S">  <span class="sz">S</span>  <span class="chest">อก 38"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-M"   value="M">  <label for="js-M">  <span class="sz">M</span>  <span class="chest">อก 40"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-L"   value="L">  <label for="js-L">  <span class="sz">L</span>  <span class="chest">อก 42"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-XL"  value="XL"> <label for="js-XL"> <span class="sz">XL</span> <span class="chest">อก 44"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-2XL" value="2XL"><label for="js-2XL"><span class="sz">2XL</span><span class="chest">อก 46"</span></label></div>
+      </div>
+
+      <button class="special-btn" onclick="toggleSpecial('js-special',this)">+ ไซส์พิเศษ (ระบุเอง)</button>
+      <div class="special-fields" id="js-special">
+        <div class="field"><label>ไซส์</label><input type="text" id="js-sp-size" placeholder="เช่น 3XL"/></div>
+        <div class="field"><label>รอบอก (นิ้ว)</label><input type="number" id="js-sp-chest" placeholder="48"/></div>
+      </div>
+
+      <div class="qty-row">
+        <span class="qty-label">จำนวน (ตัว)</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('jeansQty',-1)">−</button>
+          <input class="qty-val" type="number" id="jeansQty" value="1" min="1" max="99" readonly/>
+          <button class="qty-btn" onclick="changeQty('jeansQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="js-subtotal">฿420</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ชำระเงิน -->
   <section class="section">
     <p class="section-title">04 — การชำระเงิน</p>
 
-    <!-- ยอดรวม — คงที่ 660 บาท (เสื้อยืด 240 + เสื้อยีนส์ 420) -->
     <div class="total-box">
       <div>
         <div class="total-label">ยอดชำระทั้งหมด</div>
-        <div style="font-size:0.72rem;color:var(--gray-600);margin-top:0.25rem;">เสื้อยืด ฿240 + เสื้อยีนส์ ฿420</div>
+        <div id="total-breakdown" style="font-size:.72rem;color:var(--gray-600);margin-top:.25rem">เสื้อยืด ฿240 + เสื้อยีนส์ ฿420</div>
       </div>
-      <span class="total-amount">฿660</span>
+      <span class="total-amount" id="totalDisplay">฿660</span>
     </div>
 
-    <!-- บัญชีธนาคาร -->
     <div class="bank-box">
       <div class="bank-info">
         <div class="bank-name">ธนาคารกสิกรไทย (KBank)</div>
@@ -851,40 +360,31 @@
       <button class="copy-btn" id="copyBtn" onclick="copyAccount()">คัดลอกเลขบัญชี</button>
     </div>
 
-    <!-- หลักฐาน -->
-    <div style="margin-top:1.25rem;">
-      <div class="field" style="margin-bottom:0.75rem;">
-        <label>หลักฐานการชำระเงิน *</label>
-      </div>
-      <div class="proof-upload" id="proofZone">
-        <input type="file" id="proofFile" accept="image/*,application/pdf" onchange="handleProof(this)" />
+    <div style="margin-top:1.25rem">
+      <div class="field" style="margin-bottom:.75rem"><label>หลักฐานการชำระเงิน *</label></div>
+      <div class="proof-upload">
+        <input type="file" id="proofFile" accept="image/*,application/pdf" onchange="handleProof(this)"/>
         <div class="upload-icon">📎</div>
         <p class="upload-text">คลิกหรือลากไฟล์มาวางที่นี่<br><small style="color:#aaa">PNG / JPG / PDF</small></p>
       </div>
       <div class="proof-preview" id="proofPreview">
-        <img id="proofPreviewImg" alt="หลักฐาน" />
+        <img id="proofPreviewImg" alt="หลักฐาน"/>
       </div>
     </div>
   </section>
 
-  <!-- ── Submit ── -->
-  <section style="padding:1.5rem 0 3rem;">
+  <!-- Submit -->
+  <section style="padding:1.5rem 0 3rem">
     <button class="submit-btn" id="submitBtn" onclick="submitOrder()">ยืนยันการสั่งซื้อ</button>
-    <p style="text-align:center;font-size:0.72rem;color:var(--gray-400);margin-top:0.75rem;">
-      กรุณาตรวจสอบข้อมูลให้ครบถ้วนก่อนกดยืนยัน
+    <p style="text-align:center;font-size:.72rem;color:var(--gray-400);margin-top:.75rem">
+      กรุณาตรวจสอบข้อมูลให้ครบถ้วนก่อนกดยืนยัน<br>ระบบจะแจ้งผลการอนุมัติทางอีเมลที่ให้ไว้
     </p>
   </section>
-
 </main>
-
-<hr class="divider" />
-
-<!-- ── ส่วนตรวจสอบสถานะ (ซ่อน ใช้ modal แทน) ── -->
-<div id="check-section" style="display:none;"></div>
 
 <footer>เกษตรและสิ่งแวดล้อมศึกษา — ปีการศึกษา 2569</footer>
 
-<!-- ── Modal ตรวจสอบสถานะ ── -->
+<!-- Modal ตรวจสอบสถานะ -->
 <div class="modal-overlay" id="checkModal" onclick="if(event.target===this)closeCheckModal()">
   <div class="modal-box">
     <div class="modal-header">
@@ -893,7 +393,8 @@
     </div>
     <div class="modal-body">
       <div class="modal-check-row">
-        <input type="text" id="checkId" placeholder="ใส่รหัสนิสิต" maxlength="10" onkeydown="if(event.key==='Enter')checkStatus()" />
+        <input type="text" id="checkId" placeholder="ใส่รหัสนิสิต" maxlength="10"
+               onkeydown="if(event.key==='Enter')checkStatus()"/>
         <button class="check-btn" onclick="checkStatus()">ตรวจสอบ</button>
       </div>
       <div class="status-card" id="statusCard">
@@ -908,87 +409,99 @@
           <div class="status-item"><div class="si-label">เสื้อยีนส์</div><div class="si-val" id="sc-jeans">—</div></div>
           <div class="status-item"><div class="si-label">ยอดชำระ</div><div class="si-val" id="sc-price">—</div></div>
           <div class="status-item"><div class="si-label">วันที่สั่ง</div><div class="si-val" id="sc-date">—</div></div>
+          <div class="status-note" id="sc-note" style="display:none"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Loading -->
 <div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
-  <span class="loading-text">กำลังดำเนินการ...</span>
+  <div class="spinner"></div><span class="loading-text">กำลังดำเนินการ...</span>
 </div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ── Init ──────────────────────────────────────────────────────
 document.getElementById('bankAccDisplay').textContent    = BANK_ACCOUNT;
 document.getElementById('bankHolderDisplay').textContent = BANK_HOLDER;
-// จำนวนเสื้อทั้งสองชนิดคงที่ที่ 1 (hidden inputs)
+calcTotal(); // คำนวณราคาเริ่มต้น
 
-// ── Toggle Special Size ───────────────────────────────────────
-function toggleSpecial(id, btn) {
+// ── Qty ───────────────────────────────────────────────────────
+function changeQty(id, delta) {
   const el = document.getElementById(id);
+  el.value = Math.max(1, (parseInt(el.value)||1) + delta);
+  calcTotal();
+}
+
+// ── Calc Total (คำนวณเมื่อเลือกไซส์แล้วเท่านั้น) ──────────────
+function calcTotal() {
+  const tSize = document.querySelector('input[name="tshirtSize"]:checked');
+  const jSize = document.querySelector('input[name="jeansSize"]:checked');
+  const tq    = parseInt(document.getElementById('tshirtQty').value) || 1;
+  const jq    = parseInt(document.getElementById('jeansQty').value)  || 1;
+
+  const tsPrice = tSize ? tq * 240 : 0;
+  const jsPrice = jSize ? jq * 420 : 0;
+  const total   = tsPrice + jsPrice;
+
+  document.getElementById('ts-subtotal').textContent = tSize ? '฿'+tsPrice.toLocaleString() : '—';
+  document.getElementById('js-subtotal').textContent = jSize ? '฿'+jsPrice.toLocaleString() : '—';
+  document.getElementById('totalDisplay').textContent = total > 0 ? '฿'+total.toLocaleString() : '฿—';
+
+  let breakdown = [];
+  if (tSize) breakdown.push(`เสื้อยืด ${tSize.value} × ${tq} = ฿${tsPrice.toLocaleString()}`);
+  if (jSize) breakdown.push(`เสื้อยีนส์ ${jSize.value} × ${jq} = ฿${jsPrice.toLocaleString()}`);
+  document.getElementById('total-breakdown').textContent = breakdown.length ? breakdown.join(' + ') : 'เลือกไซส์เพื่อดูราคา';
+}
+
+// ผูก event กับ radio ทุกตัว
+document.querySelectorAll('input[name="tshirtSize"],input[name="jeansSize"]')
+  .forEach(r => r.addEventListener('change', calcTotal));
+
+// ── Special size toggle ───────────────────────────────────────
+function toggleSpecial(id, btn) {
+  const el   = document.getElementById(id);
   const open = el.classList.toggle('open');
   btn.textContent = open ? '− ปิดไซส์พิเศษ' : '+ ไซส์พิเศษ (ระบุเอง)';
 }
 
-// ── รูปเสื้อฝังตรงใน src attribute ของ <img> แก้ไขได้จากโค้ดเท่านั้น ──
-
-// ── Handle Proof File ─────────────────────────────────────────
+// ── Proof ─────────────────────────────────────────────────────
 function handleProof(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   if (file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      document.getElementById('proofPreviewImg').src = e.target.result;
-      document.getElementById('proofPreview').style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    document.getElementById('proofPreview').style.display = 'none';
+    const r = new FileReader();
+    r.onload = e => { document.getElementById('proofPreviewImg').src = e.target.result;
+                      document.getElementById('proofPreview').style.display = 'block'; };
+    r.readAsDataURL(file);
   }
   showToast('แนบหลักฐานแล้ว: ' + file.name);
 }
 
-// ── Copy Bank Account ─────────────────────────────────────────
+// ── Copy account ──────────────────────────────────────────────
 function copyAccount() {
   navigator.clipboard.writeText(BANK_ACCOUNT).then(() => {
     const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ คัดลอกแล้ว';
-    btn.classList.add('copied');
+    btn.textContent = '✓ คัดลอกแล้ว'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'คัดลอกเลขบัญชี'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
-// ── Get Selected Radio ────────────────────────────────────────
-function getRadio(name) {
-  const el = document.querySelector(`input[name="${name}"]:checked`);
-  return el ? el.value : null;
-}
-
-// ── Upload Proof to Drive ─────────────────────────────────────
+// ── Upload proof → Drive ──────────────────────────────────────
 async function uploadProofFile() {
-  const file = document.getElementById('proofFile').files[0];
-  if (!file) return "";
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = async e => {
-      const base64 = e.target.result.split(',')[1];
+  const file = document.getElementById('proofFile').files[0]; if (!file) return "";
+  return new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = async e => {
       try {
-        const res = await fetch(GAS_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'uploadProof', base64, mimeType: file.type, fileName: file.name })
-        });
+        const res  = await fetch(GAS_URL, { method:'POST',
+          body: JSON.stringify({ action:'uploadProof', base64: e.target.result.split(',')[1],
+                                  mimeType: file.type, fileName: file.name }) });
         const data = await res.json();
         resolve(data.success ? data.url : "");
       } catch { resolve(""); }
     };
-    reader.readAsDataURL(file);
+    r.readAsDataURL(file);
   });
 }
 
@@ -999,128 +512,109 @@ async function submitOrder() {
   const year      = document.getElementById('year').value;
   const phone     = document.getElementById('phone').value.trim();
   const email     = document.getElementById('email').value.trim();
-  const tshirtQty = parseInt(document.getElementById('tshirtQty').value) || 0;
-  const jeansQty  = parseInt(document.getElementById('jeansQty').value) || 0;
 
-  // Validate ข้อมูลผู้สั่ง
-  if (!fullName || !studentId || !year || !phone) { showToast('กรุณากรอกข้อมูลให้ครบ', 'error'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('กรุณากรอกอีเมลให้ถูกต้อง', 'error'); return; }
+  if (!fullName || !studentId || !year || !phone)
+    { showToast('กรุณากรอกข้อมูลให้ครบ','error'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    { showToast('กรุณากรอกอีเมลให้ถูกต้อง','error'); return; }
 
-  // ตรวจสอบไซส์เสื้อยืด (บังคับเลือก)
-  let tshirtSize = getRadio('tshirtSize'), tshirtChest = '';
-  const tsSpecial = document.getElementById('tshirt-special');
-  if (tsSpecial.classList.contains('open') && document.getElementById('ts-special-size').value) {
-    tshirtSize  = document.getElementById('ts-special-size').value;
-    tshirtChest = document.getElementById('ts-special-chest').value;
-  } else if (!tshirtSize) {
-    showToast('กรุณาเลือกไซส์เสื้อยืด', 'error'); return;
+  // ไซส์เสื้อยืด
+  let tshirtSize = (document.querySelector('input[name="tshirtSize"]:checked')||{}).value||null;
+  let tshirtChest = '';
+  if (document.getElementById('ts-special').classList.contains('open') && document.getElementById('ts-sp-size').value) {
+    tshirtSize  = document.getElementById('ts-sp-size').value;
+    tshirtChest = document.getElementById('ts-sp-chest').value;
   }
+  if (!tshirtSize) { showToast('กรุณาเลือกไซส์เสื้อยืด','error'); return; }
 
-  // ตรวจสอบไซส์เสื้อยีนส์ (บังคับเลือก)
-  let jeansSize = getRadio('jeansSize'), jeansChest = '';
-  const jsSpecial = document.getElementById('jeans-special');
-  if (jsSpecial.classList.contains('open') && document.getElementById('js-special-size').value) {
-    jeansSize  = document.getElementById('js-special-size').value;
-    jeansChest = document.getElementById('js-special-chest').value;
-  } else if (!jeansSize) {
-    showToast('กรุณาเลือกไซส์เสื้อยีนส์', 'error'); return;
+  // ไซส์เสื้อยีนส์
+  let jeansSize = (document.querySelector('input[name="jeansSize"]:checked')||{}).value||null;
+  let jeansChest = '';
+  if (document.getElementById('js-special').classList.contains('open') && document.getElementById('js-sp-size').value) {
+    jeansSize  = document.getElementById('js-sp-size').value;
+    jeansChest = document.getElementById('js-sp-chest').value;
   }
+  if (!jeansSize) { showToast('กรุณาเลือกไซส์เสื้อยีนส์','error'); return; }
 
-  if (!document.getElementById('proofFile').files[0]) { showToast('กรุณาแนบหลักฐานการชำระเงิน', 'error'); return; }
+  const tshirtQty  = parseInt(document.getElementById('tshirtQty').value) || 1;
+  const jeansQty   = parseInt(document.getElementById('jeansQty').value)  || 1;
+  const totalPrice = tshirtQty * 240 + jeansQty * 420;
 
-  const totalPrice = 660; // คงที่ (เสื้อยืด 240 + ยีนส์ 420)
+  if (!document.getElementById('proofFile').files[0])
+    { showToast('กรุณาแนบหลักฐานการชำระเงิน','error'); return; }
 
   showLoading(true);
   document.getElementById('submitBtn').disabled = true;
 
   const proofUrl = await uploadProofFile();
-
-  const payload = {
-    action: 'submitOrder', fullName, studentId, year, phone, email,
-    tshirtSize, tshirtChest, tshirtQty,
-    jeansSize, jeansChest, jeansQty,
-    totalPrice, proofUrl
-  };
-
+  const payload  = { action:'submitOrder', fullName, studentId, year, phone, email,
+                     tshirtSize, tshirtChest, tshirtQty,
+                     jeansSize,  jeansChest,  jeansQty, totalPrice, proofUrl };
   try {
-    const res  = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const res  = await fetch(GAS_URL, { method:'POST', body:JSON.stringify(payload) });
     const data = await res.json();
     showLoading(false);
     document.getElementById('submitBtn').disabled = false;
     if (data.success) {
-      showToast('สั่งซื้อสำเร็จ! ระบบจะแจ้งผลทางอีเมล ' + email, 'success');
-      setTimeout(() => location.reload(), 3000);
-    } else {
-      showToast(data.message || 'เกิดข้อผิดพลาด', 'error');
-    }
-  } catch (err) {
+      showToast('สั่งซื้อสำเร็จ! ระบบจะแจ้งผลทางอีเมล '+email,'success');
+      setTimeout(() => location.reload(), 3200);
+    } else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
+  } catch {
     showLoading(false);
     document.getElementById('submitBtn').disabled = false;
-    showToast('ไม่สามารถเชื่อมต่อได้ กรุณาลองใหม่', 'error');
+    showToast('ไม่สามารถเชื่อมต่อได้ กรุณาลองใหม่','error');
   }
 }
 
 // ── Check Status ──────────────────────────────────────────────
 async function checkStatus() {
   const sid = document.getElementById('checkId').value.trim();
-  if (!sid) { showToast('กรุณาใส่รหัสนิสิต', 'error'); return; }
-
+  if (!sid) { showToast('กรุณาใส่รหัสนิสิต','error'); return; }
   showLoading(true);
   try {
-    const res  = await fetch(`${GAS_URL}?action=checkStatus&studentId=${sid}`);
+    const res  = await fetch(`${GAS_URL}?action=checkStatus&studentId=${encodeURIComponent(sid)}`);
     const data = await res.json();
     showLoading(false);
-
     const card = document.getElementById('statusCard');
     if (data.success && data.found) {
       const d = data.data;
-      document.getElementById('sc-name').textContent  = d.fullName;
-      document.getElementById('sc-sid').textContent   = d.studentId;
-      document.getElementById('sc-year').textContent  = 'ปี ' + d.year;
-      document.getElementById('sc-tshirt').textContent = d.tshirtQty > 0 ? `${d.tshirtSize} × ${d.tshirtQty} ตัว` : '—';
-      document.getElementById('sc-jeans').textContent  = d.jeansQty > 0  ? `${d.jeansSize} × ${d.jeansQty} ตัว`  : '—';
-      document.getElementById('sc-price').textContent  = '฿' + Number(d.totalPrice).toLocaleString();
+      document.getElementById('sc-name').textContent   = d.fullName;
+      document.getElementById('sc-sid').textContent    = d.studentId;
+      document.getElementById('sc-year').textContent   = 'ปี '+d.year;
+      document.getElementById('sc-tshirt').textContent = `${d.tshirtSize} × ${d.tshirtQty} ตัว`;
+      document.getElementById('sc-jeans').textContent  = `${d.jeansSize} × ${d.jeansQty} ตัว`;
+      document.getElementById('sc-price').textContent  = '฿'+Number(d.totalPrice).toLocaleString();
       const rawDate = new Date(d.timestamp);
-      document.getElementById('sc-date').textContent  = isNaN(rawDate) ? d.timestamp : rawDate.toLocaleDateString('th-TH');
-
+      document.getElementById('sc-date').textContent   = isNaN(rawDate) ? d.timestamp : rawDate.toLocaleDateString('th-TH');
       const badge = document.getElementById('sc-badge');
-      badge.textContent = d.status;
-      badge.className = 'status-badge';
-      if (d.status === 'อนุมัติแล้ว') badge.classList.add('badge-approved');
-      else if (d.status === 'ปฏิเสธ') badge.classList.add('badge-rejected');
+      badge.textContent = d.status; badge.className = 'status-badge';
+      if (d.status==='อนุมัติแล้ว') badge.classList.add('badge-approved');
+      else if (d.status==='ปฏิเสธ') badge.classList.add('badge-rejected');
       else badge.classList.add('badge-pending');
-
+      const noteEl = document.getElementById('sc-note');
+      if (d.status==='ปฏิเสธ' && d.note) {
+        noteEl.textContent = '📌 หมายเหตุ: '+d.note; noteEl.style.display = 'block';
+      } else { noteEl.style.display = 'none'; }
       card.style.display = 'block';
     } else {
       card.style.display = 'none';
-      showToast('ไม่พบข้อมูลรหัสนิสิต ' + sid, 'error');
+      showToast('ไม่พบข้อมูลรหัสนิสิต '+sid,'error');
     }
-  } catch {
-    showLoading(false);
-    showToast('ไม่สามารถเชื่อมต่อได้', 'error');
-  }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
 }
 
-function openCheckModal() {
-  document.getElementById('checkModal').classList.add('show');
-  document.getElementById('checkId').focus();
-}
-function closeCheckModal() {
-  document.getElementById('checkModal').classList.remove('show');
-}
-// close modal on Escape key
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCheckModal(); });
+// ── Modal ─────────────────────────────────────────────────────
+function openCheckModal()  { document.getElementById('checkModal').classList.add('show'); document.getElementById('checkId').focus(); }
+function closeCheckModal() { document.getElementById('checkModal').classList.remove('show'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeCheckModal(); });
 
-// ── UI Helpers ────────────────────────────────────────────────
-function showLoading(v) {
-  document.getElementById('loadingOverlay').classList.toggle('show', v);
-}
-function showToast(msg, type) {
+// ── Helpers ───────────────────────────────────────────────────
+function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show',v); }
+function showToast(msg,type) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (type ? ' ' + type : '');
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => t.classList.remove('show'), 3200);
+  t.textContent = msg; t.className = 'toast'+(type?' '+type:'');
+  setTimeout(() => t.classList.add('show'),10);
+  setTimeout(() => t.classList.remove('show'),3500);
 }
 </script>
 </body>
