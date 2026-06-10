@@ -1,248 +1,186 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Admin — ระบบสั่งซื้อเสื้อปฏิบัติการ 2569</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --black:#0d0d0d; --white:#fafafa; --gray-100:#f4f4f4; --gray-200:#e8e8e8;
-    --gray-400:#b0b0b0; --gray-600:#5a5a5a; --gray-800:#2a2a2a;
-    --border:#e0e0e0; --radius:4px; --font:'Kanit',sans-serif;
-    --green:#1b5e20; --green-bg:#e8f5e9;
-    --amber:#e65100; --amber-bg:#fff3e0;
-    --red:#b71c1c; --red-bg:#ffebee;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0d0d0d;--white:#fafafa;--gray-100:#f4f4f4;--gray-200:#e8e8e8;
+  --gray-400:#b0b0b0;--gray-600:#5a5a5a;--gray-800:#2a2a2a;--border:#e0e0e0;
+  --radius:4px;--font:'Kanit',sans-serif;
+  --green:#1b5e20;--green-bg:#e8f5e9;--amber:#e65100;--amber-bg:#fff3e0;
+  --red:#b71c1c;--red-bg:#ffebee;
+}
+body{font-family:var(--font);background:var(--gray-100);color:var(--black);font-weight:300;min-height:100vh}
 
-  body { font-family:var(--font); background:var(--gray-100); color:var(--black); font-weight:300; min-height:100vh; }
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
+.login-box{background:var(--white);padding:2.5rem 2rem;width:100%;max-width:360px;border-radius:6px}
+.login-box .brand{font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
+.login-box h2{font-size:1.3rem;font-weight:600;margin-bottom:1.75rem}
+.login-field{margin-bottom:1rem}
+.login-field label{display:block;font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.4rem}
+.login-field input{width:100%;font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s}
+.login-field input:focus{border-color:var(--black)}
+.login-btn{width:100%;margin-top:.5rem;font-family:var(--font);font-size:.88rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:.8rem;background:var(--black);color:var(--white);
+  border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.login-btn:hover{opacity:.85}
+.login-err{font-size:.78rem;color:var(--red);margin-top:.75rem;display:none}
 
-  /* ── LOGIN ── */
-  .login-wrap {
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background:var(--black);
-  }
-  .login-box {
-    background:var(--white); padding:2.5rem 2rem; width:100%; max-width:360px;
-    border-radius:6px;
-  }
-  .login-box .brand {
-    font-size:0.65rem; font-weight:600; letter-spacing:0.25em; text-transform:uppercase;
-    color:var(--gray-400); margin-bottom:0.5rem;
-  }
-  .login-box h2 { font-size:1.3rem; font-weight:600; margin-bottom:1.75rem; }
-  .login-field { margin-bottom:1rem; }
-  .login-field label { display:block; font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-600); margin-bottom:0.4rem; }
-  .login-field input {
-    width:100%; font-family:var(--font); font-size:0.92rem; font-weight:300;
-    padding:0.65rem 0.9rem; border:1px solid var(--border); border-radius:var(--radius);
-    outline:none; transition:border-color 0.2s;
-  }
-  .login-field input:focus { border-color:var(--black); }
-  .login-btn {
-    width:100%; margin-top:0.5rem; font-family:var(--font); font-size:0.88rem;
-    font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem;
-    background:var(--black); color:var(--white); border:none; border-radius:var(--radius);
-    cursor:pointer; transition:opacity 0.2s;
-  }
-  .login-btn:hover { opacity:0.85; }
-  .login-err { font-size:0.78rem; color:var(--red); margin-top:0.75rem; display:none; }
+/* ADMIN LAYOUT */
+.admin-wrap{display:none;min-height:100vh;flex-direction:column}
+.admin-header{background:var(--black);color:var(--white);height:56px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100}
+.admin-header .hlogo{font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase}
+.admin-header .hright{display:flex;align-items:center;gap:1rem}
+.admin-header .hadmin{font-size:.75rem;color:var(--gray-400)}
+.logout-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.08em;padding:.35rem .9rem;
+  background:transparent;color:var(--gray-400);border:1px solid #444;border-radius:var(--radius);cursor:pointer;transition:all .2s}
+.logout-btn:hover{border-color:var(--white);color:var(--white)}
+.admin-content{padding:2rem 1.5rem;max-width:1200px;margin:0 auto;width:100%}
 
-  /* ── ADMIN LAYOUT ── */
-  .admin-wrap { display:none; min-height:100vh; flex-direction:column; }
+/* Dashboard cards */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+.dash-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.dash-card .dc-label{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
+.dash-card .dc-val{font-size:1.9rem;font-weight:700;line-height:1}
+.dash-card .dc-sub{font-size:.7rem;color:var(--gray-600);margin-top:.35rem}
+.dc-approved .dc-val{color:var(--green)}
+.dc-pending .dc-val{color:var(--amber)}
+.dc-rejected .dc-val{color:var(--red)}
+.dc-revenue .dc-val{font-size:1.4rem}
 
-  /* Header */
-  .admin-header {
-    background:var(--black); color:var(--white); height:56px;
-    display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem;
-    position:sticky; top:0; z-index:100;
-  }
-  .admin-header .hlogo { font-size:0.78rem; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; }
-  .admin-header .hright { display:flex; align-items:center; gap:1rem; }
-  .admin-header .hadmin { font-size:0.75rem; color:var(--gray-400); }
-  .logout-btn {
-    font-family:var(--font); font-size:0.72rem; font-weight:500; letter-spacing:0.08em;
-    padding:0.35rem 0.9rem; background:transparent; color:var(--gray-400);
-    border:1px solid #444; border-radius:var(--radius); cursor:pointer; transition:all 0.2s;
-  }
-  .logout-btn:hover { border-color:var(--white); color:var(--white); }
+/* Size summary */
+.size-summary-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:640px){.size-summary-wrap{grid-template-columns:1fr}}
+.size-summary-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.size-summary-card h4{font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.size-rows{display:flex;flex-direction:column;gap:.4rem}
+.size-row{display:flex;align-items:center;gap:.75rem}
+.size-row .sz-label{font-size:.8rem;font-weight:600;min-width:40px}
+.size-row .sz-bar-wrap{flex:1;height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
+.size-row .sz-bar{height:100%;background:var(--black);border-radius:4px;transition:width .4s ease;min-width:2px}
+.size-row .sz-count{font-size:.78rem;font-weight:500;min-width:24px;text-align:right}
 
-  /* Content */
-  .admin-content { padding:2rem 1.5rem; max-width:1100px; margin:0 auto; width:100%; }
+/* Toolbar */
+.table-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.search-input{font-family:var(--font);font-size:.85rem;font-weight:300;padding:.55rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;flex:1;min-width:160px;
+  transition:border-color .2s;background:var(--white)}
+.search-input:focus{border-color:var(--black)}
+.filter-select{font-family:var(--font);font-size:.82rem;font-weight:300;padding:.55rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);background:var(--white);outline:none;cursor:pointer}
+.refresh-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:.55rem 1.1rem;
+  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;
+  transition:opacity .2s;white-space:nowrap}
+.refresh-btn:hover{opacity:.8}
 
-  /* Dashboard Cards */
-  .dash-grid {
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem;
-    margin-bottom:2rem;
-  }
-  .dash-card {
-    background:var(--white); border:1px solid var(--border); border-radius:6px; padding:1.25rem;
-  }
-  .dash-card .dc-label { font-size:0.65rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray-400); margin-bottom:0.5rem; }
-  .dash-card .dc-val { font-size:2rem; font-weight:700; line-height:1; }
-  .dash-card .dc-sub { font-size:0.72rem; color:var(--gray-600); margin-top:0.35rem; }
-  .dc-approved .dc-val { color:var(--green); }
-  .dc-pending  .dc-val { color:var(--amber); }
-  .dc-revenue  .dc-val { font-size:1.5rem; }
+/* Table */
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+thead th{background:var(--black);color:var(--white);padding:.75rem .8rem;text-align:left;
+  font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--gray-100)}
+tbody td{padding:.7rem .8rem;vertical-align:middle}
+.name-cell{font-weight:500}
 
-  /* Filter / Search bar */
-  .table-toolbar {
-    display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; margin-bottom:1rem;
-  }
-  .search-input {
-    font-family:var(--font); font-size:0.85rem; font-weight:300;
-    padding:0.55rem 0.9rem; border:1px solid var(--border); border-radius:var(--radius);
-    outline:none; flex:1; min-width:180px; transition:border-color 0.2s;
-    background:var(--white);
-  }
-  .search-input:focus { border-color:var(--black); }
-  .filter-select {
-    font-family:var(--font); font-size:0.82rem; font-weight:300;
-    padding:0.55rem 0.9rem; border:1px solid var(--border); border-radius:var(--radius);
-    background:var(--white); outline:none; cursor:pointer;
-  }
+.badge{display:inline-block;font-size:.65rem;font-weight:500;letter-spacing:.06em;padding:.2rem .65rem;border-radius:20px;white-space:nowrap}
+.badge-pending{background:var(--amber-bg);color:var(--amber)}
+.badge-approved{background:var(--green-bg);color:var(--green)}
+.badge-rejected{background:var(--red-bg);color:var(--red)}
 
-  /* Table */
-  .table-wrap { background:var(--white); border:1px solid var(--border); border-radius:6px; overflow-x:auto; }
-  table { width:100%; border-collapse:collapse; font-size:0.82rem; }
-  thead th {
-    background:var(--black); color:var(--white); padding:0.75rem 0.9rem;
-    text-align:left; font-size:0.65rem; font-weight:600; letter-spacing:0.12em;
-    text-transform:uppercase; white-space:nowrap;
-  }
-  tbody tr { border-bottom:1px solid var(--border); }
-  tbody tr:last-child { border-bottom:none; }
-  tbody tr:hover { background:var(--gray-100); }
-  tbody td { padding:0.75rem 0.9rem; vertical-align:middle; }
-  td .name-cell { font-weight:500; }
-  td .sid-cell  { font-size:0.75rem; color:var(--gray-600); }
-  td .items-cell { font-size:0.78rem; line-height:1.5; }
+.proof-link{font-size:.72rem;color:var(--gray-600);text-decoration:none}
+.proof-link:hover{color:var(--black);text-decoration:underline}
 
-  .badge {
-    display:inline-block; font-size:0.65rem; font-weight:500; letter-spacing:0.06em;
-    padding:0.2rem 0.65rem; border-radius:20px; white-space:nowrap;
-  }
-  .badge-pending  { background:var(--amber-bg); color:var(--amber); }
-  .badge-approved { background:var(--green-bg); color:var(--green); }
-  .badge-rejected { background:var(--red-bg);   color:var(--red); }
+/* Action buttons */
+.action-group{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center}
+.act-btn{font-family:var(--font);font-size:.68rem;font-weight:500;letter-spacing:.06em;
+  padding:.3rem .7rem;border-radius:var(--radius);cursor:pointer;border:none;transition:opacity .2s;white-space:nowrap}
+.act-btn:hover{opacity:.8}
+.btn-approve{background:var(--green);color:var(--white)}
+.btn-reject{background:var(--red);color:var(--white)}
+.btn-reset{background:var(--gray-200);color:var(--gray-800)}
+.btn-delete{background:transparent;color:var(--gray-400);border:1px solid var(--border);font-size:.8rem;padding:.28rem .55rem}
+.btn-delete:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
 
-  .proof-link { font-size:0.72rem; color:var(--gray-600); text-decoration:none; }
-  .proof-link:hover { color:var(--black); text-decoration:underline; }
+/* Reject modal */
+.rmodal-overlay{display:none;position:fixed;inset:0;background:rgba(13,13,13,.75);z-index:300;
+  align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.rmodal-overlay.show{display:flex}
+.rmodal-box{background:var(--white);width:100%;max-width:440px;border-radius:8px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);margin:1rem;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.rmodal-header{background:var(--red);color:var(--white);padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between}
+.rmodal-header h3{font-size:.88rem;font-weight:600}
+.rmodal-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;padding:0}
+.rmodal-close:hover{color:var(--white)}
+.rmodal-body{padding:1.5rem}
+.rmodal-label{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.5rem}
+.rmodal-textarea{width:100%;font-family:var(--font);font-size:.88rem;font-weight:300;padding:.7rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;resize:vertical;min-height:90px;
+  transition:border-color .2s}
+.rmodal-textarea:focus{border-color:var(--black)}
+.rmodal-footer{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
+.rmodal-save-btn{font-family:var(--font);font-size:.8rem;font-weight:600;letter-spacing:.08em;padding:.6rem 1.5rem;
+  background:var(--red);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.rmodal-save-btn:hover{opacity:.85}
+.rmodal-cancel-btn{font-family:var(--font);font-size:.8rem;font-weight:500;padding:.6rem 1rem;
+  background:var(--gray-200);color:var(--gray-800);border:none;border-radius:var(--radius);cursor:pointer}
 
-  /* Action buttons */
-  .action-group { display:flex; gap:0.4rem; flex-wrap:wrap; }
-  .act-btn {
-    font-family:var(--font); font-size:0.68rem; font-weight:500; letter-spacing:0.06em;
-    padding:0.3rem 0.75rem; border-radius:var(--radius); cursor:pointer; border:none; transition:opacity 0.2s;
-  }
-  .act-btn:hover { opacity:0.8; }
-  .btn-approve { background:var(--green); color:var(--white); }
-  .btn-reject  { background:var(--red);   color:var(--white); }
-  .btn-reset   { background:var(--gray-200); color:var(--gray-800); }
-
-  /* Loading */
-  .loading-overlay {
-    display:none; position:fixed; inset:0; background:rgba(250,250,250,0.85);
-    z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:1rem;
-  }
-  .loading-overlay.show { display:flex; }
-  .spinner { width:32px; height:32px; border:2px solid var(--border); border-top-color:var(--black); border-radius:50%; animation:spin 0.7s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-
-  /* Toast */
-  .toast {
-    position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px);
-    background:var(--black); color:var(--white); padding:0.75rem 1.5rem; border-radius:4px;
-    font-size:0.82rem; opacity:0; transition:all 0.3s; z-index:999; white-space:nowrap;
-  }
-  .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
-  .toast.success { background:var(--green); }
-  .toast.error   { background:var(--red); }
-
-  /* Empty state */
-  .empty-state { text-align:center; padding:3rem; color:var(--gray-400); font-size:0.85rem; }
-
-  /* Refresh btn */
-  .refresh-btn {
-    font-family:var(--font); font-size:0.75rem; font-weight:500; letter-spacing:0.08em;
-    padding:0.55rem 1.1rem; background:var(--black); color:var(--white);
-    border:none; border-radius:var(--radius); cursor:pointer; transition:opacity 0.2s; white-space:nowrap;
-  }
-  .refresh-btn:hover { opacity:0.8; }
-
-  /* ── Section Header ── */
-  .section-hd {
-    font-size:0.65rem; font-weight:600; letter-spacing:0.25em; text-transform:uppercase;
-    color:var(--gray-400); margin-bottom:1.25rem; margin-top:2rem;
-  }
-
-  /* ── Product Image Manager ── */
-  .img-manager {
-    background:var(--white); border:1px solid var(--border); border-radius:6px;
-    padding:1.5rem; margin-bottom:2rem;
-  }
-  .img-manager-grid {
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1.25rem;
-  }
-  .img-card { display:flex; flex-direction:column; gap:0.75rem; }
-  .img-card-label { font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-600); }
-  .img-preview-box {
-    width:100%; aspect-ratio:3/4; border:1px solid var(--border); border-radius:var(--radius);
-    overflow:hidden; background:var(--gray-100); display:flex; align-items:center;
-    justify-content:center; position:relative;
-  }
-  .img-preview-box img { width:100%; height:100%; object-fit:cover; display:none; }
-  .img-preview-box img.show { display:block; }
-  .img-preview-box .no-img { font-size:0.75rem; color:var(--gray-400); }
-  .img-upload-zone {
-    border:1px dashed var(--gray-400); border-radius:var(--radius); padding:0.65rem;
-    text-align:center; cursor:pointer; position:relative; background:var(--white);
-    transition:border-color 0.2s, background 0.2s;
-  }
-  .img-upload-zone:hover { border-color:var(--black); background:var(--gray-100); }
-  .img-upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-  .img-upload-zone span { font-size:0.72rem; color:var(--gray-600); pointer-events:none; }
-  .img-upload-zone .file-name { font-size:0.68rem; color:var(--black); margin-top:0.3rem; display:none; }
-  .img-save-btn {
-    font-family:var(--font); font-size:0.72rem; font-weight:500; letter-spacing:0.08em;
-    padding:0.45rem 1rem; background:var(--black); color:var(--white); border:none;
-    border-radius:var(--radius); cursor:pointer; transition:opacity 0.2s; width:100%;
-  }
-  .img-save-btn:hover { opacity:0.8; }
-  .img-save-btn:disabled { opacity:0.35; cursor:not-allowed; }
+/* Loading / Toast */
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,250,250,.85);z-index:500;
+  align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+.loading-overlay.show{display:flex}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--black);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--black);color:var(--white);padding:.75rem 1.5rem;border-radius:4px;
+  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:var(--green)}.toast.error{background:var(--red)}
+.empty-state{text-align:center;padding:3rem;color:var(--gray-400);font-size:.85rem}
+.section-hd{font-size:.62rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gray-400);margin-bottom:.9rem;margin-top:.25rem}
 </style>
 </head>
 <body>
 
-<!-- Config -->
 <script>
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyXZQJewBd3dIc_-FwSUWjLMEZqfmbs7-ztIIdSqQ5cpWqy-hxKEGa9MHrctXiFdiVn/exec"; // ← ใส่ URL เดียวกับ index.html
-  const ADMIN_TOKEN = "ADMIN_METEE_552728";
+const GAS_URL     = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; // ← URL เดียวกับ index.html
+const ADMIN_TOKEN = "ADMIN_METEE_552728";
 </script>
 
-<!-- ── LOGIN SCREEN ── -->
+<!-- LOGIN -->
 <div class="login-wrap" id="loginWrap">
   <div class="login-box">
     <p class="brand">เกษตรและสิ่งแวดล้อมศึกษา</p>
     <h2>Admin Login</h2>
     <div class="login-field">
       <label>ชื่อผู้ใช้งาน</label>
-      <input type="text" id="loginUser" placeholder="เมธี" onkeydown="if(event.key==='Enter')doLogin()" />
+      <input type="text" id="loginUser" placeholder="เมธี" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
     <div class="login-field">
       <label>รหัสผ่าน</label>
-      <input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+      <input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
     <button class="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
     <p class="login-err" id="loginErr">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
   </div>
 </div>
 
-<!-- ── ADMIN PANEL ── -->
+<!-- ADMIN PANEL -->
 <div class="admin-wrap" id="adminWrap">
   <header class="admin-header">
-    <span class="hlogo">Admin Panel — เสื้อปฏิบัติการ 2569</span>
+    <span class="hlogo">Admin — เสื้อปฏิบัติการ 2569</span>
     <div class="hright">
       <span class="hadmin" id="adminName">—</span>
       <button class="logout-btn" onclick="doLogout()">ออกจากระบบ</button>
@@ -252,7 +190,8 @@
   <div class="admin-content">
 
     <!-- Dashboard -->
-    <div class="dash-grid" id="dashGrid">
+    <p class="section-hd">ภาพรวม</p>
+    <div class="dash-grid">
       <div class="dash-card">
         <div class="dc-label">คำสั่งซื้อทั้งหมด</div>
         <div class="dc-val" id="stat-total">—</div>
@@ -268,16 +207,41 @@
         <div class="dc-val" id="stat-pending">—</div>
         <div class="dc-sub">รายการ</div>
       </div>
+      <div class="dash-card dc-rejected">
+        <div class="dc-label">ไม่อนุมัติ</div>
+        <div class="dc-val" id="stat-rejected">—</div>
+        <div class="dc-sub">รายการ</div>
+      </div>
       <div class="dash-card dc-revenue">
-        <div class="dc-label">ยอดเงินทั้งหมด</div>
+        <div class="dc-label">ยอดเงินรวม (อนุมัติแล้ว)</div>
         <div class="dc-val" id="stat-revenue">—</div>
-        <div class="dc-sub">บาท (จากที่อนุมัติแล้ว)</div>
+        <div class="dc-sub">บาท</div>
       </div>
     </div>
 
-    <!-- Table Toolbar -->
+    <!-- Size summary -->
+    <p class="section-hd">ยอดสั่งซื้อแยกตามไซส์</p>
+    <div class="size-summary-wrap">
+      <div class="size-summary-card">
+        <h4>เสื้อยืด</h4>
+        <div class="size-rows" id="tshirt-size-rows">—</div>
+      </div>
+      <div class="size-summary-card">
+        <h4>เสื้อยีนส์</h4>
+        <div class="size-rows" id="jeans-size-rows">—</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <p class="section-hd">รายการสั่งซื้อ</p>
     <div class="table-toolbar">
-      <input class="search-input" id="searchInput" placeholder="ค้นหาชื่อ, รหัสนิสิต..." oninput="renderTable()" />
+      <input class="search-input" id="searchName" placeholder="ค้นหาชื่อ..." oninput="renderTable()"/>
+      <input class="search-input" id="searchId"   placeholder="รหัสนิสิต..." oninput="renderTable()" style="max-width:160px"/>
+      <select class="filter-select" id="filterYear" onchange="renderTable()">
+        <option value="">ทุกชั้นปี</option>
+        <option value="1">ปี 1</option><option value="2">ปี 2</option>
+        <option value="3">ปี 3</option><option value="4">ปี 4</option>
+      </select>
       <select class="filter-select" id="filterStatus" onchange="renderTable()">
         <option value="">ทุกสถานะ</option>
         <option value="รอการอนุมัติ">รอการอนุมัติ</option>
@@ -296,7 +260,7 @@
             <th>ชื่อ-นามสกุล</th>
             <th>รหัสนิสิต</th>
             <th>ปี</th>
-            <th>เบอร์โทร</th>
+            <th>เบอร์โทร / อีเมล</th>
             <th>เสื้อยืด</th>
             <th>เสื้อยีนส์</th>
             <th>ราคา</th>
@@ -310,39 +274,48 @@
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 
-<!-- Loading -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
+<!-- Reject Modal -->
+<div class="rmodal-overlay" id="rejectModal" onclick="if(event.target===this)closeRejectModal()">
+  <div class="rmodal-box">
+    <div class="rmodal-header">
+      <h3>ระบุเหตุผลที่ไม่อนุมัติ</h3>
+      <button class="rmodal-close" onclick="closeRejectModal()">✕</button>
+    </div>
+    <div class="rmodal-body">
+      <p class="rmodal-label">หมายเหตุ (จะส่งไปในอีเมลแจ้งลูกค้า)</p>
+      <textarea class="rmodal-textarea" id="rejectNote" placeholder="เช่น หลักฐานการโอนไม่ชัดเจน, ยอดเงินไม่ครบ..."></textarea>
+      <div class="rmodal-footer">
+        <button class="rmodal-cancel-btn" onclick="closeRejectModal()">ยกเลิก</button>
+        <button class="rmodal-save-btn"   onclick="confirmReject()">บันทึกและส่งอีเมล</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Toast -->
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-let allOrders = [];
+let allOrders       = [];
+let rejectRowIndex  = null;
 
 // ── Login ─────────────────────────────────────────────────────
 function doLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value.trim();
-  const err  = document.getElementById('loginErr');
-
   if (user === 'เมธี' && pass === '552728') {
-    err.style.display = 'none';
+    document.getElementById('loginErr').style.display = 'none';
     document.getElementById('loginWrap').style.display = 'none';
-    const wrap = document.getElementById('adminWrap');
-    wrap.style.display = 'flex';
+    document.getElementById('adminWrap').style.display = 'flex';
     document.getElementById('adminName').textContent = user;
     loadOrders();
   } else {
-    err.style.display = 'block';
+    document.getElementById('loginErr').style.display = 'block';
   }
 }
-
 function doLogout() {
   document.getElementById('adminWrap').style.display = 'none';
   document.getElementById('loginWrap').style.display = 'flex';
@@ -361,114 +334,182 @@ async function loadOrders() {
     if (data.success) {
       allOrders = data.orders;
       updateDash(data.summary);
+      updateSizeSummary();
       renderTable();
-    } else {
-      showToast(data.message || 'โหลดข้อมูลไม่ได้', 'error');
-    }
-  } catch {
-    showLoading(false);
-    showToast('ไม่สามารถเชื่อมต่อได้', 'error');
-  }
+    } else { showToast(data.message||'โหลดข้อมูลไม่ได้','error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
 }
 
-// ── Update Dashboard ──────────────────────────────────────────
+// ── Dashboard ─────────────────────────────────────────────────
 function updateDash(s) {
   document.getElementById('stat-total').textContent    = s.total.toLocaleString();
   document.getElementById('stat-approved').textContent = s.approved.toLocaleString();
   document.getElementById('stat-pending').textContent  = s.pending.toLocaleString();
+  document.getElementById('stat-rejected').textContent = (s.rejected||0).toLocaleString();
+  document.getElementById('stat-revenue').textContent  = '฿'+s.revenue.toLocaleString();
+}
 
-  // Revenue only from approved
-  const approvedRevenue = allOrders
-    .filter(o => o.status === 'อนุมัติแล้ว')
-    .reduce((sum, o) => sum + (Number(o.totalPrice) || 0), 0);
-  document.getElementById('stat-revenue').textContent = '฿' + approvedRevenue.toLocaleString();
+// ── Size Summary ──────────────────────────────────────────────
+function updateSizeSummary() {
+  const tMap = {}, jMap = {};
+  allOrders.forEach(o => {
+    if (o.tshirtSize && o.tshirtSize !== '-') {
+      tMap[o.tshirtSize] = (tMap[o.tshirtSize]||0) + (Number(o.tshirtQty)||1);
+    }
+    if (o.jeansSize && o.jeansSize !== '-') {
+      jMap[o.jeansSize] = (jMap[o.jeansSize]||0) + (Number(o.jeansQty)||1);
+    }
+  });
+  renderSizeRows('tshirt-size-rows', tMap, ['S','M','L','XL','2XL','3XL']);
+  renderSizeRows('jeans-size-rows',  jMap, ['S','M','L','XL','2XL']);
+}
+function renderSizeRows(elId, map, order) {
+  const el   = document.getElementById(elId);
+  const all  = Object.keys(map);
+  const keys = [...order.filter(k => all.includes(k) || map[k]),
+                 ...all.filter(k => !order.includes(k))];
+  if (keys.length === 0) { el.innerHTML = '<span style="font-size:.78rem;color:var(--gray-400)">ยังไม่มีข้อมูล</span>'; return; }
+  const max  = Math.max(...keys.map(k => map[k]||0), 1);
+  el.innerHTML = keys.map(k => {
+    const cnt = map[k]||0;
+    const pct = Math.round((cnt/max)*100);
+    return `<div class="size-row">
+      <span class="sz-label">${k}</span>
+      <div class="sz-bar-wrap"><div class="sz-bar" style="width:${pct}%"></div></div>
+      <span class="sz-count">${cnt}</span>
+    </div>`;
+  }).join('');
 }
 
 // ── Render Table ──────────────────────────────────────────────
 function renderTable() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  const filter = document.getElementById('filterStatus').value;
+  const sName   = document.getElementById('searchName').value.toLowerCase();
+  const sId     = document.getElementById('searchId').value.toLowerCase();
+  const fYear   = document.getElementById('filterYear').value;
+  const fStatus = document.getElementById('filterStatus').value;
 
   const filtered = allOrders.filter(o => {
-    const matchSearch = !search ||
-      String(o.fullName).toLowerCase().includes(search) ||
-      String(o.studentId).toLowerCase().includes(search);
-    const matchStatus = !filter || o.status === filter;
-    return matchSearch && matchStatus;
+    const mName   = !sName   || String(o.fullName).toLowerCase().includes(sName);
+    const mId     = !sId     || String(o.studentId).toLowerCase().includes(sId);
+    const mYear   = !fYear   || String(o.year) === fYear;
+    const mStatus = !fStatus || o.status === fStatus;
+    return mName && mId && mYear && mStatus;
   });
 
   const tbody = document.getElementById('orderTableBody');
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">ไม่พบข้อมูล</td></tr>`;
-    return;
+    tbody.innerHTML = `<tr><td colspan="11" class="empty-state">ไม่พบข้อมูล</td></tr>`; return;
   }
 
-  tbody.innerHTML = filtered.map((o, i) => {
-    const ts = o.tshirtQty > 0 ? `${o.tshirtSize} (${o.tshirtChest || '—'}) × ${o.tshirtQty}` : '—';
-    const js = o.jeansQty > 0  ? `${o.jeansSize} (${o.jeansChest || '—'}) × ${o.jeansQty}`   : '—';
-    const badgeCls = o.status === 'อนุมัติแล้ว' ? 'badge-approved' : o.status === 'ปฏิเสธ' ? 'badge-rejected' : 'badge-pending';
-    const proofHtml = o.proofUrl
+  tbody.innerHTML = filtered.map((o,i) => {
+    const ts  = `${o.tshirtSize}${o.tshirtChest&&o.tshirtChest!=='-'?' ('+o.tshirtChest+'")'  :''} × ${o.tshirtQty}`;
+    const js  = `${o.jeansSize}${o.jeansChest&&o.jeansChest!=='-'  ?' ('+o.jeansChest+'")'  :''} × ${o.jeansQty}`;
+    const bc  = o.status==='อนุมัติแล้ว' ? 'badge-approved' : o.status==='ปฏิเสธ' ? 'badge-rejected' : 'badge-pending';
+    const proof = o.proofUrl
       ? `<a href="${o.proofUrl}" target="_blank" class="proof-link">ดูหลักฐาน ↗</a>`
-      : '<span style="color:var(--gray-400);font-size:0.72rem">ไม่มี</span>';
-
+      : '<span style="color:var(--gray-400);font-size:.72rem">ไม่มี</span>';
     const dateFmt = o.timestamp ? new Date(o.timestamp).toLocaleDateString('th-TH') : '—';
+    const noteHtml = o.note ? `<div style="font-size:.68rem;color:var(--amber);margin-top:.2rem">📌 ${o.note}</div>` : '';
 
     return `<tr>
-      <td style="color:var(--gray-400);font-size:0.75rem">${i + 1}</td>
+      <td style="color:var(--gray-400);font-size:.75rem">${i+1}</td>
       <td>
         <div class="name-cell">${o.fullName}</div>
-        <div style="font-size:0.7rem;color:var(--gray-400)">${dateFmt}</div>
+        <div style="font-size:.7rem;color:var(--gray-400)">${dateFmt}</div>
       </td>
-      <td class="sid-cell">${o.studentId}</td>
+      <td style="font-size:.8rem">${o.studentId}</td>
       <td>ปี ${o.year}</td>
-      <td style="font-size:0.78rem">${o.phone}</td>
-      <td class="items-cell">${ts}</td>
-      <td class="items-cell">${js}</td>
+      <td>
+        <div style="font-size:.78rem">${o.phone}</div>
+        <div style="font-size:.7rem;color:var(--gray-400)">${o.email||'—'}</div>
+      </td>
+      <td style="font-size:.78rem">${ts}</td>
+      <td style="font-size:.78rem">${js}</td>
       <td style="font-weight:600;white-space:nowrap">฿${Number(o.totalPrice).toLocaleString()}</td>
-      <td>${proofHtml}</td>
-      <td><span class="badge ${badgeCls}">${o.status}</span></td>
+      <td>${proof}</td>
+      <td>
+        <span class="badge ${bc}">${o.status}</span>
+        ${noteHtml}
+      </td>
       <td>
         <div class="action-group">
-          ${o.status !== 'อนุมัติแล้ว' ? `<button class="act-btn btn-approve" onclick="updateStatus(${o.rowIndex},'อนุมัติแล้ว')">✓ อนุมัติ</button>` : ''}
-          ${o.status !== 'ปฏิเสธ' ? `<button class="act-btn btn-reject" onclick="updateStatus(${o.rowIndex},'ปฏิเสธ')">✕ ปฏิเสธ</button>` : ''}
-          ${o.status !== 'รอการอนุมัติ' ? `<button class="act-btn btn-reset" onclick="updateStatus(${o.rowIndex},'รอการอนุมัติ')">↺</button>` : ''}
+          ${o.status !== 'อนุมัติแล้ว' ? `<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>` : ''}
+          ${o.status !== 'ปฏิเสธ'      ? `<button class="act-btn btn-reject"  onclick="openRejectModal(${o.rowIndex})">✕ ไม่อนุมัติ</button>` : ''}
+          ${o.status !== 'รอการอนุมัติ' ? `<button class="act-btn btn-reset"   onclick="doReset(${o.rowIndex})">↺</button>` : ''}
+          <button class="act-btn btn-delete" onclick="doDelete(${o.rowIndex},'${o.fullName.replace(/'/g,"\\'")}')">🗑</button>
         </div>
       </td>
     </tr>`;
   }).join('');
 }
 
-// ── Update Status ─────────────────────────────────────────────
-async function updateStatus(rowIndex, status) {
+// ── Approve ───────────────────────────────────────────────────
+async function doApprove(rowIndex) {
+  await callUpdateStatus(rowIndex, 'อนุมัติแล้ว', '');
+}
+
+// ── Reset ─────────────────────────────────────────────────────
+async function doReset(rowIndex) {
+  await callUpdateStatus(rowIndex, 'รอการอนุมัติ', '');
+}
+
+// ── Open Reject Modal ─────────────────────────────────────────
+function openRejectModal(rowIndex) {
+  rejectRowIndex = rowIndex;
+  document.getElementById('rejectNote').value = '';
+  document.getElementById('rejectModal').classList.add('show');
+  setTimeout(() => document.getElementById('rejectNote').focus(), 100);
+}
+function closeRejectModal() {
+  document.getElementById('rejectModal').classList.remove('show');
+  rejectRowIndex = null;
+}
+async function confirmReject() {
+  const note = document.getElementById('rejectNote').value.trim();
+  closeRejectModal();
+  await callUpdateStatus(rejectRowIndex, 'ปฏิเสธ', note);
+}
+
+// ── Update Status API ─────────────────────────────────────────
+async function callUpdateStatus(rowIndex, status, note) {
   showLoading(true);
   try {
-    const res  = await fetch(GAS_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'updateStatus', token: ADMIN_TOKEN, rowIndex, status })
-    });
+    const res  = await fetch(GAS_URL, { method:'POST',
+      body: JSON.stringify({ action:'updateStatus', token:ADMIN_TOKEN, rowIndex, status, note }) });
     const data = await res.json();
     showLoading(false);
     if (data.success) {
-      showToast('อัปเดตสถานะแล้ว: ' + status, 'success');
+      showToast(status==='อนุมัติแล้ว' ? '✅ อนุมัติและส่งอีเมลแล้ว'
+               : status==='ปฏิเสธ'     ? '❌ ไม่อนุมัติและส่งอีเมลแล้ว'
+               : '↺ รีเซ็ตสถานะแล้ว', 'success');
       loadOrders();
-    } else {
-      showToast(data.message || 'เกิดข้อผิดพลาด', 'error');
-    }
-  } catch {
-    showLoading(false);
-    showToast('ไม่สามารถเชื่อมต่อได้', 'error');
-  }
+    } else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
 }
 
-// ── UI Helpers ────────────────────────────────────────────────
-function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show', v); }
-function showToast(msg, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (type ? ' ' + type : '');
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => t.classList.remove('show'), 3200);
+// ── Delete ────────────────────────────────────────────────────
+async function doDelete(rowIndex, name) {
+  if (!confirm(`ยืนยันการลบคำสั่งซื้อของ "${name}"?\n\nข้อมูลจะถูกลบออกจาก Google Sheet ถาวร`)) return;
+  showLoading(true);
+  try {
+    const res  = await fetch(GAS_URL, { method:'POST',
+      body: JSON.stringify({ action:'deleteOrder', token:ADMIN_TOKEN, rowIndex }) });
+    const data = await res.json();
+    showLoading(false);
+    if (data.success) { showToast('ลบคำสั่งซื้อเรียบร้อย','success'); loadOrders(); }
+    else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
 }
+
+// ── Helpers ───────────────────────────────────────────────────
+function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show',v); }
+function showToast(msg,type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast'+(type?' '+type:'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeRejectModal(); });
 </script>
 </body>
 </html>
