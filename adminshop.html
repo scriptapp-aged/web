@@ -212,7 +212,7 @@ tbody td{padding:.65rem .75rem;vertical-align:top}
 <body>
 
 <script>
-const GAS_URL     = "https://script.google.com/macros/s/AKfycbyI9FWMkNBU9l-s6d3uFBA5XcqZ1rs-SHD_GJyTA5KGza5PsO90J1K4lVCyXiJDyMyP/exec";
+const GAS_URL     = "https://script.google.com/macros/s/AKfycbyHxRLus9r2C4vtnUWh3ppmn2GAmfrel1klAlSyZl0WbPT5JeepxoIVIPT_Pi94NmBk/exec";
 const ADMIN_TOKEN = "ADMIN_METEE_552728";
 
 // ไซส์เสื้อยืดและยีนส์ที่ใช้ใน index.html
@@ -432,49 +432,39 @@ let allOrders      = [];
 let rejectRowIdx   = null;
 let currentRole    = null;
 let currentUser    = null;
-let localUsers     = []; // cache จาก GAS
 
-// ── LOGIN (ดึง users จาก GAS) ─────────────────────────────────
+// ── HARDCODE บัญชีหลัก (fallback เสมอ ไม่ขึ้นกับ GAS) ──────────
+const BUILTIN_ACCOUNTS = [
+  { username:'เมธี',    password:'552728', displayName:'เมธี (แอดมิน)',        role:'admin'  },
+  { username:'ศุภเสกย์', password:'202548', displayName:'ศุภเสกย์ (ผู้ดูระบบ)', role:'viewer' }
+];
+
+// ── LOGIN ─────────────────────────────────────────────────────
 async function doLogin() {
   const username = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value.trim();
-  if (!username||!password) return;
+  if (!username || !password) return;
+
+  // 1) ตรวจสอบบัญชีหลัก (hardcode) ก่อนเสมอ — ไม่ต้องรอ GAS
+  const builtin = BUILTIN_ACCOUNTS.find(a => a.username === username && a.password === password);
+  if (builtin) { doLoginSuccess(builtin); return; }
+
+  // 2) ถ้าไม่ใช่บัญชีหลัก ให้ตรวจกับ GAS (บัญชีที่เพิ่มใน Users sheet)
   showLoading(true);
   try {
-    // ดึง users list จาก GAS
-    const res  = await fetch(`${GAS_URL}?action=getUsers&token=${ADMIN_TOKEN}`);
+    const res  = await fetch(GAS_URL, { method:'POST', body:JSON.stringify({
+      action:'validateLogin', username, password }) });
     const data = await res.json();
     showLoading(false);
-    if (!data.success) { showLoginErr(); return; }
-    localUsers = data.users;
-    // หา user ที่ตรงกัน (GAS ไม่ส่ง password กลับ — login check ทำใน frontend จาก hardcode 2 บัญชีหลัก + fallback)
-    const found = checkLogin(username, password);
-    if (!found) { showLoginErr(); return; }
-    doLoginSuccess(found);
+    if (data.success && data.valid) {
+      doLoginSuccess({ username, displayName: data.displayName, role: data.role });
+    } else {
+      showLoginErr();
+    }
   } catch {
     showLoading(false);
-    // fallback: ใช้ hardcode accounts ถ้า GAS ไม่ตอบ
-    const found = checkLoginHardcode(username, password);
-    if (!found) { showLoginErr(); return; }
-    doLoginSuccess(found);
+    showLoginErr();
   }
-}
-
-// หมายเหตุ: เพื่อความปลอดภัย GAS ไม่ส่ง password กลับ
-// ดังนั้น login validation ทำผ่าน GAS endpoint validateLogin
-async function doLogin() {
-  const username = document.getElementById('loginUser').value.trim();
-  const password = document.getElementById('loginPass').value.trim();
-  if (!username||!password) return;
-  showLoading(true);
-  try {
-    const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
-      action:'validateLogin', username, password })});
-    const data = await res.json();
-    showLoading(false);
-    if (!data.success || !data.valid) { showLoginErr(); return; }
-    doLoginSuccess({ username, displayName: data.displayName, role: data.role });
-  } catch { showLoading(false); showLoginErr(); }
 }
 
 function showLoginErr() { document.getElementById('loginErr').style.display='block'; }
