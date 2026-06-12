@@ -137,12 +137,12 @@
         // =======================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMygtUByB0YbDBdqjmp8zdiM37Ocj4aO3_GuK10R5qvow39rUtn5K0Mh-KRpH4xciN1Q/exec"; 
 
-        const targetDate = new Date("June 12, 2026 11:00:00").getTime();
+        const targetDate = new Date("June 14, 2026 09:00:00").getTime();
         const countdownInterval = setInterval(function() {
             const distance = targetDate - new Date().getTime();
             const wrapper = document.getElementById("countdown-wrapper");
             if (!wrapper) return;
-            if (distance < 0) { clearInterval(countdownInterval); wrapper.innerHTML = '<div class="px-6 py-3 border border-black bg-black text-white text-[10px] tracking-widest uppercase font-medium rounded-full shadow-md">ระบบทดสอบเปิดแล้ว</div>'; return; }
+            if (distance < 0) { clearInterval(countdownInterval); wrapper.innerHTML = '<div class="px-6 py-3 border border-black bg-black text-white text-[10px] tracking-widest uppercase font-medium rounded-full shadow-md">โครงการปฐมนิเทศ 2569</div>'; return; }
             if(document.getElementById('cd-days')) document.getElementById('cd-days').innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
             if(document.getElementById('cd-hours')) document.getElementById('cd-hours').innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
             if(document.getElementById('cd-mins')) document.getElementById('cd-mins').innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
