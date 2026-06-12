@@ -592,7 +592,7 @@ function renderTable() {
         ${o.status!=='อนุมัติแล้ว'?`<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>`:''}
         ${o.status!=='ปฏิเสธ'?`<button class="act-btn btn-reject" onclick="openRejectModal(${o.rowIndex})">✕ ไม่อนุมัติ</button>`:''}
         ${o.status!=='รอการอนุมัติ'?`<button class="act-btn btn-reset" onclick="doReset(${o.rowIndex})">↺</button>`:''}
-        <button class="act-btn btn-edit-size" onclick="openEditSize(${o.rowIndex},'${o.tshirtSize||'-'}',${o.tshirtQty||0},'${o.jeansSize||'-'}',${o.jeansQty||0})">แก้ไขไซส์</button>
+        <button class="act-btn btn-edit-size" onclick="openEditSize(${o.rowIndex},'${o.tshirtSize||'-'}',${o.tshirtQty||0},'${o.jeansSize||'-'}',${o.jeansQty||0})">✏️ ไซส์</button>
         <button class="act-btn btn-delete" onclick="doDelete(${o.rowIndex},'${o.fullName.replace(/'/g,"\\'")}')">🗑</button>
       </div></td>`:'';
     return `<tr>
