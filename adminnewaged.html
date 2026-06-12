@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - ระบบเช็คอิน</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #6e6e6e;
+      --line: #e2e2e2;
+      --card: #fafafa;
+      --accent: #111111;
+      --accent-contrast: #ffffff;
+      --success: #2e7d32;
+      --warn: #b26a00;
+    }
+
+    * { box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100%;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ===================== Login ===================== */
+    .login-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 380px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .login-box h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+      text-align: center;
+    }
+
+    .login-box p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      text-align: center;
+    }
+
+    input, select {
+      width: 100%;
+      font-family: 'Kanit', sans-serif;
+      font-size: 15px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      outline: none;
+      background: #fff;
+      color: var(--fg);
+    }
+
+    input:focus, select:focus { border-color: var(--accent); }
+
+    button {
+      font-family: 'Kanit', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 10px;
+      border: 1px solid var(--accent);
+      padding: 11px 18px;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      transition: opacity .15s ease, transform .1s ease;
+    }
+    button:active { transform: scale(0.98); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    button.secondary {
+      background: #fff;
+      color: var(--fg);
+    }
+
+    button.danger {
+      background: #fff;
+      color: #b3261e;
+      border-color: #b3261e;
+    }
+
+    .err { color: #b3261e; font-size: 13px; min-height: 16px; text-align: center; }
+
+    /* ===================== App Shell ===================== */
+    .app { display: none; min-height: 100vh; }
+    .app.active { display: flex; flex-direction: column; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topbar .title { font-size: 16px; font-weight: 600; }
+    .topbar .sub { font-size: 12px; color: var(--muted); }
+
+    .tabs {
+      display: flex; gap: 8px; padding: 10px 20px; flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab-btn {
+      background: #fff; color: var(--fg); border: 1px solid var(--line);
+      border-radius: 999px; padding: 8px 16px; font-size: 13px;
+    }
+
+    .tab-btn.active {
+      background: var(--accent); color: var(--accent-contrast); border-color: var(--accent);
+    }
+
+    .content { padding: 20px; flex: 1; }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ===================== Dashboard Cards ===================== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .card .num { font-size: 30px; font-weight: 700; margin-bottom: 4px; }
+    .card .label { font-size: 13px; color: var(--muted); }
+
+    /* ===================== Board ===================== */
+    .board-section {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .board-header {
+      padding: 22px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .board-header h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .board-header h3 {
+      margin: 6px 0 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .board-fullscreen-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: #fff; color: var(--fg); border: 1px solid var(--line);
+      border-radius: 10px; font-size: 12px; padding: 8px 12px;
+    }
+
+    .board-body {
+      padding: 16px;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+
+    .board-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn .4s ease;
+    }
+
+    .board-item .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--success); flex-shrink: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .board-empty {
+      text-align: center; color: var(--muted); font-size: 14px; padding: 40px 0;
+    }
+
+    /* Fullscreen mode */
+    .board-section.fullscreen {
+      position: fixed; inset: 0; z-index: 9999;
+      border-radius: 0; border: none;
+      display: flex; flex-direction: column;
+      background: #fff;
+    }
+    .board-section.fullscreen .board-body { flex: 1; max-height: none; }
+    .board-section.fullscreen .board-header h2 { font-size: 32px; }
+    .board-section.fullscreen .board-header h3 { font-size: 18px; }
+    .board-section.fullscreen .board-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .board-section.fullscreen .board-item { font-size: 18px; padding: 14px 16px; }
+
+    /* ===================== Export ===================== */
+    .export-row {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+    }
+    .export-row button { flex: 0 0 auto; }
+
+    /* ===================== Staff Table ===================== */
+    table {
+      width: 100%; border-collapse: collapse; font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line); padding: 10px; text-align: left;
+    }
+    th { background: var(--card); font-weight: 500; }
+
+    .staff-form {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;
+      margin-bottom: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 14px;
+    }
+    .staff-form .field { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px; }
+    .staff-form label { font-size: 12px; color: var(--muted); }
+
+    .row-actions { display: flex; gap: 6px; }
+    .row-actions button { padding: 6px 10px; font-size: 12px; }
+
+    /* ===================== Report ===================== */
+    .report-cards .card .num { font-size: 26px; }
+
+    h2.section-title { font-size: 16px; font-weight: 600; margin: 0 0 12px; }
+
+    @media print {
+      .topbar, .tabs, .export-row, .board-fullscreen-btn, button { display: none !important; }
+      .section { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div class="login-wrap" id="loginWrap">
+    <div class="login-box">
+      <h1>เข้าสู่ระบบผู้ดูแล (Admin)</h1>
+      <p>ระบบเช็คอิน — โครงการปฐมนิเทศ ปีการศึกษา 2569<br>"เกษตรและสิ่งแวดล้อมศึกษา"</p>
+      <input type="text" id="adminName" placeholder="ชื่อผู้ดูแลระบบ" autocomplete="off">
+      <input type="password" id="adminPin" placeholder="PIN" inputmode="numeric" maxlength="8" autocomplete="off">
+      <div class="err" id="loginErr"></div>
+      <button id="adminLoginBtn" style="width:100%;">เข้าสู่ระบบ</button>
+    </div>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div class="app" id="app">
+    <div class="topbar">
+      <div>
+        <div class="title">ระบบจัดการ — โครงการปฐมนิเทศ ปีการศึกษา 2569</div>
+        <div class="sub">"เกษตรและสิ่งแวดล้อมศึกษา" • 14 มิถุนายน 2569 • ผู้ดูแล: <span id="adminNameDisplay"></span></div>
+      </div>
+      <button class="secondary" id="logoutBtn">ออกจากระบบ</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="dashboard">แดชบอร์ด</button>
+      <button class="tab-btn" data-tab="staff">จัดการสิทธิ์</button>
+      <button class="tab-btn" data-tab="report">รายงานผลโครงการ</button>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ DASHBOARD ============ -->
+      <div class="section active" id="section-dashboard">
+        <div class="cards">
+          <div class="card"><div class="num" id="statTotal">-</div><div class="label">ลงทะเบียนทั้งหมด</div></div>
+          <div class="card"><div class="num" id="statChecked">-</div><div class="label">เช็คอินแล้ว</div></div>
+          <div class="card"><div class="num" id="statRemaining">-</div><div class="label">คงเหลือ</div></div>
+        </div>
+
+        <div class="export-row">
+          <button id="exportCsvBtn">ส่งออก CSV</button>
+          <button id="exportExcelBtn">ส่งออก Excel</button>
+          <button id="exportWordBtn">ส่งออก Word</button>
+          <button id="exportPdfBtn">ส่งออก PDF</button>
+          <button id="printBtn" class="secondary">พิมพ์รายงาน</button>
+        </div>
+
+        <div class="board-section" id="boardSection">
+          <div class="board-header">
+            <h2>ก้าวแรกสู่ AG-ED 2569 เริ่มต้นอย่างมั่นใจ ก้าวไปด้วยกัน</h2>
+            <h3>โครงการปฐมนิเทศ ปีการศึกษา 2569 สาขาเกษตรและสิ่งแวดล้อมศึกษา</h3>
+            <button class="board-fullscreen-btn" id="fullscreenBtn">ขยายเต็มจอ</button>
+          </div>
+          <div class="board-body">
+            <div class="board-grid" id="boardGrid"></div>
+            <div class="board-empty hidden" id="boardEmpty">ยังไม่มีผู้เช็คอิน</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ STAFF MANAGEMENT ============ -->
+      <div class="section" id="section-staff">
+        <h2 class="section-title">จัดการสิทธิ์ผู้ใช้งาน</h2>
+
+        <div class="staff-form">
+          <div class="field">
+            <label>ชื่อ</label>
+            <input type="text" id="staffName" placeholder="เช่น เมธี">
+          </div>
+          <div class="field">
+            <label>PIN (4-8 หลัก)</label>
+            <input type="text" id="staffPin" inputmode="numeric" maxlength="8" placeholder="เช่น 123456">
+          </div>
+          <div class="field">
+            <label>สิทธิ์</label>
+            <select id="staffRole">
+              <option value="STAFF">STAFF</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class="field" style="flex: 0 0 auto;">
+            <label>&nbsp;</label>
+            <button id="staffSaveBtn">เพิ่ม / บันทึก</button>
+          </div>
+          <div class="field" style="flex: 0 0 auto;">
+            <label>&nbsp;</label>
+            <button class="secondary" id="staffClearBtn">ล้างฟอร์ม</button>
+          </div>
+        </div>
+        <div class="err" id="staffErr"></div>
+
+        <table>
+          <thead>
+            <tr><th>ชื่อ</th><th>PIN</th><th>สิทธิ์</th><th>จัดการ</th></tr>
+          </thead>
+          <tbody id="staffTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ============ PROJECT REPORT ============ -->
+      <div class="section" id="section-report">
+        <h2 class="section-title">รายงานผลโครงการ</h2>
+        <div class="cards report-cards">
+          <div class="card"><div class="num" id="repRegistered">-</div><div class="label">ลงทะเบียนเข้าร่วม (คน)</div></div>
+          <div class="card"><div class="num" id="repAttended">-</div><div class="label">เข้าร่วมจริงทั้งหมด (คน)</div></div>
+          <div class="card"><div class="num" id="repMale">-</div><div class="label">ชาย (คน)</div></div>
+          <div class="card"><div class="num" id="repFemale">-</div><div class="label">หญิง (คน)</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== PRINT-ONLY REPORT (hidden) ===================== -->
+  <div id="printArea" class="hidden"></div>
+
+  <script>
+    // ===================== Admin Login =====================
+    const loginWrap = document.getElementById('loginWrap');
+    const app = document.getElementById('app');
+    const adminNameInput = document.getElementById('adminName');
+    const adminPinInput = document.getElementById('adminPin');
+    const loginErr = document.getElementById('loginErr');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const adminNameDisplay = document.getElementById('adminNameDisplay');
+
+    adminLoginBtn.addEventListener('click', doAdminLogin);
+    adminPinInput.addEventListener('keydown', e => { if (e.key === 'Enter') doAdminLogin(); });
+
+    function doAdminLogin() {
+      const name = adminNameInput.value.trim();
+      const pin = adminPinInput.value.trim();
+      if (!name || !pin) {
+        loginErr.textContent = 'กรุณากรอกชื่อและ PIN';
+        return;
+      }
+      adminLoginBtn.disabled = true;
+      loginErr.textContent = '';
+
+      google.script.run
+        .withSuccessHandler(res => {
+          adminLoginBtn.disabled = false;
+          if (res.success) {
+            loginWrap.classList.add('hidden');
+            app.classList.add('active');
+            adminNameDisplay.textContent = res.name;
+            initApp();
+          } else {
+            loginErr.textContent = res.message;
+          }
+        })
+        .withFailureHandler(err => {
+          adminLoginBtn.disabled = false;
+          loginErr.textContent = 'เกิดข้อผิดพลาด: ' + err.message;
+        })
+        .verifyAdminLogin(name, pin);
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      app.classList.remove('active');
+      loginWrap.classList.remove('hidden');
+      adminNameInput.value = '';
+      adminPinInput.value = '';
+      stopPolling();
+    });
+
+    // ===================== Tabs =====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('section-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'report') loadReport();
+        if (btn.dataset.tab === 'staff') loadStaff();
+      });
+    });
+
+    // ===================== Init =====================
+    let pollTimer = null;
+
+    function initApp() {
+      loadStats();
+      loadBoard();
+      loadStaff();
+      loadReport();
+      pollTimer = setInterval(() => { loadStats(); loadBoard(); }, 5000);
+    }
+
+    function stopPolling() {
+      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    }
+
+    // ===================== Dashboard Stats =====================
+    function loadStats() {
+      google.script.run.withSuccessHandler(stats => {
+        document.getElementById('statTotal').textContent = stats.total;
+        document.getElementById('statChecked').textContent = stats.checkedIn;
+        document.getElementById('statRemaining').textContent = stats.remaining;
+      }).getStats();
+    }
+
+    // ===================== Realtime Board =====================
+    function loadBoard() {
+      google.script.run.withSuccessHandler(list => {
+        const grid = document.getElementById('boardGrid');
+        const empty = document.getElementById('boardEmpty');
+        if (!list || list.length === 0) {
+          grid.innerHTML = '';
+          empty.classList.remove('hidden');
+          return;
+        }
+        empty.classList.add('hidden');
+        grid.innerHTML = list.map(item =>
+          '<div class="board-item"><span class="dot"></span>' + escapeHtml(item.name) + '</div>'
+        ).join('');
+      }).getCheckinBoard();
+    }
+
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      const sec = document.getElementById('boardSection');
+      sec.classList.toggle('fullscreen');
+      document.getElementById('fullscreenBtn').textContent =
+        sec.classList.contains('fullscreen') ? 'ออกจากเต็มจอ' : 'ขยายเต็มจอ';
+    });
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[c]));
+    }
+
+    // ===================== Staff Management =====================
+    let editingRowIndex = -1;
+
+    function loadStaff() {
+      google.script.run.withSuccessHandler(list => {
+        const tbody = document.getElementById('staffTableBody');
+        tbody.innerHTML = list.map(s =>
+          '<tr>' +
+            '<td>' + escapeHtml(s.name) + '</td>' +
+            '<td>' + escapeHtml(s.pin) + '</td>' +
+            '<td>' + escapeHtml(s.role) + '</td>' +
+            '<td><div class="row-actions">' +
+              '<button class="secondary" onclick="editStaff(' + s.rowIndex + ',\\'' + escapeJs(s.name) + '\\',\\'' + escapeJs(s.pin) + '\\',\\'' + s.role + '\\')">แก้ไข</button>' +
+              '<button class="danger" onclick="deleteStaff(' + s.rowIndex + ')">ลบ</button>' +
+            '</div></td>' +
+          '</tr>'
+        ).join('');
+      }).getStaffList();
+    }
+
+    function escapeJs(str) {
+      return String(str).replace(/'/g, "\\\\'");
+    }
+
+    function editStaff(rowIndex, name, pin, role) {
+      editingRowIndex = rowIndex;
+      document.getElementById('staffName').value = name;
+      document.getElementById('staffPin').value = pin;
+      document.getElementById('staffRole').value = role;
+      document.getElementById('staffSaveBtn').textContent = 'บันทึกการแก้ไข';
+    }
+
+    function deleteStaff(rowIndex) {
+      if (!confirm('ยืนยันการลบผู้ใช้งานนี้?')) return;
+      google.script.run.withSuccessHandler(() => loadStaff()).deleteStaffRecord(rowIndex);
+    }
+
+    document.getElementById('staffClearBtn').addEventListener('click', () => {
+      editingRowIndex = -1;
+      document.getElementById('staffName').value = '';
+      document.getElementById('staffPin').value = '';
+      document.getElementById('staffRole').value = 'STAFF';
+      document.getElementById('staffSaveBtn').textContent = 'เพิ่ม / บันทึก';
+      document.getElementById('staffErr').textContent = '';
+    });
+
+    document.getElementById('staffSaveBtn').addEventListener('click', () => {
+      const name = document.getElementById('staffName').value;
+      const pin = document.getElementById('staffPin').value;
+      const role = document.getElementById('staffRole').value;
+      const errEl = document.getElementById('staffErr');
+      errEl.textContent = '';
+
+      google.script.run.withSuccessHandler(res => {
+        if (res.success) {
+          document.getElementById('staffClearBtn').click();
+          loadStaff();
+        } else {
+          errEl.textContent = res.message;
+        }
+      }).saveStaffRecord(editingRowIndex, name, pin, role);
+    });
+
+    // ===================== Project Report =====================
+    function loadReport() {
+      google.script.run.withSuccessHandler(stats => {
+        document.getElementById('repRegistered').textContent = stats.total;
+        document.getElementById('repAttended').textContent = stats.checkedIn;
+        document.getElementById('repMale').textContent = stats.male;
+        document.getElementById('repFemale').textContent = stats.female;
+      }).getStats();
+    }
+
+    // ===================== Export: CSV =====================
+    document.getElementById('exportCsvBtn').addEventListener('click', () => {
+      google.script.run.withSuccessHandler(data => {
+        let csv = '\ufeff' + data.headers.join(',') + '\r\n';
+        data.rows.forEach(row => {
+          csv += row.map(cell => '"' + String(cell).replace(/"/g, '""') + '"').join(',') + '\r\n';
+        });
+        downloadBlob(csv, 'text/csv;charset=utf-8;', 'รายงานเช็คอิน.csv');
+      }).getReportData();
+    });
+
+    // ===================== Export: Excel =====================
+    document.getElementById('exportExcelBtn').addEventListener('click', () => {
+      google.script.run.withSuccessHandler(data => {
+        const wsData = [data.headers, ...data.rows];
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'รายงาน');
+        XLSX.writeFile(wb, 'รายงานเช็คอิน.xlsx');
+      }).getReportData();
+    });
+
+    // ===================== Export: Word =====================
+    document.getElementById('exportWordBtn').addEventListener('click', () => {
+      google.script.run.withSuccessHandler(data => {
+        const html = buildReportHtml(data);
+        const fullHtml =
+          '<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+          'xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
+          '<head><meta charset="utf-8"><title>รายงาน</title></head><body>' + html + '</body></html>';
+        downloadBlob(fullHtml, 'application/msword', 'รายงานเช็คอิน.doc');
+      }).getReportData();
+    });
+
+    // ===================== Export: PDF (ผ่านพิมพ์) =====================
+    document.getElementById('exportPdfBtn').addEventListener('click', () => {
+      openPrintWindow('คุณสามารถเลือก "บันทึกเป็น PDF" ในหน้าต่างพิมพ์ที่เปิดขึ้น');
+    });
+
+    // ===================== Print =====================
+    document.getElementById('printBtn').addEventListener('click', () => {
+      openPrintWindow();
+    });
+
+    function openPrintWindow(hint) {
+      google.script.run.withSuccessHandler(data => {
+        const html = buildReportHtml(data);
+        const win = window.open('', '_blank');
+        win.document.write(
+          '<html><head><meta charset="utf-8"><title>รายงานเช็คอิน</title>' +
+          '<style>' +
+          'body{font-family:Kanit,Arial,sans-serif;padding:24px;color:#111;}' +
+          'table{width:100%;border-collapse:collapse;font-size:12px;}' +
+          'th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;}' +
+          'th{background:#f0f0f0;}' +
+          'h1{font-size:18px;} h2{font-size:13px;color:#555;font-weight:400;}' +
+          '</style></head><body>' + html + '</body></html>'
+        );
+        win.document.close();
+        setTimeout(() => { win.print(); }, 400);
+        if (hint) setTimeout(() => alert(hint), 200);
+      }).getReportData();
+    }
+
+    function buildReportHtml(data) {
+      let html = '<h1>รายงานเช็คอิน — ' + escapeHtml(data.eventName) + '</h1>';
+      html += '<h2>ออกรายงานเมื่อ: ' + escapeHtml(data.generatedAt) + '</h2>';
+      html += '<table><thead><tr>';
+      data.headers.forEach(h => html += '<th>' + escapeHtml(h) + '</th>');
+      html += '</tr></thead><tbody>';
+      data.rows.forEach(row => {
+        html += '<tr>';
+        row.forEach(cell => html += '<td>' + escapeHtml(cell) + '</td>');
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      return html;
+    }
+
+    function downloadBlob(content, mime, filename) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
