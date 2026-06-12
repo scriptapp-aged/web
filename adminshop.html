@@ -584,8 +584,9 @@ function renderTable() {
       ?`<div style="font-size:.7rem;line-height:1.5"><b>${o.approvedBy}</b><br>
          ${o.approvedAt?new Date(o.approvedAt).toLocaleString('th-TH'):'—'}</div>`
       :'<span style="font-size:.7rem;color:var(--gray-400)">—</span>';
-    const noteHtml = o.note
-      ?`<div style="font-size:.65rem;color:var(--amber);margin-top:.2rem">📌 ${o.note}</div>`:'';
+    const noteText = (o.note && !o.note.startsWith('http')) ? o.note : '';
+    const noteHtml = noteText
+      ?`<div style="font-size:.65rem;color:var(--amber);margin-top:.2rem">📌 ${noteText}</div>`:'';
     const actionCol = isAdmin?`<td class="admin-col">
       <div class="action-group">
         ${o.status!=='อนุมัติแล้ว'?`<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>`:''}
