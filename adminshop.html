@@ -313,11 +313,11 @@ const JEANS_SIZES = [
         <thead><tr>
           <th>#</th><th>ชื่อ-นามสกุล</th><th>รหัสนิสิต</th><th>ปี</th>
           <th>เบอร์โทร / อีเมล</th><th>เสื้อยืด</th><th>เสื้อยีนส์</th>
-          <th>ราคา</th><th>หลักฐาน</th><th>สถานะ / หมายเหตุ</th>
+          <th>ราคา</th><th>สถานะ / หมายเหตุ</th>
           <th>อนุมัติโดย / เวลา</th><th>วันที่สั่ง</th>
           <th class="admin-col">จัดการ</th>
         </tr></thead>
-        <tbody id="orderTableBody"><tr><td colspan="13" class="empty-state">กำลังโหลด...</td></tr></tbody>
+        <tbody id="orderTableBody"><tr><td colspan="12" class="empty-state">กำลังโหลด...</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -570,7 +570,7 @@ function renderTable() {
   const isAdmin= currentRole==='admin';
   document.querySelectorAll('.admin-col').forEach(el=>el.style.display=isAdmin?'':'none');
   const tbody  = document.getElementById('orderTableBody');
-  if(!list.length){tbody.innerHTML=`<tr><td colspan="13" class="empty-state">ไม่พบข้อมูล</td></tr>`;return;}
+  if(!list.length){tbody.innerHTML=`<tr><td colspan="12" class="empty-state">ไม่พบข้อมูล</td></tr>`;return;}
 
   tbody.innerHTML=list.map((o,i)=>{
     const ts = o.tshirtSize&&o.tshirtSize!=='-'&&o.tshirtQty>0 ? `${o.tshirtSize} × ${o.tshirtQty}` : '—';
@@ -603,7 +603,6 @@ function renderTable() {
       <td style="font-size:.78rem">${ts}</td>
       <td style="font-size:.78rem">${js}</td>
       <td style="font-weight:600;white-space:nowrap">฿${Number(o.totalPrice).toLocaleString()}</td>
-      <td>${proof}</td>
       <td><span class="badge ${bc}">${o.status}</span>${noteHtml}</td>
       <td>${appInfo}</td>
       <td style="font-size:.7rem;color:var(--gray-600);white-space:nowrap">${orderDt}</td>
