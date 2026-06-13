@@ -35,18 +35,6 @@ body{
   background-size:40px 40px;
 }
 
-/* ===== MOURNING RIBBON ===== */
-.mourning-ribbon {
-  position: fixed;
-  top: 25px;
-  left: 25px;
-  width: 70px;
-  height: auto;
-  z-index: 9999;
-  opacity: 0.9;
-  pointer-events: none; /* เพื่อไม่ให้รูปบังการคลิกองค์ประกอบอื่นๆ */
-}
-
 /* ===== Background Glow ===== */
 
 .bg-blob{
@@ -96,6 +84,13 @@ body{
   letter-spacing:2px;
   font-size:.9rem;
   margin-bottom:25px;
+}
+
+.welcome-text{
+  font-size:clamp(2rem,6vw,3.5rem);
+  color:var(--dark);
+  font-weight:500;
+  margin-bottom:10px;
 }
 
 .hero h1{
@@ -313,12 +308,6 @@ body{
 
 @media(max-width:768px){
 
-  .mourning-ribbon {
-    width: 50px;
-    top: 15px;
-    left: 15px;
-  }
-
   .hero{
     min-height:45vh;
     padding:100px 20px 20px;
@@ -343,25 +332,29 @@ body{
 
 <body>
 
-<img src="โบว์.png" alt="Black Ribbon" class="mourning-ribbon">
-
 <div class="bg-blob"></div>
+
+<!-- ===== HERO ===== -->
 
 <section class="hero">
   <div class="hero-content">
 
     <div class="tag">
-      Department of Human and Community Resource Development
+      KASETSART UNIVERSITY KAMPHAENG SAEN
     </div>
+    
+    <h2 class="welcome-text">ยินดีต้อนรับ</h2>
 
-    <h1>นิสิตใหม่ AG-ED57</h1>
+    <h1>นิสิตใหม่ KU86</h1>
 
     <div class="hero-subtitle">
-      ยินดีต้อนรับ KU86 • EDS26 • AG-ED57
+      KU86 • EDS26 • AG-ED57
     </div>
 
   </div>
 </section>
+
+<!-- ===== IMAGE POPUP ===== -->
 
 <div class="popup" id="popup">
 
@@ -373,6 +366,7 @@ body{
 
 </div>
 
+<!-- ===== INFO POPUP ===== -->
 <div class="info-popup" id="infoPopup">
 
   <div class="info-box">
