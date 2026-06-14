@@ -117,17 +117,19 @@ body{
 .hero-subtitle{
   margin-top:25px;
   color:var(--ku-green);
-  font-size:1.3rem; /* ปรับขนาดให้ใหญ่ขึ้นนิดหน่อย */
+  font-size:1.3rem;
   letter-spacing:4px;
   font-weight:500;
   opacity:.9;
 }
 
 .hero-details{
-  margin-top:20px;
+  margin-top:25px;
   color:var(--gray);
-  font-size:1.1rem;
-  line-height:1.6;
+  /* ปรับขนาดข้อความให้ใหญ่ขึ้น และใช้ clamp เพื่อให้ตอบสนองกับหน้าจอมือถือ */
+  font-size:clamp(1.1rem, 2.5vw, 1.45rem);
+  line-height:1.7;
+  font-weight:400;
 }
 
 /* ===== IMAGE POPUP ===== */
