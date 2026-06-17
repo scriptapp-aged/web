@@ -2,494 +2,905 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ระบบตรวจสอบการเรียนตามหลักสูตร - เกษตรและสิ่งแวดล้อมศึกษา</title>
-<link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — ระบบสั่งซื้อเสื้อปฏิบัติการ 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* ===== CSS Reset & Global Style ===== */
-*{box-sizing:border-box;margin:0;padding:0;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#1b6b35;/* สีเขียวหลัก */
-  --green-light:#2d9b50;
-  --green-pale:#e8f5ec;
-  --green-mid:#c2e8cc;
-  --gold:#e8a020;
-  --sky:#1976d2;
-  --coral:#e05c3a;
-  --bg:#f4f9f6;
-  --white:#fff;
-  --text:#1a2e1e;
-  --muted:#5a7a62;
-  --border:#c8e0cf;
-  --shadow:0 4px 6px rgba(0,0,0,0.07);
-  --radius-lg:16px;
-  --radius-md:10px;
-  --radius-sm:8px;
-  --font-mali:'Mali', cursive;/* ฟอนต์ Mali */
+  --black:#0d0d0d;--white:#fafafa;--gray-100:#f4f4f4;--gray-200:#e8e8e8;
+  --gray-400:#b0b0b0;--gray-600:#5a5a5a;--gray-800:#2a2a2a;--border:#e0e0e0;
+  --radius:4px;--font:'Kanit',sans-serif;
+  --green:#1b5e20;--green-bg:#e8f5e9;--amber:#e65100;--amber-bg:#fff3e0;
+  --red:#b71c1c;--red-bg:#ffebee;--blue:#1565c0;--blue-bg:#e3f2fd;
 }
-body{font-family:var(--font-mali);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
+body{font-family:var(--font);background:var(--gray-100);color:var(--black);font-weight:300;min-height:100vh}
 
-/* ===== AUTH STYLES (คงโครงสร้างเดิม แต่ปรับฟอนต์) ===== */
-.auth-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
-  background:linear-gradient(135deg,#e8f5ec 0%,#c2e8cc 40%,#fdecc8 100%);}
-.auth-card{background:var(--white);border-radius:24px;padding:2.5rem;width:100%;max-width:420px;
-  box-shadow:0 8px 40px rgba(27,107,53,0.13);border:2px solid var(--border);}
-.auth-logo{text-align:center;margin-bottom:1.75rem;}
-.auth-title{font-size:20px;font-weight:700;color:var(--green);margin-bottom:5px;}
-.auth-sub{font-size:13px;color:var(--muted);}
-.field{margin-bottom:1.2rem;}
-.field label{display:block;font-size:13px;font-weight:600;color:var(--green);margin-bottom:6px;}
-.field input,.field select{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
-  font-family:var(--font-mali);font-size:14px;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.btn-auth{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);
-  font-family:var(--font-mali);font-size:16px;font-weight:700;cursor:pointer;transition:.2s;}
-.btn-auth:hover{opacity:.9;transform:translateY(-1px);}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black)}
+.login-box{background:var(--white);padding:2.5rem 2rem;width:100%;max-width:360px;border-radius:6px}
+.login-box .brand{font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
+.login-box h2{font-size:1.3rem;font-weight:600;margin-bottom:1.75rem}
+.lf{margin-bottom:1rem}
+.lf label{display:block;font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.4rem}
+.lf input{width:100%;font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s}
+.lf input:focus{border-color:var(--black)}
+.login-btn{width:100%;margin-top:.5rem;font-family:var(--font);font-size:.88rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:.8rem;background:var(--black);color:var(--white);
+  border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.login-btn:hover{opacity:.85}
+.login-err{font-size:.78rem;color:var(--red);margin-top:.75rem;display:none}
 
-/* ===== MAIN LAYOUT STYLES ===== */
-.main-wrap{min-height:100vh;display:flex;flex-direction:column;}
-.container-full{max-width:1400px;margin:0 auto;width:100%;padding:1rem;}
+/* LAYOUT */
+.admin-wrap{display:none;min-height:100vh;flex-direction:column}
+.admin-header{background:var(--black);color:var(--white);height:56px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100;gap:.75rem}
+.hlogo{font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;flex:1}
+.hright{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.role-badge{font-size:.6rem;font-weight:600;letter-spacing:.08em;padding:.15rem .55rem;border-radius:3px;text-transform:uppercase}
+.role-admin{background:#222;color:var(--gray-400);border:1px solid #444}
+.role-viewer{background:#0d2040;color:#64b5f6;border:1px solid var(--blue)}
+.hadmin-name{font-size:.78rem;color:var(--white);font-weight:500}
+.logout-btn,.hdr-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.08em;padding:.35rem .85rem;
+  background:transparent;color:var(--gray-400);border:1px solid #444;border-radius:var(--radius);cursor:pointer;transition:all .2s;white-space:nowrap}
+.logout-btn:hover,.hdr-btn:hover{border-color:var(--white);color:var(--white)}
+.admin-content{padding:2rem 1.5rem;max-width:1200px;margin:0 auto;width:100%}
 
-/* Top Header */
-.topbar{padding:1.5rem 1rem;text-align:center;}
-.header-box{background:var(--green);border-radius:var(--radius-lg);padding:1.5rem;color:#fff;}
-.topbar-title .t1{font-size:18px;font-weight:700;letter-spacing:0.5px;}
-.topbar-title .t2{font-size:12px;opacity:0.8;margin-top:2px;}
+/* Viewer Notice */
+.viewer-notice{background:var(--blue-bg);border:1px solid #90caf9;border-radius:6px;padding:.7rem 1rem;
+  margin-bottom:1.25rem;font-size:.8rem;color:var(--blue);display:none}
 
-/* User Card */
-.user-card{background:#fff;border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;}
-.user-info-flex{display:flex;align-items:center;gap:15px;}
-.user-avatar{width:50px;height:50px;border-radius:50%;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:bold;font-size:20px;border:1px solid var(--border);}
-.btn-logout{background:none;border:1px solid #ddd;color:#333;padding:8px 16px;border-radius:20px;font-family:var(--font-mali);cursor:pointer;font-size:12px;transition:0.2s;}
-.btn-logout:hover{background:#f5f5f5;border-color:#ccc;}
+/* Section headings */
+.section-hd{font-size:.62rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gray-400);margin-bottom:.9rem;margin-top:.25rem;display:flex;align-items:center;gap:.75rem}
+.section-hd-btn{font-family:var(--font);font-size:.68rem;font-weight:500;letter-spacing:.06em;
+  padding:.25rem .75rem;background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.section-hd-btn:hover{opacity:.8}
 
-/* Summary Section (NEW) */
-.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:1.5rem;}
-.sum-box{background:var(--white);border-radius:var(--radius-md);padding:1.5rem 1rem;text-align:center;box-shadow:var(--shadow);}
-.sum-box .val{font-size:36px;font-weight:700;color:var(--green);line-height:1;}
-.sum-box .lbl{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600;}
-.sum-box.remaining .val{color:var(--coral);}
-.sum-box.gpa .val{color:var(--sky);}
+/* Dashboard */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:1rem;margin-bottom:1.5rem}
+.dash-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.dc-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.5rem}
+.dc-val{font-size:1.9rem;font-weight:700;line-height:1}
+.dc-sub{font-size:.7rem;color:var(--gray-600);margin-top:.35rem}
+.dc-approved .dc-val{color:var(--green)}
+.dc-pending  .dc-val{color:var(--amber)}
+.dc-rejected .dc-val{color:var(--red)}
+.dc-revenue  .dc-val{font-size:1.35rem}
 
-/* Progress */
-.prog-card{background:var(--white);border-radius:var(--radius-md);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.5rem;}
-.prog-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:600;}
-.prog-bar{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:5px;background:var(--green);width:0;transition:width 0.5s;}
+/* Size summary */
+.size-summary-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:640px){.size-summary-wrap{grid-template-columns:1fr}}
+.size-summary-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem}
+.size-summary-card h4{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.size-rows{display:flex;flex-direction:column;gap:.4rem}
+.sz-row{display:flex;align-items:center;gap:.75rem}
+.sz-row .szl{font-size:.8rem;font-weight:600;min-width:40px}
+.sz-bar-w{flex:1;height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
+.sz-bar{height:100%;background:var(--black);border-radius:4px;transition:width .4s ease;min-width:2px}
+.sz-cnt{font-size:.78rem;font-weight:600;min-width:24px;text-align:right}
 
-/* Tabs */
-.tabs-wrap{display:flex;gap:10px;margin-bottom:1.5rem;justify-content:center;}
-.tab-btn{background:var(--white);border:1px solid #ddd;padding:10px 20px;border-radius:20px;font-family:var(--font-mali);cursor:pointer;font-size:13px;transition:0.2s;}
-.tab-btn:hover{background:var(--green-pale);}
-.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+/* Year summary */
+.year-summary-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.25rem;margin-bottom:1.5rem}
+.year-summary-card h4{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.year-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.year-box{display:flex;flex-direction:column;gap:.5rem}
+.year-box-top{display:flex;align-items:baseline;justify-content:space-between}
+.year-box-label{font-size:.85rem;font-weight:600}
+.year-box-count{font-size:.78rem;font-weight:600;color:var(--gray-600)}
+.year-bar-w{height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
+.year-bar{height:100%;background:var(--black);border-radius:4px;transition:width .4s ease;min-width:2px}
+.year-box-sub{font-size:.68rem;color:var(--gray-400)}
 
-/* Group & Table */
-.curriculum-body{display:grid;gap:1.5rem;}
-.group-card{background:var(--white);border-radius:var(--radius-md);box-shadow:var(--shadow);padding:1.5rem;}
-.group-header{margin-bottom:1.5rem;border-left:4px solid var(--green);padding-left:15px;}
-.group-title{font-size:16px;font-weight:700;}
-.group-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+/* Export bar */
+.export-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;
+  background:var(--white);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;margin-bottom:1rem}
+.exp-label{font-size:.62rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-400);margin-right:.25rem}
+.exp-btn{font-family:var(--font);font-size:.72rem;font-weight:500;letter-spacing:.06em;
+  padding:.38rem .85rem;border-radius:var(--radius);cursor:pointer;border:1px solid var(--border);
+  background:var(--white);color:var(--gray-800);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:.3rem}
+.exp-btn:hover{background:var(--black);color:var(--white);border-color:var(--black)}
+.exp-btn.ep{background:var(--black);color:var(--white);border-color:var(--black)}
+.exp-sep{width:1px;height:22px;background:var(--border);margin:0 .15rem}
 
-.sub-group-header{padding:10px 1.5rem; background:#f8faf9; border-top:1px solid var(--border); border-bottom:1px solid var(--border); font-size:13px; font-weight:700; color:var(--green); display:flex; justify-content:space-between; align-items:center;}
+/* Toolbar */
+.table-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.search-input{font-family:var(--font);font-size:.85rem;font-weight:300;padding:.52rem .85rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;flex:1;min-width:145px;
+  transition:border-color .2s;background:var(--white)}
+.search-input:focus{border-color:var(--black)}
+.filter-sel{font-family:var(--font);font-size:.82rem;font-weight:300;padding:.52rem .85rem;
+  border:1px solid var(--border);border-radius:var(--radius);background:var(--white);outline:none;cursor:pointer}
+.refresh-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:.52rem 1rem;
+  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s;white-space:nowrap}
+.refresh-btn:hover{opacity:.8}
 
-/* Table Structure */
-.table-responsive{overflow-x:auto;}
-.curriculum-table{width:100%;border-collapse:collapse;min-width:900px;}
-.curriculum-table th, .curriculum-table td{padding:12px 1rem;border-bottom:1px solid var(--border);font-size:13px;}
-.curriculum-table th{background:#fafafa;font-weight:bold;text-align:left;color:var(--muted);}
-.curriculum-table td{vertical-align:middle;}
-.curriculum-table th.center, .curriculum-table td.center{text-align:center;}
+/* Table */
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow-x:auto;margin-bottom:2rem}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+thead th{background:var(--black);color:var(--white);padding:.7rem .75rem;text-align:left;
+  font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--gray-100)}
+tbody td{padding:.65rem .75rem;vertical-align:top}
+.name-cell{font-weight:500;font-size:.85rem}
+.sub-text{font-size:.68rem;color:var(--gray-400);margin-top:.1rem}
 
-/* Checkbox & Inputs */
-.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.check-box.done{background:var(--green);border-color:var(--green);}
-.term-input{width:90px;padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font-mali);font-size:12px;text-align:center;}
-.grade-select{padding:6px;border:1.5px solid var(--border);border-radius:6px;font-family:var(--font-mali);font-size:13px;font-weight:bold;}
+.badge{display:inline-block;font-size:.62rem;font-weight:500;letter-spacing:.06em;padding:.18rem .6rem;border-radius:20px;white-space:nowrap}
+.badge-pending {background:var(--amber-bg);color:var(--amber)}
+.badge-approved{background:var(--green-bg);color:var(--green)}
+.badge-rejected{background:var(--red-bg);  color:var(--red)}
 
-/* Action Buttons (add/remove) */
-.btn-free-add{background:var(--green); color:#fff; border:none; padding:8px 16px; border-radius:20px; font-family:var(--font-mali); font-size:12px; cursor:pointer; margin: 15px;}
-.remove-btn{border:none; background:none; color:red; cursor:pointer; font-size:18px; margin-left:10px;}
+.proof-link{font-size:.72rem;color:var(--gray-600);text-decoration:none}
+.proof-link:hover{color:var(--black);text-decoration:underline}
 
-/* Profile Pane */
-.pane{display:none;}
-.pane.active{display:block;}
-.profile-card{background:var(--white); border-radius:var(--radius-md); box-shadow:var(--shadow); padding:2rem; max-width:600px; margin:2rem auto;}
-.profile-card table {width:100%; border-collapse: collapse;}
-.profile-card th {text-align: left; color: var(--muted); padding: 10px 0; width: 150px;}
-.profile-card td {padding: 10px 0;}
+.action-group{display:flex;gap:.28rem;flex-wrap:wrap;align-items:flex-start}
+.act-btn{font-family:var(--font);font-size:.63rem;font-weight:500;letter-spacing:.05em;
+  padding:.25rem .6rem;border-radius:var(--radius);cursor:pointer;border:none;transition:opacity .2s;white-space:nowrap}
+.act-btn:hover{opacity:.8}
+.btn-approve{background:var(--green);color:var(--white)}
+.btn-reject {background:var(--red);  color:var(--white)}
+.btn-reset  {background:var(--gray-200);color:var(--gray-800)}
+.btn-delete {background:transparent;color:var(--gray-400);border:1px solid var(--border);font-size:.75rem;padding:.22rem .48rem}
+.btn-delete:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+.btn-edit-size{background:var(--blue-bg);color:var(--blue);border:none;font-size:.63rem}
+.btn-edit-size:hover{background:var(--blue);color:var(--white)}
 
-@media(max-width:900px){
-  .summary-row{grid-template-columns:1fr;gap:10px;}
+/* MODALS */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(13,13,13,.75);z-index:300;
+  align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.modal-ov.show{display:flex}
+.modal-bx{background:var(--white);width:100%;max-width:460px;border-radius:8px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);margin:1rem;animation:mIn .2s ease}
+.modal-bx.wide{max-width:600px}
+@keyframes mIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.modal-hd{color:var(--white);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.modal-hd.red{background:var(--red)} .modal-hd.black{background:var(--black)} .modal-hd.blue{background:var(--blue)} .modal-hd.green{background:var(--green)}
+.modal-hd h3{font-size:.88rem;font-weight:600}
+.modal-cls{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;padding:0}
+.modal-cls:hover{color:var(--white)}
+.modal-bd{padding:1.5rem}
+.modal-label{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.4rem}
+.modal-input,.modal-textarea,.modal-select{width:100%;font-family:var(--font);font-size:.88rem;font-weight:300;
+  padding:.65rem .9rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s;margin-bottom:.9rem}
+.modal-input:focus,.modal-textarea:focus,.modal-select:focus{border-color:var(--black)}
+.modal-textarea{resize:vertical;min-height:80px}
+.modal-footer{display:flex;gap:.6rem;justify-content:flex-end}
+.mbtn{font-family:var(--font);font-size:.8rem;font-weight:600;letter-spacing:.08em;padding:.6rem 1.5rem;
+  border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.mbtn:hover{opacity:.85}
+.mbtn-save{background:var(--black);color:var(--white)}
+.mbtn-red{background:var(--red);color:var(--white)}
+.mbtn-blue{background:var(--blue);color:var(--white)}
+.mbtn-green{background:var(--green);color:var(--white)}
+.mbtn-cancel{background:var(--gray-200);color:var(--gray-800)}
+
+/* Users table inside modal */
+.users-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-bottom:1rem}
+.users-table th{background:var(--gray-100);padding:.5rem .75rem;text-align:left;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600)}
+.users-table td{padding:.55rem .75rem;border-top:1px solid var(--border)}
+.role-tag{font-size:.65rem;font-weight:500;padding:.15rem .55rem;border-radius:3px}
+.rt-admin{background:#1a1a2e;color:#aaa}.rt-viewer{background:var(--blue-bg);color:var(--blue)}
+
+/* Print */
+@media print{
+  .admin-header,.export-bar,.table-toolbar,.action-group,.modal-ov,.loading-overlay,
+  .toast,.viewer-notice,.size-summary-wrap,.year-summary-card{display:none!important}
+  body{background:white;font-size:11pt}
+  .admin-content{padding:0;max-width:100%}
+  .dash-grid{grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:1rem}
+  .dash-card{border:1px solid #ccc;padding:.6rem .8rem;border-radius:3px}
+  .table-wrap{border:1px solid #ccc;overflow:visible}
+  table{font-size:8.5pt}
+  thead th{background:#1a1a1a!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7.5pt;padding:.35rem .5rem}
+  tbody td{padding:.35rem .5rem}
+  .print-hd{display:block!important}
+  @page{margin:12mm;size:A4 landscape}
 }
+.print-hd{display:none;text-align:center;margin-bottom:1rem;border-bottom:2px solid #000;padding-bottom:.75rem}
+.print-hd h1{font-size:14pt;font-weight:700}
+.print-hd p{font-size:9pt;color:#666;margin-top:.25rem}
+
+/* Misc */
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,250,250,.85);z-index:500;
+  align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+.loading-overlay.show{display:flex}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--black);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--black);color:var(--white);padding:.75rem 1.5rem;border-radius:4px;
+  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:var(--green)}.toast.error{background:var(--red)}
+.empty-state{text-align:center;padding:3rem;color:var(--gray-400);font-size:.85rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div id="app"></div>
 
 <script>
-// --- ข้อมูลวิชา (คงเดิม) ---
-const GROUPS=[
-  {id:'g1',label:'หมวดศึกษาทั่วไป',minCredit:30,sub:[
-    {id:'g1_1',label:'1.1 กลุ่มสาระอยู่ดีมีสุข',minCredit:6,canAdd:true,courses:[]},
-    {id:'g1_2',label:'1.2 กลุ่มสาระศาสตร์แห่งผู้ประกอบการ',minCredit:3,canAdd:true,courses:[]},
-    {id:'g1_3',label:'1.3 กลุ่มสาระภาษากับการสื่อสาร',minCredit:13,canAdd:true,courses:[]},
-    {id:'g1_4',label:'1.4 กลุ่มสาระพลเมืองไทยและพลเมืองโลก',minCredit:5,canAdd:true,courses:[]},
-    {id:'g1_5',label:'1.5 กลุ่มสาระสุนทรียศาสตร์',minCredit:3,canAdd:true,courses:[]},
-  ]},
-  {id:'g2',label:'วิชาเฉพาะบังคับ',minCredit:79,sub:[
-    {id:'g2_1',label:'2.1.1 กลุ่มวิชาวิทยาศาสตร์ (21 น.)',minCredit:21,canAdd:false,courses:[
-      {code:'01403111-60',name:'เคมีทั่วไป',credit:4},
-      {code:'01403112-65',name:'ปฏิบัติการเคมีทั่วไป',credit:1},
-      {code:'01403221-60',name:'เคมีอินทรีย์',credit:4},
-      {code:'01403222-65',name:'ปฏิบัติการเคมีอินทรีย์',credit:1},
-      {code:'01419211-65',name:'จุลชีวิทยาทั่วไป',credit:3},
-      {code:'01419214-65',name:'จุลชีววิทยาพื้นฐานภาคปฏิบัติการ',credit:1},
-      {code:'01422111-65',name:'หลักสถิติ',credit:3},
-      {code:'01424111-66',name:'หลักชีววิทยา',credit:3},
-      {code:'01424112-66',name:'ชีววิทยาภาคปฏิบัติการ',credit:1},
-    ]},
-    {id:'g2_2',label:'2.1.2 กลุ่มวิชาเกษตรและสิ่งแวดล้อมศึกษา (42 น.)',minCredit:42,canAdd:false,courses:[
-      {code:'02181111-64',name:'เกษตรและสิ่งแวดล้อมศึกษาเบื้องต้น',credit:3},
-      {code:'02181161-64',name:'ประสบการณ์พื้นฐานทางเกษตรและสิ่งแวดล้อมศึกษา',credit:1},
-      {code:'02181162-64',name:'ทักษะพื้นฐานทางเกษตรและสิ่งแวดล้อมศึกษา',credit:1},
-      {code:'02181261-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา I',credit:1},
-      {code:'02181262-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา II',credit:1},
-      {code:'02181331-64',name:'การสื่อสารทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
-      {code:'02181333-64',name:'การประยุกต์คอมพิวเตอร์ทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
-      {code:'02181351-64',name:'การประเมินการจัดการศึกษาทางเกษตรและสิ่งแวดล้อม',credit:3},
-      {code:'02181361-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา III',credit:1},
-      {code:'02181362-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา IV',credit:1},
-      {code:'02181411-64',name:'การพัฒนาทรัพยากรมนุษย์และชุมชนทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
-      {code:'02181422-64',name:'การจัดการศึกษาทางเกษตรและสิ่งแวดล้อมในชุมชน',credit:3},
-      {code:'02181441-64',name:'การวางแผนโครงการและกิจกรรมทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
-      {code:'02818461-64',name:'ประสบการณ์วิชาชีพทางเกษตรและสิ่งแวดล้อมศึกษา V',credit:2},
-      {code:'02181471-64',name:'การจัดการสิ่งแวดล้อมในชุมชน',credit:3},
-      {code:'02181472-64',name:'นิเวศวิทยาทางการเกษตร',credit:3},
-      {code:'02181481-64',name:'ค่านิยมและจริยธรรมทางเกษตรและสิ่งแวดล้อม',credit:3},
-      {code:'02181491-64',name:'วิธีวิจัยทางเกษตรและสิ่งแวดล้อมศึกษา',credit:3},
-      {code:'02181497-64',name:'สัมมนา',credit:1},
-    ]},
-    {id:'g2_3',label:'2.1.3 กลุ่มวิทยาศาสตร์เกษตร (16 น.)',minCredit:16,canAdd:false,courses:[
-      {code:'02036221-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านสัตว์',credit:3},
-      {code:'02036231-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านพืชไร่',credit:2},
-      {code:'02036241-66',name:'กีฏวิทยาเบื้องต้น',credit:3},
-      {code:'02036261-66',name:'วิทยาศาสตร์ทางดิน',credit:3},
-      {code:'02036271-66',name:'วิทยาศาสตร์และเทคโนโลยีด้านพืชสวน',credit:2},
-      {code:'02036281-66',name:'โรคพืชวิทยาเบื้องต้น',credit:3},
-    ]}
-  ]},
-  {id:'g3',label:'วิชาเฉพาะเลือก',minCredit:21,sub:[
-    {id:'g3_1',label:'2.2.1 วิชาเลือกสาขา (6 น.)',minCredit:6,canAdd:true,courses:[]},
-    {id:'g3_2',label:'2.2.2 กลุ่มวิทยาศาสตร์เกษตร (15 น.)',minCredit:15,canAdd:true,courses:[]},
-  ]},
-  {id:'g4',label:'วิชาเสรี',minCredit:6,sub:[
-    {id:'g4_1',label:'3. วิชาเสรี (6 น.)',minCredit:6,canAdd:true,courses:[]},
-  ]},
+const GAS_URL     = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const ADMIN_TOKEN = "ADMIN_METEE_552728";
+
+// ไซส์เสื้อยืดและยีนส์ที่ใช้ใน index.html
+const TSHIRT_SIZES = [
+  {size:"S",chest:"34"},{size:"M",chest:"37"},{size:"L",chest:"40"},
+  {size:"XL",chest:"43"},{size:"2XL",chest:"46"},{size:"3XL",chest:"49"},
+  {size:"4XL",chest:"52"},{size:"5XL",chest:"55"},{size:"6XL",chest:"58"}
+];
+const JEANS_SIZES = [
+  {size:"S",chest:"38"},{size:"M",chest:"40"},{size:"L",chest:"42"},
+  {size:"XL",chest:"44"},{size:"2XL",chest:"46"}
+];
+</script>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <p class="brand">เกษตรและสิ่งแวดล้อมศึกษา 2569</p>
+    <h2>เข้าสู่ระบบ</h2>
+    <div class="lf"><label>ชื่อผู้ใช้งาน</label>
+      <input type="text" id="loginUser" placeholder="ชื่อผู้ใช้" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="lf"><label>รหัสผ่าน</label>
+      <input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <p class="login-err" id="loginErr">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-wrap" id="adminWrap">
+  <header class="admin-header">
+    <span class="hlogo">ระบบสั่งซื้อเสื้อปฏิบัติการ 2569</span>
+    <div class="hright">
+      <button class="hdr-btn admin-only" id="btnUsers"    onclick="openUsersModal()"   style="display:none">👥 จัดการสิทธิ์</button>
+      <button class="hdr-btn admin-only" id="btnAnnounce" onclick="openAnnounceModal()" style="display:none">📢 ประกาศ</button>
+      <span class="role-badge" id="roleBadge"></span>
+      <span class="hadmin-name" id="adminName">—</span>
+      <button class="logout-btn" onclick="doLogout()">ออกจากระบบ</button>
+    </div>
+  </header>
+
+  <div class="admin-content">
+    <div class="print-hd">
+      <h1>รายงานคำสั่งซื้อเสื้อปฏิบัติการ</h1>
+      <p>สาขาเกษตรและสิ่งแวดล้อมศึกษา — ปีการศึกษา 2569</p>
+      <p id="printMeta"></p>
+    </div>
+
+    <div class="viewer-notice" id="viewerNotice">
+      🔍 คุณเข้าสู่ระบบในฐานะ <strong>ผู้ดูระบบ</strong> — ดูข้อมูลและส่งออกได้เท่านั้น ไม่สามารถอนุมัติหรือแก้ไขได้
+    </div>
+
+    <!-- Dashboard -->
+    <p class="section-hd">ภาพรวมคำสั่งซื้อ</p>
+    <div class="dash-grid">
+      <div class="dash-card"><div class="dc-label">ทั้งหมด</div><div class="dc-val" id="stat-total">—</div><div class="dc-sub">รายการ</div></div>
+      <div class="dash-card dc-approved"><div class="dc-label">อนุมัติแล้ว</div><div class="dc-val" id="stat-approved">—</div><div class="dc-sub">รายการ</div></div>
+      <div class="dash-card dc-pending"><div class="dc-label">รอการอนุมัติ</div><div class="dc-val" id="stat-pending">—</div><div class="dc-sub">รายการ</div></div>
+      <div class="dash-card dc-rejected"><div class="dc-label">ไม่อนุมัติ</div><div class="dc-val" id="stat-rejected">—</div><div class="dc-sub">รายการ</div></div>
+      <div class="dash-card dc-revenue"><div class="dc-label">ยอดเงิน (อนุมัติ)</div><div class="dc-val" id="stat-revenue">—</div><div class="dc-sub">บาท</div></div>
+    </div>
+
+    <!-- Year Summary -->
+    <p class="section-hd">ยอดสั่งซื้อแยกตามชั้นปี</p>
+    <div class="year-summary-card">
+      <h4>จำนวนคนสั่งซื้อ แยกตามชั้นปี</h4>
+      <div class="year-grid" id="year-summary-rows">—</div>
+    </div>
+
+    <!-- Size Summary -->
+    <p class="section-hd">ยอดสั่งซื้อแยกตามไซส์</p>
+    <div class="size-summary-wrap">
+      <div class="size-summary-card"><h4>เสื้อยืด</h4><div class="size-rows" id="tshirt-size-rows">—</div></div>
+      <div class="size-summary-card"><h4>เสื้อยีนส์</h4><div class="size-rows" id="jeans-size-rows">—</div></div>
+    </div>
+
+    <!-- Orders -->
+    <p class="section-hd">รายการสั่งซื้อ</p>
+    <div class="export-bar">
+      <span class="exp-label">ส่งออก</span>
+      <button class="exp-btn" onclick="exportExcel()">📊 Excel</button>
+      <button class="exp-btn" onclick="exportCSV()">📋 CSV</button>
+      <button class="exp-btn" onclick="exportWord()">📝 Word</button>
+      <div class="exp-sep"></div>
+      <button class="exp-btn ep" onclick="doPrint()">🖨 พิมพ์ / PDF</button>
+    </div>
+    <div class="table-toolbar">
+      <input class="search-input" id="searchName" placeholder="ค้นหาชื่อ..." oninput="renderTable()"/>
+      <input class="search-input" id="searchId" placeholder="รหัสนิสิต..." oninput="renderTable()" style="max-width:150px"/>
+      <select class="filter-sel" id="filterYear" onchange="renderTable()">
+        <option value="">ทุกชั้นปี</option>
+        <option value="1">ปี 1</option><option value="2">ปี 2</option>
+        <option value="3">ปี 3</option><option value="4">ปี 4</option>
+      </select>
+      <select class="filter-sel" id="filterStatus" onchange="renderTable()">
+        <option value="">ทุกสถานะ</option>
+        <option value="รอการอนุมัติ">รอการอนุมัติ</option>
+        <option value="อนุมัติแล้ว">อนุมัติแล้ว</option>
+        <option value="ปฏิเสธ">ปฏิเสธ</option>
+      </select>
+      <button class="refresh-btn" onclick="loadOrders()">⟳ รีเฟรช</button>
+    </div>
+    <div class="table-wrap">
+      <table id="mainTable">
+        <thead><tr>
+          <th>#</th><th>ชื่อ-นามสกุล</th><th>รหัสนิสิต</th><th>ปี</th>
+          <th>เบอร์โทร / อีเมล</th><th>เสื้อยืด</th><th>เสื้อยีนส์</th>
+          <th>ราคา</th><th>หลักฐาน</th><th>สถานะ / หมายเหตุ</th>
+          <th>อนุมัติโดย / เวลา</th><th>วันที่สั่ง</th>
+          <th class="admin-col">จัดการ</th>
+        </tr></thead>
+        <tbody id="orderTableBody"><tr><td colspan="13" class="empty-state">กำลังโหลด...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- REJECT MODAL -->
+<div class="modal-ov" id="rejectModal" onclick="if(event.target===this)closeModal('rejectModal')">
+  <div class="modal-bx">
+    <div class="modal-hd red"><h3>ระบุเหตุผลที่ไม่อนุมัติ</h3><button class="modal-cls" onclick="closeModal('rejectModal')">✕</button></div>
+    <div class="modal-bd">
+      <div class="modal-label">หมายเหตุ (จะส่งในอีเมลแจ้งลูกค้า)</div>
+      <textarea class="modal-textarea" id="rejectNote" placeholder="เช่น หลักฐานการโอนไม่ชัดเจน, ยอดเงินไม่ครบ..."></textarea>
+      <div class="modal-footer">
+        <button class="mbtn mbtn-cancel" onclick="closeModal('rejectModal')">ยกเลิก</button>
+        <button class="mbtn mbtn-red"    onclick="confirmReject()">บันทึกและส่งอีเมล</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT SIZE MODAL -->
+<div class="modal-ov" id="editSizeModal" onclick="if(event.target===this)closeModal('editSizeModal')">
+  <div class="modal-bx">
+    <div class="modal-hd blue"><h3>แก้ไขไซส์คำสั่งซื้อ</h3><button class="modal-cls" onclick="closeModal('editSizeModal')">✕</button></div>
+    <div class="modal-bd">
+      <input type="hidden" id="editRowIndex"/>
+      <div class="field-row">
+        <div>
+          <div class="modal-label">ไซส์เสื้อยืด</div>
+          <select class="modal-select" id="editTshirtSize"><option value="-">ไม่ได้สั่ง</option></select>
+        </div>
+        <div>
+          <div class="modal-label">จำนวนเสื้อยืด</div>
+          <input class="modal-input" type="number" id="editTshirtQty" min="0" max="99"/>
+        </div>
+      </div>
+      <div class="field-row">
+        <div>
+          <div class="modal-label">ไซส์เสื้อยีนส์</div>
+          <select class="modal-select" id="editJeansSize"><option value="-">ไม่ได้สั่ง</option></select>
+        </div>
+        <div>
+          <div class="modal-label">จำนวนเสื้อยีนส์</div>
+          <input class="modal-input" type="number" id="editJeansQty" min="0" max="99"/>
+        </div>
+      </div>
+      <div style="font-size:.78rem;color:var(--gray-600);margin-bottom:.75rem">
+        ราคาจะถูกคำนวณใหม่อัตโนมัติ (เสื้อยืด ฿240/ตัว · เสื้อยีนส์ ฿420/ตัว)
+      </div>
+      <div class="modal-footer">
+        <button class="mbtn mbtn-cancel" onclick="closeModal('editSizeModal')">ยกเลิก</button>
+        <button class="mbtn mbtn-blue"   onclick="saveEditSize()">บันทึกและอัปเดต Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- USERS MODAL -->
+<div class="modal-ov" id="usersModal" onclick="if(event.target===this)closeModal('usersModal')">
+  <div class="modal-bx wide">
+    <div class="modal-hd black"><h3>จัดการสิทธิ์ผู้ใช้งาน</h3><button class="modal-cls" onclick="closeModal('usersModal')">✕</button></div>
+    <div class="modal-bd">
+      <table class="users-table" id="usersTable">
+        <thead><tr><th>#</th><th>Username</th><th>ชื่อ</th><th>สิทธิ์</th><th>วันที่เพิ่ม</th><th>ลบ</th></tr></thead>
+        <tbody id="usersTableBody"><tr><td colspan="6" class="empty-state">กำลังโหลด...</td></tr></tbody>
+      </table>
+      <hr style="border:none;border-top:1px solid var(--border);margin:.75rem 0"/>
+      <p style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-600);margin-bottom:.75rem">เพิ่มผู้ใช้งานใหม่</p>
+      <div class="field-row">
+        <div><div class="modal-label">Username</div><input class="modal-input" id="newUsername" placeholder="username"/></div>
+        <div><div class="modal-label">Password</div><input class="modal-input" id="newPassword" type="password" placeholder="••••••"/></div>
+      </div>
+      <div class="field-row">
+        <div><div class="modal-label">ชื่อที่แสดง</div><input class="modal-input" id="newDisplayName" placeholder="ชื่อ นามสกุล"/></div>
+        <div><div class="modal-label">สิทธิ์</div>
+          <select class="modal-select" id="newRole">
+            <option value="viewer">Viewer (ดูข้อมูลเท่านั้น)</option>
+            <option value="admin">Admin (เต็มสิทธิ์)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="mbtn mbtn-cancel" onclick="closeModal('usersModal')">ปิด</button>
+        <button class="mbtn mbtn-save"   onclick="addUser()">เพิ่มผู้ใช้งาน</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ANNOUNCE MODAL -->
+<div class="modal-ov" id="announceModal" onclick="if(event.target===this)closeModal('announceModal')">
+  <div class="modal-bx">
+    <div class="modal-hd green"><h3>📢 เพิ่มประกาศ / ข่าวสาร</h3><button class="modal-cls" onclick="closeModal('announceModal')">✕</button></div>
+    <div class="modal-bd">
+      <div class="modal-label">หัวข้อประกาศ</div>
+      <input class="modal-input" id="annTitle" placeholder="หัวข้อ..."/>
+      <div class="modal-label">เนื้อหา</div>
+      <textarea class="modal-textarea" id="annContent" style="min-height:110px" placeholder="รายละเอียด..."></textarea>
+      <div class="modal-footer">
+        <button class="mbtn mbtn-cancel" onclick="closeModal('announceModal')">ยกเลิก</button>
+        <button class="mbtn mbtn-green"  onclick="submitAnnouncement()">ประกาศ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let allOrders      = [];
+let rejectRowIdx   = null;
+let currentRole    = null;
+let currentUser    = null;
+
+// ── HARDCODE บัญชีหลัก (fallback เสมอ ไม่ขึ้นกับ GAS) ──────────
+const BUILTIN_ACCOUNTS = [
+  { username:'เมธี',    password:'552728', displayName:'เมธี (แอดมิน)',        role:'admin'  },
+  { username:'ศุภเสกย์', password:'202548', displayName:'ศุภเสกย์ (ผู้ดูระบบ)', role:'viewer' }
 ];
 
-const TOTAL_NEEDED_CREDITS = 136;
-const USERS_KEY='ase64_users_v2';
-const DATA_KEY='ase64_data_v2';
-const GRADES=['A','B+','B','C+','C','D+','D','F','W'];
-const GRADE_POINTS={'A':4,'B+':3.5,'B':3,'C+':2.5,'C':2,'D+':1.5,'D':1,'F':0,'W':null};
+// ── LOGIN ─────────────────────────────────────────────────────
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value.trim();
+  if (!username || !password) return;
 
-let currentUser=null;
-let grades={}; // { code: { grade: 'A', term: '1/66' } }
-let freeData={};
+  // 1) ตรวจสอบบัญชีหลัก (hardcode) ก่อนเสมอ — ไม่ต้องรอ GAS
+  const builtin = BUILTIN_ACCOUNTS.find(a => a.username === username && a.password === password);
+  if (builtin) { doLoginSuccess(builtin); return; }
 
-const app=document.getElementById('app');
-
-// --- Storage Functions ---
-async function getUsers(){ try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}')}catch(e){return {}} }
-async function saveUsers(u){ localStorage.setItem(USERS_KEY,JSON.stringify(u)); }
-async function loadStudentData(sid){
-  try{const r=JSON.parse(localStorage.getItem(DATA_KEY+':'+sid)||'{}'); return {grades:r.grades||{}, free:r.free||{}};}
-  catch(e){return {grades:{},free:{}}}
-}
-async function saveStudentData(sid){ localStorage.setItem(DATA_KEY+':'+sid, JSON.stringify({grades, free:freeData})); }
-
-// --- Logic (gpa/credits) ---
-function calcGPA(){
-  let totalPoints=0, totalCredits=0;
-  GROUPS.forEach(g=>g.sub.forEach(sub=>{
-    sub.courses.forEach(c=>{
-      const d = grades[c.code];
-      if(d && d.grade && GRADE_POINTS[d.grade] !== null){
-        totalPoints += (GRADE_POINTS[d.grade]*c.credit); totalCredits += c.credit;
-      }
-    });
-    if(freeData[sub.id]){
-      freeData[sub.id].forEach(fc=>{
-        if(fc.grade && GRADE_POINTS[fc.grade] !== null){
-          totalPoints += (GRADE_POINTS[fc.grade]*fc.credit); totalCredits += fc.credit;
-        }
-      });
+  // 2) ถ้าไม่ใช่บัญชีหลัก ให้ตรวจกับ GAS (บัญชีที่เพิ่มใน Users sheet)
+  showLoading(true);
+  try {
+    const res  = await fetch(GAS_URL, { method:'POST', body:JSON.stringify({
+      action:'validateLogin', username, password }) });
+    const data = await res.json();
+    showLoading(false);
+    if (data.success && data.valid) {
+      doLoginSuccess({ username, displayName: data.displayName, role: data.role });
+    } else {
+      showLoginErr();
     }
-  }));
-  return totalCredits ? totalPoints/totalCredits : 0;
-}
-
-function calcPassedCredits(){
-  let total=0;
-  GROUPS.forEach(g=>g.sub.forEach(sub=>{
-    sub.courses.forEach(c=>{ if(grades[c.code] && !['F','W',''].includes(grades[c.code].grade)) total+=c.credit; });
-    if(freeData[sub.id]){
-      freeData[sub.id].forEach(fc=>{ if(!['F','W',''].includes(fc.grade)) total+=fc.credit; });
-    }
-  }));
-  return total;
-}
-
-// --- Render Main Layout ---
-function renderMain(){
-  const passed=calcPassedCredits();
-  const remaining = TOTAL_NEEDED_CREDITS - passed;
-  const pct=Math.round((passed/TOTAL_NEEDED_CREDITS)*100);
-  const ini=currentUser.fname[0]+currentUser.lname[0];
-
-  app.innerHTML=`
-  <div class="main-wrap">
-    <div class="topbar">
-      <div class="header-box">
-        <div class="topbar-title">
-          <div class="t1">ระบบตรวจสอบการเรียนตามหลักสูตร</div>
-          <div class="t1">วท.บ. (เกษตรและสิ่งแวดล้อมศึกษา)</div>
-          <div class="t2">หลักสูตรปรับปรุง พ.ศ. 2564 — มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-full">
-      <div class="user-card">
-        <div class="user-info-flex">
-          <div class="user-avatar">${ini}</div>
-          <div>
-            <div style="font-weight:bold; font-size:16px; color:var(--green);">${currentUser.fname} ${currentUser.lname}</div>
-            <div style="font-size:12px; color:var(--muted);">รหัสนิสิต: ${currentUser.sid}</div>
-          </div>
-        </div>
-        <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
-      </div>
-
-      <div class="summary-row">
-        <div class="sum-box"><div class="val">${passed}</div><div class="lbl">หน่วยกิตผ่านแล้ว</div></div>
-        <div class="sum-box remaining"><div class="val">${remaining > 0 ? remaining : 0}</div><div class="lbl">หน่วยกิตคงเหลือ</div></div>
-        <div class="sum-box gpa"><div class="val">${calcGPA().toFixed(2)}</div><div class="lbl">เกรดเฉลี่ยสะสม</div></div>
-      </div>
-
-      <div class="prog-card">
-        <div class="prog-label">
-          <span>ความก้าวหน้าตลอดหลักสูตร (${TOTAL_NEEDED_CREDITS} หน่วยกิต)</span>
-          <span>${pct}%</span>
-        </div>
-        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-      </div>
-
-      <div class="tabs-wrap">
-        <button class="tab-btn active" id="tab-curr" onclick="switchPane('curriculum')">หมวดตรวจสอบหลักสูตร</button>
-        <button class="tab-btn" id="tab-profile" onclick="switchPane('profile')">ข้อมูลส่วนตัว</button>
-      </div>
-
-      <div id="pane-curriculum" class="curriculum-body active"></div>
-      <div id="pane-profile" class="curriculum-body pane"></div>
-    </div>
-  </div>`;
-  renderCurriculum();
-  renderProfile();
-}
-
-// --- Render Curriculum Table ---
-function renderCurriculum(){
-  const pane=document.getElementById('pane-curriculum');
-  let html='';
-  GROUPS.forEach(g=>{
-    html+=`
-    <div class="group-card">
-      <div class="group-header">
-        <div class="group-title">${g.label}</div>
-        <div class="group-meta">ต้องการ ${g.minCredit} หน่วยกิต</div>
-      </div>
-      <div class="table-responsive">
-        <table class="curriculum-table">
-          <thead>
-            <tr>
-              <th>ผ่าน</th>
-              <th>รหัสวิชา</th>
-              <th>ชื่อวิชา</th>
-              <th class="center">หน่วยกิต</th>
-              <th class="center">เทอม/ปีที่เรียน</th>
-              <th class="center">เกรด</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${g.sub.map(sub=>`
-              <tr class="sub-group-header">
-                <td colspan="6">${sub.label} (ต้องการ ${sub.minCredit} น.)</td>
-              </tr>
-              ${sub.courses.map(c=>{
-                const saved = grades[c.code] || {grade:'', term:''};
-                const isDone = saved.grade && !['F','W'].includes(saved.grade);
-                return `
-                <tr>
-                  <td>
-                    <div class="check-box ${isDone?'done':''}" onclick="toggleDone('${c.code}')">
-                      ${isDone?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>':''}
-                    </div>
-                  </td>
-                  <td style="font-family:monospace;">${c.code}</td>
-                  <td>${c.name}</td>
-                  <td class="center">${c.credit}</td>
-                  <td class="center"><input type="text" class="term-input" placeholder="เช่น 1/66" value="${saved.term}" onchange="updateRow('${c.code}', 'term', this.value)"></td>
-                  <td class="center">
-                    <select class="grade-select" onchange="updateRow('${c.code}', 'grade', this.value)">
-                      <option value="">-</option>
-                      ${GRADES.map(grade=>`<option value="${grade}" ${saved.grade===grade?'selected':''}>${grade}</option>`).join('')}
-                    </select>
-                  </td>
-                </tr>`;
-              }).join('')}
-              
-              ${sub.canAdd ? `
-                ${(freeData[sub.id]||[]).map((fc, idx)=>`
-                  <tr style="background:#fffcf8">
-                    <td><div class="check-box ${fc.grade && !['F','W'].includes(fc.grade)?'done':''}"></div></td>
-                    <td><input type="text" class="term-input" style="width:100%" value="${fc.code}" placeholder="รหัสวิชา" onchange="updateFreeRow('${sub.id}', ${idx}, 'code', this.value)"></td>
-                    <td><input type="text" class="term-input" style="width:100%; text-align:left;" value="${fc.name}" placeholder="ชื่อวิชาเสรี/เลือก" onchange="updateFreeRow('${sub.id}', ${idx}, 'name', this.value)"></td>
-                    <td class="center"><input type="number" class="term-input" style="width:60px" value="${fc.credit}" onchange="updateFreeRow('${sub.id}', ${idx}, 'credit', this.value)"></td>
-                    <td class="center"><input type="text" class="term-input" placeholder="1/66" value="${fc.term||''}" onchange="updateFreeRow('${sub.id}', ${idx}, 'term', this.value)"></td>
-                    <td class="center">
-                      <select class="grade-select" onchange="updateFreeRow('${sub.id}', ${idx}, 'grade', this.value)">
-                        <option value="">-</option>
-                        ${GRADES.map(grade=>`<option value="${grade}" ${fc.grade===grade?'selected':''}>${grade}</option>`).join('')}
-                      </select>
-                      <button onclick="removeFreeRow('${sub.id}', ${idx})" class="remove-btn">×</button>
-                    </div>
-                  </td>
-                `).join('')}
-                <tr><td colspan="6"><button class="btn-free-add" onclick="addFreeRow('${sub.id}')">+ เพิ่มวิชา</button></td></tr>
-              ` : ''}
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-  });
-  pane.innerHTML=html;
-}
-
-// --- Render Profile Pane ---
-function renderProfile(){
-  const p = document.getElementById('pane-profile');
-  p.innerHTML = `<div class="profile-card">
-    <div style="font-weight:bold; color:var(--green); font-size:18px; margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px;">ข้อมูลนิสิต</div>
-    <table>
-      <tr><th>ชื่อ-นามสกุล</th><td>: ${currentUser.fname} ${currentUser.lname}</td></tr>
-      <tr><th>รหัสนิสิต</th><td>: ${currentUser.sid}</td></tr>
-      <tr><th>หลักสูตร</th><td>: วิทยาศาสตรบัณฑิต (เกษตรและสิ่งแวดล้อมศึกษา)</td></tr>
-      <tr><th>คณะ</th><td>: คณะศึกษาศาสตร์และพัฒนศาสตร์</td></tr>
-      <tr><th>เบอร์โทรศัพท์</th><td>: ${currentUser.phone}</td></tr>
-    </table>
-  </div>`;
-}
-
-// --- Action Functions ---
-async function updateRow(code, field, val){
-  if(!grades[code]) grades[code] = {grade:'', term:''};
-  grades[code][field] = val;
-  await saveStudentData(currentUser.sid);
-  renderMain(); // refresh summarize
-}
-
-async function toggleDone(code){
-  if(!grades[code] || grades[code].grade === '') {
-    if(!grades[code]) grades[code] = {grade:'A', term:''};
-    else grades[code].grade = 'A';
-  } else {
-    grades[code].grade = ''; // reset
+  } catch {
+    showLoading(false);
+    showLoginErr();
   }
-  await saveStudentData(currentUser.sid);
-  renderMain();
 }
 
-function addFreeRow(subId){
-  if(!freeData[subId]) freeData[subId] = [];
-  freeData[subId].push({code:'', name:'วิชาเลือกใหม่', credit:3, grade:'', term:''});
-  renderCurriculum();
+function showLoginErr() { document.getElementById('loginErr').style.display='block'; }
+
+function doLoginSuccess(acct) {
+  document.getElementById('loginErr').style.display='none';
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('adminWrap').style.display='flex';
+  document.getElementById('adminName').textContent = acct.displayName;
+  currentRole = acct.role;
+  currentUser = acct.username;
+
+  const badge = document.getElementById('roleBadge');
+  if (acct.role==='admin') {
+    badge.textContent='ADMIN'; badge.className='role-badge role-admin';
+    document.getElementById('viewerNotice').style.display='none';
+    document.getElementById('btnUsers').style.display='';
+    document.getElementById('btnAnnounce').style.display='';
+  } else {
+    badge.textContent='VIEWER'; badge.className='role-badge role-viewer';
+    document.getElementById('viewerNotice').style.display='block';
+  }
+  loadOrders();
 }
 
-async function updateFreeRow(subId, idx, field, val){
-  freeData[subId][idx][field] = (field==='credit') ? parseInt(val)||0 : val;
-  await saveStudentData(currentUser.sid);
-  renderMain();
+function doLogout() {
+  document.getElementById('adminWrap').style.display='none';
+  document.getElementById('loginWrap').style.display='flex';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  allOrders=[]; currentRole=null; currentUser=null;
+  document.getElementById('btnUsers').style.display='none';
+  document.getElementById('btnAnnounce').style.display='none';
 }
 
-async function removeFreeRow(subId, idx){
-  freeData[subId].splice(idx,1);
-  await saveStudentData(currentUser.sid);
-  renderMain();
+function guardAdmin() {
+  if (currentRole!=='admin'){showToast('ไม่มีสิทธิ์ดำเนินการนี้','error');return false;} return true;
 }
 
-function switchPane(id){
-  // Tab active
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id==='curriculum'?'tab-curr':'tab-profile').classList.add('active');
-  // Pane visible
-  document.getElementById('pane-curriculum').style.display = (id==='curriculum'?'block':'none');
-  document.getElementById('pane-profile').style.display = (id==='profile'?'block':'none');
+// ── LOAD ORDERS ────────────────────────────────────────────────
+async function loadOrders() {
+  showLoading(true);
+  try {
+    const res  = await fetch(`${GAS_URL}?action=getOrders&token=${ADMIN_TOKEN}`);
+    const data = await res.json();
+    showLoading(false);
+    if (data.success) {
+      allOrders=data.orders;
+      updateDash(data.summary);
+      updateYearSummary();
+      updateSizeSummary();
+      renderTable();
+    } else showToast(data.message||'โหลดข้อมูลไม่ได้','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
 }
 
-function logout(){ location.reload(); }
-
-// --- Auth Rendering (คงโครงสร้างเดิม) ---
-function renderLogin(){
-  app.innerHTML = `<div class="auth-bg"><div class="auth-card">
-    <div class="auth-logo"><div class="auth-title">เข้าสู่ระบบตรวจสอบการเรียน</div><div class="auth-sub">(เกษตรและสิ่งแวดล้อมศึกษา)</div></div>
-    <div class="field"><label>รหัสนิสิต</label><input id="l-id" placeholder="ตัวเลข 10 หลัก"/></div>
-    <div class="field"><label>เบอร์โทรศัพท์ (Password)</label><input id="l-pw" type="password" placeholder="เบอร์โทร"/></div>
-    <button class="btn-auth" onclick="doLogin()">เข้าสู่ระบบ</button>
-    <div style="text-align:center; margin-top:1.5rem; font-size:13px;">ยังไม่มีบัญชี? <button onclick="renderRegister()" style="background:none; border:none; color:var(--green); font-weight:bold; cursor:pointer; font-family:var(--font-mali);">สมัครสมาชิก</button></div>
-  </div></div>`;
+function updateDash(s) {
+  document.getElementById('stat-total').textContent    = s.total.toLocaleString();
+  document.getElementById('stat-approved').textContent = s.approved.toLocaleString();
+  document.getElementById('stat-pending').textContent  = s.pending.toLocaleString();
+  document.getElementById('stat-rejected').textContent = (s.rejected||0).toLocaleString();
+  document.getElementById('stat-revenue').textContent  = '฿'+s.revenue.toLocaleString();
 }
 
-async function doLogin(){
-  const sid=document.getElementById('l-id').value.trim();
-  const pw=document.getElementById('l-pw').value.trim();
-  if(!sid || !pw){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
-  const users=await getUsers();
-  if(users[sid] && users[sid].phone === pw){
-    currentUser = {...users[sid], sid};
-    const d = await loadStudentData(sid);
-    grades = d.grades; freeData = d.free;
-    renderMain();
-  } else { alert('รหัสนิสิตหรือเบอร์โทรไม่ถูกต้อง'); }
+// ── YEAR SUMMARY (ใหม่ — ไม่กระทบ logic เดิม) ───────────────────
+function updateYearSummary() {
+  const yMap = {1:0, 2:0, 3:0, 4:0};
+  allOrders.forEach(o => {
+    const y = String(o.year);
+    if (yMap[y] !== undefined) yMap[y]++;
+    else yMap[y] = (yMap[y]||0) + 1;
+  });
+  const el = document.getElementById('year-summary-rows');
+  if (!el) return;
+  const years = Object.keys(yMap).sort((a,b)=>a-b);
+  const total = allOrders.length || 1;
+  const mx    = Math.max(...years.map(y=>yMap[y]||0), 1);
+  if (!allOrders.length) {
+    el.innerHTML = '<span style="font-size:.78rem;color:var(--gray-400)">ยังไม่มีข้อมูล</span>';
+    return;
+  }
+  el.innerHTML = years.map(y => {
+    const cnt = yMap[y] || 0;
+    const pct = Math.round((cnt/mx)*100);
+    const pctOfTotal = Math.round((cnt/total)*100);
+    return `<div class="year-box">
+      <div class="year-box-top">
+        <span class="year-box-label">ปี ${y}</span>
+        <span class="year-box-count">${cnt} คน</span>
+      </div>
+      <div class="year-bar-w"><div class="year-bar" style="width:${pct}%"></div></div>
+      <span class="year-box-sub">${pctOfTotal}% ของทั้งหมด</span>
+    </div>`;
+  }).join('');
 }
 
-function renderRegister(){
-  app.innerHTML = `<div class="auth-bg"><div class="auth-card">
-    <div class="auth-title" style="text-align:center;">สมัครสมาชิก</div>
-    <div class="row2"><div class="field"><label>ชื่อ</label><input id="r-fn"/></div><div class="field"><label>นามสกุล</label><input id="r-ln"/></div></div>
-    <div class="field"><label>รหัสนิสิต</label><input id="r-id" placeholder="ตัวเลข 10 หลัก"/></div>
-    <div class="field"><label>เบอร์โทรศัพท์ (เป็น Password)</label><input id="r-pw"/></div>
-    <button class="btn-auth" onclick="doRegister()">สมัครสมาชิก</button>
-    <div style="text-align:center; margin-top:1.5rem; font-size:13px;"><button onclick="renderLogin()" style="background:none; border:none; color:var(--green); font-weight:bold; cursor:pointer; font-family:var(--font-mali);">กลับหน้าล็อกอิน</button></div>
-  </div></div>`;
+function updateSizeSummary() {
+  const tMap={}, jMap={};
+  allOrders.forEach(o=>{
+    if(o.tshirtSize&&o.tshirtSize!=='-'&&o.tshirtQty>0)
+      tMap[o.tshirtSize]=(tMap[o.tshirtSize]||0)+o.tshirtQty;
+    if(o.jeansSize&&o.jeansSize!=='-'&&o.jeansQty>0)
+      jMap[o.jeansSize]=(jMap[o.jeansSize]||0)+o.jeansQty;
+  });
+  renderSzRows('tshirt-size-rows',tMap,TSHIRT_SIZES.map(s=>s.size));
+  renderSzRows('jeans-size-rows', jMap,JEANS_SIZES.map(s=>s.size));
+}
+function renderSzRows(id,map,order) {
+  const el=document.getElementById(id);
+  const keys=[...order.filter(k=>map[k]>0),...Object.keys(map).filter(k=>!order.includes(k)&&map[k]>0)];
+  if(!keys.length){el.innerHTML='<span style="font-size:.78rem;color:var(--gray-400)">ยังไม่มีข้อมูล</span>';return;}
+  const mx=Math.max(...keys.map(k=>map[k]||0),1);
+  el.innerHTML=keys.map(k=>{
+    const c=map[k]||0,p=Math.round(c/mx*100);
+    return `<div class="sz-row"><span class="szl">${k}</span>
+      <div class="sz-bar-w"><div class="sz-bar" style="width:${p}%"></div></div>
+      <span class="sz-cnt">${c}</span></div>`;
+  }).join('');
 }
 
-async function doRegister(){
-  const fn=document.getElementById('r-fn').value.trim();
-  const ln=document.getElementById('r-ln').value.trim();
-  const sid=document.getElementById('r-id').value.trim();
-  const pw=document.getElementById('r-pw').value.trim();
-  if(!fn || !ln || !sid || !pw){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
-  const users=await getUsers();
-  if(users[sid]){ alert('รหัสนิสิตนี้สมัครไปแล้ว'); return; }
-  users[sid] = {fname:fn, lname:ln, phone:pw};
-  await saveUsers(users);
-  alert('สมัครสำเร็จ'); renderLogin();
+// ── RENDER TABLE ───────────────────────────────────────────────
+function getFiltered() {
+  const sN=document.getElementById('searchName').value.toLowerCase();
+  const sI=document.getElementById('searchId').value.toLowerCase();
+  const fY=document.getElementById('filterYear').value;
+  const fS=document.getElementById('filterStatus').value;
+  return allOrders.filter(o=>
+    (!sN||o.fullName.toLowerCase().includes(sN))&&
+    (!sI||String(o.studentId).toLowerCase().includes(sI))&&
+    (!fY||String(o.year)===fY)&&
+    (!fS||o.status===fS));
 }
 
-// Start
-renderLogin();
+function renderTable() {
+  const list   = getFiltered();
+  const isAdmin= currentRole==='admin';
+  document.querySelectorAll('.admin-col').forEach(el=>el.style.display=isAdmin?'':'none');
+  const tbody  = document.getElementById('orderTableBody');
+  if(!list.length){tbody.innerHTML=`<tr><td colspan="13" class="empty-state">ไม่พบข้อมูล</td></tr>`;return;}
+
+  tbody.innerHTML=list.map((o,i)=>{
+    const ts = o.tshirtSize&&o.tshirtSize!=='-'&&o.tshirtQty>0 ? `${o.tshirtSize} × ${o.tshirtQty}` : '—';
+    const js = o.jeansSize &&o.jeansSize !=='-'&&o.jeansQty >0 ? `${o.jeansSize}  × ${o.jeansQty}`  : '—';
+    const bc = o.status==='อนุมัติแล้ว'?'badge-approved':o.status==='ปฏิเสธ'?'badge-rejected':'badge-pending';
+    const proof= o.proofUrl
+      ? (()=>{
+          // แปลง uc?id= → /file/d/.../view เพื่อให้เปิดได้แน่นอน
+          let viewUrl = o.proofUrl;
+          const idMatch = o.proofUrl.match(/[?&]id=([^&]+)/);
+          if (idMatch) viewUrl = `https://drive.google.com/file/d/${idMatch[1]}/view`;
+          return `<a href="${viewUrl}" target="_blank" rel="noopener"
+            style="display:inline-block;font-family:var(--font);font-size:.68rem;font-weight:500;
+            padding:.25rem .65rem;background:#1a1a1a;color:#fff;border-radius:3px;
+            text-decoration:none;letter-spacing:.06em;white-space:nowrap">
+            🔍 ดูสลิป
+          </a>`;
+        })()
+      :'<span style="color:var(--gray-400);font-size:.7rem">ไม่มี</span>';
+    const orderDt = o.timestamp ? new Date(o.timestamp).toLocaleString('th-TH') : '—';
+    const appInfo = o.approvedBy
+      ?`<div style="font-size:.7rem;line-height:1.5"><b>${o.approvedBy}</b><br>
+         ${o.approvedAt?new Date(o.approvedAt).toLocaleString('th-TH'):'—'}</div>`
+      :'<span style="font-size:.7rem;color:var(--gray-400)">—</span>';
+    const noteText = (o.note && !o.note.startsWith('http')) ? o.note : '';
+    const noteHtml = noteText
+      ?`<div style="font-size:.65rem;color:var(--amber);margin-top:.2rem">📌 ${noteText}</div>`:'';
+    const actionCol = isAdmin?`<td class="admin-col">
+      <div class="action-group">
+        ${o.status!=='อนุมัติแล้ว'?`<button class="act-btn btn-approve" onclick="doApprove(${o.rowIndex})">✓ อนุมัติ</button>`:''}
+        ${o.status!=='ปฏิเสธ'?`<button class="act-btn btn-reject" onclick="openRejectModal(${o.rowIndex})">✕ ไม่อนุมัติ</button>`:''}
+        ${o.status!=='รอการอนุมัติ'?`<button class="act-btn btn-reset" onclick="doReset(${o.rowIndex})">↺</button>`:''}
+        <button class="act-btn btn-edit-size" onclick="openEditSize(${o.rowIndex},'${o.tshirtSize||'-'}',${o.tshirtQty||0},'${o.jeansSize||'-'}',${o.jeansQty||0})">✏️ ไซส์</button>
+        <button class="act-btn btn-delete" onclick="doDelete(${o.rowIndex},'${o.fullName.replace(/'/g,"\\'")}')">🗑</button>
+      </div></td>`:'';
+    return `<tr>
+      <td style="color:var(--gray-400);font-size:.72rem">${i+1}</td>
+      <td><div class="name-cell">${o.fullName}</div></td>
+      <td style="font-size:.78rem">${o.studentId}</td>
+      <td>ปี ${o.year}</td>
+      <td><div style="font-size:.78rem">${o.phone}</div><div class="sub-text">${o.email||'—'}</div></td>
+      <td style="font-size:.78rem">${ts}</td>
+      <td style="font-size:.78rem">${js}</td>
+      <td style="font-weight:600;white-space:nowrap">฿${Number(o.totalPrice).toLocaleString()}</td>
+      <td>${proof}</td>
+      <td><span class="badge ${bc}">${o.status}</span>${noteHtml}</td>
+      <td>${appInfo}</td>
+      <td style="font-size:.7rem;color:var(--gray-600);white-space:nowrap">${orderDt}</td>
+      ${actionCol}
+    </tr>`;
+  }).join('');
+}
+
+// ── APPROVE / REJECT / RESET ───────────────────────────────────
+async function doApprove(rowIndex) { if(!guardAdmin())return; await callUpdate(rowIndex,'อนุมัติแล้ว',''); }
+async function doReset(rowIndex)   { if(!guardAdmin())return; await callUpdate(rowIndex,'รอการอนุมัติ',''); }
+
+function openRejectModal(rowIndex) {
+  if(!guardAdmin())return;
+  rejectRowIdx=rowIndex;
+  document.getElementById('rejectNote').value='';
+  document.getElementById('rejectModal').classList.add('show');
+  setTimeout(()=>document.getElementById('rejectNote').focus(),100);
+}
+async function confirmReject() {
+  const note=document.getElementById('rejectNote').value.trim();
+  closeModal('rejectModal');
+  await callUpdate(rejectRowIdx,'ปฏิเสธ',note);
+}
+
+async function callUpdate(rowIndex,status,note) {
+  showLoading(true);
+  const now = new Date().toISOString();
+  try {
+    const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
+      action:'updateStatus', token:ADMIN_TOKEN, rowIndex, status, note,
+      approvedBy: status==='รอการอนุมัติ'?'':currentUser,
+      approvedAt: status==='รอการอนุมัติ'?'':now })});
+    const data = await res.json();
+    showLoading(false);
+    if(data.success){
+      showToast(status==='อนุมัติแล้ว'?'✅ อนุมัติและส่งอีเมลแล้ว':
+                status==='ปฏิเสธ'?'❌ ไม่อนุมัติและส่งอีเมลแล้ว':'↺ รีเซ็ตสถานะแล้ว','success');
+      loadOrders();
+    } else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+// ── EDIT SIZE ──────────────────────────────────────────────────
+function openEditSize(rowIndex,tSize,tQty,jSize,jQty) {
+  if(!guardAdmin())return;
+  document.getElementById('editRowIndex').value = rowIndex;
+  // สร้าง options เสื้อยืด
+  const tSel=document.getElementById('editTshirtSize');
+  tSel.innerHTML='<option value="-">ไม่ได้สั่ง</option>'+
+    TSHIRT_SIZES.map(s=>`<option value="${s.size}"${s.size===tSize?' selected':''}>${s.size} (อก ${s.chest}")</option>`).join('');
+  document.getElementById('editTshirtQty').value=tQty||1;
+  // สร้าง options เสื้อยีนส์
+  const jSel=document.getElementById('editJeansSize');
+  jSel.innerHTML='<option value="-">ไม่ได้สั่ง</option>'+
+    JEANS_SIZES.map(s=>`<option value="${s.size}"${s.size===jSize?' selected':''}>${s.size} (อก ${s.chest}")</option>`).join('');
+  document.getElementById('editJeansQty').value=jQty||1;
+  document.getElementById('editSizeModal').classList.add('show');
+}
+async function saveEditSize() {
+  const rowIndex  = parseInt(document.getElementById('editRowIndex').value);
+  const tshirtSize= document.getElementById('editTshirtSize').value;
+  const tshirtQty = parseInt(document.getElementById('editTshirtQty').value)||0;
+  const jeansSize = document.getElementById('editJeansSize').value;
+  const jeansQty  = parseInt(document.getElementById('editJeansQty').value)||0;
+  if(tshirtSize==='-'&&jeansSize==='-'){showToast('กรุณาเลือกสินค้าอย่างน้อย 1 รายการ','error');return;}
+  closeModal('editSizeModal');
+  showLoading(true);
+  try {
+    const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
+      action:'updateOrderSize', token:ADMIN_TOKEN, rowIndex, tshirtSize, tshirtQty, jeansSize, jeansQty })});
+    const data = await res.json();
+    showLoading(false);
+    if(data.success){showToast('✅ อัปเดตไซส์และราคาใน Sheet เรียบร้อย','success');loadOrders();}
+    else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+// ── DELETE ─────────────────────────────────────────────────────
+async function doDelete(rowIndex,name) {
+  if(!guardAdmin())return;
+  if(!confirm(`ยืนยันการลบคำสั่งซื้อของ "${name}"?\nข้อมูลจะถูกลบออกจาก Google Sheet ถาวร`))return;
+  showLoading(true);
+  try {
+    const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'deleteOrder',token:ADMIN_TOKEN,rowIndex})});
+    const data = await res.json();
+    showLoading(false);
+    if(data.success){showToast('ลบคำสั่งซื้อเรียบร้อย','success');loadOrders();}
+    else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+// ── USERS ──────────────────────────────────────────────────────
+async function openUsersModal() {
+  if(!guardAdmin())return;
+  document.getElementById('usersModal').classList.add('show');
+  showLoading(true);
+  try {
+    const res  = await fetch(`${GAS_URL}?action=getUsers&token=${ADMIN_TOKEN}`);
+    const data = await res.json();
+    showLoading(false);
+    if(data.success) renderUsersTable(data.users);
+  } catch { showLoading(false); showToast('โหลดข้อมูล users ไม่ได้','error'); }
+}
+function renderUsersTable(users) {
+  const tbody=document.getElementById('usersTableBody');
+  const protected_=['เมธี','ศุภเสกย์'];
+  tbody.innerHTML=users.map((u,i)=>{
+    const rtag=u.role==='admin'?'<span class="role-tag rt-admin">ADMIN</span>':'<span class="role-tag rt-viewer">VIEWER</span>';
+    const dt=u.createdAt?new Date(u.createdAt).toLocaleDateString('th-TH'):'—';
+    const canDel=!protected_.includes(u.username);
+    return `<tr>
+      <td style="font-size:.72rem;color:var(--gray-400)">${i+1}</td>
+      <td style="font-weight:500">${u.username}</td>
+      <td>${u.displayName}</td>
+      <td>${rtag}</td><td style="font-size:.72rem">${dt}</td>
+      <td>${canDel?`<button class="act-btn btn-delete" onclick="deleteUser(${u.rowIndex},'${u.username}','${u.displayName}')">🗑</button>`:'<span style="font-size:.7rem;color:var(--gray-400)">ปกป้อง</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+async function addUser() {
+  const username   =document.getElementById('newUsername').value.trim();
+  const password   =document.getElementById('newPassword').value.trim();
+  const displayName=document.getElementById('newDisplayName').value.trim();
+  const role       =document.getElementById('newRole').value;
+  if(!username||!password||!displayName){showToast('กรุณากรอกข้อมูลให้ครบ','error');return;}
+  showLoading(true);
+  try {
+    const res  =await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'addUser',token:ADMIN_TOKEN,username,password,displayName,role})});
+    const data =await res.json();
+    showLoading(false);
+    if(data.success){
+      showToast('เพิ่มผู้ใช้งานเรียบร้อย','success');
+      document.getElementById('newUsername').value='';
+      document.getElementById('newPassword').value='';
+      document.getElementById('newDisplayName').value='';
+      openUsersModal();
+    } else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+async function deleteUser(rowIndex,username,displayName) {
+  if(!confirm(`ลบผู้ใช้งาน "${displayName}" (${username})?`))return;
+  showLoading(true);
+  try {
+    const res  =await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'deleteUser',token:ADMIN_TOKEN,rowIndex,username})});
+    const data =await res.json();
+    showLoading(false);
+    if(data.success){showToast('ลบผู้ใช้งานเรียบร้อย','success');openUsersModal();}
+    else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+// ── ANNOUNCEMENT ───────────────────────────────────────────────
+function openAnnounceModal() {
+  if(!guardAdmin())return;
+  document.getElementById('annTitle').value='';
+  document.getElementById('annContent').value='';
+  document.getElementById('announceModal').classList.add('show');
+}
+async function submitAnnouncement() {
+  const title  =document.getElementById('annTitle').value.trim();
+  const content=document.getElementById('annContent').value.trim();
+  if(!title||!content){showToast('กรุณาใส่หัวข้อและเนื้อหา','error');return;}
+  closeModal('announceModal');
+  showLoading(true);
+  try {
+    const res  =await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'addAnnouncement',token:ADMIN_TOKEN,title,content,author:currentUser})});
+    const data =await res.json();
+    showLoading(false);
+    if(data.success) showToast('📢 ประกาศเรียบร้อยแล้ว จะแสดงในหน้าสั่งซื้อ','success');
+    else showToast(data.message||'เกิดข้อผิดพลาด','error');
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+// ── EXPORT ─────────────────────────────────────────────────────
+function getExportRows() {
+  return getFiltered().map((o,i)=>({
+    '#':i+1,'ชื่อ-นามสกุล':o.fullName,'รหัสนิสิต':o.studentId,'ชั้นปี':'ปี '+o.year,
+    'เบอร์โทร':o.phone,'อีเมล':o.email||'',
+    'ไซส์เสื้อยืด':o.tshirtSize,'จำนวนเสื้อยืด':o.tshirtQty,
+    'ไซส์เสื้อยีนส์':o.jeansSize,'จำนวนเสื้อยีนส์':o.jeansQty,
+    'ราคารวม':o.totalPrice,'สถานะ':o.status,'หมายเหตุ':o.note||'',
+    'อนุมัติโดย':o.approvedBy||'','วันเวลาที่อนุมัติ':o.approvedAt?new Date(o.approvedAt).toLocaleString('th-TH'):'',
+    'วันที่สั่ง':o.timestamp?new Date(o.timestamp).toLocaleString('th-TH'):''
+  }));
+}
+function exportExcel() {
+  const rows=getExportRows(); if(!rows.length){showToast('ไม่มีข้อมูล','error');return;}
+  const ws=XLSX.utils.json_to_sheet(rows);
+  ws['!cols']=Object.keys(rows[0]).map(k=>({wch:Math.max(k.length+2,12)}));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'คำสั่งซื้อ');
+  XLSX.writeFile(wb,`orders-2569-${ds()}.xlsx`);
+  showToast('ส่งออก Excel เรียบร้อย ✓','success');
+}
+function exportCSV() {
+  const rows=getExportRows(); if(!rows.length){showToast('ไม่มีข้อมูล','error');return;}
+  const ws=XLSX.utils.json_to_sheet(rows);
+  const blob=new Blob(['\ufeff'+XLSX.utils.sheet_to_csv(ws)],{type:'text/csv;charset=utf-8'});
+  dl(blob,`orders-2569-${ds()}.csv`);
+  showToast('ส่งออก CSV เรียบร้อย ✓','success');
+}
+function exportWord() {
+  const rows=getExportRows(); if(!rows.length){showToast('ไม่มีข้อมูล','error');return;}
+  const ks=Object.keys(rows[0]);
+  const th=ks.map(h=>`<th style="background:#1a1a1a;color:#fff;padding:5px 8px;font-size:9pt">${h}</th>`).join('');
+  const trs=rows.map(r=>`<tr>${ks.map((k,j)=>`<td style="padding:4px 8px;border:1px solid #ddd;font-size:9pt${j===10?' font-weight:bold;':''}">${r[k]}</td>`).join('')}</tr>`).join('');
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+  <head><meta charset="UTF-8"><style>body{font-family:'Cordia New',sans-serif;font-size:11pt}table{border-collapse:collapse;width:100%}tr:nth-child(even){background:#f9f9f9}</style></head>
+  <body><h2 style="text-align:center">รายงานคำสั่งซื้อเสื้อปฏิบัติการ 2569</h2>
+  <p style="text-align:center;font-size:10pt;color:#666">พิมพ์เมื่อ: ${new Date().toLocaleString('th-TH')}</p>
+  <table border="1"><thead><tr>${th}</tr></thead><tbody>${trs}</tbody></table></body></html>`;
+  dl(new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'}),`orders-2569-${ds()}.doc`);
+  showToast('ส่งออก Word เรียบร้อย ✓','success');
+}
+function doPrint() {
+  document.getElementById('printMeta').textContent=
+    `พิมพ์เมื่อ: ${new Date().toLocaleString('th-TH')} | ออกโดย: ${currentUser||'—'}`;
+  window.print();
+}
+
+// ── HELPERS ────────────────────────────────────────────────────
+function ds(){const d=new Date();return`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;}
+function dl(blob,fn){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function showLoading(v){document.getElementById('loadingOverlay').classList.toggle('show',v);}
+function showToast(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(type?' '+type:'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')['rejectModal','editSizeModal','usersModal','announceModal'].forEach(closeModal);});
 </script>
 </body>
 </html>
