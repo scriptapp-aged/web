@@ -5,57 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>โครงการเกษตรน้องใหม่หัวใจ EDS</title>
     <style>
+        /* ใช้ Flexbox จัดหน้าจอให้เต็มและอยู่ตรงกลาง */
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffffff; /* พื้นหลังขาว */
-            color: #000000; /* ตัวหนังสือดำ */
-            font-family: 'Kanit', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             text-align: center;
         }
-        .container {
-            padding: 20px;
-            border: 2px solid #000; /* กรอบดำบางๆ */
-            border-radius: 10px;
-        }
+
         h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            font-weight: 500;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
+
         .date {
             font-size: 1rem;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            opacity: 0.7;
         }
+
         #time {
-            font-size: 5rem;
-            font-weight: 700;
-            margin: 10px 0;
+            font-size: 8rem;
+            font-weight: 200;
+            margin: 1rem 0;
             font-variant-numeric: tabular-nums;
+            line-height: 1;
         }
+
         .footer {
-            margin-top: 30px;
+            margin-top: 2rem;
             font-size: 0.9rem;
-            border-top: 1px solid #000;
-            padding-top: 10px;
+            letter-spacing: 0.1rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>โครงการเกษตรน้องใหม่หัวใจ EDS</h1>
-        <div class="date">วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
-        
-        <div id="time">00:00:00</div>
-        
-        <div class="footer">
-            คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
-        </div>
+    <h1>โครงการเกษตรน้องใหม่หัวใจ EDS</h1>
+    <div class="date">วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
+    
+    <div id="time">00:00:00</div>
+    
+    <div class="footer">
+        คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
     </div>
 
     <script>
