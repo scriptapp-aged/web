@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แสดงเวลาปัจจุบัน</title>
+    <title>โครงการเกษตรน้องใหม่หัวใจ EDS</title>
     <style>
         body {
             display: flex;
@@ -11,58 +11,66 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f2f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .clock-card {
-            background: white;
-            padding: 2rem 4rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background-color: #ffffff; /* พื้นหลังขาว */
+            color: #000000; /* ตัวหนังสือดำ */
+            font-family: 'Kanit', sans-serif;
             text-align: center;
         }
-        #time {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #333;
-            margin: 0;
+        .container {
+            padding: 20px;
+            border: 2px solid #000; /* กรอบดำบางๆ */
+            border-radius: 10px;
         }
-        #date {
-            font-size: 1.2rem;
-            color: #666;
-            margin-top: 10px;
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .date {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        #time {
+            font-size: 5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            border-top: 1px solid #000;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="clock-card">
+    <div class="container">
+        <h1>โครงการเกษตรน้องใหม่หัวใจ EDS</h1>
+        <div class="date">วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
+        
         <div id="time">00:00:00</div>
-        <div id="date">กำลังโหลดวันที่...</div>
+        
+        <div class="footer">
+            คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
+        </div>
     </div>
 
     <script>
         function updateClock() {
             const now = new Date();
-            
-            // จัดรูปแบบเวลา
-            const timeString = now.toLocaleTimeString('th-TH', { hour12: false });
-            // จัดรูปแบบวันที่
-            const dateString = now.toLocaleDateString('th-TH', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+            const timeString = now.toLocaleTimeString('th-TH', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false 
             });
-
             document.getElementById('time').textContent = timeString;
-            document.getElementById('date').textContent = dateString;
         }
 
-        // เรียกฟังก์ชันทุกๆ 1 วินาที
         setInterval(updateClock, 1000);
-        
-        // เรียกทันทีเมื่อโหลดหน้าเว็บ
         updateClock();
     </script>
 </body>
