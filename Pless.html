@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>สั่งซื้อเสื้อปฏิบัติการ — เกษตรและสิ่งแวดล้อมศึกษา 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0d0d0d;--white:#fafafa;--gray-100:#f4f4f4;--gray-200:#e8e8e8;
+  --gray-400:#b0b0b0;--gray-600:#5a5a5a;--border:#e0e0e0;--radius:4px;--font:'Kanit',sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--white);color:var(--black);font-weight:300;line-height:1.6;min-height:100vh}
+
+.site-header{background:var(--black);color:var(--white);padding:0 2rem;position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase}
+.header-check-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.1em;
+  padding:.4rem 1rem;background:transparent;color:var(--white);border:1px solid #555;
+  border-radius:var(--radius);cursor:pointer;transition:all .2s;white-space:nowrap}
+.header-check-btn:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+
+/* Announcement Banner */
+.announce-bar{background:#1a1a2e;color:#e8e8f0;padding:.7rem 1.5rem;font-size:.82rem;
+  display:none;align-items:flex-start;gap:.75rem;border-bottom:1px solid #2a2a3e}
+.announce-bar.show{display:flex}
+.ann-icon{font-size:1rem;flex-shrink:0;margin-top:.05rem}
+.ann-body{flex:1}
+.ann-title{font-weight:600;margin-bottom:.15rem}
+.ann-text{opacity:.85;line-height:1.5}
+.ann-date{font-size:.68rem;opacity:.55;margin-top:.2rem}
+
+.hero{background:var(--black);color:var(--white);padding:4rem 2rem 3rem;text-align:center}
+.hero-label{font-size:.7rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:600;line-height:1.2;margin-bottom:.75rem}
+.hero-sub{font-size:.9rem;color:var(--gray-400)}
+.hero-date{display:inline-block;margin-top:1.25rem;padding:.4rem 1.2rem;border:1px solid #444;font-size:.78rem;letter-spacing:.1em;color:var(--gray-400)}
+
+.container{max-width:840px;margin:0 auto;padding:0 1.5rem}
+.section{padding:2.5rem 0;border-bottom:1px solid var(--border)}
+.section-title{font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1.5rem}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:540px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.72rem;font-weight:500;letter-spacing:.08em;color:var(--gray-600);text-transform:uppercase}
+.field input,.field select{font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);background:var(--white);color:var(--black);border-radius:var(--radius);
+  outline:none;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--black)}
+.field input::placeholder{color:var(--gray-400)}
+.field-full{grid-column:1/-1}
+
+.product-block{background:var(--gray-100);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1rem}
+.product-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.25rem}
+.product-name{font-size:1rem;font-weight:600}
+.product-price-tag{font-size:.75rem;color:var(--gray-600)}
+
+/* ═══ รูปเสื้อ — แก้ src="" ในโค้ดเท่านั้น ═══ */
+.product-images{display:flex;gap:1rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:.5rem}
+.img-slot{flex-shrink:0;width:360px;height:440px;border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;background:var(--white);display:flex;align-items:center;justify-content:center}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:600px){.img-slot{width:260px;height:320px}}
+
+/* Size grid */
+.size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:.5rem;margin-bottom:1rem}
+.size-option{position:relative}
+.size-option input[type="radio"]{position:absolute;opacity:0;width:0;height:0}
+.size-option label{display:block;text-align:center;padding:.5rem .2rem .35rem;border:1px solid var(--border);
+  border-radius:var(--radius);cursor:pointer;background:var(--white);transition:all .15s;user-select:none}
+.size-option label .sz{font-size:.85rem;font-weight:600;display:block}
+.size-option label .chest{font-size:.58rem;color:var(--gray-600);display:block}
+.size-option input:checked+label{background:var(--black);color:var(--white);border-color:var(--black)}
+.size-option input:checked+label .chest{color:var(--gray-400)}
+
+/* Qty row */
+.qty-row{display:flex;align-items:center;gap:1rem;margin-top:.9rem;flex-wrap:wrap}
+.qty-label{font-size:.78rem;color:var(--gray-600)}
+.qty-control{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.qty-btn{font-family:var(--font);width:36px;height:36px;background:var(--white);border:none;font-size:1.1rem;
+  cursor:pointer;color:var(--black);transition:background .15s}
+.qty-btn:hover{background:var(--gray-100)}
+.qty-val{width:48px;height:36px;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);
+  text-align:center;font-family:var(--font);font-size:.92rem;font-weight:600;background:var(--white);color:var(--black)}
+.qty-price{font-size:.82rem;color:var(--gray-600);margin-left:auto}
+
+.total-box{background:var(--black);color:var(--white);padding:1.25rem 1.5rem;border-radius:6px;
+  display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0}
+.total-label{font-size:.78rem;font-weight:400;letter-spacing:.1em;color:var(--gray-400)}
+.total-amount{font-size:1.6rem;font-weight:700}
+.total-breakdown{font-size:.72rem;color:var(--gray-600);margin-top:.25rem}
+
+.bank-box{border:1px solid var(--border);border-radius:6px;padding:1.25rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.bank-name{font-size:.72rem;color:var(--gray-600);letter-spacing:.08em;text-transform:uppercase}
+.bank-acc{font-size:1.2rem;font-weight:600;letter-spacing:.06em;margin-top:.2rem}
+.bank-holder{font-size:.8rem;color:var(--gray-600);margin-top:.1rem}
+.copy-btn{font-family:var(--font);font-size:.75rem;font-weight:500;letter-spacing:.1em;padding:.5rem 1.2rem;
+  background:var(--black);color:var(--white);border:none;border-radius:var(--radius);cursor:pointer;transition:opacity .2s}
+.copy-btn:hover{opacity:.8}
+.copy-btn.copied{background:#2e7d32}
+
+.proof-upload{border:1px dashed var(--gray-400);border-radius:6px;padding:2rem;text-align:center;
+  cursor:pointer;transition:border-color .2s,background .2s;position:relative;background:var(--white)}
+.proof-upload:hover{border-color:var(--black);background:var(--gray-100)}
+.proof-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.proof-upload .upload-icon{font-size:2rem;margin-bottom:.5rem}
+.proof-upload .upload-text{font-size:.82rem;color:var(--gray-600)}
+.proof-preview{display:none;margin-top:.75rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.proof-preview img{width:100%;max-height:200px;object-fit:cover;display:block}
+
+.submit-btn{width:100%;font-family:var(--font);font-size:.95rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:1rem;background:var(--black);color:var(--white);border:none;
+  border-radius:var(--radius);cursor:pointer;transition:opacity .2s;margin-top:.5rem}
+.submit-btn:hover{opacity:.85}
+.submit-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Status Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,13,13,.75);z-index:200;
+  align-items:flex-start;justify-content:center;padding-top:80px;backdrop-filter:blur(3px)}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--white);width:100%;max-width:500px;border-radius:8px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .2s ease;margin:0 1rem}
+@keyframes mIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{background:var(--black);color:var(--white);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:.88rem;font-weight:600;letter-spacing:.06em}
+.modal-close{background:none;border:none;color:var(--gray-400);font-size:1.2rem;cursor:pointer;padding:0;transition:color .2s}
+.modal-close:hover{color:var(--white)}
+.modal-body{padding:1.5rem}
+.modal-check-row{display:flex;gap:.6rem;margin-bottom:1rem}
+.modal-check-row input{flex:1;font-family:var(--font);font-size:.92rem;font-weight:300;padding:.65rem .9rem;
+  border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s}
+.modal-check-row input:focus{border-color:var(--black)}
+.modal-check-row .check-btn{font-family:var(--font);font-size:.8rem;font-weight:500;letter-spacing:.08em;
+  padding:.65rem 1.25rem;background:var(--black);color:var(--white);border:none;border-radius:var(--radius);
+  cursor:pointer;transition:opacity .2s;white-space:nowrap}
+.modal-check-row .check-btn:hover{opacity:.8}
+.status-card{display:none;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:.5rem}
+.status-card-header{padding:1rem 1.25rem;background:var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+.status-card-name{font-weight:600;font-size:.95rem}
+.status-badge{font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px}
+.badge-pending{background:#fff3e0;color:#e65100}
+.badge-approved{background:#e8f5e9;color:#1b5e20}
+.badge-rejected{background:#ffebee;color:#b71c1c}
+.status-card-body{padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:480px){.status-card-body{grid-template-columns:1fr}}
+.si-label{font-size:.68rem;color:var(--gray-600);letter-spacing:.08em;text-transform:uppercase}
+.si-val{font-size:.9rem;font-weight:500;margin-top:.15rem}
+.status-note{grid-column:1/-1;background:#fff3e0;border-radius:4px;padding:.6rem .9rem;font-size:.8rem;color:#e65100}
+.status-approve-info{grid-column:1/-1;background:#e8f5e9;border-radius:4px;padding:.6rem .9rem;font-size:.78rem;color:#1b5e20}
+
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(250,250,250,.85);z-index:500;
+  align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+.loading-overlay.show{display:flex}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--black);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--black);color:var(--white);padding:.75rem 1.5rem;border-radius:4px;
+  font-size:.82rem;opacity:0;transition:all .3s;z-index:999;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:#1b5e20}.toast.error{background:#b71c1c}
+footer{background:var(--black);color:var(--gray-400);text-align:center;padding:1.5rem;font-size:.72rem;letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<script>
+// ══ CONFIG ═══════════════════════════════════════════════════
+const GAS_URL      = "https://script.google.com/macros/s/AKfycbyHxRLus9r2C4vtnUWh3ppmn2GAmfrel1klAlSyZl0WbPT5JeepxoIVIPT_Pi94NmBk/exec";
+const BANK_ACCOUNT = "414-237272-3";        // ← เลขบัญชีจริง
+const BANK_HOLDER  = "ชื่อบัญชี : นายศุภเสกย์ นิลเทพา และหรือ นายเมธี ใจสุขดี";     // ← ชื่อจริง
+// ═════════════════════════════════════════════════════════════
+</script>
+
+<header class="site-header">
+  <span class="logo">เกษตรและสิ่งแวดล้อมศึกษา</span>
+  <button class="header-check-btn" onclick="openCheckModal()">ตรวจสอบสถานะ</button>
+</header>
+
+<!-- Announcement Banner -->
+<div class="announce-bar" id="announceBanner">
+  <span class="ann-icon">📢</span>
+  <div class="ann-body">
+    <div class="ann-title" id="ann-title"></div>
+    <div class="ann-text"  id="ann-text"></div>
+    <div class="ann-date"  id="ann-date"></div>
+  </div>
+</div>
+
+<div class="hero">
+  <p class="hero-label">สั่งซื้อเสื้อปฏิบัติการ</p>
+  <h1>"เกษตรและสิ่งแวดล้อมศึกษา"<br>ปีการศึกษา 2569</h1>
+  <p class="hero-sub">พบปัญหาการใช้งานติดต่อ : นายเมธี ใจสุขดี (Line : _maytee)</p>
+  <span class="hero-date">10 มิถุนายน — 21 มิถุนายน 2569</span>
+</div>
+
+<main class="container">
+
+  <!-- 01 ข้อมูลผู้สั่ง -->
+  <section class="section">
+    <p class="section-title">01 — ข้อมูลผู้สั่งซื้อ</p>
+    <div class="form-grid">
+      <div class="field">
+        <label>ชื่อ-นามสกุล *</label>
+        <input type="text" id="fullName" placeholder="ชื่อ นามสกุล"/>
+      </div>
+      <div class="field">
+        <label>รหัสนิสิต *</label>
+        <input type="text" id="studentId" placeholder="65XXXXXXX" maxlength="10"/>
+      </div>
+      <div class="field">
+        <label>ชั้นปี *</label>
+        <select id="year">
+          <option value="" disabled selected>เลือกชั้นปี</option>
+          <option value="1">ปี 1</option><option value="2">ปี 2</option>
+          <option value="3">ปี 3</option><option value="4">ปี 4</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>เบอร์โทรศัพท์ *</label>
+        <input type="tel" id="phone" placeholder="08XXXXXXXX" maxlength="10"/>
+      </div>
+      <div class="field field-full">
+        <label>อีเมล * <span style="font-weight:300;font-size:.68rem;color:var(--gray-400)">(รับแจ้งผลอนุมัติ)</span></label>
+        <input type="email" id="email" placeholder="example@ku.th"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 เสื้อยืด -->
+  <section class="section">
+    <p class="section-title">02 — เสื้อยืด · 240 บาท/ตัว <span style="font-weight:300;font-size:.7rem">(ไม่บังคับ)</span></p>
+    <div class="product-block">
+
+      <!--
+      ═══════════════════════════════════════════════════════════
+      รูปเสื้อยืด — แก้ไขได้จากในโค้ดเท่านั้น
+      ► เปลี่ยนรูป: แก้ค่า src="URL" แล้ว commit ขึ้น GitHub
+      ═══════════════════════════════════════════════════════════ -->
+      <div class="product-images">
+        <div class="img-slot">
+          <img src="หน้า.png"
+               alt="เสื้อยืดด้านหน้า" id="tshirt-front"/>
+        </div>
+        <div class="img-slot">
+          <img src="หลัง.png"
+               alt="เสื้อยืดด้านหลัง" id="tshirt-back"/>
+        </div>
+      </div>
+
+      <div class="size-grid">
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-S"   value="S">  <label for="ts-S">  <span class="sz">S</span>  <span class="chest">อก 34"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-M"   value="M">  <label for="ts-M">  <span class="sz">M</span>  <span class="chest">อก 37"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-L"   value="L">  <label for="ts-L">  <span class="sz">L</span>  <span class="chest">อก 40"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-XL"  value="XL"> <label for="ts-XL"> <span class="sz">XL</span> <span class="chest">อก 43"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-2XL" value="2XL"><label for="ts-2XL"><span class="sz">2XL</span><span class="chest">อก 46"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-3XL" value="3XL"><label for="ts-3XL"><span class="sz">3XL</span><span class="chest">อก 49"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-4XL" value="4XL"><label for="ts-4XL"><span class="sz">4XL</span><span class="chest">อก 52"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-5XL" value="5XL"><label for="ts-5XL"><span class="sz">5XL</span><span class="chest">อก 55"</span></label></div>
+        <div class="size-option"><input type="radio" name="tshirtSize" id="ts-6XL" value="6XL"><label for="ts-6XL"><span class="sz">6XL</span><span class="chest">อก 58"</span></label></div>
+      </div>
+
+      <div class="qty-row">
+        <span class="qty-label">จำนวน (ตัว)</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('tshirtQty',-1)">−</button>
+          <input class="qty-val" type="number" id="tshirtQty" value="1" min="1" max="99" readonly/>
+          <button class="qty-btn" onclick="changeQty('tshirtQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="ts-subtotal">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 เสื้อยีนส์ -->
+  <section class="section">
+    <p class="section-title">03 — เสื้อยีนส์ · 420 บาท/ตัว <span style="font-weight:300;font-size:.7rem">(ไม่บังคับ)</span></p>
+    <div class="product-block">
+
+      <!--
+      ═══════════════════════════════════════════════════════════
+      รูปเสื้อยีนส์ — แก้ไขได้จากในโค้ดเท่านั้น
+      ► เปลี่ยนรูป: แก้ค่า src="URL" แล้ว commit ขึ้น GitHub
+      ═══════════════════════════════════════════════════════════ -->
+      <div class="product-images">
+        <div class="img-slot">
+          <img src="ยีนส์.png"
+               alt="เสื้อยีนส์" id="jeans-front"/>
+        </div>
+      </div>
+
+      <div class="size-grid">
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-S"   value="S">  <label for="js-S">  <span class="sz">S</span>  <span class="chest">อก 38"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-M"   value="M">  <label for="js-M">  <span class="sz">M</span>  <span class="chest">อก 40"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-L"   value="L">  <label for="js-L">  <span class="sz">L</span>  <span class="chest">อก 42"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-XL"  value="XL"> <label for="js-XL"> <span class="sz">XL</span> <span class="chest">อก 44"</span></label></div>
+        <div class="size-option"><input type="radio" name="jeansSize" id="js-2XL" value="2XL"><label for="js-2XL"><span class="sz">2XL</span><span class="chest">อก 46"</span></label></div>
+      </div>
+
+      <div class="qty-row">
+        <span class="qty-label">จำนวน (ตัว)</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty('jeansQty',-1)">−</button>
+          <input class="qty-val" type="number" id="jeansQty" value="1" min="1" max="99" readonly/>
+          <button class="qty-btn" onclick="changeQty('jeansQty',1)">+</button>
+        </div>
+        <span class="qty-price" id="js-subtotal">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ชำระเงิน -->
+  <section class="section">
+    <p class="section-title">04 — การชำระเงิน</p>
+    <div class="total-box">
+      <div>
+        <div class="total-label">ยอดชำระทั้งหมด</div>
+        <div class="total-breakdown" id="total-breakdown">เลือกไซส์เพื่อดูราคา</div>
+      </div>
+      <span class="total-amount" id="totalDisplay">฿—</span>
+    </div>
+
+    <div class="bank-box">
+      <div>
+        <div class="bank-name">ธนาคารไทยพาณิชย์ (SCB)</div>
+        <div class="bank-acc" id="bankAccDisplay">—</div>
+        <div class="bank-holder" id="bankHolderDisplay">—</div>
+      </div>
+      <button class="copy-btn" id="copyBtn" onclick="copyAccount()">คัดลอกเลขบัญชี</button>
+    </div>
+
+    <div style="margin-top:1.25rem">
+      <div class="field" style="margin-bottom:.75rem">
+        <label>หลักฐานการชำระเงิน * <span style="font-weight:300;font-size:.68rem;color:var(--gray-400)">(PNG / JPG / PDF)</span></label>
+      </div>
+      <div class="proof-upload">
+        <input type="file" id="proofFile" accept="image/*,application/pdf" onchange="handleProof(this)"/>
+        <div class="upload-icon">📎</div>
+        <p class="upload-text">คลิกหรือลากไฟล์มาวางที่นี่</p>
+      </div>
+      <div class="proof-preview" id="proofPreview">
+        <img id="proofPreviewImg" alt="หลักฐาน"/>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:1.5rem 0 3rem">
+    <button class="submit-btn" id="submitBtn" onclick="submitOrder()">ยืนยันการสั่งซื้อ</button>
+    <p style="text-align:center;font-size:.72rem;color:var(--gray-400);margin-top:.75rem">
+      สั่งเสื้อยืดหรือเสื้อยีนส์อย่างใดอย่างหนึ่งหรือทั้งคู่ก็ได้<br>ระบบจะแจ้งผลทางอีเมลที่ให้ไว้
+    </p>
+  </section>
+</main>
+
+<footer>เกษตรและสิ่งแวดล้อมศึกษา — ปีการศึกษา 2569</footer>
+
+<!-- Modal ตรวจสอบสถานะ -->
+<div class="modal-overlay" id="checkModal" onclick="if(event.target===this)closeCheckModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>ตรวจสอบสถานะการชำระเงิน</h3>
+      <button class="modal-close" onclick="closeCheckModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-check-row">
+        <input type="text" id="checkId" placeholder="ใส่รหัสนิสิต" maxlength="10"
+               onkeydown="if(event.key==='Enter')checkStatus()"/>
+        <button class="check-btn" onclick="checkStatus()">ตรวจสอบ</button>
+      </div>
+      <div class="status-card" id="statusCard">
+        <div class="status-card-header">
+          <span class="status-card-name" id="sc-name">—</span>
+          <span class="status-badge" id="sc-badge">—</span>
+        </div>
+        <div class="status-card-body">
+          <div><div class="si-label">รหัสนิสิต</div><div class="si-val" id="sc-sid">—</div></div>
+          <div><div class="si-label">ชั้นปี</div><div class="si-val" id="sc-year">—</div></div>
+          <div><div class="si-label">เสื้อยืด</div><div class="si-val" id="sc-tshirt">—</div></div>
+          <div><div class="si-label">เสื้อยีนส์</div><div class="si-val" id="sc-jeans">—</div></div>
+          <div><div class="si-label">ยอดชำระ</div><div class="si-val" id="sc-price">—</div></div>
+          <div><div class="si-label">วันที่สั่ง</div><div class="si-val" id="sc-date">—</div></div>
+          <div class="status-note" id="sc-note" style="display:none"></div>
+          <div class="status-approve-info" id="sc-approve" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Init ──────────────────────────────────────────────────────
+document.getElementById('bankAccDisplay').textContent    = BANK_ACCOUNT;
+document.getElementById('bankHolderDisplay').textContent = BANK_HOLDER;
+loadAnnouncement();
+
+// ── Load Announcement ─────────────────────────────────────────
+async function loadAnnouncement() {
+  try {
+    const res  = await fetch(`${GAS_URL}?action=getAnnouncements`);
+    const data = await res.json();
+    if (data.success && data.announcements && data.announcements.length > 0) {
+      const ann = data.announcements[0]; // แสดงล่าสุด
+      document.getElementById('ann-title').textContent = ann.title;
+      document.getElementById('ann-text').textContent  = ann.content;
+      document.getElementById('ann-date').textContent  =
+        ann.date ? 'ประกาศเมื่อ: ' + new Date(ann.date).toLocaleDateString('th-TH') : '';
+      document.getElementById('announceBanner').classList.add('show');
+    }
+  } catch { /* ไม่มีประกาศ ไม่ต้องแสดง */ }
+}
+
+// ── Qty ───────────────────────────────────────────────────────
+function changeQty(id, delta) {
+  const el = document.getElementById(id);
+  el.value = Math.max(1, (parseInt(el.value)||1) + delta);
+  calcTotal();
+}
+
+// ── Calc Total — คำนวณเมื่อเลือกไซส์แล้วเท่านั้น ──────────────
+function calcTotal() {
+  const tSize = document.querySelector('input[name="tshirtSize"]:checked');
+  const jSize = document.querySelector('input[name="jeansSize"]:checked');
+  const tq    = parseInt(document.getElementById('tshirtQty').value)||1;
+  const jq    = parseInt(document.getElementById('jeansQty').value) ||1;
+
+  const tsAmt = tSize ? tq*240 : 0;
+  const jsAmt = jSize ? jq*420 : 0;
+  const total = tsAmt + jsAmt;
+
+  document.getElementById('ts-subtotal').textContent = tSize ? '฿'+tsAmt.toLocaleString() : '—';
+  document.getElementById('js-subtotal').textContent = jSize ? '฿'+jsAmt.toLocaleString() : '—';
+  document.getElementById('totalDisplay').textContent = total>0 ? '฿'+total.toLocaleString() : '฿—';
+
+  const lines = [];
+  if (tSize) lines.push(`เสื้อยืด ${tSize.value} × ${tq} = ฿${tsAmt.toLocaleString()}`);
+  if (jSize) lines.push(`เสื้อยีนส์ ${jSize.value} × ${jq} = ฿${jsAmt.toLocaleString()}`);
+  document.getElementById('total-breakdown').textContent = lines.length ? lines.join(' + ') : 'เลือกไซส์เพื่อดูราคา';
+}
+document.querySelectorAll('input[name="tshirtSize"],input[name="jeansSize"]')
+  .forEach(r => r.addEventListener('change', calcTotal));
+
+// ── Proof ─────────────────────────────────────────────────────
+function handleProof(input) {
+  const file = input.files[0]; if (!file) return;
+  if (file.type.startsWith('image/')) {
+    const r = new FileReader();
+    r.onload = e => {
+      document.getElementById('proofPreviewImg').src = e.target.result;
+      document.getElementById('proofPreview').style.display = 'block';
+    };
+    r.readAsDataURL(file);
+  }
+  showToast('แนบหลักฐานแล้ว: '+file.name);
+}
+
+// ── Copy account ──────────────────────────────────────────────
+function copyAccount() {
+  navigator.clipboard.writeText(BANK_ACCOUNT).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent='✓ คัดลอกแล้ว'; btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='คัดลอกเลขบัญชี';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ── Upload Proof ──────────────────────────────────────────────
+async function uploadProofFile() {
+  const file = document.getElementById('proofFile').files[0]; if (!file) return "";
+  return new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = async e => {
+      try {
+        const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
+          action:'uploadProof', base64:e.target.result.split(',')[1], mimeType:file.type, fileName:file.name })});
+        const data = await res.json();
+        resolve(data.success ? data.url : "");
+      } catch { resolve(""); }
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+// ── Submit Order ──────────────────────────────────────────────
+async function submitOrder() {
+  const fullName  = document.getElementById('fullName').value.trim();
+  const studentId = document.getElementById('studentId').value.trim();
+  const year      = document.getElementById('year').value;
+  const phone     = document.getElementById('phone').value.trim();
+  const email     = document.getElementById('email').value.trim();
+
+  if (!fullName||!studentId||!year||!phone)
+    { showToast('กรุณากรอกข้อมูลให้ครบ','error'); return; }
+  if (!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    { showToast('กรุณากรอกอีเมลให้ถูกต้อง','error'); return; }
+
+  const tSize = document.querySelector('input[name="tshirtSize"]:checked');
+  const jSize = document.querySelector('input[name="jeansSize"]:checked');
+  const tshirtSize  = tSize ? tSize.value : "-";
+  const jeansSize   = jSize ? jSize.value : "-";
+  const tshirtQty   = tSize ? (parseInt(document.getElementById('tshirtQty').value)||1) : 0;
+  const jeansQty    = jSize ? (parseInt(document.getElementById('jeansQty').value) ||1) : 0;
+
+  if (!tSize && !jSize)
+    { showToast('กรุณาเลือกสินค้าอย่างน้อย 1 รายการ (เสื้อยืดหรือเสื้อยีนส์)','error'); return; }
+
+  const totalPrice = tshirtQty*240 + jeansQty*420;
+
+  if (!document.getElementById('proofFile').files[0])
+    { showToast('กรุณาแนบหลักฐานการชำระเงิน','error'); return; }
+
+  showLoading(true);
+  document.getElementById('submitBtn').disabled = true;
+  const proofUrl = await uploadProofFile();
+
+  try {
+    const res  = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({
+      action:'submitOrder', fullName, studentId, year, phone, email,
+      tshirtSize, tshirtQty, jeansSize, jeansQty, totalPrice, proofUrl })});
+    const data = await res.json();
+    showLoading(false);
+    document.getElementById('submitBtn').disabled = false;
+    if (data.success) {
+      showToast('สั่งซื้อสำเร็จ! ระบบจะแจ้งผลทางอีเมล '+email,'success');
+      setTimeout(()=>location.reload(),3200);
+    } else { showToast(data.message||'เกิดข้อผิดพลาด','error'); }
+  } catch {
+    showLoading(false);
+    document.getElementById('submitBtn').disabled = false;
+    showToast('ไม่สามารถเชื่อมต่อได้ กรุณาลองใหม่','error');
+  }
+}
+
+// ── Check Status ──────────────────────────────────────────────
+async function checkStatus() {
+  const sid = document.getElementById('checkId').value.trim();
+  if (!sid) { showToast('กรุณาใส่รหัสนิสิต','error'); return; }
+  showLoading(true);
+  try {
+    const res  = await fetch(`${GAS_URL}?action=checkStatus&studentId=${encodeURIComponent(sid)}`);
+    const data = await res.json();
+    showLoading(false);
+    const card = document.getElementById('statusCard');
+    if (data.success && data.found) {
+      const d = data.data;
+      document.getElementById('sc-name').textContent   = d.fullName;
+      document.getElementById('sc-sid').textContent    = d.studentId;
+      document.getElementById('sc-year').textContent   = 'ปี '+d.year;
+      document.getElementById('sc-tshirt').textContent =
+        d.tshirtSize && d.tshirtSize!=='-' && d.tshirtQty>0 ? `${d.tshirtSize} × ${d.tshirtQty} ตัว` : 'ไม่ได้สั่ง';
+      document.getElementById('sc-jeans').textContent  =
+        d.jeansSize  && d.jeansSize !=='-' && d.jeansQty >0 ? `${d.jeansSize}  × ${d.jeansQty}  ตัว` : 'ไม่ได้สั่ง';
+      document.getElementById('sc-price').textContent  = '฿'+Number(d.totalPrice).toLocaleString();
+      const rawDate = new Date(d.timestamp);
+      document.getElementById('sc-date').textContent = isNaN(rawDate)?d.timestamp:rawDate.toLocaleString('th-TH');
+      const badge = document.getElementById('sc-badge');
+      badge.textContent = d.status; badge.className='status-badge';
+      if (d.status==='อนุมัติแล้ว') badge.classList.add('badge-approved');
+      else if (d.status==='ปฏิเสธ') badge.classList.add('badge-rejected');
+      else badge.classList.add('badge-pending');
+      const noteEl    = document.getElementById('sc-note');
+      const approveEl = document.getElementById('sc-approve');
+      if (d.status==='ปฏิเสธ'&&d.note) {
+        noteEl.textContent='📌 หมายเหตุ: '+d.note; noteEl.style.display='block';
+      } else noteEl.style.display='none';
+      if (d.status==='อนุมัติแล้ว'&&d.approvedBy) {
+        approveEl.innerHTML=`✅ อนุมัติโดย: <strong>${d.approvedBy}</strong><br>
+          เมื่อ: ${d.approvedAt?new Date(d.approvedAt).toLocaleString('th-TH'):'—'}`;
+        approveEl.style.display='block';
+      } else approveEl.style.display='none';
+      card.style.display='block';
+    } else {
+      card.style.display='none';
+      showToast('ไม่พบข้อมูลรหัสนิสิต '+sid,'error');
+    }
+  } catch { showLoading(false); showToast('ไม่สามารถเชื่อมต่อได้','error'); }
+}
+
+function openCheckModal()  { document.getElementById('checkModal').classList.add('show'); setTimeout(()=>document.getElementById('checkId').focus(),100); }
+function closeCheckModal() { document.getElementById('checkModal').classList.remove('show'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeCheckModal(); });
+function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('show',v); }
+function showToast(msg,type) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast'+(type?' '+type:'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+</script>
+</body>
+</html>
