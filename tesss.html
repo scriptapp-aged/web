@@ -3,177 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Closed - เสื้อปฏิบัติการ 2569</title>
+    <title>เสื้อปฏิบัติการ 2569</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg: #ffffff;
-            --text-main: #000000;
-            --text-sub: #666666;
-            --accent: #eeeeee;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
+        body, html {
+            height: 100%;
+            background-color: #ffffff; /* ขาวล้วนบริสุทธิ์ */
+            color: #000000; /* ดำสนิท */
             font-family: 'Prompt', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* จัดกึ่งกลางหน้าจอแบบนิ่งๆ */
+        .wrapper {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* ป้องกันการเลื่อนหน้าจอ */
+            padding: 40px 20px;
+            position: relative;
         }
 
-        /* ลูกเล่นพื้นหลัง: จุดตารางจางๆ แบบสมุดโน้ต */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.4;
-            z-index: -1;
-        }
-
-        .container {
+        /* ลูกเล่น: เนื้อหาทั้งหมดจะค่อยๆ เฟดขึ้นมาอย่างนุ่มนวลและช้าลง (Ease-out) */
+        .main-content {
             text-align: center;
-            max-width: 600px;
-            padding: 40px;
-            animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            max-width: 500px;
+            animation: superSmoothFade 1.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* แอนิเมชันตอนหน้าโหลด */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes superSmoothFade {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #000;
-            border-radius: 50%;
-            display: inline-block;
-            margin-bottom: 15px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
         h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            letter-spacing: -1px;
-            line-height: 1.1;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            font-size: 1.35rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        .year {
-            font-weight: 100;
-            display: block;
-            font-size: 4rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-            -webkit-text-stroke: 1px #000;
-            color: transparent;
-        }
-
-        .message {
-            font-size: 1.1rem;
+        .subtitle {
+            font-size: 0.95rem;
             font-weight: 300;
-            margin-bottom: 50px;
-            color: var(--text-sub);
+            color: #888888; /* สีเทาอ่อนเพื่อให้หัวข้อเด่นขึ้น */
+            margin-bottom: 48px;
         }
 
-        .contact-box {
-            border-top: 1px solid #000;
-            padding-top: 30px;
-            display: inline-block;
-            min-width: 280px;
+        /* ลูกเล่น: เส้นแบ่งสไตล์มินิมอลที่ขยายตัวจากตรงกลางตอนโหลดหน้า */
+        .line-separator {
+            width: 15px;
+            height: 1px;
+            background-color: #000000;
+            margin: 0 auto 48px auto;
+            animation: lineExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .contact-box p {
+        @keyframes lineExpand {
+            from { width: 0px; }
+            to { width: 15px; }
+        }
+
+        .contact-section {
             font-size: 0.9rem;
             font-weight: 300;
-            margin-bottom: 5px;
+            line-height: 1.8;
+            color: #111111;
         }
 
-        .line-id {
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 1rem;
-            font-weight: 500;
+        /* ลูกเล่น: ลิงก์ LINE ที่มีเส้นใต้บางๆ และจะขยายระยะห่างตัวอักษรเมื่อ Hover */
+        .line-contact {
+            color: #000000;
             text-decoration: none;
-            color: #000;
-            border-bottom: 1px solid transparent;
-            transition: all 0.3s;
+            font-weight: 400;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 2px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .line-id:hover {
-            letter-spacing: 2px;
-            border-bottom: 1px solid #000;
+        .line-contact:hover {
+            letter-spacing: 1.5px;
+            background-color: #000000;
+            color: #ffffff;
+            padding-left: 6px;
+            padding-right: 4px;
         }
 
+        /* ส่วนท้ายสุด: วางตำแหน่งไว้ล่างสุดของหน้าจออย่างถาวร */
         footer {
             position: absolute;
             bottom: 40px;
             font-size: 0.75rem;
-            letter-spacing: 2px;
-            font-weight: 300;
-            text-transform: uppercase;
-            opacity: 0.6;
+            font-weight: 200;
+            letter-spacing: 1.5px;
+            color: #999999;
+            text-align: center;
+            width: 100%;
         }
 
-        /* ลูกเล่นเส้นวิ่งมินิมอล */
-        .line-decoration {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, #000, transparent);
-            margin: 0 auto 20px;
-        }
-
+        /* ปรับสัดส่วนบนมือถือขนาดเล็ก */
         @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
-            .year { font-size: 3rem; }
+            h1 { font-size: 1.2rem; }
+            .subtitle { font-size: 0.9rem; }
+            footer { font-size: 0.7rem; bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="line-decoration"></div>
-        <div class="status-dot"></div>
+    <div class="wrapper">
         
-        <h1>System Closed</h1>
-        <span class="year">2026</span>
-        
-        <p class="message">ปิดระบบคำสั่งซื้อเสื้อปฏิบัติการ<br>
-            <span style="font-size: 0.9rem;">(วันรับเสื้อจะแจ้งให้ทราบภายหลัง)</span>
-        </p>
-        
-        <div class="contact-box">
-            <p>พบข้อสงสัยติดต่อ <strong>นายเมธี ใจสุขดี</strong> (ชั้นปีที่ 3)</p>
-            <a href="#" class="line-id">LINE: _maytee</a>
+        <div class="main-content">
+            <h1>ปิดระบบคำสั่งซื้อเสื้อปฏิบัติการ 2569</h1>
+            <p class="subtitle">วันรับเสื้อจะแจ้งให้ทราบภายหลัง</p>
+            
+            <div class="line-separator"></div>
+            
+            <div class="contact-section">
+                หากพบข้อสงสัยติดต่อ นายเมธี ใจสุขดี (นิสิตชั้นปีที่ 3)<br>
+                <a href="#" class="line-contact">Line : _maytee</a>
+            </div>
         </div>
-    </div>
 
-    <footer>
-        คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
-    </footer>
+        <footer>
+            คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
+        </footer>
+
+    </div>
 
 </body>
 </html>
