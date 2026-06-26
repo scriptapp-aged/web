@@ -3,76 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปิดระบบคำสั่งซื้อเสื้อปฏิบัติการ 2569</title>
+    <title>System Closed - เสื้อปฏิบัติการ 2569</title>
     
-    <!-- ใช้ฟอนต์ Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #ffffff; /* พื้นหลังสีขาวล้วน */
-            color: #000000;
-            font-family: 'Prompt', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000;
+            --text-sub: #666666;
+            --accent: #eeeeee;
         }
 
-        .content {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* ป้องกันการเลื่อนหน้าจอ */
+        }
+
+        /* ลูกเล่นพื้นหลัง: จุดตารางจางๆ แบบสมุดโน้ต */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .container {
             text-align: center;
-            padding: 20px;
+            max-width: 600px;
+            padding: 40px;
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* แอนิเมชันตอนหน้าโหลด */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #000;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         h1 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            margin: 0 0 5px 0;
-            letter-spacing: 0.5px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .subtitle {
+        .year {
+            font-weight: 100;
+            display: block;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            -webkit-text-stroke: 1px #000;
+            color: transparent;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 50px;
+            color: var(--text-sub);
+        }
+
+        .contact-box {
+            border-top: 1px solid #000;
+            padding-top: 30px;
+            display: inline-block;
+            min-width: 280px;
+        }
+
+        .contact-box p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 5px;
+        }
+
+        .line-id {
+            display: inline-block;
+            margin-top: 10px;
             font-size: 1rem;
-            font-weight: 400;
-            margin: 0 0 40px 0;
+            font-weight: 500;
+            text-decoration: none;
+            color: #000;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
         }
 
-        .note {
-            font-size: 0.95rem;
-            color: #666666; /* ใช้สีเทาเพื่อลดความเข้ม */
+        .line-id:hover {
+            letter-spacing: 2px;
+            border-bottom: 1px solid #000;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
             font-weight: 300;
-            margin: 0 0 60px 0;
+            text-transform: uppercase;
+            opacity: 0.6;
         }
 
-        .contact {
-            font-size: 0.85rem;
-            color: #999999;
-            font-weight: 300;
-            line-height: 1.8;
+        /* ลูกเล่นเส้นวิ่งมินิมอล */
+        .line-decoration {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, #000, transparent);
+            margin: 0 auto 20px;
         }
 
-        .contact span {
-            color: #000000; /* เน้นเฉพาะข้อมูลสำคัญด้วยสีดำ */
-            font-weight: 400;
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .year { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="content">
-        <h1>ปิดระบบคำสั่งซื้อ</h1>
-        <p class="subtitle">เสื้อปฏิบัติการ 2569</p>
+    <div class="container">
+        <div class="line-decoration"></div>
+        <div class="status-dot"></div>
         
-        <p class="note">กำหนดการวันรับเสื้อ จะแจ้งให้ทราบในภายหลัง</p>
+        <h1>System Closed</h1>
+        <span class="year">2026</span>
         
-        <div class="contact">
-            หากมีข้อสงสัยติดต่อ นายเมธี ใจสุขดี (ปี 3) <br>
-            LINE: <span>_maytee</span>
+        <p class="message">ปิดระบบคำสั่งซื้อเสื้อปฏิบัติการ<br>
+            <span style="font-size: 0.9rem;">(วันรับเสื้อจะแจ้งให้ทราบภายหลัง)</span>
+        </p>
+        
+        <div class="contact-box">
+            <p>พบข้อสงสัยติดต่อ <strong>นายเมธี ใจสุขดี</strong> (ชั้นปีที่ 3)</p>
+            <a href="#" class="line-id">LINE: _maytee</a>
         </div>
     </div>
+
+    <footer>
+        คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
+    </footer>
 
 </body>
 </html>
