@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #006633;
+            --accent: #00ff88;
+            --text: #0f172a;
+            --glass: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mitr', sans-serif;
+            border-radius: 16px;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* Hero Section */
+        .hero-header {
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        .subtitle-pill {
+            display: inline-block;
+            background: #e2e8f0;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+        }
+
+        /* Countdown */
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .countdown-box {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            min-width: 85px;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .countdown-num { font-size: 1.8rem; font-weight: 700; display: block; }
+        .countdown-unit { font-size: 0.65rem; color: #64748b; text-transform: uppercase; }
+
+        /* Main Portal */
+        .main-portal {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .image-wrapper { height: 180px; margin-bottom: 25px; }
+        .image-wrapper img { height: 100%; object-fit: contain; }
+
+        /* Banner */
+        .order-banner-wrap {
+            max-width: 1100px;
+            margin: 20px auto 40px;
+            padding: 0 20px;
+        }
+
+        .order-banner {
+            background: var(--text);
+            color: white;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .order-banner-btn {
+            background: var(--accent);
+            color: var(--text);
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Extra Services */
+        .extra-services {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .mini-card {
+            background: white;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-header">
+        <div class="subtitle-pill">DEPARTMENT OF HUMAN AND COMMUNITY RESOURCE DEVELOPMENT</div>
+        <h1 class="main-title">ชุมนุมฟาร์มนิสิต</h1>
+        <div class="countdown-grid" id="countdown-wrapper">
+            <div class="countdown-box"><span class="countdown-num" id="d-days">00</span><span class="countdown-unit">Days</span></div>
+            <div class="countdown-box"><span class="countdown-num" id="d-hours">00</span><span class="countdown-unit">Hours</span></div>
+            <div class="countdown-box"><span class="countdown-num" id="d-mins">00</span><span class="countdown-unit">Mins</span></div>
+            <div class="countdown-box"><span class="countdown-num" id="d-secs">00</span><span class="countdown-unit">Secs</span></div>
+        </div>
+    </header>
+
+    <div class="order-banner-wrap">
+        <div class="order-banner">
+            <div>
+                <h2 style="margin-bottom: 5px;">สั่งซื้อเสื้อปฏิบัติการฟาร์ม</h2>
+                <p style="opacity: 0.7;">ปีการศึกษา 2569 (14 - 21 มิถุนายน 2569)</p>
+            </div>
+            <a href="time.html" class="order-banner-btn">สั่งซื้อเลย</a>
+        </div>
+    </div>
+
+    <div class="main-portal">
+        <a href="people.html" class="card">
+            <div class="image-wrapper"><img src="090.png" alt="Committee"></div>
+            <h3>คณะกรรมการฟาร์ม</h3>
+        </a>
+        <a href="room.html" class="card">
+            <div class="image-wrapper"><img src="091.png" alt="Reservation"></div>
+            <h3>จองห้องประชุม</h3>
+        </a>
+        <a href="project.html" class="card">
+            <div class="image-wrapper"><img src="092.png" alt="Projects"></div>
+            <h3>โครงการชุมนุม</h3>
+        </a>
+    </div>
+
+    <div class="extra-services">
+        <a href="academic-calendar.html" class="mini-card"><i class="fa-solid fa-calendar-days"></i> <h4>ปฏิทินการศึกษา</h4></a>
+        <a href="schedule.html" class="mini-card"><i class="fa-solid fa-calendar-check"></i> <h4>ตารางจองห้องประชุม</h4></a>
+        <a href="admin-approve.html" class="mini-card"><i class="fa-solid fa-user-shield"></i> <h4>ระบบอนุมัติการจอง</h4></a>
+    </div>
+
+    <script>
+        function startCountdown(){
+            const target = new Date("June 28, 2026 00:00:00").getTime();
+            setInterval(()=>{
+                const now = new Date().getTime();
+                const diff = target - now;
+                if(diff > 0){
+                    document.getElementById('d-days').innerText = Math.floor(diff / (1000*60*60*24)).toString().padStart(2,'0');
+                    document.getElementById('d-hours').innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)).toString().padStart(2,'0');
+                    document.getElementById('d-mins').innerText = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2,'0');
+                    document.getElementById('d-secs').innerText = Math.floor((diff % (1000*60)) / 1000).toString().padStart(2,'0');
+                } else {
+                    document.getElementById('countdown-wrapper').innerHTML = "<h3>เริ่มโครงการแล้ววันนี้!</h3>";
+                }
+            }, 1000);
+        }
+        startCountdown();
+    </script>
+</body>
+</html>
