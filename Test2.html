@@ -3,115 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ชุมนุมฟาร์มนิสิต | EDS KPS</title>
+    <title>KU KPS | Farm Collective</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
-
-        :root {
-            --bg: #ffffff;
-            --text: #050505;
-            --accent: #2d5a27;
-            --soft: #f4f4f4;
-        }
-
+        :root { --glass: rgba(255, 255, 255, 0.1); }
+        
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
             margin: 0;
+            background: #0a0a0a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% 50%, #1a3a2a 0%, #0a0a0a 80%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 40px;
         }
 
-        /* Hero Section */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            padding: 80px 0;
-            align-items: center;
+        .main-card {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 60px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .hero h1 {
-            font-size: clamp(3rem, 7vw, 6rem);
-            line-height: 0.9;
-            letter-spacing: -3px;
-            text-transform: uppercase;
-        }
-
-        .hero p { font-size: 1.2rem; color: #666; max-width: 400px; }
-
-        /* Modern Grid */
-        .grid-container {
+        h1 { font-size: 5rem; letter-spacing: -4px; margin: 0 0 40px 0; line-height: 1; }
+        
+        .nav-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        .box {
-            background: var(--soft);
-            padding: 40px;
-            aspect-ratio: 1/1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-radius: 40px;
-            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        .item {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 24px;
+            transition: 0.4s;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
         }
 
-        .box:hover { background: var(--accent); color: white; transform: translateY(-10px); }
-        .box h3 { font-size: 1.5rem; }
-        .arrow { font-size: 2rem; }
+        .item:hover { background: #2d5a27; transform: scale(1.02); }
+        .item span { opacity: 0.6; font-size: 0.8rem; text-transform: uppercase; }
+        .item h2 { margin: 10px 0 0 0; }
 
-        /* Utility Footer */
-        .footer {
-            margin-top: 80px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        @media (max-width: 768px) {
-            .hero { grid-template-columns: 1fr; }
-            .grid-container { grid-template-columns: 1fr 1fr; }
-        }
+        .status { margin-bottom: 20px; font-weight: 300; letter-spacing: 2px; color: #888; }
     </style>
 </head>
 <body>
 
-    <section class="hero">
+    <div class="main-card">
+        <div class="status">EDS KPS — FARM COLLECTIVE 2026</div>
         <h1>ชุมนุม<br>ฟาร์มนิสิต</h1>
-        <div>
-            <p>EDS KPS Farm Collective — ศูนย์รวมกิจกรรมและระบบจัดการทรัพยากรนิสิตเพื่อการพัฒนาที่ยั่งยืน</p>
-            <br>
-            <a href="ku86.html" style="text-decoration:none; color:black; border-bottom:2px solid black; font-weight:bold;">อ่านเกี่ยวกับนิสิตใหม่ KU86 →</a>
-        </div>
-    </section>
-
-    <div class="grid-container">
-        <a href="people.html" class="box" style="text-decoration:none; color:inherit;">
-            <h3>ทีมงาน<br>ผู้ขับเคลื่อน</h3>
-            <div class="arrow">↗</div>
-        </a>
-        <a href="room.html" class="box" style="text-decoration:none; color:inherit;">
-            <h3>จองพื้นที่<br>ส่วนกลาง</h3>
-            <div class="arrow">↗</div>
-        </a>
-        <a href="project.html" class="box" style="text-decoration:none; color:inherit;">
-            <h3>โครงการ<br>แห่งปี</h3>
-            <div class="arrow">↗</div>
-        </a>
-        <a href="time.html" class="box" style="text-decoration:none; color:inherit;">
-            <h3>สั่งซื้อเสื้อ<br>ปฏิบัติการ</h3>
-            <div class="arrow">↗</div>
-        </a>
-    </div>
-
-    <div class="footer">
-        <div>© 2026 Farm Collective</div>
-        <div style="display:flex; gap:20px;">
-            <a href="academic-calendar.html" style="color:black;">ปฏิทิน</a>
-            <a href="admin-approve.html" style="color:black;">Admin Panel</a>
+        
+        <div class="nav-grid">
+            <a href="ku86.html" class="item">
+                <span>NEW STUDENT</span>
+                <h2>นิสิตใหม่ KU86</h2>
+            </a>
+            <a href="people.html" class="item">
+                <span>OUR TEAM</span>
+                <h2>คณะกรรมการ</h2>
+            </a>
+            <a href="room.html" class="item">
+                <span>RESERVATION</span>
+                <h2>จองห้องประชุม</h2>
+            </a>
+            <a href="time.html" class="item">
+                <span>ORDERS</span>
+                <h2>สั่งซื้อเสื้อ</h2>
+            </a>
         </div>
     </div>
 
