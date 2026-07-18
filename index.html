@@ -3,540 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title>System Maintenance</title>
+    <!-- ใช้ฟอนต์ Prompt ซึ่งเป็นฟอนต์ยอดนิยมสำหรับงานดีไซน์โมเดิร์น[span_4](start_span)[span_4](end_span) -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-
-        :root{
-            --primary-neon:#00ff88;
-            --ku-green:#006633;
-            --text-dark:#0f172a;
-            --feedback-blue:#1e3a8a;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: radial-gradient(circle at 50% 50%, #1a1c23 0%, #050608 100%);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Mitr',sans-serif;
-            border-radius:0 !important;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-
-        body{
-            background-color:#ffffff;
-            color:var(--text-dark);
-            min-height:100vh;
-            overflow-x:hidden;
-
-            background-image:
-                radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-
-            background-size:40px 40px;
+        .status-pill {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            padding: 0.4rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: inline-block;
         }
-
-        .bg-blob{
-            position:fixed;
-
-            width:500px;
-            height:500px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(0,255,136,0.1) 0%,
-                    transparent 70%
-                );
-
-            filter:blur(80px);
-
-            z-index:-1;
-
-            animation:moveBlob 20s infinite alternate;
-        }
-
-        @keyframes moveBlob{
-
-            0%{
-                transform:
-                    translate(-10%, -10%)
-                    scale(1);
-            }
-
-            100%{
-                transform:
-                    translate(100%, 50%)
-                    scale(1.5);
-            }
-        }
-
-        .hero-header{
-            padding:120px 20px 60px;
-
-            text-align:center;
-
-            position:relative;
-
-            animation:
-                fadeInUp 1.2s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        @keyframes fadeInUp{
-
-            from{
-                opacity:0;
-                transform:translateY(40px);
-                filter:blur(10px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-                filter:blur(0);
-            }
-        }
-
-        .header-glow{
-            position:absolute;
-
-            top:40%;
-            left:50%;
-
-            transform:translate(-50%,-50%);
-
-            width:500px;
-            height:500px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(0,255,136,0.15) 0%,
-                    transparent 70%
-                );
-
-            filter:blur(100px);
-
-            z-index:0;
-
-            animation:
-                breathing 5s ease-in-out infinite;
-        }
-
-        @keyframes breathing{
-
-            0%,100%{
-                transform:
-                    translate(-50%,-50%)
-                    scale(1);
-
-                opacity:0.4;
-            }
-
-            50%{
-                transform:
-                    translate(-50%,-50%)
-                    scale(1.15);
-
-                opacity:0.7;
-            }
-        }
-
-        .main-title{
-            font-size:
-                clamp(3.5rem,10vw,6.8rem);
-
-            font-weight:700;
-
-            letter-spacing:-4px;
-
-            line-height:0.9;
-
-            color:var(--text-dark);
-
-            margin-bottom:30px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #0f172a,
-                    #006633,
-                    #0f172a
-                );
-
-            background-size:200% auto;
-
-            -webkit-background-clip:text;
-            background-clip:text;
-
-            animation:textFlow 10s linear infinite;
-        }
-
-        @keyframes textFlow{
-            to{
-                background-position:200% center;
-            }
-        }
-
-        .subtitle-pill{
-            display:inline-block;
-
-            background:
-                rgba(241,245,249,0.6);
-
-            backdrop-filter:blur(10px);
-
-            padding:12px 32px;
-
-            font-size:0.9rem;
-
-            font-weight:600;
-
-            color:var(--ku-green);
-
-            letter-spacing:2px;
-
-            border:
-                1px solid rgba(226,232,240,0.8);
-
-            margin-bottom:20px;
-        }
-
-        .countdown-section{
-            margin-top:30px;
-
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-
-            animation:
-                fadeInUp 1.2s 0.4s both;
-        }
-
-        .countdown-project-label{
-            font-size:1rem;
-            font-weight:500;
-            color:var(--ku-green);
-
-            letter-spacing:1px;
-
-            margin-bottom:5px;
-        }
-
-        .countdown-date-label{
-            font-size:0.85rem;
-            color:#64748b;
-
-            margin-bottom:15px;
-
-            font-weight:300;
-        }
-
-        .countdown-grid{
-            display:flex;
-            gap:12px;
-            justify-content:center;
-        }
-
-        .countdown-box{
-            background:rgba(255,255,255,0.5);
-
-            border-bottom:
-                3px solid var(--ku-green);
-
-            padding:12px;
-
-            min-width:75px;
-
-            backdrop-filter:blur(5px);
-
-            box-shadow:
-                0 4px 15px rgba(0,0,0,0.03);
-        }
-
-        .countdown-num{
-            display:block;
-
-            font-size:1.8rem;
-            font-weight:700;
-
-            color:var(--text-dark);
-
-            line-height:1;
-        }
-
-        .countdown-unit{
-            display:block;
-
-            font-size:0.65rem;
-
-            color:#94a3b8;
-
-            text-transform:uppercase;
-
-            margin-top:4px;
-
-            letter-spacing:1px;
-        }
-
-        /* ========================= */
-        /* ✨ KU86 BUTTON */
-        /* ========================= */
-
-        .ku86-hero-wrap{
-            margin-top:28px;
-
-            display:flex;
-            justify-content:center;
-
-            animation:
-                fadeInUp 1.2s 0.6s both;
-        }
-
-        .ku86-hero-btn{
-            position:relative;
-            overflow:hidden;
-
-            display:inline-flex;
-
-            align-items:center;
-            justify-content:center;
-
-            gap:14px;
-
-            width:min(520px,92%);
-
-            padding:18px 30px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(0,255,136,0.10),
-                    rgba(0,102,51,0.08)
-                );
-
-            border:
-                1px solid rgba(0,255,136,0.25);
-
-            text-decoration:none;
-
-            color:var(--text-dark);
-
-            backdrop-filter:blur(10px);
-
-            transition:
-                0.45s cubic-bezier(0.2,1,0.2,1);
-
-            box-shadow:
-                0 10px 30px rgba(0,255,136,0.08),
-                inset 0 1px 0 rgba(255,255,255,0.4);
-        }
-
-        .ku86-hero-btn::before{
-            content:'';
-
-            position:absolute;
-            inset:0;
-
-            background:
-                linear-gradient(
-                    120deg,
-                    transparent,
-                    rgba(255,255,255,0.35),
-                    transparent
-                );
-
-            transform:translateX(-120%);
-
-            transition:0.8s;
-        }
-
-        .ku86-hero-btn:hover::before{
-            transform:translateX(120%);
-        }
-
-        .ku86-hero-btn:hover{
-            transform:
-                translateY(-8px)
-                scale(1.01);
-
-            border-color:
-                rgba(0,255,136,0.45);
-
-            box-shadow:
-                0 25px 60px rgba(0,255,136,0.16),
-                0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .ku86-hero-btn i{
-            font-size:1.3rem;
-            color:var(--ku-green);
-        }
-
-        .ku86-hero-content{
-            display:flex;
-            flex-direction:column;
-            align-items:flex-start;
-            text-align:left;
-        }
-
-        .ku86-hero-title{
-            font-size:1.15rem;
-            font-weight:600;
-            line-height:1.2;
-        }
-
-        .ku86-hero-sub{
-            font-size:0.82rem;
-            color:#64748b;
-
-            margin-top:2px;
-
-            font-weight:300;
-        }
-
-        .ku86-new-badge{
-            position:absolute;
-
-            top:12px;
-            right:14px;
-
-            background:#ff003c;
-            color:#fff;
-
-            font-size:0.62rem;
-            font-weight:700;
-
-            letter-spacing:1px;
-
-            padding:5px 10px;
-
-            animation:
-                pulseNew 1.8s infinite;
-        }
-
-        @keyframes pulseNew{
-
-            0%{
-                transform:scale(1);
-
-                box-shadow:
-                    0 0 0 0 rgba(255,0,60,0.5);
-            }
-
-            70%{
-                transform:scale(1.05);
-
-                box-shadow:
-                    0 0 0 12px rgba(255,0,60,0);
-            }
-
-            100%{
-                transform:scale(1);
-
-                box-shadow:
-                    0 0 0 0 rgba(255,0,60,0);
-            }
-        }
-
-        .main-portal{
-            max-width:1250px;
-
-            margin:0 auto;
-
-            padding:0 20px 60px;
-
-            display:grid;
-
-            grid-template-columns:
-                repeat(3,1fr);
-
-            gap:60px;
-        }
-
-        .card{
-            text-align:center;
-
-            text-decoration:none;
-
-            color:inherit;
-
-            position:relative;
-
-            opacity:0;
-
-            animation:
-                cardReveal 1s cubic-bezier(0.2,1,0.2,1)
-                forwards;
-        }
-
-        .card:nth-child(1){
-            animation-delay:0.3s;
-        }
-
-        .card:nth-child(2){
-            animation-delay:0.5s;
-        }
-
-        .card:nth-child(3){
-            animation-delay:0.7s;
-        }
-
-        @keyframes cardReveal{
-
-            from{
-                opacity:0;
-                transform:translateY(60px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-        }
-
-        .card:hover{
-            transform:translateY(-30px);
-        }
-
-        .image-wrapper{
-            width:100%;
-            height:400px;
-
-            display:flex;
-
-            justify-content:center;
-            align-items:flex-end;
-
-            margin-bottom:35px;
-
-            position:relative;
-        }
-
-        .image-wrapper img{
-            max-width:100%;
-            max-height:100%;
-
-            object-fit:contain;
-
-            filter:
-                grayscale(100%)
-                opacity(0.5)
-                brightness(1.1);
-
-            transition:
-                0.8s cubic-bezier(0.2,1,0.2,1);
-        }
-
-        .card:hover img{
-            filter:
-                grayscale(0%)
-                opacity(1)
-                drop-shadow(
-                    0 40px 60px rgba(0,0,0,0.15)
-                );
-
+        h1 { font-size: 2rem; margin-bottom: 1rem; }
+        p { color: #a0aab8; line-height: 1.7; margin-bottom: 2rem; }
+        .progress-bar { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #00d4ff; width: 60%; animation: pulse 2s infinite ease-in-out; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        .footer-text { margin-top: 2rem; font-size: 0.85rem; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="glass-card">
+        <div class="status-pill">System Maintenance</div>
+        <h1>กำลังอัปเกรดระบบ</h1>
+        <p>เพื่อประสิทธิภาพที่ยอดเยี่ยมยิ่งขึ้น เรากำลังพัฒนาและปรับปรุงระบบในขณะนี้ คาดว่าจะกลับมาให้บริการได้ในไม่ช้า</p>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="footer-text">
+            ขอบคุณที่เข้าใจและร่วมเป็นส่วนหนึ่งในการพัฒนาของเรา<br>
+            <strong>คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</strong>
+        </div>
+    </div>
+</body>
+</html>
