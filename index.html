@@ -1,47 +1,328 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Maintenance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400;800&display=swap" rel="stylesheet">
+
+    <!-- Font -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Prompt', sans-serif; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        
-        /* แสงตามเมาส์[span_7](start_span)[span_7](end_span) */
-        #cursor-glow { position: fixed; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,242,255,0.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; transform: translate(-50%, -50%); }
-
-        .card { 
-            position: relative; z-index: 1; padding: 5rem; border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(40px); border-radius: 80px; text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "LINE Seed Sans TH", sans-serif;
         }
 
-        h1 { font-size: 5rem; text-transform: uppercase; margin-bottom: 2rem; letter-spacing: -5px; }
-        .accent { color: #00f2ff; text-shadow: 0 0 30px #00f2ff; }
-        
-        .pulse-btn { 
-            padding: 1rem 3rem; border: 2px solid #00f2ff; border-radius: 50px; 
-            color: #00f2ff; font-weight: 800; display: inline-block; animation: pulse 2s infinite;
+        body {
+            background: #ffffff;
+            color: #111827;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0,242,255,0.4); } 70% { box-shadow: 0 0 0 20px rgba(0,242,255,0); } }
 
-        .footer { margin-top: 4rem; color: #555; letter-spacing: 5px; font-weight: 200; }
+        /* Aurora */
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: #4f46e5;
+            filter: blur(170px);
+            opacity: .08;
+            top: -250px;
+            left: -250px;
+            animation: move1 12s infinite alternate;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: #06b6d4;
+            filter: blur(170px);
+            opacity: .08;
+            bottom: -250px;
+            right: -250px;
+            animation: move2 15s infinite alternate;
+        }
+
+        @keyframes move1 {
+            to {
+                transform: translate(180px, 160px);
+            }
+        }
+
+        @keyframes move2 {
+            to {
+                transform: translate(-180px, -160px);
+            }
+        }
+
+        /* Grid */
+
+        .grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, .04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, .04) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+
+        /* Card */
+
+        .card {
+            position: relative;
+            width: min(860px, 92%);
+            padding: 65px;
+            border-radius: 28px;
+
+            background: rgba(255, 255, 255, .75);
+            backdrop-filter: blur(30px);
+
+            border: 1px solid rgba(0, 0, 0, .05);
+
+            box-shadow:
+                0 15px 60px rgba(0, 0, 0, .08);
+
+            z-index: 10;
+        }
+
+        /* Badge */
+
+        .badge {
+
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 18px;
+
+            border-radius: 999px;
+
+            background: #eff6ff;
+
+            border: 1px solid #bfdbfe;
+
+            color: #2563eb;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 28px;
+
+        }
+
+        .dot {
+
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2563eb;
+
+            animation: blink 1.4s infinite;
+
+        }
+
+        @keyframes blink {
+
+            50% {
+                opacity: .25;
+            }
+
+        }
+
+        h1 {
+
+            font-size: 56px;
+
+            line-height: 1.1;
+
+            margin-bottom: 18px;
+
+            font-weight: 700;
+
+            letter-spacing: -.03em;
+
+        }
+
+        .gradient {
+
+            background: linear-gradient(90deg,
+                    #111827,
+                    #2563eb,
+                    #06b6d4);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        p {
+
+            font-size: 19px;
+
+            color: #6b7280;
+
+            line-height: 1.9;
+
+            max-width: 650px;
+
+        }
+
+        /* Progress */
+
+        .progress {
+
+            margin-top: 40px;
+
+            height: 6px;
+
+            background: #e5e7eb;
+
+            border-radius: 999px;
+
+            overflow: hidden;
+
+        }
+
+        .progress span {
+
+            display: block;
+
+            width: 35%;
+
+            height: 100%;
+
+            background: linear-gradient(90deg,
+                    #2563eb,
+                    #06b6d4);
+
+            animation: loading 2s linear infinite;
+
+        }
+
+        @keyframes loading {
+
+            from {
+                transform: translateX(-120%);
+            }
+
+            to {
+                transform: translateX(420%);
+            }
+
+        }
+
+        .footer {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 35px;
+
+            color: #9ca3af;
+
+            font-size: 15px;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+
+        }
+
+        @media(max-width:768px) {
+
+            .card {
+
+                padding: 35px;
+
+            }
+
+            h1 {
+
+                font-size: 38px;
+
+            }
+
+            p {
+
+                font-size: 16px;
+
+            }
+
+        }
     </style>
+
 </head>
+
 <body>
-    <div id="cursor-glow"></div>
+
+    <div class="grid"></div>
+
     <div class="card">
-        <h1>SYSTEM <span class="accent">ACTIVE</span></h1>
-        <div class="pulse-btn">OPTIMIZING...</div>
-        <p style="margin-top: 2rem; color: #888;">เรากำลังปรับแต่งทุกส่วนประกอบของระบบให้สมบูรณ์แบบที่สุด</p>
-        <div class="footer">คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</div>
+
+        <div class="badge">
+
+            <div class="dot"></div>
+
+            System Maintenance
+
+        </div>
+
+        <h1>
+
+            <span class="gradient">
+
+                ปิดระบบชั่วคราว
+
+            </span>
+
+        </h1>
+
+        <p>
+
+            ขณะนี้ระบบกำลังอยู่ระหว่างการปรับปรุงและพัฒนาประสิทธิภาพ
+            เพื่อให้สามารถให้บริการได้อย่างรวดเร็ว ปลอดภัย และมีเสถียรภาพมากยิ่งขึ้น
+
+            <br><br>
+
+            ขออภัยในความไม่สะดวก และขอขอบคุณที่ให้ความเข้าใจ
+            แล้วพบกันอีกครั้งในเร็ว ๆ นี้
+
+        </p>
+
+        <div class="progress">
+
+            <span></span>
+
+        </div>
+
+        <div class="footer">
+
+            <div>System Version 2.6.9</div>
+
+            <div>Developing & Optimizing Platform...</div>
+
+        </div>
+
     </div>
 
-    <script>
-        document.addEventListener('mousemove', e => {
-            const glow = document.getElementById('cursor-glow');
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        });
-    </script>
 </body>
+
 </html>
