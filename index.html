@@ -4,71 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Maintenance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #00f2ff; --bg: #050505; }
+        :root { --glow: #00f2ff; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             font-family: 'Prompt', sans-serif;
-            background: var(--bg);
+            background: #000;
             color: #fff;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
         }
 
-        /* กราฟิกพื้นหลังแบบเคลื่อนไหว */
-        .blob {
-            position: absolute; width: 500px; height: 500px;
-            background: linear-gradient(135deg, var(--accent), #7000ff);
-            filter: blur(150px); border-radius: 50%;
-            animation: float 10s infinite ease-in-out;
+        .hero-text {
+            position: absolute;
+            font-size: 15vw;
+            font-weight: 800;
+            color: rgba(255,255,255,0.03);
             z-index: 0;
+            pointer-events: none;
+            user-select: none;
         }
 
-        @keyframes float { 
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(100px, 100px); }
+        .glass-card {
+            position: relative;
+            z-index: 1;
+            padding: 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 60px;
+            text-align: center;
+            max-width: 700px;
         }
 
-        .container {
-            position: relative; z-index: 1;
-            text-align: left;
-            max-width: 900px;
-            padding: 2rem;
-        }
+        h1 { font-size: 3rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .accent { color: var(--glow); }
 
-        h1 { font-size: 5rem; font-weight: 700; line-height: 1; margin-bottom: 2rem; }
-        
-        .status-tag {
-            border: 1px solid var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            color: var(--accent);
-            display: inline-block;
-            margin-bottom: 1rem;
+        .loader-line {
+            width: 100%; height: 2px; background: #333; margin: 2rem 0;
+            position: relative; overflow: hidden;
         }
+        .loader-line::after {
+            content: ''; position: absolute; left: -100%; width: 50%; height: 100%;
+            background: var(--glow); animation: move 2s infinite linear;
+        }
+        @keyframes move { to { left: 100%; } }
 
-        .footer-text {
-            margin-top: 3rem;
-            border-top: 1px solid #333;
-            padding-top: 1rem;
-            color: #666;
-        }
+        .footer { margin-top: 2rem; font-weight: 200; letter-spacing: 3px; color: #888; }
     </style>
 </head>
 <body>
-    <div class="blob"></div>
-    <div class="container">
-        <div class="status-tag">● ระบบกำลังพัฒนาประสิทธิภาพ</div>
-        <h1>UPGRADING<br>THE SYSTEM</h1>
-        <p>เรากำลังปรับปรุงโครงสร้างพื้นฐานใหม่ทั้งหมด เพื่อประสบการณ์ที่รวดเร็วและปลอดภัยยิ่งกว่าเดิม</p>
-        <div class="footer-text">
-            คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569
-        </div>
+    <div class="hero-text">SYSTEM</div>
+    <div class="glass-card">
+        <h1>UNDER <span class="accent">MAINTENANCE</span></h1>
+        <div class="loader-line"></div>
+        <p>กำลังอัปเกรดประสิทธิภาพระบบ เพื่อประสบการณ์ที่ดีที่สุดของนิสิตเกษตร</p>
+        <div class="footer">คณะกรรมการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</div>
     </div>
 </body>
 </html>
