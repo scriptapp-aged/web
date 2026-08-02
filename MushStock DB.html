@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MushStock | ระบบจัดการสต็อกเห็ด</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --green-900:#123D22;
+  --green-800:#1F6B39;
+  --green-700:#2A8449;
+  --green-600:#379A5A;
+  --green-500:#4CB56F;
+  --green-100:#E8F5EC;
+  --green-50:#F4FAF6;
+  --paper:#FFFFFF;
+  --ink:#152018;
+  --ink-soft:#5B6B62;
+  --line:#DCEBE1;
+  --gold:#F0A93A;
+  --red:#D6564A;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 8px 24px rgba(18,61,34,.08);
+  --shadow-sm:0 2px 8px rgba(18,61,34,.06);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Prompt',sans-serif;
+  background:var(--green-50);
+  color:var(--ink);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:600;margin:0 0 4px;}
+p{margin:0;}
+button{font-family:'Prompt',sans-serif;cursor:pointer;}
+input,select,textarea{font-family:'Prompt',sans-serif;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--green-100);border-radius:8px;}
+
+/* ---------- Utility ---------- */
+.hidden{display:none !important;}
+.btn{
+  border:none;border-radius:999px;padding:11px 22px;font-size:14.5px;font-weight:500;
+  transition:.18s ease; display:inline-flex; align-items:center; gap:8px; justify-content:center;
+}
+.btn-primary{background:var(--green-800);color:#fff;}
+.btn-primary:hover{background:var(--green-900);transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1.5px solid var(--green-800);color:var(--green-800);}
+.btn-outline:hover{background:var(--green-100);}
+.btn-ghost{background:var(--green-100);color:var(--green-800);}
+.btn-ghost:hover{background:#dcf0e2;}
+.btn-danger{background:#fdeeec;color:var(--red);}
+.btn-danger:hover{background:#fbdedb;}
+.btn-sm{padding:7px 14px;font-size:13px;border-radius:8px;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.card{background:var(--paper);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:22px;border:1px solid var(--line);}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13.5px;color:var(--ink-soft);margin-bottom:6px;font-weight:500;}
+.field input,.field select,.field textarea{
+  width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);
+  font-size:14.5px;color:var(--ink);background:#fff;outline:none;transition:.15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green-600);box-shadow:0 0 0 3px var(--green-100);}
+.field-row{display:flex;gap:14px;}
+.field-row>.field{flex:1;}
+.hint{font-size:12.5px;color:var(--ink-soft);margin-top:5px;}
+.err{font-size:12.5px;color:var(--red);margin-top:5px;display:none;}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:500;background:var(--green-100);color:var(--green-800);}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--line);}
+table{width:100%;border-collapse:collapse;font-size:14px;white-space:nowrap;}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);}
+th{background:var(--green-50);color:var(--green-900);font-weight:600;font-size:13px;}
+tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--green-50);}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.section-title h2{font-size:20px;}
+.section-title .sub{color:var(--ink-soft);font-size:13.5px;margin-top:2px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;}.field-row{flex-direction:column;gap:0;}}
+.empty{text-align:center;padding:40px 20px;color:var(--ink-soft);}
+.empty svg{opacity:.5;margin-bottom:10px;}
+.toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+.toast{background:var(--green-900);color:#fff;padding:13px 20px;border-radius:12px;font-size:14px;box-shadow:var(--shadow);animation:slideIn .25s ease;}
+.toast.err{background:var(--red);}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+.modal-bg{position:fixed;inset:0;background:rgba(18,40,25,.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
+.modal{background:#fff;border-radius:var(--radius);padding:26px;max-width:440px;width:100%;box-shadow:var(--shadow);max-height:88vh;overflow:auto;}
+
+/* ---------- Auth screen ---------- */
+#authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(circle at 15% 15%, var(--green-100), transparent 45%),
+             radial-gradient(circle at 85% 85%, var(--green-100), transparent 45%), var(--green-50);}
+.auth-box{width:100%;max-width:960px;background:#fff;border-radius:24px;box-shadow:var(--shadow);overflow:hidden;display:flex;min-height:560px;}
+.auth-side{flex:1;background:linear-gradient(160deg,var(--green-900),var(--green-700));color:#fff;padding:44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.auth-side::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.06);right:-120px;bottom:-140px;}
+.auth-side::before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);left:-60px;top:-60px;}
+.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;position:relative;z-index:1;}
+.brand svg{width:34px;height:34px;}
+.auth-side h1{font-size:28px;line-height:1.35;margin-top:26px;position:relative;z-index:1;}
+.auth-side p{color:rgba(255,255,255,.8);margin-top:12px;font-size:14.5px;line-height:1.6;position:relative;z-index:1;}
+.spore{position:relative;z-index:1;}
+.spore-dots{display:flex;gap:8px;margin-top:30px;}
+.spore-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);}
+.auth-form-area{flex:1.15;padding:44px;overflow-y:auto;}
+.auth-tabs{display:flex;gap:6px;background:var(--green-50);padding:5px;border-radius:12px;margin-bottom:26px;}
+.auth-tabs button{flex:1;border:none;background:transparent;padding:10px;border-radius:9px;font-size:14.5px;font-weight:500;color:var(--ink-soft);}
+.auth-tabs button.active{background:#fff;color:var(--green-800);box-shadow:var(--shadow-sm);}
+.auth-form-area form{display:none;}
+.auth-form-area form.active{display:block;}
+.auth-form-area h2{font-size:21px;}
+.auth-form-area .sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:24px;}
+
+/* ---------- App shell ---------- */
+#appScreen{display:none;min-height:100vh;}
+#appScreen.show{display:flex;}
+.sidebar{
+  width:260px;flex-shrink:0;background:var(--green-900);color:#fff;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-head{padding:24px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-head .brand{font-size:17px;}
+.sidebar-head .brand svg{width:28px;height:28px;}
+.side-user{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.08);}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--green-600);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0;}
+.side-user .u-name{font-size:13.5px;font-weight:500;line-height:1.3;}
+.side-user .u-role{font-size:11.5px;color:rgba(255,255,255,.55);}
+.nav-group{padding:14px 12px;}
+.nav-group .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.4);padding:8px 12px 6px;}
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,.78);
+  font-size:14px;margin-bottom:2px;transition:.15s;
+}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+.nav-item.active{background:var(--green-700);color:#fff;font-weight:500;}
+.nav-item.logout{margin-top:auto;}
+.side-foot{margin-top:auto;padding:14px 12px;border-top:1px solid rgba(255,255,255,.08);}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{
+  height:64px;flex-shrink:0;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;
+  justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:20;
+}
+.topbar .page-name{font-size:16px;font-weight:600;}
+.menu-btn{display:none;background:none;border:none;padding:8px;}
+.content{padding:26px;flex:1;}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* dashboard */
+.stat-card{display:flex;align-items:center;gap:14px;}
+.stat-icon{width:48px;height:48px;border-radius:12px;background:var(--green-100);display:flex;align-items:center;justify-content:center;color:var(--green-800);flex-shrink:0;}
+.stat-icon svg{width:24px;height:24px;}
+.stat-value{font-size:24px;font-weight:700;color:var(--green-900);}
+.stat-label{font-size:13px;color:var(--ink-soft);}
+.announce-item{border-left:3px solid var(--green-600);background:var(--green-50);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:12px;}
+.announce-item .a-title{font-weight:600;font-size:14.5px;margin-bottom:3px;}
+.announce-item .a-meta{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+
+/* stars */
+.star-rate{display:flex;gap:6px;}
+.star-rate svg{width:30px;height:30px;cursor:pointer;color:#E3E9E5;transition:.1s;}
+.star-rate svg.on{color:var(--gold);}
+
+/* upload */
+.upload-box{border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--ink-soft);font-size:13.5px;cursor:pointer;position:relative;}
+.upload-box:hover{border-color:var(--green-600);background:var(--green-50);}
+.upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.slip-preview{max-width:140px;max-height:140px;border-radius:8px;margin-top:10px;border:1px solid var(--line);}
+
+/* status badge */
+.badge{padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:500;}
+.badge-new{background:#FEF0DE;color:#B8761F;}
+.badge-done{background:var(--green-100);color:var(--green-800);}
+
+.tabs-inline{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.tabs-inline button{border:1.5px solid var(--line);background:#fff;padding:8px 16px;border-radius:999px;font-size:13.5px;color:var(--ink-soft);}
+.tabs-inline button.active{background:var(--green-800);border-color:var(--green-800);color:#fff;}
+
+@media print{
+  .sidebar,.topbar,.no-print{display:none !important;}
+  .content{padding:0;}
+  body{background:#fff;}
+}
+@media(max-width:880px){
+  .sidebar{position:fixed;left:-280px;z-index:100;transition:.25s;box-shadow:var(--shadow);}
+  .sidebar.open{left:0;}
+  .menu-btn{display:block;}
+  .auth-box{flex-direction:column;min-height:auto;}
+  .auth-side{padding:30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ============ AUTH SCREEN ============ -->
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-side">
+      <div>
+        <div class="brand">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 11C3 6.5 7 3 12 3s9 3.5 9 8c0 1.4-1.4 2-3 2H6c-1.6 0-3-.6-3-2Z" fill="#fff"/><path d="M9 13v6a3 3 0 0 0 6 0v-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          MushStock
+        </div>
+        <h1>ระบบจัดการสต็อกเห็ด<br>เพื่อโครงการของเรา</h1>
+        <p>ติดตามจำนวนก้อนเห็ด บันทึกการขาย และดูภาพรวมรายได้ได้ในที่เดียว ใช้งานง่าย โปร่งใส ตรวจสอบได้ทุกขั้นตอน</p>
+      </div>
+      <div class="spore">
+        <div class="spore-dots"><span></span><span></span><span></span><span></span><span></span></div>
+        <p style="font-size:12px;color:rgba(255,255,255,.5);margin-top:14px;">© โครงการเพาะเห็ด · ระบบบริหารสต็อกและยอดขาย</p>
+      </div>
+    </div>
+    <div class="auth-form-area">
+      <div class="auth-tabs">
+        <button class="active" id="tabLoginBtn" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+        <button id="tabRegisterBtn" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
+      </div>
+
+      <form id="loginForm" class="active" onsubmit="return handleLogin(event)">
+        <h2>ยินดีต้อนรับกลับมา</h2>
+        <div class="sub">เข้าสู่ระบบด้วยชื่อผู้ใช้และรหัสผ่านของคุณ</div>
+        <div class="field">
+          <label>ชื่อผู้ใช้ (Username)</label>
+          <input type="text" id="loginUsername" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label>รหัสผ่าน</label>
+          <input type="password" id="loginPassword" required autocomplete="current-password">
+        </div>
+        <div class="err" id="loginErr"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:6px;">เข้าสู่ระบบ</button>
+      </form>
+
+      <form id="registerForm" onsubmit="return handleRegister(event)">
+        <h2>สมัครสมาชิกใหม่</h2>
+        <div class="sub">กรอกข้อมูลให้ครบถ้วนเพื่อสมัครใช้งานระบบ</div>
+        <div class="field">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" id="regFullname" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>เบอร์โทรศัพท์</label>
+            <input type="tel" id="regPhone" required pattern="[0-9]{9,10}" placeholder="0812345678">
+          </div>
+          <div class="field">
+            <label>Line ID</label>
+            <input type="text" id="regLine" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>ชื่อผู้ใช้ (Username)</label>
+          <input type="text" id="regUsername" required>
+          <div class="hint">ใช้ชื่อจริงเป็น Username และใช้สำหรับเข้าสู่ระบบ</div>
+        </div>
+        <div class="field">
+          <label>สถานะ</label>
+          <select id="regRole" required>
+            <option value="">-- เลือกสถานะ --</option>
+            <option value="teacher">อาจารย์</option>
+            <option value="staff">เจ้าหน้าที่</option>
+            <option value="president">ประธานโครงการ</option>
+            <option value="vice_president">รองประธานโครงการ</option>
+            <option value="treasurer">เหรัญญิก</option>
+            <option value="student">นิสิตทั่วไป</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>รหัสผ่าน</label>
+            <input type="password" id="regPassword" required minlength="6">
+          </div>
+          <div class="field">
+            <label>ยืนยันรหัสผ่าน</label>
+            <input type="password" id="regConfirmPassword" required minlength="6">
+          </div>
+        </div>
+        <div class="err" id="regErr"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:6px;">ลงทะเบียน</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SCREEN ============ -->
+<div id="appScreen">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 11C3 6.5 7 3 12 3s9 3.5 9 8c0 1.4-1.4 2-3 2H6c-1.6 0-3-.6-3-2Z" fill="#fff"/><path d="M9 13v6a3 3 0 0 0 6 0v-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        MushStock
+      </div>
+    </div>
+    <div class="side-user">
+      <div class="avatar" id="sideAvatar">-</div>
+      <div>
+        <div class="u-name" id="sideName">-</div>
+        <div class="u-role" id="sideRole">-</div>
+      </div>
+    </div>
+    <div id="navMain" class="nav-group"></div>
+    <div id="navOther" class="nav-group"></div>
+    <div class="side-foot">
+      <div class="nav-item" onclick="logout()" style="cursor:pointer;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        ออกจากระบบ
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div class="page-name" id="topPageName">Dashboard</div>
+      </div>
+      <div class="pill" id="topDate"></div>
+    </div>
+    <div class="content" id="content"><!-- pages injected by JS --></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   MUSHSTOCK — ระบบจัดการสต็อกเห็ด
+   Data layer: localStorage (works instantly, demo/offline mode) +
+   optional sync to a Google Apps Script Web App bound to a Google Sheet
+   (see Code.gs + README.md). Set the URL from Admin > ตั้งค่า Google Sheet.
+   ========================================================================= */
+
+const ROLE_LABEL = {
+  admin:'ผู้ดูแลระบบ', teacher:'อาจารย์', staff:'เจ้าหน้าที่',
+  president:'ประธานโครงการ', vice_president:'รองประธานโครงการ',
+  treasurer:'เหรัญญิก', student:'นิสิตทั่วไป'
+};
+// permission groups
+const GROUP_STOCKSALES = ['president','vice_president','treasurer']; // full ops
+const GROUP_STAFF = ['teacher','staff']; // view-only ops
+
+function roleGroup(role){
+  if(role==='admin') return 'admin';
+  if(GROUP_STOCKSALES.includes(role)) return 'ops';
+  if(GROUP_STAFF.includes(role)) return 'staff';
+  return 'student';
+}
+
+/* ---------------- storage helpers ---------------- */
+const DB_KEYS = {users:'msk_users',stock:'msk_stock',sales:'msk_sales',ann:'msk_announcements',fb:'msk_feedback',cfg:'msk_config'};
+function load(key,fallback){ try{ const v = localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch(e){ return fallback; } }
+function save(key,val){ localStorage.setItem(key, JSON.stringify(val)); syncSheets(key,val); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function nowStr(){ const d=new Date(); return d.toLocaleDateString('th-TH')+' '+d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }
+
+/* optional Google Sheets sync (fire-and-forget) */
+function syncSheets(key,val){
+  const cfg = load(DB_KEYS.cfg,{});
+  if(!cfg.gasUrl) return;
+  fetch(cfg.gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify({action:'sync',sheet:key,data:val})}).catch(()=>{});
+}
+
+/* ---------------- seed data ---------------- */
+(function seed(){
+  let users = load(DB_KEYS.users,null);
+  if(!users){
+    users = [{
+      id:uid(), username:'เมธี ใจสุขดี', fullname:'เมธี ใจสุขดี', phone:'0930879722',
+      line:'_maytee', role:'admin', password:'880x39^C', createdAt:nowStr()
+    }];
+    save(DB_KEYS.users,users);
+  }
+  if(!load(DB_KEYS.stock,null)) save(DB_KEYS.stock,[]);
+  if(!load(DB_KEYS.sales,null)) save(DB_KEYS.sales,[]);
+  if(!load(DB_KEYS.ann,null)) save(DB_KEYS.ann,[]);
+  if(!load(DB_KEYS.fb,null)) save(DB_KEYS.fb,[]);
+  if(!load(DB_KEYS.cfg,null)) save(DB_KEYS.cfg,{gasUrl:''});
+})();
+
+/* ---------------- toast ---------------- */
+function toast(msg,isErr){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className='toast'+(isErr?' err':'');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='.3s'; setTimeout(()=>el.remove(),300); },2600);
+}
+
+/* ================= AUTH ================= */
+function switchAuthTab(tab){
+  document.getElementById('tabLoginBtn').classList.toggle('active',tab==='login');
+  document.getElementById('tabRegisterBtn').classList.toggle('active',tab==='register');
+  document.getElementById('loginForm').classList.toggle('active',tab==='login');
+  document.getElementById('registerForm').classList.toggle('active',tab==='register');
+}
+
+function handleRegister(e){
+  e.preventDefault();
+  const errEl = document.getElementById('regErr');
+  errEl.style.display='none';
+  const fullname = document.getElementById('regFullname').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const line = document.getElementById('regLine').value.trim();
+  const username = document.getElementById('regUsername').value.trim();
+  const role = document.getElementById('regRole').value;
+  const pw = document.getElementById('regPassword').value;
+  const cpw = document.getElementById('regConfirmPassword').value;
+
+  if(pw !== cpw){ errEl.textContent='รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน'; errEl.style.display='block'; return false; }
+  const users = load(DB_KEYS.users,[]);
+  if(users.some(u=>u.username.toLowerCase()===username.toLowerCase())){
+    errEl.textContent='ชื่อผู้ใช้นี้มีคนใช้แล้ว กรุณาเลือกชื่ออื่น'; errEl.style.display='block'; return false;
+  }
+  users.push({id:uid(),username,fullname,phone,line,role,password:pw,createdAt:nowStr()});
+  save(DB_KEYS.users,users);
+  toast('สมัครสมาชิกสำเร็จ กรุณาเข้าสู่ระบบ');
+  document.getElementById('registerForm').reset();
+  switchAuthTab('login');
+  document.getElementById('loginUsername').value = username;
+  return false;
+}
+
+function handleLogin(e){
+  e.preventDefault();
+  const errEl = document.getElementById('loginErr');
+  errEl.style.display='none';
+  const username = document.getElementById('loginUsername').value.trim();
+  const pw = document.getElementById('loginPassword').value;
+  const users = load(DB_KEYS.users,[]);
+  const user = users.find(u=>u.username.toLowerCase()===username.toLowerCase() && u.password===pw);
+  if(!user){ errEl.textContent='ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'; errEl.style.display='block'; return false; }
+  sessionStorage.setItem('msk_current', user.id);
+  enterApp(user);
+  return false;
+}
+
+function logout(){
+  sessionStorage.removeItem('msk_current');
+  document.getElementById('appScreen').classList.remove('show');
+  document.getElementById('authScreen').style.display='flex';
+  document.getElementById('loginForm').reset();
+}
+
+function currentUser(){
+  const id = sessionStorage.getItem('msk_current');
+  if(!id) return null;
+  return load(DB_KEYS.users,[]).find(u=>u.id===id) || null;
+}
+
+/* ================= NAV / MENU ================= */
+const ICONS = {
+  dashboard:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  stock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
+  sale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="9" cy="21" r="1.3"/><circle cx="18" cy="21" r="1.3"/></svg>',
+  overview:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-7"/></svg>',
+  report:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h9l4 4v14H6v-3"/><path d="M2 12h12M2 16h9M2 20h6"/></svg>',
+  announce:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v3a2 2 0 0 0 2 2h1l3 5V6l-3 5H5a2 2 0 0 0-2 2Z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M17 5a8 8 0 0 1 0 14"/></svg>',
+  permission:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M17 3.5a4 4 0 0 1 0 7"/></svg>',
+  inbox:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6l3.5-7Z"/></svg>',
+  contact:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10Z"/></svg>',
+  profile:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+  settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>'
+};
+
+const MENUS = {
+  admin:{
+    main:[['dashboard','Dashboard','dashboard'],['stock','บันทึกจำนวนก้อนเห็ด','stock'],['sale','บันทึกการขาย','sale'],
+          ['overview','ภาพรวมการขาย','overview'],['report','พิมพ์รายงาน','report'],['announce','ประกาศ','announce'],
+          ['permission','การกำหนดสิทธิ์การใช้งาน','permission'],['inbox','รับเรื่องจากผู้ใช้งาน','inbox']],
+    other:[['profile','ข้อมูลส่วนตัว','profile'],['settings','ตั้งค่า Google Sheet','settings']]
+  },
+  staff:{
+    main:[['dashboard','Dashboard','dashboard'],['overview','ภาพรวมการขาย','overview'],['report','พิมพ์รายงาน','report']],
+    other:[['contact','ติดต่อผู้ดูแลระบบ','contact'],['profile','ข้อมูลส่วนตัว','profile']]
+  },
+  ops:{
+    main:[['dashboard','Dashboard','dashboard'],['stock','บันทึกจำนวนก้อนเห็ด','stock'],['sale','บันทึกการขาย','sale'],
+          ['overview','ภาพรวมการขาย','overview'],['report','พิมพ์รายงาน','report']],
+    other:[['contact','ติดต่อผู้ดูแลระบบ','contact'],['profile','ข้อมูลส่วนตัว','profile']]
+  },
+  student:{
+    main:[['dashboard','Dashboard','dashboard']],
+    other:[['contact','ติดต่อผู้ดูแลระบบ','contact'],['profile','ข้อมูลส่วนตัว','profile']]
+  }
+};
+
+let ACTIVE_PAGE = 'dashboard';
+
+function enterApp(user){
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('appScreen').classList.add('show');
+  document.getElementById('sideAvatar').textContent = (user.fullname||user.username).trim().charAt(0);
+  document.getElementById('sideName').textContent = user.fullname || user.username;
+  document.getElementById('sideRole').textContent = ROLE_LABEL[user.role] || user.role;
+  buildNav(user);
+  const d = new Date();
+  document.getElementById('topDate').textContent = d.toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'});
+  goPage('dashboard');
+}
+
+function buildNav(user){
+  const group = roleGroup(user.role);
+  const cfg = MENUS[group];
+  const nameMap = {dashboard:'Dashboard',stock:'บันทึกจำนวนก้อนเห็ด',sale:'บันทึกการขาย',overview:'ภาพรวมการขาย',
+    report:'พิมพ์รายงาน',announce:'ประกาศ',permission:'การกำหนดสิทธิ์การใช้งาน',inbox:'รับเรื่องจากผู้ใช้งาน',
+    contact:'ติดต่อผู้ดูแลระบบ',profile:'ข้อมูลส่วนตัว',settings:'ตั้งค่า Google Sheet'};
+  const build = (list)=> list.map(([id,label,icon])=>`
+    <div class="nav-item" data-page="${id}" onclick="goPage('${id}')">${ICONS[icon]}<span>${nameMap[id]||label}</span></div>
+  `).join('');
+  document.getElementById('navMain').innerHTML = '<div class="label">เมนูหลัก</div>' + build(cfg.main);
+  document.getElementById('navOther').innerHTML = cfg.other.length ? ('<div class="label">บริการอื่นๆ</div>' + build(cfg.other)) : '';
+}
+
+function goPage(page){
+  ACTIVE_PAGE = page;
+  document.querySelectorAll('.nav-item[data-page]').forEach(el=>el.classList.toggle('active', el.dataset.page===page));
+  document.getElementById('sidebar').classList.remove('open');
+  const titles = {dashboard:'Dashboard',stock:'บันทึกจำนวนก้อนเห็ด',sale:'บันทึกการขาย',overview:'ภาพรวมการขาย',
+    report:'พิมพ์รายงาน',announce:'ประกาศ',permission:'การกำหนดสิทธิ์การใช้งาน',inbox:'รับเรื่องจากผู้ใช้งาน',
+    contact:'ติดต่อผู้ดูแลระบบ',profile:'ข้อมูลส่วนตัว',settings:'ตั้งค่า Google Sheet'};
+  document.getElementById('topPageName').textContent = titles[page] || page;
+  renderPage(page);
+}
+
+/* ================= RENDER ROUTER ================= */
+function renderPage(page){
+  const c = document.getElementById('content');
+  const user = currentUser();
+  if(!user) return;
+  const renderers = {
+    dashboard:renderDashboard, stock:renderStock, sale:renderSale, overview:renderOverview,
+    report:renderReport, announce:renderAnnounce, permission:renderPermission, inbox:renderInbox,
+    contact:renderContact, profile:renderProfile, settings:renderSettings
+  };
+  c.innerHTML = (renderers[page]||renderDashboard)(user);
+  afterRenderHooks(page,user);
+}
+
+/* helper: aggregate numbers */
+function totals(){
+  const stock = load(DB_KEYS.stock,[]);
+  const sales = load(DB_KEYS.sales,[]);
+  const totalBlocks = stock.reduce((s,r)=>s+Number(r.amount||0),0);
+  const soldBlocks = sales.reduce((s,r)=>s+Number(r.amountSold||0),0);
+  const money = sales.reduce((s,r)=>s+Number(r.money||0),0);
+  return {totalBlocks, remain: Math.max(totalBlocks-soldBlocks,0), money, soldBlocks};
+}
+function fmt(n){ return Number(n||0).toLocaleString('th-TH'); }
+function fmtMoney(n){ return Number(n||0).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+/* ---------------- DASHBOARD ---------------- */
+function renderDashboard(user){
+  const t = totals();
+  const ann = load(DB_KEYS.ann,[]).slice().reverse();
+  return `
+  <div class="section-title"><div><h2>ภาพรวมระบบ</h2><div class="sub">สรุปข้อมูลสต็อกเห็ดและยอดขายล่าสุด</div></div></div>
+  <div class="grid-3" style="margin-bottom:24px;">
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.stock}</div>
+      <div><div class="stat-value">${fmt(t.totalBlocks)}</div><div class="stat-label">จำนวนก้อนเห็ดทั้งหมด (ก้อน)</div></div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.overview}</div>
+      <div><div class="stat-value">${fmt(t.remain)}</div><div class="stat-label">จำนวนก้อนเห็ดที่เหลือ (ก้อน)</div></div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">${ICONS.sale}</div>
+      <div><div class="stat-value">฿${fmtMoney(t.money)}</div><div class="stat-label">จำนวนเงินที่ขายได้</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-bottom:14px;"><h2 style="font-size:16px;">📢 ประกาศจากผู้ดูแลระบบ</h2></div>
+    ${ann.length? ann.map(a=>`
+      <div class="announce-item">
+        <div class="a-title">${escapeHtml(a.title)}</div>
+        <div>${escapeHtml(a.content)}</div>
+        <div class="a-meta">โดย ${escapeHtml(a.postedBy)} • ${a.timestamp}</div>
+      </div>`).join('') : `<div class="empty">ยังไม่มีประกาศในขณะนี้</div>`}
+  </div>`;
+}
+
+/* ---------------- STOCK (บันทึกจำนวนก้อนเห็ด) ---------------- */
+function renderStock(user){
+  const rows = load(DB_KEYS.stock,[]).slice().reverse();
+  return `
+  <div class="section-title"><div><h2>บันทึกจำนวนก้อนเห็ด</h2><div class="sub">เพิ่มจำนวนก้อนเห็ดที่เพาะ/รับเข้าใหม่</div></div></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">เพิ่มรายการก้อนเห็ด</h3>
+      <form onsubmit="return submitStock(event)">
+        <div class="field"><label>วันที่บันทึก</label><input type="date" id="stockDate" required value="${todayStr()}"></div>
+        <div class="field"><label>จำนวนก้อนเห็ด (ก้อน)</label><input type="number" id="stockAmount" min="1" required placeholder="เช่น 500"></div>
+        <div class="field"><label>หมายเหตุ (ถ้ามี)</label><textarea id="stockNote" rows="2" placeholder="เช่น รับเห็ดนางฟ้าล็อตใหม่"></textarea></div>
+        <button class="btn btn-primary" style="width:100%;">บันทึกข้อมูล</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ประวัติการบันทึก</h3>
+      <div class="table-wrap" style="max-height:360px;overflow-y:auto;">
+        <table>
+          <thead><tr><th>วันที่</th><th>จำนวน (ก้อน)</th><th>บันทึกโดย</th><th>เวลา</th></tr></thead>
+          <tbody>
+            ${rows.length? rows.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.amount)}</td><td>${escapeHtml(r.recordedBy)}</td><td>${r.timestamp}</td></tr>`).join('') : `<tr><td colspan="4" class="empty">ยังไม่มีข้อมูล</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+function submitStock(e){
+  e.preventDefault();
+  const user = currentUser();
+  const rows = load(DB_KEYS.stock,[]);
+  rows.push({id:uid(), date:document.getElementById('stockDate').value, amount:Number(document.getElementById('stockAmount').value),
+    note:document.getElementById('stockNote').value.trim(), recordedBy:user.fullname||user.username, timestamp:nowStr()});
+  save(DB_KEYS.stock,rows);
+  toast('บันทึกจำนวนก้อนเห็ดเรียบร้อย');
+  goPage('stock');
+  return false;
+}
+
+/* ---------------- SALE (บันทึกการขาย) ---------------- */
+function renderSale(user){
+  const rows = load(DB_KEYS.sales,[]).slice().reverse();
+  return `
+  <div class="section-title"><div><h2>บันทึกการขาย</h2><div class="sub">บันทึกยอดขายพร้อมแนบหลักฐานการโอน</div></div></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">เพิ่มรายการขาย</h3>
+      <form onsubmit="return submitSale(event)">
+        <div class="field"><label>วันที่ขาย</label><input type="date" id="saleDate" required value="${todayStr()}"></div>
+        <div class="field-row">
+          <div class="field"><label>จำนวนก้อนที่ขาย</label><input type="number" id="saleAmount" min="1" required></div>
+          <div class="field"><label>จำนวนเงิน (บาท)</label><input type="number" id="saleMoney" min="0" step="0.01" required></div>
+        </div>
+        <div class="field">
+          <label>หลักฐานการโอน (สลิป)</label>
+          <div class="upload-box" id="uploadBox">
+            <input type="file" accept="image/*" id="saleSlip" onchange="previewSlip(event)">
+            <span id="uploadLabel">คลิกเพื่ออัพโหลดรูปสลิป</span>
+          </div>
+          <img id="slipPreview" class="slip-preview hidden">
+        </div>
+        <button class="btn btn-primary" style="width:100%;">บันทึกการขาย</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ประวัติการขาย</h3>
+      <div class="table-wrap" style="max-height:360px;overflow-y:auto;">
+        <table>
+          <thead><tr><th>วันที่ขาย</th><th>จำนวนก้อน</th><th>จำนวนเงิน</th><th>สลิป</th><th>บันทึกโดย</th></tr></thead>
+          <tbody>
+            ${rows.length? rows.map(r=>`<tr><td>${r.saleDate}</td><td>${fmt(r.amountSold)}</td><td>฿${fmtMoney(r.money)}</td>
+              <td>${r.slip?`<a href="#" onclick="viewSlip('${r.id}');return false;" class="pill">ดูสลิป</a>`:'-'}</td>
+              <td>${escapeHtml(r.recordedBy)}<br><span style="color:var(--ink-soft);font-size:12px;">${r.timestamp}</span></td></tr>`).join('')
+              : `<tr><td colspan="5" class="empty">ยังไม่มีข้อมูล</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+let _slipData = null;
+function previewSlip(e){
+  const f = e.target.files[0]; if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{ _slipData = reader.result;
+    document.getElementById('slipPreview').src = _slipData;
+    document.getElementById('slipPreview').classList.remove('hidden');
+    document.getElementById('uploadLabel').textContent = f.name;
+  };
+  reader.readAsDataURL(f);
+}
+function submitSale(e){
+  e.preventDefault();
+  const user = currentUser();
+  const rows = load(DB_KEYS.sales,[]);
+  rows.push({id:uid(), saleDate:document.getElementById('saleDate').value,
+    amountSold:Number(document.getElementById('saleAmount').value),
+    money:Number(document.getElementById('saleMoney').value),
+    slip:_slipData||null, recordedBy:user.fullname||user.username, timestamp:nowStr()});
+  save(DB_KEYS.sales,rows);
+  _slipData=null;
+  toast('บันทึกการขายเรียบร้อย');
+  goPage('sale');
+  return false;
+}
+function viewSlip(id){
+  const r = load(DB_KEYS.sales,[]).find(x=>x.id===id);
+  if(!r || !r.slip) return;
+  openModal(`<h3 style="margin-bottom:14px;">หลักฐานการขาย ${r.saleDate}</h3><img src="${r.slip}" style="width:100%;border-radius:10px;">`);
+}
+
+/* ---------------- OVERVIEW (ภาพรวมการขาย) ---------------- */
+let overviewChart = null;
+function renderOverview(user){
+  const sales = load(DB_KEYS.sales,[]);
+  const t = totals();
+  return `
+  <div class="section-title"><div><h2>ภาพรวมการขาย</h2><div class="sub">สรุปยอดขายและแนวโน้มจากข้อมูลที่บันทึกไว้</div></div></div>
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="card stat-card"><div class="stat-icon">${ICONS.sale}</div><div><div class="stat-value">฿${fmtMoney(t.money)}</div><div class="stat-label">ยอดขายรวม</div></div></div>
+    <div class="card stat-card"><div class="stat-icon">${ICONS.stock}</div><div><div class="stat-value">${fmt(t.soldBlocks)}</div><div class="stat-label">ก้อนเห็ดที่ขายแล้ว</div></div></div>
+    <div class="card stat-card"><div class="stat-icon">${ICONS.overview}</div><div><div class="stat-value">${sales.length}</div><div class="stat-label">จำนวนรายการขาย</div></div></div>
+  </div>
+  <div class="card" style="margin-bottom:20px;">
+    <h3 style="font-size:15px;margin-bottom:14px;">แนวโน้มยอดขายรายวัน</h3>
+    <canvas id="salesChart" height="90"></canvas>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;margin-bottom:14px;">รายการขายทั้งหมด</h3>
+    <div class="table-wrap" style="max-height:360px;overflow-y:auto;">
+      <table><thead><tr><th>วันที่ขาย</th><th>จำนวนก้อน</th><th>จำนวนเงิน</th><th>บันทึกโดย</th></tr></thead>
+      <tbody>${sales.length? sales.slice().reverse().map(r=>`<tr><td>${r.saleDate}</td><td>${fmt(r.amountSold)}</td><td>฿${fmtMoney(r.money)}</td><td>${escapeHtml(r.recordedBy)}</td></tr>`).join('') : `<tr><td colspan="4" class="empty">ยังไม่มีข้อมูล</td></tr>`}</tbody></table>
+    </div>
+  </div>`;
+}
+function drawOverviewChart(){
+  const canvas = document.getElementById('salesChart');
+  if(!canvas || typeof Chart==='undefined') return;
+  const sales = load(DB_KEYS.sales,[]);
+  const byDate = {};
+  sales.forEach(r=>{ byDate[r.saleDate] = (byDate[r.saleDate]||0) + Number(r.money||0); });
+  const labels = Object.keys(byDate).sort();
+  const data = labels.map(l=>byDate[l]);
+  if(overviewChart) overviewChart.destroy();
+  overviewChart = new Chart(canvas,{
+    type:'line',
+    data:{labels, datasets:[{label:'ยอดขาย (บาท)', data, borderColor:'#1F6B39', backgroundColor:'rgba(76,181,111,.18)', fill:true, tension:.3, pointBackgroundColor:'#1F6B39'}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}, responsive:true, font:{family:'Prompt'}}
+  });
+}
+
+/* ---------------- REPORT (พิมพ์รายงาน) ---------------- */
+function renderReport(user){
+  const t = totals();
+  const stock = load(DB_KEYS.stock,[]);
+  const sales = load(DB_KEYS.sales,[]);
+  return `
+  <div class="section-title no-print"><div><h2>พิมพ์รายงาน</h2><div class="sub">สรุปรายงานสต็อกเห็ดและยอดขายสำหรับพิมพ์เก็บไว้เป็นหลักฐาน</div></div>
+    <button class="btn btn-primary" onclick="window.print()">🖨 พิมพ์รายงาน</button>
+  </div>
+  <div class="card">
+    <div style="text-align:center;margin-bottom:20px;">
+      <h2>รายงานสรุปสต็อกและยอดขายเห็ด</h2>
+      <div class="sub">ออกรายงานวันที่ ${new Date().toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'})}</div>
+    </div>
+    <div class="grid-3" style="margin-bottom:24px;">
+      <div><b>จำนวนก้อนเห็ดทั้งหมด:</b> ${fmt(t.totalBlocks)} ก้อน</div>
+      <div><b>จำนวนก้อนเห็ดที่เหลือ:</b> ${fmt(t.remain)} ก้อน</div>
+      <div><b>จำนวนเงินที่ขายได้:</b> ฿${fmtMoney(t.money)}</div>
+    </div>
+    <h3 style="font-size:15px;">รายการบันทึกจำนวนก้อนเห็ด</h3>
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table><thead><tr><th>วันที่</th><th>จำนวน (ก้อน)</th><th>บันทึกโดย</th></tr></thead>
+      <tbody>${stock.length?stock.map(r=>`<tr><td>${r.date}</td><td>${fmt(r.amount)}</td><td>${escapeHtml(r.recordedBy)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">ไม่มีข้อมูล</td></tr>'}</tbody></table>
+    </div>
+    <h3 style="font-size:15px;">รายการบันทึกการขาย</h3>
+    <div class="table-wrap">
+      <table><thead><tr><th>วันที่ขาย</th><th>จำนวนก้อน</th><th>จำนวนเงิน</th><th>บันทึกโดย</th></tr></thead>
+      <tbody>${sales.length?sales.map(r=>`<tr><td>${r.saleDate}</td><td>${fmt(r.amountSold)}</td><td>฿${fmtMoney(r.money)}</td><td>${escapeHtml(r.recordedBy)}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">ไม่มีข้อมูล</td></tr>'}</tbody></table>
+    </div>
+  </div>`;
+}
+
+/* ---------------- ANNOUNCE (ประกาศ - admin) ---------------- */
+function renderAnnounce(user){
+  const rows = load(DB_KEYS.ann,[]).slice().reverse();
+  return `
+  <div class="section-title"><div><h2>ประกาศ</h2><div class="sub">เผยแพร่ข่าวสารให้ผู้ใช้งานทุกคนเห็นบนหน้า Dashboard</div></div></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ประกาศใหม่</h3>
+      <form onsubmit="return submitAnnounce(event)">
+        <div class="field"><label>หัวข้อประกาศ</label><input type="text" id="annTitle" required></div>
+        <div class="field"><label>รายละเอียด</label><textarea id="annContent" rows="5" required></textarea></div>
+        <button class="btn btn-primary" style="width:100%;">เผยแพร่ประกาศ</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ประกาศทั้งหมด</h3>
+      <div style="max-height:400px;overflow-y:auto;">
+        ${rows.length? rows.map(a=>`
+          <div class="announce-item">
+            <div class="a-title">${escapeHtml(a.title)}</div>
+            <div>${escapeHtml(a.content)}</div>
+            <div class="a-meta">โดย ${escapeHtml(a.postedBy)} • ${a.timestamp}
+              <a href="#" onclick="deleteAnn('${a.id}');return false;" style="color:var(--red);margin-left:10px;">ลบ</a>
+            </div>
+          </div>`).join('') : `<div class="empty">ยังไม่มีประกาศ</div>`}
+      </div>
+    </div>
+  </div>`;
+}
+function submitAnnounce(e){
+  e.preventDefault();
+  const user = currentUser();
+  const rows = load(DB_KEYS.ann,[]);
+  rows.push({id:uid(), title:document.getElementById('annTitle').value.trim(), content:document.getElementById('annContent').value.trim(),
+    postedBy:user.fullname||user.username, timestamp:nowStr()});
+  save(DB_KEYS.ann,rows);
+  toast('เผยแพร่ประกาศเรียบร้อย');
+  goPage('announce');
+  return false;
+}
+function deleteAnn(id){
+  save(DB_KEYS.ann, load(DB_KEYS.ann,[]).filter(a=>a.id!==id));
+  toast('ลบประกาศแล้ว');
+  goPage('announce');
+}
+
+/* ---------------- PERMISSION (การกำหนดสิทธิ์ - admin) ---------------- */
+function renderPermission(user){
+  const users = load(DB_KEYS.users,[]).filter(u=>u.role!=='admin');
+  return `
+  <div class="section-title"><div><h2>การกำหนดสิทธิ์การใช้งาน</h2><div class="sub">เปลี่ยนสถานะ/สิทธิ์การใช้งานของสมาชิกในระบบ</div></div></div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ชื่อผู้ใช้</th><th>เบอร์โทร</th><th>Line ID</th><th>สถานะปัจจุบัน</th><th>เปลี่ยนสถานะ</th></tr></thead>
+        <tbody>
+          ${users.length? users.map(u=>`
+            <tr>
+              <td>${escapeHtml(u.fullname||u.username)}</td>
+              <td>${escapeHtml(u.phone||'-')}</td>
+              <td>${escapeHtml(u.line||'-')}</td>
+              <td><span class="pill">${ROLE_LABEL[u.role]||u.role}</span></td>
+              <td>
+                <select onchange="changeRole('${u.id}',this.value)" style="padding:7px 10px;border-radius:8px;border:1px solid var(--line);">
+                  ${Object.entries(ROLE_LABEL).filter(([k])=>k!=='admin').map(([k,v])=>`<option value="${k}" ${u.role===k?'selected':''}>${v}</option>`).join('')}
+                </select>
+              </td>
+            </tr>`).join('') : `<tr><td colspan="5" class="empty">ยังไม่มีสมาชิกในระบบ</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+function changeRole(id,role){
+  const users = load(DB_KEYS.users,[]);
+  const u = users.find(x=>x.id===id);
+  if(u){ u.role = role; save(DB_KEYS.users,users); toast(`เปลี่ยนสถานะของ ${u.fullname||u.username} เป็น ${ROLE_LABEL[role]} แล้ว`); }
+}
+
+/* ---------------- INBOX (รับเรื่องจากผู้ใช้งาน - admin) ---------------- */
+function renderInbox(user){
+  const rows = load(DB_KEYS.fb,[]).slice().reverse();
+  const typeLabel = {1:'แจ้งปัญหาการใช้งาน/ระบบขัดข้อง',2:'แนะนำฟีเจอร์ใหม่ / การปรับปรุง',3:'คำถามและข้อสงสัย',4:'ชื่นชมและกำลังใจ'};
+  return `
+  <div class="section-title"><div><h2>รับเรื่องจากผู้ใช้งาน</h2><div class="sub">ข้อความติดต่อ ข้อเสนอแนะ และการประเมินความพึงพอใจจากผู้ใช้งาน</div></div></div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>วันที่/เวลา</th><th>ผู้แจ้ง</th><th>ประเภท</th><th>คะแนน</th><th>รายละเอียด</th><th>สถานะ</th></tr></thead>
+        <tbody>
+          ${rows.length? rows.map(f=>`
+            <tr>
+              <td>${f.timestamp}</td>
+              <td>${escapeHtml(f.fullname)}</td>
+              <td>${typeLabel[f.type]||'-'}</td>
+              <td>${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</td>
+              <td style="white-space:normal;max-width:280px;">${escapeHtml(f.detail||'-')}</td>
+              <td>
+                <span class="badge ${f.status==='done'?'badge-done':'badge-new'}" style="cursor:pointer;" onclick="toggleFbStatus('${f.id}')">
+                  ${f.status==='done'?'รับเรื่องแล้ว':'ยังไม่ได้อ่าน'}
+                </span>
+              </td>
+            </tr>`).join('') : `<tr><td colspan="6" class="empty">ยังไม่มีเรื่องแจ้งเข้ามา</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+function toggleFbStatus(id){
+  const rows = load(DB_KEYS.fb,[]);
+  const f = rows.find(x=>x.id===id);
+  if(f){ f.status = f.status==='done'?'new':'done'; save(DB_KEYS.fb,rows); goPage('inbox'); }
+}
+
+/* ---------------- CONTACT (ติดต่อผู้ดูแลระบบ) ---------------- */
+function renderContact(user){
+  return `
+  <div class="section-title"><div><h2>ติดต่อผู้ดูแลระบบ</h2><div class="sub">แจ้งปัญหาการใช้งาน สอบถามข้อมูล หรือเสนอแนะเพื่อพัฒนาระบบ</div></div></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:6px;">ประเมินการใช้งานและข้อเสนอแนะ</h3>
+      <div class="hint" style="margin-bottom:16px;">ระดับความพึงพอใจต่อระบบสต็อกเห็ด</div>
+      <div class="star-rate" id="starRate">
+        ${[1,2,3,4,5].map(i=>`<svg data-v="${i}" viewBox="0 0 24 24" fill="currentColor" onclick="setStar(${i})"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1L12 2Z"/></svg>`).join('')}
+      </div>
+      <form onsubmit="return submitFeedback(event)" style="margin-top:20px;">
+        <div class="field">
+          <label>ประเภทของการติดต่อ</label>
+          <select id="fbType" required>
+            <option value="1">แจ้งปัญหาการใช้งาน/ระบบขัดข้อง</option>
+            <option value="2">แนะนำฟีเจอร์ใหม่ / การปรับปรุง</option>
+            <option value="3">คำถามและข้อสงสัย</option>
+            <option value="4">ชื่นชมและกำลังใจ</option>
+          </select>
+        </div>
+        <div class="field"><label>รายละเอียดเพิ่มเติม</label><textarea id="fbDetail" rows="4" placeholder="พิมพ์รายละเอียด..."></textarea></div>
+        <button class="btn btn-primary" style="width:100%;">ส่งข้อความถึงผู้ดูแลระบบ</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ช่องทางติดต่อผู้ดูแลระบบ</h3>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+        <div class="avatar" style="width:52px;height:52px;font-size:18px;background:var(--green-700);">ม</div>
+        <div><b>นายเมธี ใจสุขดี</b><div class="hint">ผู้ดูแลระบบหลัก</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="pill">📞 0930879722</div>
+        <div class="pill">💬 Line: _maytee</div>
+      </div>
+    </div>
+  </div>`;
+}
+let _starVal = 0;
+function setStar(v){
+  _starVal = v;
+  document.querySelectorAll('#starRate svg').forEach(s=>s.classList.toggle('on', Number(s.dataset.v)<=v));
+}
+function submitFeedback(e){
+  e.preventDefault();
+  const user = currentUser();
+  if(_starVal===0){ toast('กรุณาให้คะแนนความพึงพอใจ',true); return false; }
+  const rows = load(DB_KEYS.fb,[]);
+  rows.push({id:uid(), username:user.username, fullname:user.fullname||user.username, rating:_starVal,
+    type:Number(document.getElementById('fbType').value), detail:document.getElementById('fbDetail').value.trim(),
+    status:'new', timestamp:nowStr()});
+  save(DB_KEYS.fb,rows);
+  toast('ส่งข้อความถึงผู้ดูแลระบบเรียบร้อย ขอบคุณสำหรับความคิดเห็น');
+  _starVal=0;
+  goPage('contact');
+  return false;
+}
+
+/* ---------------- PROFILE (ข้อมูลส่วนตัว) ---------------- */
+function renderProfile(user){
+  return `
+  <div class="section-title"><div><h2>ข้อมูลส่วนตัว</h2><div class="sub">ดูและแก้ไขข้อมูลส่วนตัวของคุณ</div></div></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:14px;">ข้อมูลสมาชิก</h3>
+      <div class="field"><label>ชื่อ-นามสกุล</label><input value="${escapeAttr(user.fullname)}" disabled></div>
+      <div class="field"><label>ชื่อผู้ใช้ (Username)</label><input value="${escapeAttr(user.username)}" disabled></div>
+      <div class="field"><label>สถานะ</label><input value="${ROLE_LABEL[user.role]||user.role}" disabled></div>
+      <form onsubmit="return updateProfileInfo(event)">
+        <div class="field"><label>เบอร์โทรศัพท์</label><input type="tel" id="pfPhone" value="${escapeAttr(user.phone)}"></div>
+        <div class="field"><label>Line ID</label><input type="text" id="pfLine" value="${escapeAttr(user.line)}"></div>
+        <button class="btn btn-primary" style="width:100%;">บันทึกการเปลี่ยนแปลง</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:4px;">${escapeHtml(user.fullname||user.username)}</h3>
+      <div class="hint" style="margin-bottom:20px;">${ROLE_LABEL[user.role]||user.role}</div>
+      <form onsubmit="return changePassword(event)">
+        <div class="field"><label>รหัสผ่านใหม่</label><input type="password" id="pfNewPw" minlength="6" required></div>
+        <div class="field"><label>ยืนยันรหัสผ่านใหม่</label><input type="password" id="pfConfirmPw" minlength="6" required></div>
+        <div class="err" id="pfPwErr"></div>
+        <button class="btn btn-outline" style="width:100%;">เปลี่ยนรหัสผ่าน</button>
+      </form>
+    </div>
+  </div>`;
+}
+function updateProfileInfo(e){
+  e.preventDefault();
+  const users = load(DB_KEYS.users,[]);
+  const user = currentUser();
+  const u = users.find(x=>x.id===user.id);
+  u.phone = document.getElementById('pfPhone').value.trim();
+  u.line = document.getElementById('pfLine').value.trim();
+  save(DB_KEYS.users,users);
+  toast('บันทึกข้อมูลส่วนตัวเรียบร้อย');
+  return false;
+}
+function changePassword(e){
+  e.preventDefault();
+  const errEl = document.getElementById('pfPwErr'); errEl.style.display='none';
+  const pw = document.getElementById('pfNewPw').value;
+  const cpw = document.getElementById('pfConfirmPw').value;
+  if(pw!==cpw){ errEl.textContent='รหัสผ่านใหม่ไม่ตรงกัน'; errEl.style.display='block'; return false; }
+  const users = load(DB_KEYS.users,[]);
+  const user = currentUser();
+  const u = users.find(x=>x.id===user.id);
+  u.password = pw;
+  save(DB_KEYS.users,users);
+  toast('เปลี่ยนรหัสผ่านเรียบร้อย');
+  document.getElementById('pfNewPw').value=''; document.getElementById('pfConfirmPw').value='';
+  return false;
+}
+
+/* ---------------- SETTINGS (admin: Google Sheet URL) ---------------- */
+function renderSettings(user){
+  const cfg = load(DB_KEYS.cfg,{});
+  return `
+  <div class="section-title"><div><h2>ตั้งค่า Google Sheet</h2><div class="sub">เชื่อมต่อระบบกับ Google Sheet ผ่าน Google Apps Script Web App</div></div></div>
+  <div class="card" style="max-width:640px;">
+    <div class="field"><label>Web App URL ของ Apps Script</label><input type="text" id="gasUrl" value="${escapeAttr(cfg.gasUrl||'')}" placeholder="https://script.google.com/macros/s/xxxx/exec"></div>
+    <div class="hint" style="margin-bottom:18px;">ดูขั้นตอนการสร้าง Sheet และ Deploy สคริปต์ได้ในไฟล์ Code.gs และ README.md ที่แนบมาพร้อมระบบ เมื่อบันทึก URL แล้วทุกการบันทึกข้อมูลในระบบจะถูกส่งไปเก็บไว้ใน Google Sheet โดยอัตโนมัติ</div>
+    <button class="btn btn-primary" onclick="saveGasUrl()">บันทึก URL</button>
+  </div>`;
+}
+function saveGasUrl(){
+  const cfg = load(DB_KEYS.cfg,{});
+  cfg.gasUrl = document.getElementById('gasUrl').value.trim();
+  localStorage.setItem(DB_KEYS.cfg, JSON.stringify(cfg));
+  toast('บันทึกการตั้งค่าเรียบร้อย');
+}
+
+/* ---------------- misc helpers ---------------- */
+function afterRenderHooks(page){
+  if(page==='overview') setTimeout(drawOverviewChart,30);
+}
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s); }
+function openModal(html){
+  const bg = document.createElement('div'); bg.className='modal-bg';
+  bg.onclick = (e)=>{ if(e.target===bg) bg.remove(); };
+  bg.innerHTML = `<div class="modal">${html}<button class="btn btn-ghost" style="width:100%;margin-top:16px;" onclick="this.closest('.modal-bg').remove()">ปิด</button></div>`;
+  document.body.appendChild(bg);
+}
+
+/* ---------------- boot ---------------- */
+(function boot(){
+  const u = currentUser();
+  if(u) enterApp(u);
+})();
+</script>
+</body>
+</html>
