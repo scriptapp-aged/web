@@ -1,119 +1,196 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Website</title>
+  <title>Hero Section</title>
   
-  <!-- นำเข้าฟอนต์ Prompt -->
+  <!-- Importing Prompt Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --banner-bg: #111827; /* สีพื้นหลังแบนเนอร์ */
-      --banner-text: #ffffff;
-      --badge-bg: #4f46e5;
-      --badge-text: #ffffff;
-      --link-color: #818cf8;
+      --bg-color: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
       --font-family: 'Prompt', sans-serif;
     }
 
     body {
       margin: 0;
       font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
     }
 
-    .announcement-banner {
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 60px;
+      text-align: center;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 8px 16px;
-      background-color: var(--banner-bg);
-      color: var(--banner-text);
-      font-size: 14px;
-      width: 100%;
-      box-sizing: border-box;
+      position: relative;
+      z-index: 10;
     }
 
-    .banner-content {
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0 0 24px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 0 48px 0;
+      line-height: 1.6;
+    }
+
+    .cta-group {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
+      gap: 16px;
+      margin-bottom: 72px;
       justify-content: center;
     }
 
-    .badge-new {
-      background-color: var(--badge-bg);
-      color: var(--badge-text);
-      padding: 2px 8px;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      /* ดีไซน์ขอบเหลี่ยมคมกริบ */
+    .btn {
+      padding: 14px 36px;
+      font-size: 1rem;
+      font-weight: 500;
+      font-family: var(--font-family);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      /* Strict sharp edges */
+      border-radius: 0; 
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--text-main);
+      color: #ffffff;
+    }
+
+    /* Glassmorphism Visual Container */
+    .visual-container {
+      width: 100%;
+      max-width: 1000px;
+      position: relative;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+      padding: 16px;
+      /* Strict sharp edges */
       border-radius: 0; 
     }
 
-    .banner-message {
-      font-weight: 400;
-    }
-
-    .banner-link {
-      color: var(--link-color);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      margin-left: 4px;
-    }
-
-    .banner-link:hover {
-      text-decoration: none;
-    }
-
-    .dismiss-btn {
-      background: transparent;
-      border: none;
-      color: var(--banner-text);
-      cursor: pointer;
-      padding: 4px;
+    .visual-placeholder {
+      width: 100%;
+      height: 500px;
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0.8;
-      transition: opacity 0.2s;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      font-weight: 500;
+      /* Strict sharp edges */
+      border-radius: 0; 
     }
 
-    .dismiss-btn:hover {
-      opacity: 1;
+    /* Abstract shapes behind the glass to make the blur effect pop */
+    .bg-shape {
+      position: absolute;
+      z-index: 0;
+      filter: blur(80px);
+      opacity: 0.6;
+    }
+    
+    .shape-1 {
+      top: -10%;
+      left: 15%;
+      width: 400px;
+      height: 400px;
+      background: #93c5fd; /* Soft Blue */
+    }
+    
+    .shape-2 {
+      top: 40%;
+      right: 15%;
+      width: 500px;
+      height: 500px;
+      background: #c4b5fd; /* Soft Purple */
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .visual-placeholder {
+        height: 300px;
+      }
+      .cta-group {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- แบนเนอร์ประกาศ -->
-  <div class="announcement-banner" id="promo-banner">
-    <div class="banner-content">
-      <span class="badge-new">New</span>
-      <span class="banner-message">
-        เรามีอัปเดตระบบใหม่ล่าสุด! 
-        <a href="#" class="banner-link">ดูรายละเอียด</a>
-      </span>
-    </div>
-    <button class="dismiss-btn" aria-label="Dismiss" onclick="document.getElementById('promo-banner').style.display='none'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-  </div>
+  <!-- Background decorations for glassmorphism -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
 
-  <!-- ส่วนเนื้อหาเว็บไซต์หลักของคุณเริ่มต้นที่นี่ -->
-  <div style="padding: 20px; text-align: center;">
-    <h1>เนื้อหาเว็บไซต์</h1>
-    <p>นี่คือพื้นที่สำหรับแสดงผลเนื้อหาอื่นๆ ของคุณ</p>
-  </div>
+  <!-- Hero Section -->
+  <section class="hero-container">
+    <h1 class="hero-title">Next Generation Platform</h1>
+    <p class="hero-subtitle">Optimize your workflow with a precise, modern system engineered for maximum performance and clarity.</p>
+    
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary">Get Started</a>
+      <a href="#" class="btn btn-secondary">Learn More</a>
+    </div>
+
+    <div class="visual-container">
+      <div class="visual-placeholder">
+        [ Insert Product Screenshot / Image Here ]
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>
