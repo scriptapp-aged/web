@@ -1,545 +1,119 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website</title>
+  
+  <!-- นำเข้าฟอนต์ Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary-neon: #00e676;
-            --primary-green: #00b359;
-            --ku-green: #00592d;
-            --dark-surface: #0f172a;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --bg-light: #fafafa;
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --radius-lg: 28px;
-            --radius-md: 16px;
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+  <style>
+    :root {
+      --banner-bg: #111827; /* สีพื้นหลังแบนเนอร์ */
+      --banner-text: #ffffff;
+      --badge-bg: #4f46e5;
+      --badge-text: #ffffff;
+      --link-color: #818cf8;
+      --font-family: 'Prompt', sans-serif;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Mitr', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+    }
 
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+    .announcement-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background-color: var(--banner-bg);
+      color: var(--banner-text);
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-        /* 🟢 Modern Grid Background */
-        .grid-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background-image: 
-                linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-        }
+    .banner-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
 
-        /* 🟢 Glowing Orbs */
-        .bg-blob {
-            position: fixed;
-            width: 70vw;
-            height: 70vw;
-            max-width: 800px;
-            max-height: 800px;
-            background: radial-gradient(circle, rgba(0, 230, 118, 0.1) 0%, transparent 50%);
-            filter: blur(80px);
-            z-index: -1;
-            top: -20%;
-            left: -10%;
-            animation: orbFloat 20s ease-in-out infinite alternate;
-        }
+    .badge-new {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      /* ดีไซน์ขอบเหลี่ยมคมกริบ */
+      border-radius: 0; 
+    }
 
-        .bg-blob-2 {
-            position: fixed;
-            width: 60vw;
-            height: 60vw;
-            max-width: 600px;
-            max-height: 600px;
-            background: radial-gradient(circle, rgba(15, 23, 42, 0.08) 0%, transparent 50%);
-            filter: blur(60px);
-            z-index: -1;
-            bottom: -20%;
-            right: -10%;
-            animation: orbFloat 25s ease-in-out infinite alternate-reverse;
-        }
+    .banner-message {
+      font-weight: 400;
+    }
 
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(5%, 10%) scale(1.1); }
-        }
+    .banner-link {
+      color: var(--link-color);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+    }
 
-        /* 🟢 Hero Section */
-        .hero-header {
-            padding: 120px 20px 60px;
-            text-align: center;
-            max-width: 1000px;
-            margin: 0 auto;
-            animation: fadeInUp 1s var(--transition) forwards;
-        }
+    .banner-link:hover {
+      text-decoration: none;
+    }
 
-        .subtitle-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #ffffff;
-            padding: 10px 28px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--ku-green);
-            border: 1px solid rgba(0, 89, 45, 0.1);
-            border-radius: 100px;
-            margin-bottom: 28px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-            transition: var(--transition);
-        }
+    .dismiss-btn {
+      background: transparent;
+      border: none;
+      color: var(--banner-text);
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
 
-        .subtitle-pill:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(0, 89, 45, 0.08);
-        }
-
-        .main-title {
-            font-size: clamp(3.2rem, 8vw, 6rem);
-            font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            color: var(--dark-surface);
-            margin-bottom: 20px;
-        }
-
-        .main-title span {
-            background: linear-gradient(135deg, var(--primary-green), var(--ku-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: 3px;
-            font-size: 1.05rem;
-            text-transform: uppercase;
-        }
-
-        /* 🟢 Countdown */
-        .countdown-wrapper {
-            margin-top: 50px;
-            display: inline-block;
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-lg);
-            padding: 30px 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255,255,255,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .countdown-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--primary-neon), var(--ku-green));
-        }
-
-        .countdown-title {
-            font-weight: 600;
-            color: var(--dark-surface);
-            font-size: 1.1rem;
-        }
-
-        .countdown-subtitle {
-            font-size: 0.9rem;
-            color: var(--primary-green);
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        .countdown-grid {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .countdown-box {
-            background: #ffffff;
-            border-radius: var(--radius-md);
-            padding: 18px 20px;
-            min-width: 90px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            transition: var(--transition);
-        }
-
-        .countdown-box:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: var(--primary-neon);
-            box-shadow: 0 12px 25px rgba(0, 230, 118, 0.15);
-        }
-
-        .countdown-num {
-            display: block;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--dark-surface);
-            line-height: 1;
-        }
-
-        .countdown-unit {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 10px;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-        }
-
-        /* 🟢 Layout Grid */
-        .container {
-            max-width: 1250px;
-            margin: 0 auto;
-            padding: 0 24px 100px;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 28px;
-        }
-
-        /* 🟢 Order Banner */
-        .order-banner {
-            grid-column: span 12;
-            background: var(--dark-surface);
-            border-radius: var(--radius-lg);
-            padding: 40px 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.2);
-            transition: var(--transition);
-        }
-
-        .order-banner:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 60px rgba(0, 230, 118, 0.15);
-        }
-
-        .order-banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 230, 118, 0.2) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .banner-content {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            z-index: 1;
-        }
-
-        .banner-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 230, 118, 0.3);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            color: var(--primary-neon);
-            animation: floatIcon 4s ease-in-out infinite;
-        }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .banner-text h2 {
-            color: #ffffff;
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .banner-text p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
-            font-weight: 300;
-        }
-
-        .banner-btn {
-            z-index: 1;
-            background: var(--primary-neon);
-            color: var(--dark-surface);
-            text-decoration: none;
-            padding: 16px 36px;
-            border-radius: 100px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-            box-shadow: 0 0 20px rgba(0, 230, 118, 0.4);
-        }
-
-        .banner-btn:hover {
-            background: #ffffff;
-            color: var(--ku-green);
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-        }
-
-        .banner-btn i {
-            transition: var(--transition);
-        }
-
-        .banner-btn:hover i {
-            transform: translateX(6px);
-        }
-
-        /* 🟢 Portal Cards */
-        .portal-card {
-            grid-column: span 4;
-            background: #ffffff;
-            border-radius: var(--radius-lg);
-            padding: 40px 32px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            border: 1px solid rgba(226, 232, 240, 0.6);
-            position: relative;
-            z-index: 1;
-        }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-lg);
-            padding: 2px;
-            background: linear-gradient(135deg, var(--primary-neon), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: var(--transition);
-            z-index: -1;
-        }
-
-        .portal-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 50px rgba(0, 89, 45, 0.08);
-        }
-
-        .portal-card:hover::before {
-            opacity: 1;
-        }
-
-        .card-img-wrap {
-            width: 100%;
-            height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            border-radius: var(--radius-md);
-        }
-
-        .card-img-wrap img {
-            max-width: 85%;
-            max-height: 85%;
-            object-fit: contain;
-            transition: var(--transition);
-            filter: grayscale(100%) opacity(0.5);
-        }
-
-        .portal-card:hover .card-img-wrap img {
-            filter: grayscale(0%) opacity(1);
-            transform: scale(1.15) translateY(-10px);
-            drop-shadow: 0 20px 30px rgba(0,0,0,0.1);
-        }
-
-        .portal-card h3 {
-            font-size: 1.5rem;
-            color: var(--dark-surface);
-            margin-bottom: 10px;
-            transition: var(--transition);
-        }
-
-        .portal-card:hover h3 {
-            color: var(--ku-green);
-        }
-
-        .portal-card p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        /* 🟢 Responsive */
-        @media (max-width: 1024px) {
-            .portal-card { grid-column: span 6; }
-            .countdown-grid { flex-wrap: wrap; }
-        }
-
-        @media (max-width: 768px) {
-            .portal-card { grid-column: span 12; }
-            .order-banner { flex-direction: column; text-align: center; gap: 30px; padding: 40px 24px; }
-            .banner-content { flex-direction: column; }
-            .hero-header { padding-top: 80px; }
-        }
-
-        /* Keyframes */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .dismiss-btn:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="grid-bg"></div>
-    <div class="bg-blob"></div>
-    <div class="bg-blob-2"></div>
+  <!-- แบนเนอร์ประกาศ -->
+  <div class="announcement-banner" id="promo-banner">
+    <div class="banner-content">
+      <span class="badge-new">New</span>
+      <span class="banner-message">
+        เรามีอัปเดตระบบใหม่ล่าสุด! 
+        <a href="#" class="banner-link">ดูรายละเอียด</a>
+      </span>
+    </div>
+    <button class="dismiss-btn" aria-label="Dismiss" onclick="document.getElementById('promo-banner').style.display='none'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
 
-    <!-- Header Section -->
-    <header class="hero-header">
-        <div class="subtitle-pill">
-            <i class="fa-solid fa-leaf"></i>
-            Dept. of Human and Community Resource Development
-        </div>
-        
-        <h1 class="main-title">ชุมนุม<span>ฟาร์ม</span>นิสิต</h1>
-        <p class="hero-desc">Faculty of Education and Development Sciences</p>
+  <!-- ส่วนเนื้อหาเว็บไซต์หลักของคุณเริ่มต้นที่นี่ -->
+  <div style="padding: 20px; text-align: center;">
+    <h1>เนื้อหาเว็บไซต์</h1>
+    <p>นี่คือพื้นที่สำหรับแสดงผลเนื้อหาอื่นๆ ของคุณ</p>
+  </div>
 
-        <!-- Countdown -->
-        <div class="countdown-wrapper">
-            <div class="countdown-title">โครงการเกษตรน้องใหม่หัวใจ EDS</div>
-            <div class="countdown-subtitle">28 มิถุนายน 2569</div>
-            
-            <div class="countdown-grid" id="countdown-container">
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-days">00</span>
-                    <span class="countdown-unit">Days</span>
-                </div>
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-hours">00</span>
-                    <span class="countdown-unit">Hours</span>
-                </div>
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-mins">00</span>
-                    <span class="countdown-unit">Mins</span>
-                </div>
-                <div class="countdown-box">
-                    <span class="countdown-num" id="d-secs">00</span>
-                    <span class="countdown-unit">Secs</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container">
-        
-        <!-- Order Banner -->
-        <div class="order-banner">
-            <div class="banner-content">
-                <div class="banner-icon">
-                    <i class="fa-solid fa-shirt"></i>
-                </div>
-                <div class="banner-text">
-                    <h2>สั่งซื้อเสื้อปฏิบัติการฟาร์ม</h2>
-                    <p>ปีการศึกษา 2569 (เปิดรับ 14 - 21 มิถุนายน 2569)</p>
-                </div>
-            </div>
-            <a href="time.html" class="banner-btn">
-                สั่งซื้อตอนนี้ <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-
-        <!-- Portal Cards -->
-        <a href="people.html" class="portal-card">
-            <div class="card-img-wrap">
-                <img src="090.png" alt="Committee">
-            </div>
-            <h3>คณะกรรมการฟาร์ม</h3>
-            <p>Team Excellence 2569</p>
-        </a>
-
-        <a href="room.html" class="portal-card">
-            <div class="card-img-wrap">
-                <img src="091.png" alt="Reservation">
-            </div>
-            <h3>จองห้องประชุม</h3>
-            <p>Smart Space Booking</p>
-        </a>
-
-        <a href="project.html" class="portal-card">
-            <div class="card-img-wrap">
-                <img src="092.png" alt="Projects">
-            </div>
-            <h3>โครงการชุมนุม</h3>
-            <p>Future Farm Initiatives</p>
-        </a>
-
-    </main>
-
-    <!-- Javascript -->
-    <script>
-        function startCountdown() {
-            const target = new Date("June 28, 2026 00:00:00").getTime();
-            
-            const timer = setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
-
-                if (diff > 0) {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                    document.getElementById('d-days').innerText = days.toString().padStart(2, '0');
-                    document.getElementById('d-hours').innerText = hours.toString().padStart(2, '0');
-                    document.getElementById('d-mins').innerText = mins.toString().padStart(2, '0');
-                    document.getElementById('d-secs').innerText = secs.toString().padStart(2, '0');
-                } else {
-                    clearInterval(timer);
-                    document.getElementById('countdown-container').innerHTML = 
-                        "<div style='font-size:1.3rem; font-weight:700; color:var(--ku-green); padding: 25px 0;'>🚀 เริ่มโครงการแล้ววันนี้!</div>";
-                }
-            }, 1000);
-        }
-        
-        startCountdown();
-    </script>
 </body>
 </html>
