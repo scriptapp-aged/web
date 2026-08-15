@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบเลือกโครงการนิสิต</title>
+<style>
+  :root{
+    --bg:#F6F4EE;
+    --surface:#FFFFFF;
+    --ink:#1C2B45;
+    --ink-soft:#5B6B85;
+    --accent:#B8892B;
+    --accent-soft:#F1E4C8;
+    --ok:#2E7D52;
+    --ok-soft:#E3F0E8;
+    --warn:#C07A22;
+    --warn-soft:#F7EBDA;
+    --danger:#B23B3B;
+    --danger-soft:#F6E5E4;
+    --border:#E4E0D3;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:8px;
+    --shadow:0 8px 24px rgba(28,43,69,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Sarabun','Leelawadee UI','Noto Sans Thai',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 20px 60px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 0 20px;border-bottom:1px solid var(--border);margin-bottom:28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:36px;height:36px;border-radius:10px;background:var(--ink);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:15px;letter-spacing:-0.5px;
+  }
+  .brand-text{font-weight:700;font-size:16px;}
+  .brand-sub{font-size:12px;color:var(--ink-soft);}
+  .user-chip{display:flex;align-items:center;gap:12px;font-size:14px;}
+  .user-chip .who{color:var(--ink-soft);}
+  .btn-ghost{
+    border:1px solid var(--border);background:var(--surface);color:var(--ink);
+    padding:8px 14px;border-radius:var(--radius-sm);font-size:13px;cursor:pointer;
+    font-family:inherit;
+  }
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  /* ---------- Login ---------- */
+  .login-shell{
+    min-height:80vh;display:flex;align-items:center;justify-content:center;
+  }
+  .login-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);padding:40px 36px;width:100%;max-width:400px;
+  }
+  .login-card h1{font-size:20px;margin:0 0 4px;}
+  .login-card p.sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 26px;line-height:1.6;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink);}
+  .field input{
+    width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    font-size:14.5px;font-family:inherit;background:#FCFBF8;
+  }
+  .field input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+  .field .hint{font-size:11.5px;color:var(--ink-soft);margin-top:5px;}
+  .btn-primary{
+    width:100%;padding:12px;border:none;border-radius:var(--radius-sm);
+    background:var(--ink);color:#fff;font-size:15px;font-weight:600;cursor:pointer;
+    font-family:inherit;margin-top:6px;
+  }
+  .btn-primary:hover{background:#12203a;}
+  .btn-primary:disabled{background:#9aa5b8;cursor:not-allowed;}
+  .form-error{
+    background:var(--danger-soft);color:var(--danger);font-size:13px;
+    padding:10px 12px;border-radius:var(--radius-sm);margin-bottom:16px;
+  }
+
+  /* ---------- Dashboard ---------- */
+  .page-title{font-size:22px;font-weight:700;margin:0 0 4px;}
+  .page-sub{color:var(--ink-soft);font-size:14px;margin:0 0 22px;}
+
+  .status-banner{
+    display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--radius-md);
+    margin-bottom:26px;border:1px solid;
+  }
+  .status-banner.selected{background:var(--ok-soft);border-color:#bfe0cc;}
+  .status-banner .icon{
+    width:34px;height:34px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;
+    background:var(--ok);
+  }
+  .status-banner .txt strong{display:block;font-size:14.5px;}
+  .status-banner .txt span{font-size:12.5px;color:var(--ink-soft);}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;
+  }
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+    padding:20px;display:flex;flex-direction:column;gap:12px;position:relative;
+  }
+  .card.is-selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .card-head h3{margin:0;font-size:16px;line-height:1.4;}
+  .badge{
+    font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .badge.open{background:var(--ok-soft);color:var(--ok);}
+  .badge.near{background:var(--warn-soft);color:var(--warn);}
+  .badge.full{background:var(--danger-soft);color:var(--danger);}
+
+  .seats{display:flex;flex-wrap:wrap;gap:4px;}
+  .seat{
+    width:14px;height:14px;border-radius:4px;border:1.5px solid var(--border);
+  }
+  .seat.filled{background:var(--ink);border-color:var(--ink);}
+  .seat.filled.near-fill{background:var(--warn);border-color:var(--warn);}
+  .seat.filled.full-fill{background:var(--danger);border-color:var(--danger);}
+
+  .count-line{font-size:13px;color:var(--ink-soft);}
+  .count-line b{color:var(--ink);}
+
+  .select-btn{
+    margin-top:auto;padding:10px;border-radius:var(--radius-sm);border:none;
+    font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  }
+  .select-btn.available{background:var(--ink);color:#fff;}
+  .select-btn.available:hover{background:#12203a;}
+  .select-btn.disabled{background:#EDEAE1;color:#9aa5b8;cursor:not-allowed;}
+  .select-btn.mine{background:var(--accent);color:#fff;cursor:default;}
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);
+    background:var(--ink);color:#fff;padding:13px 20px;border-radius:var(--radius-sm);
+    font-size:14px;box-shadow:var(--shadow);opacity:0;pointer-events:none;
+    transition:all .25s ease;z-index:50;max-width:90%;text-align:center;
+  }
+  .toast.danger{background:var(--danger);}
+  .toast.ok{background:var(--ok);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .footnote{margin-top:34px;font-size:12px;color:var(--ink-soft);text-align:center;}
+  .spinner{
+    width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;
+    border-radius:50%;display:inline-block;animation:spin .7s linear infinite;vertical-align:-3px;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =========================================================
+   CONFIG — แก้ 2 บรรทัดนี้หลังตั้งค่า Google Apps Script แล้ว
+   ========================================================= */
+const CONFIG = {
+  APPS_SCRIPT_URL: "", // วาง URL ของ Web App (Google Apps Script) ที่นี่ เช่น "https://script.google.com/macros/s/XXXX/exec"
+  PROJECT_NAMES: [
+    "โครงการที่ 1", "โครงการที่ 2", "โครงการที่ 3",
+    "โครงการที่ 4", "โครงการที่ 5", "โครงการที่ 6"
+  ]
+};
+
+/* ---------------------------------------------------------
+   In-memory demo data (ใช้เฉพาะตอนยังไม่ได้ผูก Apps Script URL)
+   --------------------------------------------------------- */
+let demoState = {
+  projects: CONFIG.PROJECT_NAMES.map((name, i) => ({
+    id: "P" + (i + 1),
+    name,
+    capacity: 20,
+    taken: [4, 20, 12, 20, 7, 15][i]
+  })),
+  selections: {} // studentId -> {projectId, projectName, timestamp}
+};
+
+let state = {
+  screen: "login",       // "login" | "dashboard"
+  loginError: "",
+  loading: false,
+  student: null,         // {id, name}
+  projects: [],
+  mySelection: null       // {projectId, projectName, timestamp}
+};
+
+const app = document.getElementById("app");
+
+/* ---------------------------------------------------------
+   API layer — ใช้ Apps Script ถ้าตั้งค่า URL แล้ว, ไม่งั้นใช้ demo
+   --------------------------------------------------------- */
+async function apiGetProjects(studentId){
+  if(!CONFIG.APPS_SCRIPT_URL){
+    return {
+      projects: demoState.projects.map(p => ({...p})),
+      mySelection: demoState.selections[studentId] || null
+    };
+  }
+  const url = CONFIG.APPS_SCRIPT_URL + "?action=status&studentId=" + encodeURIComponent(studentId);
+  const res = await fetch(url);
+  return await res.json();
+}
+
+async function apiSubmitSelection(studentId, studentName, projectId, projectName){
+  if(!CONFIG.APPS_SCRIPT_URL){
+    // demo-mode logic
+    if(demoState.selections[studentId]){
+      return {ok:false, message:"คุณได้เลือกโครงการไปแล้ว"};
+    }
+    const proj = demoState.projects.find(p => p.id === projectId);
+    if(proj.taken >= proj.capacity){
+      return {ok:false, message:"โครงการนี้มีนิสิตเลือกเต็มแล้ว"};
+    }
+    proj.taken += 1;
+    const record = {projectId, projectName, timestamp: new Date().toLocaleString("th-TH")};
+    demoState.selections[studentId] = record;
+    return {ok:true, selection: record};
+  }
+  const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: {"Content-Type":"text/plain;charset=utf-8"}, // avoids CORS preflight on Apps Script
+    body: JSON.stringify({action:"select", studentId, studentName, projectId, projectName})
+  });
+  return await res.json();
+}
+
+/* ---------------------------------------------------------
+   Render: Login
+   --------------------------------------------------------- */
+function renderLogin(){
+  app.innerHTML = `
+    <div class="wrap">
+      <div class="login-shell">
+        <div class="login-card">
+          <h1>เข้าสู่ระบบเลือกโครงการ</h1>
+          <p class="sub">กรอกข้อมูลนิสิตเพื่อเข้าสู่ระบบเลือกโครงการ</p>
+          ${state.loginError ? `<div class="form-error">${state.loginError}</div>` : ""}
+          <form id="loginForm">
+            <div class="field">
+              <label for="studentId">รหัสนิสิต</label>
+              <input id="studentId" name="studentId" inputmode="numeric" placeholder="เช่น 6512345678" required />
+            </div>
+            <div class="field">
+              <label for="studentName">ชื่อ-นามสกุล</label>
+              <input id="studentName" name="studentName" placeholder="เช่น สมชาย ใจดี" required />
+            </div>
+            <div class="field">
+              <label for="password">รหัสผ่าน</label>
+              <input id="password" name="password" type="password" inputmode="numeric" placeholder="เลข 4 ตัวท้ายรหัสนิสิต" required />
+              <div class="hint">รหัสผ่าน คือ เลข 4 ตัวท้ายของรหัสนิสิตที่กรอกด้านบน</div>
+            </div>
+            <button class="btn-primary" type="submit" id="loginBtn">เข้าสู่ระบบ</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const studentId = document.getElementById("studentId").value.trim();
+    const studentName = document.getElementById("studentName").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if(studentId.length < 4){
+      state.loginError = "กรุณากรอกรหัสนิสิตให้ถูกต้อง";
+      renderLogin();
+      return;
+    }
+    const expected = studentId.slice(-4);
+    if(password !== expected){
+      state.loginError = "รหัสผ่านไม่ถูกต้อง (ต้องเป็นเลข 4 ตัวท้ายของรหัสนิสิต)";
+      renderLogin();
+      return;
+    }
+
+    const btn = document.getElementById("loginBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span> กำลังเข้าสู่ระบบ...`;
+
+    try{
+      state.student = {id: studentId, name: studentName};
+      await loadDashboardData();
+      state.screen = "dashboard";
+      state.loginError = "";
+      renderDashboard();
+    }catch(err){
+      state.loginError = "เชื่อมต่อระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
+      renderLogin();
+    }
+  });
+}
+
+/* ---------------------------------------------------------
+   Data loading
+   --------------------------------------------------------- */
+async function loadDashboardData(){
+  const data = await apiGetProjects(state.student.id);
+  state.projects = data.projects || [];
+  state.mySelection = data.mySelection || null;
+}
+
+/* ---------------------------------------------------------
+   Render: Dashboard
+   --------------------------------------------------------- */
+function statusOf(p){
+  const remaining = p.capacity - p.taken;
+  if(remaining <= 0) return "full";
+  if(remaining <= Math.ceil(p.capacity * 0.2)) return "near";
+  return "open";
+}
+function statusLabel(s){
+  return {open:"เปิดรับ", near:"ใกล้เต็ม", full:"เต็มแล้ว"}[s];
+}
+
+function seatGrid(p){
+  const TOTAL_DOTS = 10;
+  const filledDots = Math.min(TOTAL_DOTS, Math.round((p.taken / p.capacity) * TOTAL_DOTS));
+  const s = statusOf(p);
+  const fillClass = s === "full" ? "full-fill" : (s === "near" ? "near-fill" : "");
+  let html = "";
+  for(let i=0;i<TOTAL_DOTS;i++){
+    html += `<div class="seat ${i < filledDots ? "filled "+fillClass : ""}"></div>`;
+  }
+  return `<div class="seats">${html}</div>`;
+}
+
+function projectCard(p){
+  const s = statusOf(p);
+  const remaining = Math.max(0, p.capacity - p.taken);
+  const isMine = state.mySelection && state.mySelection.projectId === p.id;
+  const iHaveAnySelection = !!state.mySelection;
+
+  let btnHtml;
+  if(isMine){
+    btnHtml = `<button class="select-btn mine" disabled>✓ คุณเลือกโครงการนี้แล้ว</button>`;
+  } else if(iHaveAnySelection){
+    btnHtml = `<button class="select-btn disabled" disabled>คุณเลือกโครงการอื่นแล้ว</button>`;
+  } else if(s === "full"){
+    btnHtml = `<button class="select-btn disabled" disabled>เต็มแล้ว ไม่สามารถเลือกได้</button>`;
+  } else {
+    btnHtml = `<button class="select-btn available" data-select="${p.id}">เลือกโครงการนี้</button>`;
+  }
+
+  return `
+    <div class="card ${isMine ? "is-selected" : ""}">
+      <div class="card-head">
+        <h3>${p.name}</h3>
+        <span class="badge ${s}">${statusLabel(s)}</span>
+      </div>
+      ${seatGrid(p)}
+      <div class="count-line">รับแล้ว <b>${p.taken}</b> / <b>${p.capacity}</b> คน &nbsp;•&nbsp; เหลือ <b>${remaining}</b> ที่</div>
+      ${btnHtml}
+    </div>
+  `;
+}
+
+function renderDashboard(){
+  const bannerHtml = state.mySelection ? `
+    <div class="status-banner selected">
+      <div class="icon">✓</div>
+      <div class="txt">
+        <strong>คุณได้เลือกโครงการ: ${state.mySelection.projectName}</strong>
+        <span>ทำรายการเมื่อ ${state.mySelection.timestamp}</span>
+      </div>
+    </div>
+  ` : "";
+
+  app.innerHTML = `
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-mark">P</div>
+          <div>
+            <div class="brand-text">ระบบเลือกโครงการนิสิต</div>
+            <div class="brand-sub">เลือกได้ 1 โครงการ ต่อ 1 คน</div>
+          </div>
+        </div>
+        <div class="user-chip">
+          <span class="who">${state.student.name} (${state.student.id})</span>
+          <button class="btn-ghost" id="logoutBtn">ออกจากระบบ</button>
+        </div>
+      </div>
+
+      <div class="page-title">ภาพรวมโครงการ</div>
+      <div class="page-sub">เลือกโครงการที่ต้องการ — หากที่นั่งเต็มระบบจะแจ้งเตือนอัตโนมัติ</div>
+
+      ${bannerHtml}
+
+      <div class="grid">
+        ${state.projects.map(projectCard).join("")}
+      </div>
+
+      <div class="footnote">ข้อมูลจะถูกบันทึกพร้อมชื่อ รหัสนิสิต โครงการที่เลือก และวันเวลาที่ทำรายการ</div>
+    </div>
+    <div class="toast" id="toast"></div>
+  `;
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    state.screen = "login";
+    state.student = null;
+    state.mySelection = null;
+    state.projects = [];
+    renderLogin();
+  });
+
+  document.querySelectorAll("[data-select]").forEach(btn => {
+    btn.addEventListener("click", () => onSelectProject(btn.getAttribute("data-select")));
+  });
+}
+
+/* ---------------------------------------------------------
+   Selection flow
+   --------------------------------------------------------- */
+function showToast(msg, kind){
+  const t = document.getElementById("toast");
+  if(!t) return;
+  t.textContent = msg;
+  t.className = "toast show" + (kind ? " " + kind : "");
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => { t.className = "toast"; }, 3200);
+}
+
+async function onSelectProject(projectId){
+  if(state.mySelection){
+    showToast("คุณได้เลือกโครงการไปแล้ว ไม่สามารถเลือกซ้ำได้", "danger");
+    return;
+  }
+  const btn = document.querySelector(`[data-select="${projectId}"]`);
+  if(btn){ btn.disabled = true; btn.innerHTML = `<span class="spinner" style="border-top-color:#1C2B45;border-color:rgba(28,43,69,.4)"></span> กำลังบันทึก...`; }
+
+  const proj = state.projects.find(p => p.id === projectId);
+  try{
+    const result = await apiSubmitSelection(state.student.id, state.student.name, projectId, proj.name);
+    if(result.ok){
+      state.mySelection = result.selection;
+      showToast("เลือกโครงการสำเร็จ: " + proj.name, "ok");
+      await loadDashboardData();
+      renderDashboard();
+    } else {
+      showToast(result.message || "โครงการนี้มีนิสิตเลือกเต็มแล้ว ไม่สามารถเลือกได้", "danger");
+      await loadDashboardData();
+      renderDashboard();
+    }
+  }catch(err){
+    showToast("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง", "danger");
+    if(btn){ btn.disabled = false; btn.textContent = "เลือกโครงการนี้"; }
+  }
+}
+
+/* ---------------------------------------------------------
+   Init
+   --------------------------------------------------------- */
+renderLogin();
+</script>
+</body>
+</html>
