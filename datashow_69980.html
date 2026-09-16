@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบริหารวิชาการ - โรงเรียนบรรหารแจ่มใสวิทยา 1</title>
+    <style>
+        body { font-family: 'Sarabun', Tahoma, sans-serif; margin: 0; background-color: #f4f4f4; }
+        header { background-color: #003366; color: white; padding: 20px; text-align: center; }
+        nav { background-color: #e0e0e0; display: flex; justify-content: center; padding: 10px 0; }
+        nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: bold; font-size: 14px; }
+        
+        .container { display: flex; max-width: 1200px; margin: 20px auto; gap: 20px; padding: 0 10px; }
+        
+        /* คอลัมน์ซ้าย */
+        .left-sidebar { flex: 1; background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .menu-group { margin-bottom: 20px; }
+        .menu-title { color: #003366; font-weight: bold; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; }
+        .left-sidebar ul { list-style: none; padding: 0; margin: 0; }
+        .left-sidebar li { padding: 5px 0; font-size: 14px; color: #0044cc; cursor: pointer; }
+        .left-sidebar li:hover { text-decoration: underline; }
+
+        /* คอลัมน์กลาง */
+        .main-content { flex: 2; display: flex; flex-direction: column; gap: 15px; }
+        .banner-header { background: #000080; color: yellow; text-align: center; padding: 10px; font-weight: bold; border-radius: 5px; }
+        .news-box { background: #e6f2ff; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #b3d9ff; }
+        .news-box-large { background: #cce0ff; height: 250px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #b3d9ff; }
+
+        /* คอลัมน์ขวา */
+        .right-sidebar { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .director-box { background: white; text-align: center; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .director-img { width: 100%; height: 200px; background-color: #ccc; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+        .link-box { background: #fff3cc; height: 100px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #ffcc00; font-weight: bold; }
+
+        /* ปุ่มแชท */
+        .chat-btn { position: fixed; bottom: 20px; right: 20px; background: #007bff; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>ระบบบริหารวิชาการ โรงเรียนบรรหารแจ่มใสวิทยา 1</h2>
+    </header>
+
+    <nav>
+        <a href="#">หน้าแรก</a>
+        <a href="#">ข้อมูลทั่วไป</a>
+        <a href="#">ระบบงานทะเบียน</a>
+        <a href="#">ปฏิทินวิชาการ</a>
+        <a href="#">ตารางเรียน</a>
+        <a href="#">ข่าววิชาการ</a>
+        <a href="#">ดาวน์โหลดเอกสาร</a>
+    </nav>
+
+    <div class="container">
+        <!-- คอลัมน์ซ้าย -->
+        <div class="left-sidebar">
+            <div class="menu-group">
+                <div class="menu-title">ℹ️ บริการสำหรับนักเรียน</div>
+                <ul>
+                    <li>ตรวจสอบผลการเรียน (SGS)</li>
+                    <li>ระบบลงทะเบียนชุมนุม</li>
+                    <li>ตารางสอบกลางภาค/ปลายภาค</li>
+                    <li>คำร้องขอสอบแก้ตัว</li>
+                </ul>
+            </div>
+            <div class="menu-group">
+                <div class="menu-title">📚 กลุ่มสาระการเรียนรู้</div>
+                <ul>
+                    <li>กลุ่มสาระฯ คณิตศาสตร์</li>
+                    <li>กลุ่มสาระฯ วิทยาศาสตร์</li>
+                    <li>กลุ่มสาระฯ ภาษาไทย</li>
+                    <li>กลุ่มสาระฯ ภาษาต่างประเทศ</li>
+                    <li>กลุ่มสาระฯ สังคมศึกษาฯ</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- คอลัมน์กลาง -->
+        <div class="main-content">
+            <div class="banner-header">📢 ข่าวประชาสัมพันธ์ งานวิชาการ</div>
+            <div class="news-box">[พื้นที่ใส่แบนเนอร์ เช่น Facebook Page วิชาการ]</div>
+            <div class="news-box-large">[พื้นที่ใส่กราฟิก กำหนดการสอบปลายภาค ภาคเรียนที่ 1]</div>
+            <div class="news-box-large">[พื้นที่ใส่ภาพ แสดงความยินดีนักเรียนคนเก่ง]</div>
+        </div>
+
+        <!-- คอลัมน์ขวา -->
+        <div class="right-sidebar">
+            <div class="director-box">
+                <div class="director-img">รูปผู้บริหาร / หัวหน้าวิชาการ</div>
+                <strong>ผู้อำนวยการโรงเรียน</strong><br>
+                <small>โรงเรียนบรรหารแจ่มใสวิทยา 1</small>
+            </div>
+            <div class="link-box">ระบบจัดเก็บข้อมูล (My Office)</div>
+            <div class="link-box">ลิงก์หน่วยงาน สพม.</div>
+        </div>
+    </div>
+
+    <div class="chat-btn">💬 แชทกับเรา (ฝ่ายวิชาการ)</div>
+
+</body>
+</html>
