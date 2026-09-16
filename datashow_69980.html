@@ -5,70 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบบริหารวิชาการ - โรงเรียนบรรหารแจ่มใสวิทยา 1</title>
     <style>
-        body { font-family: 'Sarabun', Tahoma, sans-serif; margin: 0; background-color: #f4f4f4; }
-        header { background-color: #003366; color: white; padding: 20px; text-align: center; }
-        nav { background-color: #e0e0e0; display: flex; justify-content: center; padding: 10px 0; }
-        nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: bold; font-size: 14px; }
+        body { font-family: 'Sarabun', Tahoma, sans-serif; margin: 0; background-color: #f0f2f5; }
+        header { background-color: #003366; color: white; padding: 20px; text-align: center; border-bottom: 4px solid #ffcc00; }
+        nav { background-color: #ffffff; display: flex; justify-content: center; padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: bold; font-size: 15px; }
+        nav a:hover { color: #003366; }
         
-        .container { display: flex; max-width: 1200px; margin: 20px auto; gap: 20px; padding: 0 10px; }
+        .container { display: flex; max-width: 1250px; margin: 0 auto 20px; gap: 20px; padding: 0 10px; }
         
         /* คอลัมน์ซ้าย */
-        .left-sidebar { flex: 1; background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .left-sidebar { flex: 1; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: fit-content; }
         .menu-group { margin-bottom: 20px; }
-        .menu-title { color: #003366; font-weight: bold; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; }
+        .menu-title { color: #003366; font-weight: bold; border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-bottom: 10px; font-size: 16px; }
         .left-sidebar ul { list-style: none; padding: 0; margin: 0; }
-        .left-sidebar li { padding: 5px 0; font-size: 14px; color: #0044cc; cursor: pointer; }
-        .left-sidebar li:hover { text-decoration: underline; }
+        .left-sidebar li { padding: 8px 5px; font-size: 14px; color: #333; cursor: pointer; border-bottom: 1px dashed #eee; }
+        .left-sidebar li:hover { background-color: #f9f9f9; color: #0044cc; font-weight: bold; }
 
         /* คอลัมน์กลาง */
         .main-content { flex: 2; display: flex; flex-direction: column; gap: 15px; }
-        .banner-header { background: #000080; color: yellow; text-align: center; padding: 10px; font-weight: bold; border-radius: 5px; }
-        .news-box { background: #e6f2ff; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #b3d9ff; }
-        .news-box-large { background: #cce0ff; height: 250px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #b3d9ff; }
+        
+        /* เมนูด่วน (Action Buttons) - ส่วนที่เพิ่มใหม่ */
+        .action-panel { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #003366; }
+        .action-panel h3 { margin: 0 0 15px 0; font-size: 16px; color: #333; }
+        .button-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { flex: 1; min-width: 150px; padding: 12px 10px; text-align: center; border-radius: 6px; color: white; font-weight: bold; text-decoration: none; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn-check { background: linear-gradient(135deg, #0056b3, #003366); } /* สีน้ำเงิน */
+        .btn-midterm { background: linear-gradient(135deg, #ff9900, #e65c00); } /* สีส้ม */
+        .btn-final { background: linear-gradient(135deg, #28a745, #1e7e34); } /* สีเขียว */
+
+        .banner-header { background: #003366; color: #ffcc00; text-align: center; padding: 12px; font-weight: bold; border-radius: 8px; }
+        .news-box-large { background: #e6f2ff; height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px dashed #b3d9ff; color: #666; }
 
         /* คอลัมน์ขวา */
         .right-sidebar { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        .director-box { background: white; text-align: center; padding: 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-        .director-img { width: 100%; height: 200px; background-color: #ccc; border-radius: 5px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
-        .link-box { background: #fff3cc; height: 100px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: 1px solid #ffcc00; font-weight: bold; }
+        .director-box { background: white; text-align: center; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .director-img { width: 100%; height: 220px; background-color: #ddd; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #888; }
+        .link-box { background: #fff8e6; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #ffcc00; font-weight: bold; color: #333; cursor: pointer; }
+        .link-box:hover { background: #ffcc00; color: #003366; }
 
         /* ปุ่มแชท */
-        .chat-btn { position: fixed; bottom: 20px; right: 20px; background: #007bff; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: bold; }
+        .chat-btn { position: fixed; bottom: 20px; right: 20px; background: #003366; color: white; padding: 12px 25px; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-weight: bold; z-index: 1000; }
+        .chat-btn:hover { background: #0044cc; }
     </style>
 </head>
 <body>
 
     <header>
-        <h2>ระบบบริหารวิชาการ โรงเรียนบรรหารแจ่มใสวิทยา 1</h2>
+        <h2>เว็บไซต์ระบบบริหารวิชาการ โรงเรียนบรรหารแจ่มใสวิทยา 1</h2>
     </header>
 
     <nav>
-        <a href="#">หน้าแรก</a>
-        <a href="#">ข้อมูลทั่วไป</a>
-        <a href="#">ระบบงานทะเบียน</a>
-        <a href="#">ปฏิทินวิชาการ</a>
-        <a href="#">ตารางเรียน</a>
-        <a href="#">ข่าววิชาการ</a>
-        <a href="#">ดาวน์โหลดเอกสาร</a>
+        <a href="#">🏠 หน้าแรก</a>
+        <a href="#">📑 ข้อมูลทั่วไป</a>
+        <a href="#">👥 บุคลากร</a>
+        <a href="#">📅 ปฏิทินวิชาการ</a>
+        <a href="#">📊 ตารางเรียน/ตารางสอน</a>
+        <a href="#">📝 ดาวน์โหลดเอกสาร</a>
     </nav>
 
     <div class="container">
         <!-- คอลัมน์ซ้าย -->
         <div class="left-sidebar">
             <div class="menu-group">
-                <div class="menu-title">ℹ️ บริการสำหรับนักเรียน</div>
+                <div class="menu-title">🎓 บริการสำหรับนักเรียน</div>
                 <ul>
                     <li>ตรวจสอบผลการเรียน (SGS)</li>
-                    <li>ระบบลงทะเบียนชุมนุม</li>
+                    <li>ระบบลงทะเบียนกิจกรรมชุมนุม</li>
                     <li>ตารางสอบกลางภาค/ปลายภาค</li>
-                    <li>คำร้องขอสอบแก้ตัว</li>
+                    <li>ดาวน์โหลดคำร้องขอสอบแก้ตัว</li>
                 </ul>
             </div>
             <div class="menu-group">
                 <div class="menu-title">📚 กลุ่มสาระการเรียนรู้</div>
                 <ul>
                     <li>กลุ่มสาระฯ คณิตศาสตร์</li>
-                    <li>กลุ่มสาระฯ วิทยาศาสตร์</li>
+                    <li>กลุ่มสาระฯ วิทยาศาสตร์และเทคโนโลยี</li>
                     <li>กลุ่มสาระฯ ภาษาไทย</li>
                     <li>กลุ่มสาระฯ ภาษาต่างประเทศ</li>
                     <li>กลุ่มสาระฯ สังคมศึกษาฯ</li>
@@ -78,25 +90,35 @@
 
         <!-- คอลัมน์กลาง -->
         <div class="main-content">
+            
+            <!-- ส่วนที่เพิ่มใหม่: แผงเมนูด่วนสำหรับครู -->
+            <div class="action-panel">
+                <h3>📌 ระบบจัดการและติดตามผลการเรียน (สำหรับครู)</h3>
+                <div class="button-group">
+                    <a href="#" class="btn btn-check">🔍 ตรวจสอบข้อมูล</a>
+                    <a href="#" class="btn btn-midterm">📊 ติดตามการส่งเกรดกลางภาค 1/69</a>
+                    <a href="#" class="btn btn-final">🎓 ติดตามการส่งเกรดปลายภาค 1/69</a>
+                </div>
+            </div>
+
             <div class="banner-header">📢 ข่าวประชาสัมพันธ์ งานวิชาการ</div>
-            <div class="news-box">[พื้นที่ใส่แบนเนอร์ เช่น Facebook Page วิชาการ]</div>
-            <div class="news-box-large">[พื้นที่ใส่กราฟิก กำหนดการสอบปลายภาค ภาคเรียนที่ 1]</div>
-            <div class="news-box-large">[พื้นที่ใส่ภาพ แสดงความยินดีนักเรียนคนเก่ง]</div>
+            <div class="news-box-large">[พื้นที่แบนเนอร์ ข่าวประชาสัมพันธ์ / Facebook Feed]</div>
+            <div class="news-box-large">[พื้นที่แบนเนอร์ แสดงความยินดีกับนักเรียน]</div>
         </div>
 
         <!-- คอลัมน์ขวา -->
         <div class="right-sidebar">
             <div class="director-box">
-                <div class="director-img">รูปผู้บริหาร / หัวหน้าวิชาการ</div>
-                <strong>ผู้อำนวยการโรงเรียน</strong><br>
-                <small>โรงเรียนบรรหารแจ่มใสวิทยา 1</small>
+                <div class="director-img">รูปภาพผู้บริหาร</div>
+                <strong style="color:#003366;">ผู้อำนวยการโรงเรียน</strong><br>
+                <small style="color:#666;">โรงเรียนบรรหารแจ่มใสวิทยา 1</small>
             </div>
-            <div class="link-box">ระบบจัดเก็บข้อมูล (My Office)</div>
-            <div class="link-box">ลิงก์หน่วยงาน สพม.</div>
+            <div class="link-box">🌐 เข้าสู่ระบบ My Office</div>
+            <div class="link-box">🔗 ลิงก์ สพม. สุพรรณบุรี</div>
         </div>
     </div>
 
-    <div class="chat-btn">💬 แชทกับเรา (ฝ่ายวิชาการ)</div>
+    <div class="chat-btn">💬 ติดต่องานวิชาการ</div>
 
 </body>
 </html>
