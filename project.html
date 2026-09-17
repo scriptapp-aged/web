@@ -3,64 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nisit Farm Club 2026</title>
-    <!-- ใช้ฟอนต์ Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Nisit Farm Club 2026 - Project System</title>
+    <!-- ใช้ฟอนต์ Prompt ตามความเหมาะสมกับงานระบบที่ต้องการความทันสมัย -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #ffffff;
-            --text-color: #000000;
+            --text-main: #000000;
+            --text-muted: #555555;
             --border-color: #000000;
-            --hover-bg: #f0f0f0;
+            --accent-bg: #111111;
+            --accent-text: #ffffff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* บังคับไม่มีมุมโค้งมนตามสไตล์โมเดิร์นที่คมชัด */
+            /* บังคับไม่มีมุมโค้งมน (Sharp Edges) เพื่อความเฉียบคม */
             border-radius: 0 !important; 
         }
 
         body {
             font-family: 'Prompt', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             line-height: 1.6;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
+        /* Header Section */
         .header {
-            margin-bottom: 50px;
-            border-bottom: 3px solid var(--text-color);
-            padding-bottom: 20px;
+            margin-bottom: 60px;
+            text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
+            font-size: 3rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
         }
 
         .header p {
-            font-size: 1rem;
-            color: #666;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        
+        .header .sub-text {
+            font-size: 0.9rem;
             margin-top: 5px;
+            letter-spacing: 1px;
+            color: #888;
         }
 
-        /* Accordion Styles */
+        /* Accordion Structure */
         .accordion {
-            border-top: 2px solid var(--border-color);
+            border-top: 3px solid var(--border-color);
         }
 
         .accordion-item {
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .accordion-header {
@@ -68,160 +78,213 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 10px;
-            background: none;
+            padding: 30px 20px;
+            background: transparent;
             border: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            font-family: 'Prompt', sans-serif;
-            color: var(--text-color);
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
             text-align: left;
         }
 
-        .accordion-header:hover {
-            background-color: var(--hover-bg);
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .accordion-header.active {
-            background-color: var(--text-color);
-            color: var(--bg-color);
+        .project-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--border-color);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            font-family: 'Prompt', sans-serif;
         }
 
         .toggle-icon {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 300;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #f8f8f8;
+        }
+
+        .accordion-header.active {
+            background-color: var(--accent-bg);
+            color: var(--accent-text);
+        }
+
+        .accordion-header.active .project-number {
+            color: var(--accent-text);
         }
 
         .accordion-header.active .toggle-icon {
             transform: rotate(45deg);
         }
 
+        /* Accordion Content */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
             background-color: var(--bg-color);
         }
 
-        .accordion-content-inner {
-            padding: 30px 10px;
+        .accordion-content.open {
+            max-height: 2000px; /* ค่าเผื่อไว้ให้เนื้อหาขยายได้เต็มที่ */
+            transition: max-height 0.5s ease-in-out;
         }
 
-        /* เนื้อหาด้านใน */
-        .info-grid {
+        .content-inner {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Grid for Info */
+        .info-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             border: 1px solid var(--border-color);
-            padding: 20px;
         }
 
-        .info-label {
+        .info-box {
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+        .info-box:last-child {
+            border-right: none;
+        }
+
+        .section-label {
             font-size: 0.8rem;
             text-transform: uppercase;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 5px;
+            color: var(--text-muted);
             letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        .info-value {
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
             font-size: 1rem;
             font-weight: 400;
         }
 
-        .section-title {
-            font-size: 1rem;
+        .obj-num {
+            background-color: var(--accent-bg);
+            color: var(--accent-text);
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            border-left: 4px solid var(--border-color);
-            padding-left: 10px;
+            flex-shrink: 0;
         }
 
-        /* IDKU Checkboxes */
-        .idku-flex {
+        /* Tags (IDKU & SDGs) */
+        .tags-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
         }
 
-        .idku-box {
+        .tag-box {
             border: 1px solid var(--border-color);
-            padding: 8px 15px;
+            padding: 8px 16px;
             font-size: 0.9rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
+            background-color: #fff;
         }
 
-        .check-mark {
+        .tag-icon {
             font-weight: bold;
         }
 
-        /* SDGs Boxes */
-        .sdg-flex {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .sdg-square {
-            width: 50px;
-            height: 50px;
+        .sdg-box {
+            width: 45px;
+            height: 45px;
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 0.7rem;
             font-weight: 600;
-            background-color: #fafafa;
+            background-color: #f4f4f4;
         }
 
-        /* Data Table */
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
         }
 
         th, td {
             border: 1px solid var(--border-color);
             padding: 15px;
             text-align: left;
-            font-size: 0.95rem;
         }
 
         th {
-            background-color: #000;
-            color: #fff;
+            background-color: var(--accent-bg);
+            color: var(--accent-text);
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .text-center {
             text-align: center;
         }
 
-        /* Image Placeholder */
-        .img-box {
+        /* Image Area */
+        .img-area {
             width: 100%;
-            height: 250px;
+            height: 300px;
             border: 1px solid var(--border-color);
-            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #888;
-            font-size: 0.9rem;
-            text-transform: uppercase;
+            background: repeating-linear-gradient(
+                45deg,
+                #f9f9f9,
+                #f9f9f9 10px,
+                #ffffff 10px,
+                #ffffff 20px
+            );
+            color: #999;
+            font-weight: 600;
             letter-spacing: 2px;
+        }
+
+        /* Helper title */
+        .block-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--border-color);
+            padding-left: 15px;
+            text-transform: uppercase;
         }
 
     </style>
@@ -232,6 +295,7 @@
         <div class="header">
             <h1>Nisit Farm Club</h1>
             <p>ระบบโครงการชุมนุมฟาร์มนิสิต ประจำปีการศึกษา 2569</p>
+            <div class="sub-text">คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
         </div>
 
         <div class="accordion">
@@ -239,64 +303,98 @@
             <!-- โครงการที่ 1 -->
             <div class="accordion-item">
                 <button class="accordion-header">
-                    <span>01. โครงการเกษตรน้องใหม่หัวใจ EDS</span>
+                    <div class="header-content">
+                        <span class="project-number">01</span>
+                        <span class="project-title">โครงการเกษตรน้องใหม่หัวใจ EDS</span>
+                    </div>
                     <span class="toggle-icon">+</span>
                 </button>
                 <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <div class="info-grid">
-                            <div>
-                                <div class="info-label">กำหนดการ</div>
-                                <div class="info-value">วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
+                    <div class="content-inner">
+                        
+                        <div class="info-panel">
+                            <div class="info-box">
+                                <div class="section-label">กำหนดการ</div>
+                                <div>วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
                             </div>
-                            <div>
-                                <div class="info-label">กลุ่มเป้าหมาย</div>
-                                <div class="info-value">นิสิตชั้นปีที่ 1 คณะศึกษาศาสตร์และพัฒนศาสตร์ (250 คน)</div>
+                            <div class="info-box">
+                                <div class="section-label">กลุ่มเป้าหมาย</div>
+                                <div>นิสิตชั้นปีที่ 1 ทุกสาขาวิชา (250 คน)</div>
                             </div>
                         </div>
 
-                        <div class="section-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
-                        <div class="idku-flex">
-                            <div class="idku-box"><span class="check-mark">✓</span> I = สำนึกดี</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> D = มุ่งมั่น</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> K = สร้างสรรค์</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> U = สามัคคี</div>
+                        <div>
+                            <div class="block-title">วัตถุประสงค์โครงการ</div>
+                            <ul class="objectives-list">
+                                <li>
+                                    <div class="obj-num">1</div>
+                                    <div>เพื่อสร้างความสัมพันธ์อันดีและความสามัคคีระหว่างนิสิตใหม่ทุกสาขาวิชาในคณะฯ ผ่านกิจกรรมเชิงปฏิบัติการร่วมกัน</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">2</div>
+                                    <div>เพื่อถ่ายทอดองค์ความรู้พื้นฐานด้านการเกษตรและสิ่งแวดล้อมศึกษา (Hands-on Experience) ให้แก่นิสิตใหม่</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">3</div>
+                                    <div>เพื่อปลูกจิตสำนึกให้นิสิตตระหนักถึงความสำคัญของระบบนิเวศ การลดความเหลื่อมล้ำในการเข้าถึงทรัพยากร และการใช้ชีวิตอย่างยั่งยืน</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">4</div>
+                                    <div>เพื่อส่งเสริมทักษะการทำงานร่วมกันเป็นทีม (Teamwork) และการยอมรับในความแตกต่างหลากหลายของเพื่อนต่างสาขาวิชา</div>
+                                </li>
+                            </ul>
                         </div>
 
-                        <div class="section-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
-                        <div class="sdg-flex">
-                            <div class="sdg-square">SDG 1</div><div class="sdg-square">SDG 2</div>
-                            <div class="sdg-square">SDG 3</div><div class="sdg-square">SDG 4</div>
-                            <div class="sdg-square">SDG 5</div><div class="sdg-square">SDG 6</div>
-                            <div class="sdg-square">SDG 7</div>
+                        <div>
+                            <div class="block-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
+                            <div class="tags-container">
+                                <div class="tag-box"><span class="tag-icon">✓</span> I = สำนึกดี</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> D = มุ่งมั่น</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> K = สร้างสรรค์</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> U = สามัคคี</div>
+                            </div>
                         </div>
 
-                        <div class="section-title">กิจกรรมเสริมสร้างสมรรถนะ</div>
-                        <table>
-                            <tr>
-                                <th>หมวดหมู่กิจกรรม</th>
-                                <th width="120px" class="text-center">จำนวน (ชม.)</th>
-                            </tr>
-                            <tr>
-                                <td>กิจกรรมพัฒนาคุณธรรมจริยธรรม</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td>กิจกรรมพัฒนาทักษะการคิดและการเรียนรู้</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td>กิจกรรมพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคล</td>
-                                <td class="text-center">1</td>
-                            </tr>
-                            <tr>
-                                <td>กิจกรรมเพื่อสังคม</td>
-                                <td class="text-center">4</td>
-                            </tr>
-                        </table>
+                        <div>
+                            <div class="block-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+                            <div class="tags-container">
+                                <div class="sdg-box">S1</div><div class="sdg-box">S2</div><div class="sdg-box">S3</div>
+                                <div class="sdg-box">S4</div><div class="sdg-box">S5</div><div class="sdg-box">S6</div>
+                                <div class="sdg-box">S7</div>
+                            </div>
+                        </div>
 
-                        <div class="section-title">ภาพประกอบกิจกรรม</div>
-                        <div class="img-box">IMAGE PLACEHOLDER</div>
+                        <div>
+                            <div class="block-title">กิจกรรมเสริมสร้างสมรรถนะ</div>
+                            <table>
+                                <tr>
+                                    <th>หมวดหมู่กิจกรรม</th>
+                                    <th width="150px" class="text-center">จำนวนชั่วโมง</th>
+                                </tr>
+                                <tr>
+                                    <td>กิจกรรมพัฒนาคุณธรรมจริยธรรม</td>
+                                    <td class="text-center">1</td>
+                                </tr>
+                                <tr>
+                                    <td>กิจกรรมพัฒนาทักษะการคิดและการเรียนรู้</td>
+                                    <td class="text-center">1</td>
+                                </tr>
+                                <tr>
+                                    <td>กิจกรรมพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคล</td>
+                                    <td class="text-center">1</td>
+                                </tr>
+                                <tr>
+                                    <td>กิจกรรมเพื่อสังคม</td>
+                                    <td class="text-center">4</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div>
+                            <div class="block-title">ภาพประกอบกิจกรรม</div>
+                            <div class="img-area">IMAGE PLACEHOLDER</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -304,37 +402,63 @@
             <!-- โครงการที่ 2 -->
             <div class="accordion-item">
                 <button class="accordion-header">
-                    <span>02. ถ่ายทอดความรู้ทางการเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียงสู่โรงเรียน</span>
+                    <div class="header-content">
+                        <span class="project-number">02</span>
+                        <span class="project-title">โครงการถ่ายทอดความรู้ทางการเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียงสู่โรงเรียน</span>
+                    </div>
                     <span class="toggle-icon">+</span>
                 </button>
                 <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <div class="info-grid">
-                            <div>
-                                <div class="info-label">กำหนดการ</div>
-                                <div class="info-value">ตุลาคม - พฤศจิกายน 2569</div>
+                    <div class="content-inner">
+                        
+                        <div class="info-panel">
+                            <div class="info-box">
+                                <div class="section-label">กำหนดการ</div>
+                                <div>เดือนตุลาคม - พฤศจิกายน 2569</div>
                             </div>
-                            <div>
-                                <div class="info-label">กลุ่มเป้าหมาย</div>
-                                <div class="info-value">นักเรียนชั้นประถมศึกษา (100 คน)</div>
+                            <div class="info-box">
+                                <div class="section-label">กลุ่มเป้าหมาย</div>
+                                <div>นักเรียนชั้นประถมศึกษา (100 คน)</div>
                             </div>
                         </div>
 
-                        <div class="section-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
-                        <div class="idku-flex">
-                            <div class="idku-box"><span class="check-mark">✓</span> I = สำนึกดี</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> D = มุ่งมั่น</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> K = สร้างสรรค์</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> U = สามัคคี</div>
+                        <div>
+                            <div class="block-title">วัตถุประสงค์โครงการ</div>
+                            <ul class="objectives-list">
+                                <li>
+                                    <div class="obj-num">1</div>
+                                    <div>เพื่อถ่ายทอดความรู้และทักษะทางการเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียง</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">2</div>
+                                    <div>ส่งเสริมการพึ่งพาตนเองด้านอาหาร ลดรายจ่ายครัวเรือน</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">3</div>
+                                    <div>เพื่อปลูกฝังคุณธรรม ความรับผิดชอบ และการใช้ทรัพยากรอย่างคุ้มค่า</div>
+                                </li>
+                            </ul>
                         </div>
 
-                        <div class="section-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
-                        <div class="sdg-flex">
-                            <div class="sdg-square">SDG 1</div><div class="sdg-square">SDG 2</div>
-                            <div class="sdg-square">SDG 3</div><div class="sdg-square">SDG 4</div>
-                            <div class="sdg-square">SDG 5</div><div class="sdg-square">SDG 6</div>
-                            <div class="sdg-square">SDG 7</div>
+                        <div>
+                            <div class="block-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
+                            <div class="tags-container">
+                                <div class="tag-box"><span class="tag-icon">✓</span> I = สำนึกดี</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> D = มุ่งมั่น</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> K = สร้างสรรค์</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> U = สามัคคี</div>
+                            </div>
                         </div>
+
+                        <div>
+                            <div class="block-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+                            <div class="tags-container">
+                                <div class="sdg-box">S1</div><div class="sdg-box">S2</div><div class="sdg-box">S3</div>
+                                <div class="sdg-box">S4</div><div class="sdg-box">S5</div><div class="sdg-box">S6</div>
+                                <div class="sdg-box">S7</div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -342,38 +466,68 @@
             <!-- โครงการที่ 3 -->
             <div class="accordion-item">
                 <button class="accordion-header">
-                    <span>03. จัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูงเพื่อความยั่งยืน</span>
+                    <div class="header-content">
+                        <span class="project-number">03</span>
+                        <span class="project-title">โครงการจัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูงเพื่อความยั่งยืน</span>
+                    </div>
                     <span class="toggle-icon">+</span>
                 </button>
                 <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        <div class="info-grid">
-                            <div>
-                                <div class="info-label">กำหนดการ</div>
-                                <div class="info-value">มกราคม - กุมภาพันธ์ 2570</div>
+                    <div class="content-inner">
+                        
+                        <div class="info-panel">
+                            <div class="info-box">
+                                <div class="section-label">กำหนดการ</div>
+                                <div>เดือนมกราคม - กุมภาพันธ์ 2570</div>
                             </div>
-                            <div>
-                                <div class="info-label">กลุ่มเป้าหมาย</div>
-                                <div class="info-value">นิสิตสาขาเกษตรและสิ่งแวดล้อมศึกษา (50 คน)</div>
+                            <div class="info-box">
+                                <div class="section-label">กลุ่มเป้าหมาย</div>
+                                <div>นิสิตสาขาเกษตรและสิ่งแวดล้อมศึกษา (50 คน)</div>
                             </div>
                         </div>
 
-                        <div class="section-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
-                        <div class="idku-flex">
-                            <div class="idku-box"><span class="check-mark">✓</span> I = สำนึกดี</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> D = มุ่งมั่น</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> K = สร้างสรรค์</div>
-                            <div class="idku-box"><span class="check-mark">✓</span> U = สามัคคี</div>
+                        <div>
+                            <div class="block-title">วัตถุประสงค์โครงการ</div>
+                            <ul class="objectives-list">
+                                <li>
+                                    <div class="obj-num">1</div>
+                                    <div>เพื่อสร้างระบบบริหารจัดการขยะอินทรีย์ภายในคณะฯ ให้เป็นศูนย์ (Zero Waste Model) โดยนิสิตเป็นผู้ขับเคลื่อน</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">2</div>
+                                    <div>เพื่อพัฒนาทักษะวิจัยและนวัตกรรม (Research & Innovation) ในการผลิตปุ๋ยอินทรีย์สั่งตัดที่ตอบโจทย์ความต้องการธาตุอาหารของพืชแต่ละชนิด</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">3</div>
+                                    <div>เพื่อให้นิสิตได้ฝึกทักษะการเป็น "วิทยากรเกษตรสิ่งแวดล้อม" (Environmental Educator) ผ่านการถ่ายทอดองค์ความรู้การจัดการขยะ</div>
+                                </li>
+                                <li>
+                                    <div class="obj-num">4</div>
+                                    <div>เพื่อยกระดับฟาร์มนิสิตให้เป็นห้องปฏิบัติการที่มีชีวิต (Living Lab) ด้านการเกษตรหมุนเวียน (Circular Agriculture)</div>
+                                </li>
+                            </ul>
                         </div>
 
-                        <div class="section-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
-                        <div class="sdg-flex">
-                            <div class="sdg-square">SDG 1</div><div class="sdg-square">SDG 2</div>
-                            <div class="sdg-square">SDG 3</div><div class="sdg-square">SDG 4</div>
-                            <div class="sdg-square">SDG 5</div><div class="sdg-square">SDG 6</div>
-                            <div class="sdg-square">SDG 7</div><div class="sdg-square">SDG 8</div>
-                            <div class="sdg-square">SDG 9</div><div class="sdg-square">SDG 10</div>
+                        <div>
+                            <div class="block-title">เป้าหมายอัตลักษณ์ (IDKU)</div>
+                            <div class="tags-container">
+                                <div class="tag-box"><span class="tag-icon">✓</span> I = สำนึกดี</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> D = มุ่งมั่น</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> K = สร้างสรรค์</div>
+                                <div class="tag-box"><span class="tag-icon">✓</span> U = สามัคคี</div>
+                            </div>
                         </div>
+
+                        <div>
+                            <div class="block-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+                            <div class="tags-container">
+                                <div class="sdg-box">S1</div><div class="sdg-box">S2</div><div class="sdg-box">S3</div>
+                                <div class="sdg-box">S4</div><div class="sdg-box">S5</div><div class="sdg-box">S6</div>
+                                <div class="sdg-box">S7</div><div class="sdg-box">S8</div><div class="sdg-box">S9</div>
+                                <div class="sdg-box">S10</div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -381,30 +535,36 @@
         </div>
     </div>
 
-    <!-- Script สำหรับควบคุมการเปิด-ปิด (Accordion) -->
+    <!-- Script สำหรับคุม Accordion -->
     <script>
         const headers = document.querySelectorAll('.accordion-header');
 
         headers.forEach(header => {
             header.addEventListener('click', function() {
-                // Toggle active class on header
+                // ปิดอันที่เปิดอยู่ก่อน (ถ้าต้องการให้เปิดได้ทีละ 1 อัน ให้เอาคอมเมนต์ส่วนนี้ออก)
+                /*
+                const activeHeader = document.querySelector('.accordion-header.active');
+                if (activeHeader && activeHeader !== this) {
+                    activeHeader.classList.remove('active');
+                    activeHeader.nextElementSibling.classList.remove('open');
+                    activeHeader.querySelector('.toggle-icon').textContent = '+';
+                }
+                */
+
+                // สลับคลาส active ที่ปุ่มกด
                 this.classList.toggle('active');
 
-                // Toggle icon
+                // เปลี่ยนไอคอน
                 const icon = this.querySelector('.toggle-icon');
                 if (this.classList.contains('active')) {
-                    icon.textContent = '×'; // เปลี่ยนเป็นเครื่องหมายกากบาทเมื่อเปิด
+                    icon.textContent = '×';
                 } else {
                     icon.textContent = '+';
                 }
 
-                // Control panel max-height
+                // เปิด/ปิดเนื้อหา
                 const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                }
+                content.classList.toggle('open');
             });
         });
     </script>
