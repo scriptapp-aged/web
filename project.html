@@ -3,462 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โครงการชุมนุมฟาร์มนิสิต ปี 2569</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Prompt:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <title>ระบบโครงการชุมนุมฟาร์มนิสิต 2569</title>
     <style>
-        :root {
-            --bg-color: #030303;
-            --text-main: #ffffff;
-            --text-muted: #71717a; /* zinc-500 */
-            --border-color: #27272a; /* zinc-800 */
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap');
 
         body {
-            font-family: 'Prompt', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            -webkit-font-smoothing: antialiased;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f4f9f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
         }
 
-        .font-inter {
-            font-family: 'Inter', sans-serif;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        /* ซ่อน Scrollbar แต่ยังเลื่อนได้ */
-        ::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
+        h1 {
+            text-align: center;
+            color: #2c5e1a;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
         }
 
-        /* Accordion Animation */
-        .accordion-content {
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid #4caf50;
+        }
+
+        .card h2 {
+            color: #2c5e1a;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
             display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            background-color: #fdfdfd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
         }
 
-        .accordion-content.open {
-            grid-template-rows: 1fr;
+        .section-title {
+            font-weight: 600;
+            color: #444;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
 
-        .accordion-inner {
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+        .idku-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .accordion-content.open .accordion-inner {
-            opacity: 1;
-            transform: translateY(0);
+        .idku-item {
+            background-color: #e8f5e9;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #2e7d32;
+            font-weight: 600;
         }
 
-        /* Icon Animation */
-        .icon-cross {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .open-btn.active .icon-cross {
-            transform: rotate(45deg);
+        .sdg-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .hover-trigger:hover .project-num {
-            color: #ffffff;
-            transform: translateX(5px);
+        .sdg-box {
+            width: 50px;
+            height: 50px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #666;
+            border: 1px dashed #999;
         }
-        .project-num {
-            transition: all 0.3s ease;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f8f1;
+            color: #2c5e1a;
+        }
+
+        .td-hours {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            max-width: 400px;
+            height: 200px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 2px dashed #ccc;
+            margin-top: 10px;
         }
     </style>
 </head>
-<body class="py-12 md:py-24 px-6 md:px-12 lg:px-24">
+<body>
 
-    <div class="max-w-5xl mx-auto">
+<div class="container">
+    <h1>🌱 ระบบโครงการชุมนุมฟาร์มนิสิต ปีการศึกษา 2569</h1>
+
+    <!-- โครงการที่ 1 -->
+    <div class="card">
+        <h2>1. โครงการเกษตรน้องใหม่หัวใจ EDS</h2>
         
-        <!-- Header -->
-        <header class="mb-20">
-            <p class="font-inter text-zinc-500 tracking-[0.2em] text-sm mb-4 uppercase">Academic Year 2026</p>
-            <h1 class="text-3xl md:text-5xl font-light tracking-wide leading-tight">
-                โครงการชุมนุมฟาร์มนิสิต <br>
-                <span class="text-zinc-500">สาขาเกษตรและสิ่งแวดล้อมศึกษา</span>
-            </h1>
-        </header>
+        <div class="info-grid">
+            <div><strong>📅 กำหนดการ:</strong> วันอาทิตย์ที่ 28 มิถุนายน 2569</div>
+            <div><strong>👥 กลุ่มเป้าหมาย:</strong> นิสิตชั้นปีที่ 1 คณะศึกษาศาสตร์และพัฒนศาสตร์ (250 คน)</div>
+        </div>
 
-        <!-- Projects Container -->
-        <div class="border-t border-zinc-800">
+        <div class="section-title">🎯 เป้าหมายอัตลักษณ์ (IDKU)</div>
+        <div class="idku-container">
+            <div class="idku-item">✅ I = สำนึกดี</div>
+            <div class="idku-item">✅ D = มุ่งมั่น</div>
+            <div class="idku-item">✅ K = สร้างสรรค์</div>
+            <div class="idku-item">✅ U = สามัคคี</div>
+        </div>
 
-            <!-- PROJECT 1 -->
-            <div class="border-b border-zinc-800">
-                <button class="open-btn w-full py-8 flex items-center justify-between text-left hover-trigger group" onclick="toggleAccordion(1)">
-                    <div class="flex items-baseline gap-6 md:gap-12">
-                        <span class="project-num font-inter text-2xl md:text-4xl text-zinc-600 font-light">01</span>
-                        <h2 class="text-2xl md:text-4xl font-light group-hover:text-white transition-colors">ฟาร์มผักอินทรีย์อัจฉริยะ</h2>
-                    </div>
-                    <div class="icon-cross w-8 h-8 flex items-center justify-center rounded-full border border-zinc-800 group-hover:border-zinc-500 transition-colors">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                </button>
+        <div class="section-title">🌍 เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+        <div class="sdg-container">
+            <!-- สร้างกล่อง 7 กล่อง -->
+            <div class="sdg-box">SDG 1</div><div class="sdg-box">SDG 2</div><div class="sdg-box">SDG 3</div>
+            <div class="sdg-box">SDG 4</div><div class="sdg-box">SDG 5</div><div class="sdg-box">SDG 6</div>
+            <div class="sdg-box">SDG 7</div>
+        </div>
 
-                <div id="content-1" class="accordion-content">
-                    <div class="accordion-inner pb-12 pt-4">
-                        
-                        <!-- Project Header Info -->
-                        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8 bg-zinc-900/30 p-6 md:p-8 rounded-2xl">
-                            <div>
-                                <p class="text-zinc-400 font-inter text-sm tracking-widest mb-2 uppercase">Scheduled Date</p>
-                                <p class="text-xl md:text-2xl font-light">28 มิถุนายน 2569</p>
-                            </div>
+        <div class="section-title">📊 กิจกรรมเสริมสร้างสมรรถนะ</div>
+        <table>
+            <tr>
+                <th>หมวดหมู่กิจกรรม</th>
+                <th width="100px" style="text-align: center;">จำนวนชั่วโมง</th>
+            </tr>
+            <tr>
+                <td>กิจกรรมพัฒนาคุณธรรมจริยธรรม</td>
+                <td class="td-hours">1</td>
+            </tr>
+            <tr>
+                <td>กิจกรรมพัฒนาทักษะการคิดและการเรียนรู้</td>
+                <td class="td-hours">1</td>
+            </tr>
+            <tr>
+                <td>กิจกรรมพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคล</td>
+                <td class="td-hours">1</td>
+            </tr>
+            <tr>
+                <td>กิจกรรมเพื่อสังคม</td>
+                <td class="td-hours">4</td>
+            </tr>
+        </table>
 
-                            <!-- Countdown (Minimal) -->
-                            <div class="flex items-center gap-4 md:gap-8 font-inter">
-                                <div class="flex flex-col items-center">
-                                    <span id="cd-days" class="text-3xl md:text-5xl font-light text-white">00</span>
-                                    <span class="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest mt-1">Days</span>
-                                </div>
-                                <span class="text-2xl font-light text-zinc-700 pb-4">:</span>
-                                <div class="flex flex-col items-center">
-                                    <span id="cd-hours" class="text-3xl md:text-5xl font-light text-white">00</span>
-                                    <span class="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest mt-1">Hrs</span>
-                                </div>
-                                <span class="text-2xl font-light text-zinc-700 pb-4">:</span>
-                                <div class="flex flex-col items-center">
-                                    <span id="cd-minutes" class="text-3xl md:text-5xl font-light text-white">00</span>
-                                    <span class="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest mt-1">Min</span>
-                                </div>
-                                <span class="text-2xl font-light text-zinc-700 pb-4">:</span>
-                                <div class="flex flex-col items-center">
-                                    <span id="cd-seconds" class="text-3xl md:text-5xl font-light text-white">00</span>
-                                    <span class="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest mt-1">Sec</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Main Details Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            
-                            <!-- Left Column: Info -->
-                            <div class="lg:col-span-4 space-y-8">
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Organization</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ชุมนุมฟาร์มนิสิต สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Target Audience</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">นิสิตปี 69 คณะศึกษาศาสตร์และพัฒนศาสตร์ ทุกสาขาวิชา และพี่เลี้ยงโครงการ</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Location</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ฟาร์มนิสิตภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</p>
-                                </div>
-                            </div>
-
-                            <!-- Right Column: Objectives & Goals -->
-                            <div class="lg:col-span-8 space-y-12">
-                                <!-- Objectives -->
-                                <div>
-                                    <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">วัตถุประสงค์</h3>
-                                    <ul class="space-y-4 text-zinc-300 font-light text-sm md:text-base">
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">01</span> 
-                                            <p>เพื่อให้นิสิตได้เรียนรู้และลงมือปฏิบัติจริงเกี่ยวกับการปลูกพืชแบบอินทรีย์</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">02</span> 
-                                            <p>เพื่อส่งเสริมการทำงานร่วมกันเป็นทีม และการแก้ปัญหาในแปลงเกษตร</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">03</span> 
-                                            <p>เพื่อนำผลผลิตที่ได้ไปใช้ประโยชน์หรือจำหน่ายเป็นรายได้เสริมของชุมนุม</p>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <!-- IDKU & SDGs Grid -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    <!-- IDKU -->
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">อัตลักษณ์ (IDKU)</h3>
-                                        <div class="space-y-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>I</strong> - สำนึกดี (Integrity)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>D</strong> - มุ่งมั่น (Determination)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>K</strong> - สร้างสรรค์ (Knowledge Creation)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>U</strong> - สามัคคี (Unity)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- SDGs -->
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">การพัฒนาอย่างยั่งยืน (SDGs)</h3>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 2: Zero Hunger</span>
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 12: Responsible Consumption</span>
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 15: Life on Land</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROJECT 2 -->
-            <div class="border-b border-zinc-800">
-                <button class="open-btn w-full py-8 flex items-center justify-between text-left hover-trigger group" onclick="toggleAccordion(2)">
-                    <div class="flex items-baseline gap-6 md:gap-12">
-                        <span class="project-num font-inter text-2xl md:text-4xl text-zinc-600 font-light">02</span>
-                        <h2 class="text-2xl md:text-4xl font-light group-hover:text-white transition-colors">ปศุสัตว์และสวัสดิภาพสัตว์</h2>
-                    </div>
-                    <div class="icon-cross w-8 h-8 flex items-center justify-center rounded-full border border-zinc-800 group-hover:border-zinc-500 transition-colors">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                </button>
-
-                <div id="content-2" class="accordion-content">
-                    <div class="accordion-inner pb-12 pt-4">
-                        
-                        <div class="mb-12">
-                            <p class="text-zinc-400 font-inter text-sm tracking-widest mb-2 uppercase">Scheduled Date</p>
-                            <p class="text-xl md:text-2xl font-light text-white">พฤศจิกายน 2569 - มกราคม 2570</p>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            <div class="lg:col-span-4 space-y-8">
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Organization</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ชุมนุมฟาร์มนิสิต สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Target Audience</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">นิสิตปี 69 คณะศึกษาศาสตร์และพัฒนศาสตร์ ทุกสาขาวิชา และพี่เลี้ยงโครงการ</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Location</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ฟาร์มนิสิตภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</p>
-                                </div>
-                            </div>
-
-                            <div class="lg:col-span-8 space-y-12">
-                                <div>
-                                    <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">วัตถุประสงค์</h3>
-                                    <ul class="space-y-4 text-zinc-300 font-light text-sm md:text-base">
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">01</span> 
-                                            <p>เพื่อสร้างความเข้าใจที่ถูกต้องเกี่ยวกับการเลี้ยงสัตว์และการจัดการฟาร์ม</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">02</span> 
-                                            <p>เพื่อปลูกฝังจิตสำนึกเรื่องสวัสดิภาพสัตว์ (Animal Welfare) ให้แก่นิสิต</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">03</span> 
-                                            <p>เพื่อพัฒนาระบบนิเวศภายในฟาร์มให้เกื้อกูลกันระหว่างพืชและสัตว์</p>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">อัตลักษณ์ (IDKU)</h3>
-                                        <div class="space-y-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>I</strong> - สำนึกดี (Integrity)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>D</strong> - มุ่งมั่น (Determination)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>K</strong> - สร้างสรรค์ (Knowledge Creation)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>U</strong> - สามัคคี (Unity)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">การพัฒนาอย่างยั่งยืน (SDGs)</h3>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 2: Zero Hunger</span>
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 3: Good Health & Well-being</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROJECT 3 -->
-            <div class="border-b border-zinc-800">
-                <button class="open-btn w-full py-8 flex items-center justify-between text-left hover-trigger group" onclick="toggleAccordion(3)">
-                    <div class="flex items-baseline gap-6 md:gap-12">
-                        <span class="project-num font-inter text-2xl md:text-4xl text-zinc-600 font-light">03</span>
-                        <h2 class="text-2xl md:text-4xl font-light group-hover:text-white transition-colors">แปรรูปและเพิ่มมูลค่าผลผลิต</h2>
-                    </div>
-                    <div class="icon-cross w-8 h-8 flex items-center justify-center rounded-full border border-zinc-800 group-hover:border-zinc-500 transition-colors">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                </button>
-
-                <div id="content-3" class="accordion-content">
-                    <div class="accordion-inner pb-12 pt-4">
-                        
-                        <div class="mb-12">
-                            <p class="text-zinc-400 font-inter text-sm tracking-widest mb-2 uppercase">Scheduled Date</p>
-                            <p class="text-xl md:text-2xl font-light text-white">กุมภาพันธ์ - เมษายน 2570</p>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            <div class="lg:col-span-4 space-y-8">
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Organization</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ชุมนุมฟาร์มนิสิต สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Target Audience</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">นิสิตปี 69 คณะศึกษาศาสตร์และพัฒนศาสตร์ ทุกสาขาวิชา และพี่เลี้ยงโครงการ</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-xs text-zinc-500 uppercase tracking-widest mb-2 font-inter">Location</h3>
-                                    <p class="text-sm font-light leading-relaxed text-zinc-200">ฟาร์มนิสิตภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน</p>
-                                </div>
-                            </div>
-
-                            <div class="lg:col-span-8 space-y-12">
-                                <div>
-                                    <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">วัตถุประสงค์</h3>
-                                    <ul class="space-y-4 text-zinc-300 font-light text-sm md:text-base">
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">01</span> 
-                                            <p>เพื่อให้นิสิตมีทักษะในการนำผลผลิตทางการเกษตรมาแปรรูปเพื่อยืดอายุ</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">02</span> 
-                                            <p>เพื่อส่งเสริมแนวคิดการเป็นผู้ประกอบการ (Entrepreneurship) ให้แก่นิสิต</p>
-                                        </li>
-                                        <li class="flex items-start gap-4">
-                                            <span class="text-zinc-600 font-inter text-xs mt-1">03</span> 
-                                            <p>เพื่อสร้างนวัตกรรมใหม่ๆ จากผลผลิตที่เหลือทิ้ง (Zero Waste)</p>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">อัตลักษณ์ (IDKU)</h3>
-                                        <div class="space-y-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>I</strong> - สำนึกดี (Integrity)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>D</strong> - มุ่งมั่น (Determination)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>K</strong> - สร้างสรรค์ (Knowledge Creation)</span>
-                                            </div>
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full bg-white flex items-center justify-center"><svg class="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                                                <span class="text-sm font-light text-zinc-200"><strong>U</strong> - สามัคคี (Unity)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-sm text-zinc-400 mb-6 border-b border-zinc-800 pb-2">การพัฒนาอย่างยั่งยืน (SDGs)</h3>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 8: Decent Work & Economic Growth</span>
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 9: Industry, Innovation</span>
-                                            <span class="px-3 py-1.5 border border-zinc-700 rounded-full text-xs font-light text-zinc-300">Goal 12: Responsible Consumption</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="section-title">📸 ภาพประกอบกิจกรรม</div>
+        <div class="image-placeholder">
+            [ รูปภาพขนาดกลาง 1 รูป ]
         </div>
     </div>
 
-    <script>
-        // Accordion Logic
-        function toggleAccordion(id) {
-            const content = document.getElementById(`content-${id}`);
-            const btn = content.previousElementSibling;
-            
-            // ปิดอันอื่นที่ไม่ได้เลือก (Optional - ถอดออกได้ถ้าอยากให้เปิดพร้อมกันได้หลายอัน)
-            document.querySelectorAll('.accordion-content').forEach(el => {
-                if(el.id !== `content-${id}`) {
-                    el.classList.remove('open');
-                    el.previousElementSibling.classList.remove('active');
-                }
-            });
+    <!-- โครงการที่ 2 -->
+    <div class="card">
+        <h2>2. โครงการถ่ายทอดความรู้ทางการเกษตรตามหลักปรัชญาเศรษฐกิจพอเพียงสู่โรงเรียน</h2>
+        
+        <div class="info-grid">
+            <div><strong>📅 กำหนดการ:</strong> ตุลาคม - พฤศจิกายน 2569</div>
+            <div><strong>👥 กลุ่มเป้าหมาย:</strong> นักเรียนชั้นประถมศึกษา (100 คน)</div>
+        </div>
 
-            // สลับสถานะเปิด/ปิด
-            content.classList.toggle('open');
-            btn.classList.toggle('active');
-        }
+        <div class="section-title">🎯 เป้าหมายอัตลักษณ์ (IDKU)</div>
+        <div class="idku-container">
+            <div class="idku-item">✅ I = สำนึกดี</div>
+            <div class="idku-item">✅ D = มุ่งมั่น</div>
+            <div class="idku-item">✅ K = สร้างสรรค์</div>
+            <div class="idku-item">✅ U = สามัคคี</div>
+        </div>
 
-        // Countdown Logic (Project 1: June 28, 2026)
-        function initCountdown() {
-            const targetDate = new Date("June 28, 2026 00:00:00").getTime();
+        <div class="section-title">🌍 เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+        <div class="sdg-container">
+            <!-- สร้างกล่อง 7 กล่อง -->
+            <div class="sdg-box">SDG 1</div><div class="sdg-box">SDG 2</div><div class="sdg-box">SDG 3</div>
+            <div class="sdg-box">SDG 4</div><div class="sdg-box">SDG 5</div><div class="sdg-box">SDG 6</div>
+            <div class="sdg-box">SDG 7</div>
+        </div>
+    </div>
 
-            const timerInterval = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
+    <!-- โครงการที่ 3 -->
+    <div class="card">
+        <h2>3. โครงการจัดการนวัตกรรมขยะอินทรีย์สู่ปุ๋ยคุณภาพสูงเพื่อความยั่งยืน</h2>
+        
+        <div class="info-grid">
+            <div><strong>📅 กำหนดการ:</strong> มกราคม - กุมภาพันธ์ 2570</div>
+            <div><strong>👥 กลุ่มเป้าหมาย:</strong> นิสิตสาขาเกษตรและสิ่งแวดล้อมศึกษา (50 คน)</div>
+        </div>
 
-                if (distance < 0) {
-                    clearInterval(timerInterval);
-                    document.getElementById("cd-days").innerText = "00";
-                    document.getElementById("cd-hours").innerText = "00";
-                    document.getElementById("cd-minutes").innerText = "00";
-                    document.getElementById("cd-seconds").innerText = "00";
-                    return;
-                }
+        <div class="section-title">🎯 เป้าหมายอัตลักษณ์ (IDKU)</div>
+        <div class="idku-container">
+            <div class="idku-item">✅ I = สำนึกดี</div>
+            <div class="idku-item">✅ D = มุ่งมั่น</div>
+            <div class="idku-item">✅ K = สร้างสรรค์</div>
+            <div class="idku-item">✅ U = สามัคคี</div>
+        </div>
 
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        <div class="section-title">🌍 เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
+        <div class="sdg-container">
+            <!-- สร้างกล่อง 10 กล่อง -->
+            <div class="sdg-box">SDG 1</div><div class="sdg-box">SDG 2</div><div class="sdg-box">SDG 3</div>
+            <div class="sdg-box">SDG 4</div><div class="sdg-box">SDG 5</div><div class="sdg-box">SDG 6</div>
+            <div class="sdg-box">SDG 7</div><div class="sdg-box">SDG 8</div><div class="sdg-box">SDG 9</div>
+            <div class="sdg-box">SDG 10</div>
+        </div>
+    </div>
 
-                document.getElementById("cd-days").innerText = days.toString().padStart(2, '0');
-                document.getElementById("cd-hours").innerText = hours.toString().padStart(2, '0');
-                document.getElementById("cd-minutes").innerText = minutes.toString().padStart(2, '0');
-                document.getElementById("cd-seconds").innerText = seconds.toString().padStart(2, '0');
+</div>
 
-            }, 1000);
-        }
-
-        // Initialize when page loads
-        window.onload = function() {
-            initCountdown();
-            // เปิดโปรเจกต์ 1 ไว้เป็นค่าเริ่มต้น
-            setTimeout(() => toggleAccordion(1), 300);
-        };
-    </script>
 </body>
 </html>
