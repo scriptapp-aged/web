@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nisit Farm Club 2026 - Project System</title>
-    <!-- ใช้ฟอนต์ Prompt ตามความเหมาะสมกับงานระบบที่ต้องการความทันสมัย -->
+    <!-- ใช้ฟอนต์ Prompt -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,7 +20,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* บังคับไม่มีมุมโค้งมน (Sharp Edges) เพื่อความเฉียบคม */
+            /* บังคับไม่มีมุมโค้งมน (Sharp Edges) */
             border-radius: 0 !important; 
         }
 
@@ -136,7 +136,7 @@
         }
 
         .accordion-content.open {
-            max-height: 2000px; /* ค่าเผื่อไว้ให้เนื้อหาขยายได้เต็มที่ */
+            max-height: 2000px; 
             transition: max-height 0.5s ease-in-out;
         }
 
@@ -277,6 +277,28 @@
             letter-spacing: 2px;
         }
 
+        /* Action Button */
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: var(--accent-bg);
+            color: var(--accent-text);
+            text-align: center;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
         /* Helper title */
         .block-title {
             font-size: 1.1rem;
@@ -358,7 +380,7 @@
                         <div>
                             <div class="block-title">เป้าหมายการพัฒนาอย่างยั่งยืน (SDGs)</div>
                             <div class="tags-container">
-                                <div class="sdg-box">S1</div><div class="sdg-box">S2</div><div class="sdg-box">S3</div>
+                                <div class="S4">S1</div><div class="sdg-box">S2</div><div class="sdg-box">S3</div>
                                 <div class="sdg-box">S4</div><div class="sdg-box">S5</div><div class="sdg-box">S6</div>
                                 <div class="sdg-box">S7</div>
                             </div>
@@ -390,9 +412,14 @@
                             </table>
                         </div>
 
+                        <!-- เพิ่มปุ่มด้านล่างภาพกิจกรรมที่นี่ -->
                         <div>
                             <div class="block-title">ภาพประกอบกิจกรรม</div>
                             <div class="img-area">IMAGE PLACEHOLDER</div>
+                            
+                            <a href="#" class="action-btn">
+                                ➔ ตรวจสอบรายชื่อสำหรับขอหน่วยกิจกรรม
+                            </a>
                         </div>
 
                     </div>
@@ -541,17 +568,6 @@
 
         headers.forEach(header => {
             header.addEventListener('click', function() {
-                // ปิดอันที่เปิดอยู่ก่อน (ถ้าต้องการให้เปิดได้ทีละ 1 อัน ให้เอาคอมเมนต์ส่วนนี้ออก)
-                /*
-                const activeHeader = document.querySelector('.accordion-header.active');
-                if (activeHeader && activeHeader !== this) {
-                    activeHeader.classList.remove('active');
-                    activeHeader.nextElementSibling.classList.remove('open');
-                    activeHeader.querySelector('.toggle-icon').textContent = '+';
-                }
-                */
-
-                // สลับคลาส active ที่ปุ่มกด
                 this.classList.toggle('active');
 
                 // เปลี่ยนไอคอน
