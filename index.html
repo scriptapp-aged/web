@@ -728,7 +728,6 @@
             gap: 25px;
         }
 
-        /* ปรับดีไซน์ใหม่ให้สมูทและพรีเมียมขึ้นแบบ Glassmorphism เหลี่ยมคมชัด */
         .order-banner-icon{
             position: relative;
             display: flex;
@@ -746,7 +745,6 @@
             animation: floatSmooth 5s ease-in-out infinite;
         }
 
-        /* ไล่เฉดสีในตัวไอคอน */
         .order-banner-icon i {
             background: linear-gradient(135deg, var(--primary-neon), var(--ku-green));
             -webkit-background-clip: text;
@@ -754,7 +752,6 @@
             filter: drop-shadow(0 8px 12px rgba(0, 255, 136, 0.4));
         }
 
-        /* แอนิเมชันลอยตัวแบบสมูท */
         @keyframes floatSmooth {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -823,6 +820,79 @@
             }
         }
 
+        /* ========================= */
+        /* ✨ CHECK PROJECT BUTTON */
+        /* ========================= */
+
+        .check-project-wrap{
+            margin-top:30px;
+            display:flex;
+            justify-content:center;
+            animation: fadeInUp 1.2s 0.4s both;
+        }
+
+        .check-project-btn{
+            position:relative;
+            overflow:hidden;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:14px;
+            width:min(520px,92%);
+            padding:18px 30px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.10), rgba(0,102,51,0.08));
+            border: 1px solid rgba(0,255,136,0.25);
+            text-decoration:none;
+            color:var(--text-dark);
+            backdrop-filter:blur(10px);
+            transition: 0.45s cubic-bezier(0.2,1,0.2,1);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.08), inset 0 1px 0 rgba(255,255,255,0.4);
+        }
+
+        .check-project-btn::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform:translateX(-120%);
+            transition:0.8s;
+        }
+
+        .check-project-btn:hover::before{
+            transform:translateX(120%);
+        }
+
+        .check-project-btn:hover{
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(0,255,136,0.45);
+            box-shadow: 0 25px 60px rgba(0,255,136,0.16), 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .check-project-btn i{
+            font-size:1.5rem;
+            color:var(--ku-green);
+        }
+
+        .check-project-content{
+            display:flex;
+            flex-direction:column;
+            align-items:flex-start;
+            text-align:left;
+        }
+
+        .check-project-title{
+            font-size:1.15rem;
+            font-weight:600;
+            line-height:1.2;
+        }
+
+        .check-project-sub{
+            font-size:0.82rem;
+            color:#64748b;
+            margin-top:2px;
+            font-weight:300;
+        }
+
     </style>
 </head>
 
@@ -854,61 +924,21 @@
                 FACULTY OF EDUCATION AND DEVELOPMENT SCIENCES
             </p>
 
-            <div class="countdown-section">
+            <div class="check-project-wrap">
 
-                <div class="countdown-project-label">
-                    โครงการเกษตรน้องใหม่หัวใจ EDS
-                </div>
+                <a href="check-project.html"
+                   class="check-project-btn">
 
-                <div class="countdown-date-label">
-                    28 มิถุนายน 2569
-                </div>
+                    <i class="fa-solid fa-clipboard-list"></i>
 
-                <div class="countdown-grid">
+                    <div class="check-project-content">
 
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-days">00</span>
-                        <span class="countdown-unit">Days</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-hours">00</span>
-                        <span class="countdown-unit">Hours</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-mins">00</span>
-                        <span class="countdown-unit">Mins</span>
-                    </div>
-
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="d-secs">00</span>
-                        <span class="countdown-unit">Secs</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="ku86-hero-wrap">
-
-                <a href="ku86.html"
-                   class="ku86-hero-btn">
-
-                    <div class="ku86-new-badge">
-                        NEW
-                    </div>
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <div class="ku86-hero-content">
-
-                        <div class="ku86-hero-title">
-                            นิสิตใหม่ KU86
+                        <div class="check-project-title">
+                            ตรวจสอบรายชื่อการเลือกโครงการ 2569
                         </div>
 
-                        <div class="ku86-hero-sub">
-                            คู่มือ • กิจกรรม • ข้อมูลสำหรับนิสิตใหม่
+                        <div class="check-project-sub">
+                            คลิกเพื่อดูรายชื่อและสถานะการลงทะเบียน
                         </div>
 
                     </div>
@@ -920,23 +950,6 @@
         </div>
 
     </header>
-
-    <div class="order-banner-wrap">
-        <div class="order-banner">
-            <div class="order-banner-content">
-                <div class="order-banner-icon">
-                    <i class="fa-solid fa-shirt"></i>
-                </div>
-                <div class="order-banner-text">
-                    <h2>สั่งซื้อเสื้อปฏิบัติการฟาร์ม</h2>
-                    <p>ปีการศึกษา 2569 (14 - 21 มิถุนายน 2569)</p>
-                </div>
-            </div>
-            <a href="time.html" class="order-banner-btn">
-                สั่งซื้อตอนนี้ <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
 
     <div class="main-portal">
 
@@ -1050,96 +1063,6 @@
     </div>
 
     <script>
-
-        function startCountdown(){
-
-            const target =
-                new Date(
-                    "June 28, 2026 00:00:00"
-                ).getTime();
-
-            setInterval(()=>{
-
-                const now =
-                    new Date().getTime();
-
-                const diff =
-                    target - now;
-
-                if(diff > 0){
-
-                    const days =
-                        Math.floor(
-                            diff /
-                            (1000*60*60*24)
-                        );
-
-                    const hours =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60*60*24)
-                            ) /
-                            (1000*60*60)
-                        );
-
-                    const mins =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60*60)
-                            ) /
-                            (1000*60)
-                        );
-
-                    const secs =
-                        Math.floor(
-                            (
-                                diff %
-                                (1000*60)
-                            ) /
-                            1000
-                        );
-
-                    document
-                        .getElementById('d-days')
-                        .innerText =
-                        days.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-hours')
-                        .innerText =
-                        hours.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-mins')
-                        .innerText =
-                        mins.toString()
-                        .padStart(2,'0');
-
-                    document
-                        .getElementById('d-secs')
-                        .innerText =
-                        secs.toString()
-                        .padStart(2,'0');
-
-                }else{
-
-                    document
-                        .querySelector(
-                            '.countdown-section'
-                        )
-                        .innerHTML =
-                        "<div class='countdown-project-label'>เริ่มโครงการแล้ววันนี้! (28 มิ.ย. 69)</div>";
-                }
-
-            },1000);
-        }
-
-        startCountdown();
-
     </script>
 
 </body>
