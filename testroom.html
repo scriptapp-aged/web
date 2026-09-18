@@ -127,7 +127,7 @@
     /* Responsive Auth (หน้าจอมือถือ) */
     @media (max-width: 900px) {
       #authScreen {
-        flex-direction: column-reverse; /* มือถือให้แบบฟอร์มอยู่บน ข้อมูลผู้พัฒนาอยู่ล่าง */
+        flex-direction: column-reverse;
         gap: 40px;
         padding: 20px;
       }
@@ -562,10 +562,17 @@
 
   <!-- ฝั่งซ้าย: ข้อมูลผู้พัฒนา -->
   <div class="auth-credit">
+    <div style="font-size:32px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:8px;letter-spacing:0.5px;">
+      ระบบจองห้องประชุม<br>AG-ED | HCRD
+    </div>
+    <div style="font-size:16px;color:rgba(255,255,255,.8);margin-bottom:40px;line-height:1.5;">
+      ชุมนุมฟาร์มนิสิต คณะศึกษาศาสตร์และพัฒนศาสตร์
+    </div>
+
     <div class="ac-by">ออกแบบและพัฒนาโดย</div>
-    <div class="ac-name">นายเมธี ใจสุขดี</div>
+    <div class="ac-name" style="font-size:24px;">นายเมธี ใจสุขดี</div>
     <div class="ac-detail">นิสิตชั้นปีที่ 2 สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
-    <div class="ac-detail">คณะศึกษาศาสตร์และพัฒนศาสตร์ ม.เกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+    <div class="ac-detail">คณะศึกษาศาสตร์และพัฒนศาสตร์ ม.เกษตรศาสตร์ กำแพงแสน</div>
   </div>
 
   <!-- ฝั่งขวา: ฟอร์มเข้าสู่ระบบ -->
@@ -625,7 +632,7 @@
         <div class="auth-field">
           <div class="auth-lbl">เบอร์โทรศัพท์ (ใช้เป็นรหัสผ่าน)</div>
           <div class="auth-ibox">
-            <div class="auth-iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a0 0 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
             <input class="auth-inp" type="tel" id="regPhone" placeholder="0812345678" maxlength="10">
           </div>
         </div>
@@ -725,7 +732,7 @@
             <div class="sec-lbl"><div class="sec-n">4</div>ข้อมูลผู้จอง<div class="sec-hr"></div></div>
             <div class="fgrid">
               <div class="field"><label>ชื่อ-นามสกุล <span class="req">*</span></label><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><input type="text" id="name" required placeholder="ชื่อ-นามสกุล"></div></div>
-              <div class="field"><label>เบอร์ติดต่อ <span class="req">*</span></label><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><input type="tel" id="phone" required placeholder="0812345678" pattern="[0-9]{9,10}" maxlength="10"></div></div>
+              <div class="field"><label>เบอร์ติดต่อ <span class="req">*</span></label><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a0 0 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><input type="tel" id="phone" required placeholder="0812345678" pattern="[0-9]{9,10}" maxlength="10"></div></div>
             </div>
           </div>
           
