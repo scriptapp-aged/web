@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ระบบจองห้องประชุม AG-ED | HCRD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      /* Professional / Government 4.0 Color Scheme */
+      --c1: #1e3a8a; /* Deep Navy Blue */
+      --c2: #2563eb; /* Primary Blue */
+      --c3: #d97706; /* Gold/Amber Accent */
+      --ink: #0f172a;
+      --sub: #475569;
+      --dim: #94a3b8;
+      --white: #ffffff;
+      --bg: #f1f5f9;
+      --line: #cbd5e1;
+      --err: #dc2626;
+      --ok: #059669;
+      /* Sharp Edges Design */
+      --radius: 0px; 
+      --t: all .2s cubic-bezier(.4,0,.2,1);
+    }
+    html,body{min-height:100vh;font-family:'Prompt',sans-serif;background:var(--bg);color:var(--ink);}
+
+    /* ══════════════════════
+       AUTH SCREEN
+    ══════════════════════ */
+    #authScreen{
+      position:fixed;inset:0;z-index:999;
+      background: #0f172a;
+      background-image: radial-gradient(circle at 20% 30%, #1e3a8a 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #1e40af 0%, transparent 40%);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:20px;
+      min-height:100vh;
+    }
+    /* Sharp geometric background elements instead of rounded */
+    .as{position:absolute;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);animation:drift 10s linear infinite;}
+    .as1{width:300px;height:300px;top:10%;left:5%;transform:rotate(15deg);}
+    .as2{width:200px;height:200px;bottom:15%;right:10%;transform:rotate(-10deg);animation-delay:-3s;}
+    @keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(5deg)}}
+
+    .auth-card{
+      position:relative;z-index:1;
+      background:#fff;border-radius:var(--radius);
+      width:100%;max-width:420px;
+      box-shadow:0 20px 40px rgba(0,0,0,.3);
+      overflow:hidden;
+      flex-shrink:0;
+      border-top: 4px solid var(--c1);
+    }
+    .auth-head{
+      background: var(--white);
+      padding:30px 28px 20px;text-align:center;
+      border-bottom: 1px solid var(--line);
+    }
+    .auth-logo{
+      width:56px;height:56px;border-radius:var(--radius);
+      background:var(--bg);border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 16px;
+    }
+    .auth-logo svg{width:28px;height:28px;fill:none;stroke:var(--c1);stroke-width:2;stroke-linecap:square;}
+    .auth-sys{font-size:18px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.4;}
+    .auth-sub-txt{font-size:13px;color:var(--sub);}
+
+    /* Tabs */
+    .auth-tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--line);}
+    .auth-tab{flex:1;padding:14px;text-align:center;font-size:14px;font-weight:500;color:var(--dim);cursor:pointer;transition:var(--t);border:none;background:transparent;font-family:'Prompt',sans-serif;border-bottom:2px solid transparent;}
+    .auth-tab.active{color:var(--c1);border-bottom-color:var(--c1);background:var(--white);}
+    .auth-tab:hover:not(.active){color:var(--ink);}
+
+    .auth-body{padding:24px 28px 30px;}
+    .auth-panel{display:none;}
+    .auth-panel.show{display:block;}
+
+    .auth-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .auth-lbl{font-size:13px;font-weight:500;color:var(--sub);}
+    .auth-ibox{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);transition:var(--t);}
+    .auth-ibox:focus-within{border-color:var(--c1);box-shadow:0 0 0 1px var(--c1);}
+    .auth-iico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:.4;pointer-events:none;}
+    .auth-iico svg{width:100%;height:100%;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:square;}
+    .auth-inp{width:100%;padding:12px 14px 12px 38px;background:transparent;border:none;border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:14px;color:var(--ink);outline:none;}
+    .auth-inp::placeholder{color:var(--dim);font-weight:300;}
+
+    .btn-auth{width:100%;padding:14px;background:var(--c1);color:#fff;border:none;border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:var(--t);margin-top:8px;}
+    .btn-auth:hover{background:var(--c2);}
+    .btn-auth:disabled{background:var(--dim);cursor:not-allowed;}
+
+    .auth-msg{padding:12px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;margin-bottom:16px;display:none;align-items:center;gap:8px;border:1px solid;}
+    .auth-msg.ok{display:flex;background:#f0fdf4;border-color:#86efac;color:#15803d;}
+    .auth-msg.er{display:flex;background:#fef2f2;border-color:#fca5a5;color:#dc2626;}
+    .auth-msg svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;flex-shrink:0;}
+    .auth-hint{font-size:13px;color:var(--dim);text-align:center;margin-top:16px;}
+
+    /* Credit bottom of auth screen */
+    .auth-credit{
+      position:relative;z-index:1;margin-top:24px;
+      padding:16px 24px;background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);
+      width:100%;max-width:520px;
+      display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;
+    }
+    .ac-by{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;}
+    .ac-divider{width:1px;height:24px;background:rgba(255,255,255,.2);flex-shrink:0;}
+    .ac-name{font-size:14px;font-weight:500;color:#fff;}
+    .ac-detail{font-size:12px;color:rgba(255,255,255,.6);}
+    .ac-sep{color:rgba(255,255,255,.3);font-size:12px;}
+
+    /* ══════════════════════
+       MAIN APP
+    ══════════════════════ */
+    #mainApp{display:none;flex-direction:column;min-height:100vh;}
+
+    /* Topbar */
+    .topbar{
+      background:var(--white);border-bottom:1px solid var(--line);
+      height:64px;padding:0 24px;
+      display:flex;align-items:center;gap:16px;
+      position:sticky;top:0;z-index:50;
+    }
+    .tb-logo{width:32px;height:32px;background:var(--c1);display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:var(--radius);}
+    .tb-logo svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;}
+    .tb-name{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:0.3px;}
+    .tb-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+
+    /* User badge in topbar */
+    .user-badge{
+      display:flex;align-items:center;gap:10px;
+      background:var(--bg);border:1px solid var(--line);
+      border-radius:var(--radius);padding:6px 12px 6px 6px;
+    }
+    .ub-av{width:28px;height:28px;border-radius:var(--radius);background:var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;overflow:hidden;border:1px solid var(--line);}
+    .ub-av svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5;}
+    .ub-info{display:flex;flex-direction:column;justify-content:center;}
+    .ub-name{font-size:13px;font-weight:500;color:var(--ink);line-height:1.2;}
+    .ub-id{font-size:11px;color:var(--sub);}
+
+    .btn-logout{padding:8px 16px;background:transparent;color:var(--sub);border:1px solid var(--line);border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:13px;font-weight:400;cursor:pointer;transition:var(--t);}
+    .btn-logout:hover{background:var(--bg);color:var(--ink);border-color:var(--dim);}
+
+    .btn-cancel-top{
+      display:flex;align-items:center;gap:6px;
+      padding:8px 16px;
+      background:transparent;color:var(--err);
+      border:1px solid var(--err);border-radius:var(--radius);
+      font-family:'Prompt',sans-serif;font-size:13px;font-weight:400;
+      cursor:pointer;transition:var(--t);
+    }
+    .btn-cancel-top svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;}
+    .btn-cancel-top:hover{background:var(--err);color:var(--white);}
+
+    /* ══════════════════════
+       BOOKING PAGE (Bento Grid Style)
+    ══════════════════════ */
+    .book-page{
+      flex:1;
+      display:grid;grid-template-columns:350px 1fr;
+      min-height:calc(100vh - 64px);
+    }
+
+    /* Left panel - Info / Hero (Now professional solid blue) */
+    .book-left{
+      background:var(--c1);
+      display:flex;flex-direction:column;
+      padding:40px 32px;
+      position:relative;overflow:hidden;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .bl-inner{position:relative;z-index:2;margin-top:20px;}
+    .bl-title{font-size:28px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:12px;letter-spacing:0.5px;}
+    .bl-sub{font-size:14px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.6;}
+
+    .bl-credit{
+      margin-top:auto;
+      padding:20px 0 0;
+      border-top:1px solid rgba(255,255,255,.15);
+    }
+    .blc-by{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:6px;letter-spacing:1px;}
+    .blc-name{font-size:14px;font-weight:500;color:#fff;margin-bottom:4px;}
+    .blc-detail{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;}
+
+    .book-right{background:var(--bg);display:flex;flex-direction:column;overflow-y:auto;padding:24px;}
+    .br-body{
+      flex:1;display:flex;flex-direction:column;gap:20px;
+      background:var(--white);border:1px solid var(--line);
+      padding:32px;
+    }
+    .br-title{font-size:20px;font-weight:600;color:var(--ink);border-left:4px solid var(--c1);padding-left:12px;}
+    .br-sub{font-size:13px;color:var(--sub);margin-top:6px;padding-left:16px;}
+
+    /* Sections */
+    .sec{display:flex;flex-direction:column;gap:16px;}
+    .sec-lbl{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;color:var(--ink);}
+    .sec-n{width:24px;height:24px;background:var(--c1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#fff;flex-shrink:0;border-radius:var(--radius);}
+    .sec-hr{flex:1;height:1px;background:var(--line);}
+
+    /* Room Bento Cards */
+    .rg{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .rcard{cursor:pointer;position:relative;border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--white);transition:var(--t);display:flex;align-items:center;gap:12px;}
+    .rcard:hover{border-color:var(--dim);background:var(--bg);}
+    .rcard.sel{border-color:var(--c1);background:#f0f9ff;box-shadow:inset 2px 0 0 var(--c1);}
+    .rcard input[type="radio"]{position:absolute;opacity:0;pointer-events:none;}
+    .r-emo{font-size:20px;flex-shrink:0;width:36px;height:36px;background:var(--bg);display:flex;align-items:center;justify-content:center;border:1px solid var(--line);}
+    .r-n{font-size:14px;font-weight:500;color:var(--ink);}
+    .r-s{font-size:12px;color:var(--sub);margin-top:2px;}
+    
+    /* Sharp radio check */
+    .rchk{margin-left:auto;width:16px;height:16px;flex-shrink:0;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;transition:var(--t);}
+    .rdot{width:8px;height:8px;background:var(--c1);transform:scale(0);transition:var(--t);}
+    .rcard.sel .rchk{border-color:var(--c1);background:var(--white);}
+    .rcard.sel .rdot{transform:scale(1);}
+
+    /* Fields */
+    .field{display:flex;flex-direction:column;gap:8px;}
+    label{font-size:13px;font-weight:500;color:var(--ink);}
+    .req{color:var(--err);}
+    .ibox{position:relative;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);transition:var(--t);}
+    .ibox:focus-within{border-color:var(--c1);background:var(--white);}
+    .iico{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:.4;pointer-events:none;}
+    .iico svg{width:100%;height:100%;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:square;}
+    input,select{width:100%;padding:12px 14px 12px 40px;background:transparent;border:none;border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:14px;color:var(--ink);appearance:none;-webkit-appearance:none;}
+    input:focus,select:focus{outline:none;}
+    input::placeholder{color:var(--dim);font-weight:300;}
+    select:disabled,input:disabled{opacity:.4;cursor:not-allowed;}
+    .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+    /* Slots */
+    .slot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+    .slot-info{font-size:13px;color:var(--sub);}
+    .slot-info b{color:var(--c1);font-weight:600;}
+    .scnt{font-size:12px;font-weight:500;color:var(--sub);border:1px solid var(--line);padding:2px 8px;background:var(--bg);}
+    .scnt.full{background:var(--err);color:var(--white);border-color:var(--err);}
+    .slspin{width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--c1);border-radius:50%;animation:sp .6s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px;}
+    @keyframes sp{to{transform:rotate(360deg)}}
+    .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    
+    .slot{cursor:pointer;border:1px solid var(--line);border-radius:var(--radius);padding:12px 8px;text-align:center;background:var(--white);transition:var(--t);user-select:none;}
+    .slot:hover:not(.booked):not(.locked){border-color:var(--dim);background:var(--bg);}
+    .slot.sel{border-color:var(--c1);background:var(--c1);}
+    .slot.booked{background:var(--bg);border-color:var(--line);cursor:not-allowed;opacity:.5;}
+    .slot.locked:not(.sel){opacity:.4;cursor:not-allowed;}
+    
+    .slot-t{font-size:13px;font-weight:400;color:var(--ink);line-height:1.4;}
+    .slot.sel .slot-t{color:var(--white);}
+    .slot.booked .slot-t{text-decoration:line-through;color:var(--sub);}
+    .slot-bx{display:none;font-size:11px;font-weight:500;color:var(--err);margin-top:4px;}
+    .slot.booked .slot-bx{display:block;}
+
+    .clash{display:none;padding:12px 16px;background:#fef2f2;border:1px solid #fca5a5;align-items:center;gap:12px;margin-top:10px;border-radius:var(--radius);}
+    .clash.show{display:flex;}
+    .clash svg{width:16px;height:16px;fill:none;stroke:var(--err);stroke-width:1.5;flex-shrink:0;}
+    .clash-t{font-size:13px;font-weight:500;color:var(--err);}
+    .clash-s{font-size:12px;color:var(--err);opacity:0.8;}
+
+    /* Submit bar */
+    .sub-bar{padding:20px 32px;border-top:1px solid var(--line);background:var(--white);display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-top:none;}
+    .btn-sub{flex:1;padding:14px;background:var(--c1);color:#fff;border:none;border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:var(--t);display:flex;align-items:center;justify-content:center;gap:10px;}
+    .btn-sub svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.5;flex-shrink:0;}
+    .btn-sub:hover:not(:disabled){background:var(--c2);}
+    .btn-sub:disabled{opacity:.5;cursor:not-allowed;background:var(--sub);}
+    .btn-rst{padding:14px 20px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:14px;font-weight:400;cursor:pointer;transition:var(--t);}
+    .btn-rst:hover{background:var(--line);}
+
+    .lbar{display:none;height:2px;background:var(--line);overflow:hidden;margin:0;}
+    .lbar.on{display:block;}
+    .lbar-in{height:100%;background:var(--c1);width:30%;animation:lm 1.5s ease-in-out infinite alternate;}
+    @keyframes lm{0%{transform:translateX(-100%)}100%{transform:translateX(330%)}}
+    
+    .toast{display:none;margin:0 0 12px;padding:12px 16px;font-size:13px;font-weight:500;align-items:center;gap:10px;border:1px solid;border-radius:var(--radius);}
+    .toast.ok{display:flex;background:#f0fdf4;border-color:#86efac;color:var(--ok);}
+    .toast.er{display:flex;background:#fef2f2;border-color:#fca5a5;color:var(--err);}
+    .toast svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;flex-shrink:0;}
+
+    /* ══════════════════════
+       RECEIPT OVERLAY
+    ══════════════════════ */
+    .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:24px;}
+    .overlay.open{display:flex;animation:fdin .2s ease;}
+    @keyframes fdin{from{opacity:0}to{opacity:1}}
+    @keyframes popin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    #ov-rc .popup{background:#fff;border-radius:var(--radius);width:100%;max-width:420px;max-height:92vh;overflow-y:auto;box-shadow:0 24px 48px rgba(0,0,0,.2);animation:popin .3s ease-out;border-top:4px solid var(--ok);}
+    .rc-top{padding:32px 32px 24px;text-align:center;border-bottom:1px dashed var(--line);}
+    .rc-chk{width:56px;height:56px;background:#f0fdf4;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+    .rc-chk svg{width:24px;height:24px;fill:none;stroke:var(--ok);stroke-width:2;}
+    .rc-ht{font-size:18px;font-weight:600;color:var(--ink);}
+    .rc-hs{font-size:13px;color:var(--sub);margin-top:4px;}
+    
+    .rc-idb{background:var(--bg);padding:16px 32px;text-align:center;border-bottom:1px solid var(--line);}
+    .rc-idl{font-size:11px;font-weight:500;color:var(--sub);text-transform:uppercase;margin-bottom:4px;}
+    .rc-idv{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:1px;}
+    
+    .rc-body{padding:16px 32px;}
+    .rc-row{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--bg);}
+    .rc-row:last-child{border-bottom:none;}
+    .rc-ico{width:32px;height:32px;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;}
+    .rc-ico svg{width:14px;height:14px;fill:none;stroke:var(--sub);stroke-width:1.5;}
+    .rc-l{font-size:11px;font-weight:500;color:var(--sub);text-transform:uppercase;margin-bottom:2px;}
+    .rc-v{font-size:14px;font-weight:500;color:var(--ink);}
+    
+    .rc-ts{background:var(--bg);margin:0 32px 16px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);}
+    .rc-ts svg{width:14px;height:14px;fill:none;stroke:var(--sub);stroke-width:1.5;flex-shrink:0;}
+    .rc-ts-t{font-size:12px;color:var(--sub);}
+    
+    .rc-ft{padding:16px 32px 32px;display:flex;flex-direction:column;gap:12px;}
+    .btn-pr{width:100%;padding:14px;background:var(--c1);color:#fff;border:none;border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:var(--t);display:flex;align-items:center;justify-content:center;gap:8px;}
+    .btn-pr svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5;flex-shrink:0;}
+    .btn-pr:hover{background:var(--c2);}
+    .btn-cr{width:100%;padding:14px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);font-family:'Prompt',sans-serif;font-size:14px;font-weight:400;cursor:pointer;transition:var(--t);}
+    .btn-cr:hover{background:var(--bg);}
+
+    /* ══════════════════════
+       CANCEL OVERLAY
+    ══════════════════════ */
+    #ov-cancel .popup{background:#fff;border-radius:var(--radius);width:100%;max-width:760px;max-height:92vh;overflow-y:auto;box-shadow:0 24px 48px rgba(0,0,0,.2);animation:popin .3s ease-out;}
+    .can-top{background:var(--bg);padding:24px 32px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;}
+    .can-ht{font-size:18px;font-weight:600;color:var(--ink);}
+    .can-hs{font-size:13px;color:var(--sub);margin-top:4px;}
+    .can-x{width:32px;height:32px;background:var(--white);border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--t);flex-shrink:0;}
+    .can-x:hover{background:var(--err);border-color:var(--err);color:var(--white);}
+    .can-x svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;}
+    
+    .can-notice{margin:24px 32px 0;padding:16px;background:#fffbeb;border:1px solid #fde68a;}
+    .cn-row{display:flex;align-items:flex-start;gap:12px;font-size:13px;color:#92400e;line-height:1.5;}
+    .cn-row svg{width:16px;height:16px;fill:none;stroke:#d97706;stroke-width:1.5;flex-shrink:0;margin-top:2px;}
+    
+    .can-body{padding:24px 32px;}
+    .bk-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+    .bk-card{border:1px solid var(--line);background:var(--white);}
+    .bk-hd{background:var(--bg);padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .bk-rm{font-size:14px;font-weight:600;color:var(--ink);}
+    .bk-dt{font-size:12px;color:var(--sub);background:var(--white);border:1px solid var(--line);padding:2px 8px;}
+    .bk-info{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px;}
+    .bk-inf{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);}
+    .bk-inf svg{width:14px;height:14px;fill:none;stroke:var(--sub);stroke-width:1.5;flex-shrink:0;}
+    .bk-slots{padding:16px;}
+    .bk-sl{font-size:12px;font-weight:500;color:var(--sub);margin-bottom:10px;}
+    .bk-chips{display:flex;flex-wrap:wrap;gap:8px;}
+    .slot-cb{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);padding:8px 12px;cursor:pointer;transition:var(--t);user-select:none;}
+    .slot-cb:hover{border-color:var(--err);background:#fef2f2;}
+    .slot-cb.chk{border-color:var(--err);background:#fef2f2;}
+    .slot-cb input[type="checkbox"]{accent-color:var(--err);width:14px;height:14px;flex-shrink:0;cursor:pointer;pointer-events:none;border-radius:0;}
+    .slot-cb-l{font-size:13px;font-weight:500;color:var(--ink);}
+    .slot-cb.chk .slot-cb-l{color:var(--err);}
+    
+    .can-empty{text-align:center;padding:32px 0;font-size:14px;color:var(--dim);}
+    
+    .can-ft{display:flex;align-items:center;gap:12px;padding:20px 32px;border-top:1px solid var(--line);background:var(--bg);}
+    .can-fi{flex:1;font-size:13px;color:var(--sub);}
+    .can-fi.on{color:var(--err);font-weight:500;}
+    .btn-can{padding:12px 24px;background:var(--err);color:#fff;border:none;font-family:'Prompt',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:var(--t);white-space:nowrap;}
+    .btn-can:hover:not(:disabled){background:#b91c1c;}
+    .btn-can:disabled{opacity:.5;cursor:not-allowed;}
+    .btn-can-cl{padding:12px 20px;background:var(--white);color:var(--ink);border:1px solid var(--line);font-family:'Prompt',sans-serif;font-size:14px;font-weight:400;cursor:pointer;transition:var(--t);}
+    .btn-can-cl:hover{background:var(--line);}
+
+    @media print{body>*:not(#ov-rc){display:none!important;}#ov-rc{display:flex!important;position:static;background:none;backdrop-filter:none;padding:0;}.rc-ft{display:none;}.popup{box-shadow:none;max-width:100%;border-radius:0;animation:none;border:none;}}
+    @media(max-width:800px){.book-page{grid-template-columns:1fr;}.book-left{display:none; /* Hide left panel on mobile to save space */}.br-body{padding:20px; border:none;}.sub-bar{padding:16px 20px;}.fgrid,.rg{grid-template-columns:1fr;}}
+    @media(max-width:480px){.sgrid{grid-template-columns:repeat(2,1fr);}.sub-bar{flex-direction:column;}.btn-sub,.btn-rst{width:100%;justify-content:center;}}
+  
+    /* ── SUMMARY PANEL (Bento Side Grid) ── */
+    .book-right-wrap{display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - 64px);}
+    .summary-panel{
+      background:var(--bg);
+      border-left:1px solid var(--line);
+      display:flex;flex-direction:column;
+      position:sticky;top:64px;height:calc(100vh - 64px);
+      overflow-y:auto;
+      padding:32px 24px;
+    }
+    .sp-title{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+    .sp-title svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:2;}
+
+    .sp-empty{
+      flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;color:var(--dim);gap:12px;
+    }
+    .sp-empty-ico{font-size:36px;opacity:.5;}
+    .sp-empty-txt{font-size:13px;line-height:1.6;}
+
+    .sp-list{display:flex;flex-direction:column;gap:12px;flex:1;}
+    .sp-item{
+      background:var(--white);
+      border:1px solid var(--line);
+      padding:16px;
+      display:flex;align-items:flex-start;gap:14px;
+      transition:var(--t);
+    }
+    .sp-item.filled{border-color:var(--c1);}
+    .sp-ico{
+      width:32px;height:32px;flex-shrink:0;
+      background:var(--bg);border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;
+    }
+    .sp-item.filled .sp-ico{background:var(--c1); border-color:var(--c1); color:var(--white);}
+    .sp-lbl{font-size:11px;font-weight:500;color:var(--sub);text-transform:uppercase;margin-bottom:4px;}
+    .sp-val{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4;}
+    .sp-val.empty{color:var(--dim);font-weight:300;}
+
+    /* Slot chips in summary */
+    .sp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+    .sp-chip{
+      font-size:12px;font-weight:400;color:var(--ink);
+      background:var(--bg);border:1px solid var(--line);
+      padding:4px 8px;
+    }
+
+    /* Submit in summary */
+    .sp-submit{margin-top:auto;padding-top:24px;}
+    .sp-divider{height:1px;background:var(--line);margin-bottom:20px;}
+    .sp-total{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .sp-total-lbl{font-size:14px;color:var(--ink);font-weight:500;}
+    .sp-total-val{font-size:16px;font-weight:600;color:var(--c1);}
+
+    @media(max-width:950px){
+      .book-right-wrap{grid-template-columns:1fr;}
+      .summary-panel{display:none;}
+    }
+
+    /* ── PROFILE AVATAR ── */
+    .ub-av:hover{border-color:var(--c1); background:var(--c1);}
+    .ub-av:hover svg{stroke:var(--white);}
+    .ub-av:hover::after{
+      content:'📷';
+      position:absolute;inset:0;
+      background:rgba(15,23,42,.8);
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;
+    }
+    .ub-av img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius);}
+
+    /* ── PROFILE POPUP ── */
+    #ov-profile .popup{
+      background:#fff;border-radius:var(--radius);
+      width:100%;max-width:380px;
+      box-shadow:0 24px 48px rgba(0,0,0,.2);
+      animation:popin .3s ease-out;
+      overflow:hidden;
+    }
+    .prof-head{
+      background:var(--bg);
+      padding:24px 32px; border-bottom:1px solid var(--line);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .prof-ht{font-size:16px;font-weight:600;color:var(--ink);}
+    .prof-hs{font-size:13px;color:var(--sub);margin-top:4px;}
+
+    .prof-body{padding:32px;}
+    .prof-preview{
+      width:96px;height:96px;
+      margin:0 auto 24px;
+      background:var(--bg); border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;
+      font-size:32px;overflow:hidden;
+      position:relative;cursor:pointer;
+    }
+    .prof-preview img{width:100%;height:100%;object-fit:cover;}
+    .prof-preview-overlay{
+      position:absolute;inset:0;
+      background:rgba(15,23,42,.8);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      opacity:0;transition:var(--t);color:#fff;font-size:12px;font-weight:500;gap:8px;
+    }
+    .prof-preview:hover .prof-preview-overlay{opacity:1;}
+    .prof-preview-overlay svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.5;}
+
+    .prof-name{text-align:center;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+    .prof-id{text-align:center;font-size:13px;color:var(--sub);margin-bottom:24px;}
+
+    .prof-upload-btn{
+      width:100%;padding:14px;
+      background:var(--c1);color:#fff;border:none;
+      font-family:'Prompt',sans-serif;font-size:14px;font-weight:500;
+      cursor:pointer;transition:var(--t);
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      margin-bottom:12px;
+    }
+    .prof-upload-btn svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5;}
+    .prof-upload-btn:hover{background:var(--c2);}
+    .prof-close-btn{
+      width:100%;padding:14px;background:transparent;
+      color:var(--ink);border:1px solid var(--line);
+      font-family:'Prompt',sans-serif;font-size:14px;font-weight:400;
+      cursor:pointer;transition:var(--t);
+    }
+    .prof-close-btn:hover{background:var(--bg);}
+    .prof-status{font-size:13px;text-align:center;margin-top:12px;color:var(--sub);min-height:20px;}
+
+    /* ── STATUS BUTTON TOP ── */
+    .btn-status-top{
+      display:flex;align-items:center;gap:6px;
+      padding:8px 16px;
+      background:var(--bg);color:var(--ink);
+      border:1px solid var(--line);border-radius:var(--radius);
+      font-family:'Prompt',sans-serif;font-size:13px;font-weight:400;
+      cursor:pointer;transition:var(--t);
+    }
+    .btn-status-top svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;}
+    .btn-status-top:hover{background:var(--white);border-color:var(--c1);color:var(--c1);}
+
+    /* ── BOOKING STATUS IN FORM ── */
+    .status-section{background:var(--white);border:1px solid var(--line);padding:20px;margin-top:8px;}
+    .status-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--bg);}
+    .status-row:last-child{border-bottom:none;padding-bottom:0;}
+    .status-row:first-child{padding-top:0;}
+    .st-room{font-size:14px;font-weight:500;color:var(--ink);flex:1;}
+    .st-date{font-size:12px;color:var(--sub);background:var(--bg);border:1px solid var(--line);padding:4px 10px;}
+    .st-time{font-size:12px;color:var(--dim);margin-top:4px;}
+    .st-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;font-size:12px;font-weight:500;flex-shrink:0;border:1px solid;}
+    .st-badge.pending {background:#fffbeb;color:#d97706;border-color:#fde68a;}
+    .st-badge.approved{background:#f0fdf4;color:#059669;border-color:#86efac;}
+    .st-badge.auto    {background:#f8fafc;color:#0f172a;border-color:#cbd5e1;}
+    .st-badge.rejected{background:#fef2f2;color:#dc2626;border-color:#fca5a5;}
+    .st-dot{width:6px;height:6px;}
+    .st-badge.pending  .st-dot{background:#d97706;}
+    .st-badge.approved .st-dot{background:#059669;}
+    .st-badge.auto     .st-dot{background:#0f172a;}
+    .st-badge.rejected .st-dot{background:#dc2626;}
+
+  </style>
+</head>
+<body>
+
+<!-- ══ AUTH SCREEN ══ -->
+<div id="authScreen">
+  <div class="as as1"></div>
+  <div class="as as2"></div>
+
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="auth-logo">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+      </div>
+      <div class="auth-sys">ระบบจองห้องประชุม<br>AG-ED | HCRD</div>
+      <div class="auth-sub-txt">กรุณาเข้าสู่ระบบก่อนใช้งาน</div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">เข้าสู่ระบบ</button>
+      <button class="auth-tab" onclick="switchTab('register')">สมัครสมาชิก</button>
+    </div>
+
+    <div class="auth-body">
+      <!-- LOGIN -->
+      <div class="auth-panel show" id="panelLogin">
+        <div class="auth-msg" id="loginMsg"><svg viewBox="0 0 24 24"></svg><span id="loginMsgTxt"></span></div>
+        <div class="auth-field">
+          <div class="auth-lbl">รหัสนิสิต</div>
+          <div class="auth-ibox">
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <input class="auth-inp" type="text" id="loginId" placeholder="เช่น 6510012345" maxlength="20">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-lbl">เบอร์โทรศัพท์ ไม่ต้องใส่ 0 (รหัสผ่าน)</div>
+          <div class="auth-ibox">
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a0 0 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a0 0 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a0 0 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <input class="auth-inp" type="password" id="loginPhone" placeholder="เบอร์โทรที่ลงทะเบียน" maxlength="10">
+          </div>
+        </div>
+        <button class="btn-auth" id="btnLogin">เข้าสู่ระบบ</button>
+        <div class="auth-hint">ยังไม่มีบัญชี? กดที่ "สมัครสมาชิก" ด้านบน</div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-panel" id="panelRegister">
+        <div class="auth-msg" id="regMsg"><svg viewBox="0 0 24 24"></svg><span id="regMsgTxt"></span></div>
+        <div class="auth-field">
+          <div class="auth-lbl">รหัสนิสิต</div>
+          <div class="auth-ibox">
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <input class="auth-inp" type="text" id="regId" placeholder="เช่น 6510012345" maxlength="20">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-lbl">ชื่อ-นามสกุล</div>
+          <div class="auth-ibox">
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <input class="auth-inp" type="text" id="regName" placeholder="ชื่อ-นามสกุล">
+          </div>
+        </div>
+        <div class="auth-field">
+          <div class="auth-lbl">เบอร์โทรศัพท์ (ใช้เป็นรหัสผ่าน)</div>
+          <div class="auth-ibox">
+            <div class="auth-iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <input class="auth-inp" type="tel" id="regPhone" placeholder="0812345678" maxlength="10">
+          </div>
+        </div>
+        <button class="btn-auth" id="btnRegister">สมัครสมาชิก</button>
+        <div class="auth-hint">มีบัญชีแล้ว? กดที่ "เข้าสู่ระบบ" ด้านบน</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credit below card — horizontal -->
+  <div class="auth-credit">
+    <div class="ac-by">ออกแบบและพัฒนาโดย</div>
+    <div class="ac-divider"></div>
+    <div class="ac-name">นายเมธี ใจสุขดี</div>
+    <div class="ac-sep">·</div>
+    <div class="ac-detail">นิสิตชั้นปีที่ 2 · สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
+    <div class="ac-sep">·</div>
+    <div class="ac-detail">คณะศึกษาศาสตร์และพัฒนศาสตร์ · ม.เกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="mainApp">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="tb-logo"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div>
+    <div class="tb-name">ระบบจองห้องประชุม AG-ED | HCRD</div>
+    <div class="tb-right">
+      <!-- Status button -->
+      <button class="btn-status-top" id="openStatus">
+        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        สถานะการจอง
+      </button>
+      <!-- Cancel button -->
+      <button class="btn-cancel-top" id="openCancel">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        ยกเลิกการจอง
+      </button>
+      <!-- User badge -->
+      <div class="user-badge">
+        <div class="ub-av" id="ubAvatar" onclick="openOv('ov-profile')" title="เปลี่ยนรูปโปรไฟล์">
+          <svg id="ubAvatarIcon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <img id="ubAvatarImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="ub-info">
+          <div class="ub-name" id="ubName">—</div>
+          <div class="ub-id" id="ubId">—</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <!-- Booking page (Bento layout) -->
+  <div class="book-page">
+    
+    <!-- Left Info / Branding -->
+    <div class="book-left">
+      <div class="bl-inner">
+        <div class="bl-title">AG-ED<br>Meeting Room<br>Booking</div>
+        <div class="bl-sub">ระบบจองห้องประชุม ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน<br>คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์</div>
+      </div>
+      <div class="bl-credit">
+        <div class="blc-by">ออกแบบและพัฒนาโดย</div>
+        <div class="blc-name">นายเมธี ใจสุขดี</div>
+        <div class="blc-detail">นิสิตชั้นปีที่ 2 สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
+      </div>
+    </div>
+
+    <!-- Form full width -->
+    <div class="book-right-wrap">
+      <div class="book-right">
+        <div class="br-body">
+          <div>
+            <div class="br-title">แบบฟอร์มจองห้อง</div>
+            <div class="br-sub">กรอกข้อมูลให้ครบถ้วน ระบบจะตรวจสอบช่วงเวลาว่างอัตโนมัติ</div>
+          </div>
+
+          <!-- Step 1: Room -->
+          <div class="sec">
+            <div class="sec-lbl"><div class="sec-n">1</div>เลือกห้องประชุม<div class="sec-hr"></div></div>
+            <div class="rg">
+              <label class="rcard" id="rc1"><input type="radio" name="room" value="ห้องคอมม่อนรูม"><div class="r-emo">🏢</div><div><div class="r-n">คอมม่อนรูม</div><div class="r-s">Common Room</div></div><div class="rchk"><div class="rdot"></div></div></label>
+              <label class="rcard" id="rc2"><input type="radio" name="room" value="ห้องอ่านหนังสือ (ฟาร์ม)"><div class="r-emo">📚</div><div><div class="r-n">ห้องอ่านหนังสือ</div><div class="r-s">ฟาร์ม</div></div><div class="rchk"><div class="rdot"></div></div></label>
+            </div>
+          </div>
+
+          <!-- Step 2: Date -->
+          <div class="sec">
+            <div class="sec-lbl"><div class="sec-n">2</div>วันที่จอง<div class="sec-hr"></div></div>
+            <div class="field"><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><input type="date" id="date" required></div></div>
+          </div>
+
+          <!-- Step 3: Time -->
+          <div class="sec">
+            <div class="sec-lbl"><div class="sec-n">3</div>ช่วงเวลา (สูงสุด 3 ชม.)<div class="sec-hr"></div></div>
+            <div class="slot-row"><div class="slot-info" id="slotInfo">เลือกห้องและวันที่ก่อน</div><div class="scnt" id="scnt">0/3</div></div>
+            <div class="sgrid" id="sgrid"></div>
+            <div class="clash" id="clash"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div class="clash-t">ช่วงเวลานี้ถูกจองแล้ว</div><div class="clash-s" id="clashS">กรุณาเลือกช่วงอื่น</div></div></div>
+          </div>
+
+          <!-- Status Section — shown after login -->
+          <div id="formStatusSection" style="display:none;"></div>
+
+          <!-- Step 4: User -->
+          <div class="sec">
+            <div class="sec-lbl"><div class="sec-n">4</div>ข้อมูลผู้จอง<div class="sec-hr"></div></div>
+            <div class="fgrid">
+              <div class="field"><label>ชื่อ-นามสกุล <span class="req">*</span></label><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><input type="text" id="name" required placeholder="ชื่อ-นามสกุล"></div></div>
+              <div class="field"><label>เบอร์ติดต่อ <span class="req">*</span></label><div class="ibox"><div class="iico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><input type="tel" id="phone" required placeholder="0812345678" pattern="[0-9]{9,10}" maxlength="10"></div></div>
+            </div>
+          </div>
+          
+          <div class="lbar" id="lb"><div class="lbar-in"></div></div>
+          <div class="toast" id="toast"><svg id="tIco" viewBox="0 0 24 24"></svg><span id="tTxt"></span></div>
+          <div class="sub-bar">
+            <button class="btn-rst" id="resetBtn">ล้างข้อมูล</button>
+            <button class="btn-sub" id="sub" disabled>
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              ยืนยันการจอง
+            </button>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Summary Panel Bento -->
+      <div class="summary-panel" id="summaryPanel">
+        <div class="sp-title">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          สรุปรายการจอง
+        </div>
+
+        <div class="sp-list" id="spList">
+          <!-- Room -->
+          <div class="sp-item" id="spRoom">
+            <div class="sp-ico">🏢</div>
+            <div><div class="sp-lbl">ห้องประชุม</div><div class="sp-val empty" id="spRoomVal">ยังไม่ได้เลือก</div></div>
+          </div>
+          <!-- Date -->
+          <div class="sp-item" id="spDate">
+            <div class="sp-ico">📅</div>
+            <div><div class="sp-lbl">วันที่จอง</div><div class="sp-val empty" id="spDateVal">ยังไม่ได้เลือก</div></div>
+          </div>
+          <!-- Time -->
+          <div class="sp-item" id="spTime">
+            <div class="sp-ico">🕐</div>
+            <div style="flex:1;">
+              <div class="sp-lbl">ช่วงเวลา (<span id="spSlotCnt">0</span>/3 ชม.)</div>
+              <div class="sp-val empty" id="spTimeVal">ยังไม่ได้เลือก</div>
+              <div class="sp-chips" id="spChips"></div>
+            </div>
+          </div>
+          <!-- Name -->
+          <div class="sp-item" id="spName">
+            <div class="sp-ico">👤</div>
+            <div><div class="sp-lbl">ชื่อ-นามสกุล</div><div class="sp-val empty" id="spNameVal">ยังไม่ได้กรอก</div></div>
+          </div>
+          <!-- Phone -->
+          <div class="sp-item" id="spPhone">
+            <div class="sp-ico">📞</div>
+            <div><div class="sp-lbl">เบอร์ติดต่อ</div><div class="sp-val empty" id="spPhoneVal">ยังไม่ได้กรอก</div></div>
+          </div>
+        </div>
+
+        <div class="sp-submit">
+          <div class="sp-divider"></div>
+          <div class="sp-total">
+            <span class="sp-total-lbl">จำนวนรวม</span>
+            <span class="sp-total-val"><span id="spHours">0</span> ชั่วโมง</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- end book-right-wrap -->
+  </div>
+</div>
+
+<!-- RECEIPT -->
+<div class="overlay" id="ov-rc">
+  <div class="popup">
+    <div class="rc-top">
+      <div class="rc-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="rc-ht">บันทึกการจองสำเร็จ</div>
+      <div class="rc-hs">กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐาน</div>
+    </div>
+    <div class="rc-idb"><div class="rc-idl">เลขที่การจอง</div><div class="rc-idv" id="rcId">—</div></div>
+    <div class="rc-body">
+      <div class="rc-row"><div class="rc-ico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div><div class="rc-l">ห้องประชุม</div><div class="rc-v" id="rcRoom">—</div></div></div>
+      <div class="rc-row"><div class="rc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="rc-l">วันที่</div><div class="rc-v" id="rcDate">—</div></div></div>
+      <div class="rc-row"><div class="rc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="rc-l">เวลา</div><div class="rc-v" id="rcTime">—</div></div></div>
+      <div class="rc-row"><div class="rc-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="rc-l">ผู้จอง</div><div class="rc-v" id="rcName">—</div></div></div>
+      <div class="rc-row"><div class="rc-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a0 0 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.19 2 2 0 012.2 1h3a0 0 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.06-1.06a0 0 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><div><div class="rc-l">เบอร์ติดต่อ</div><div class="rc-v" id="rcPhone">—</div></div></div>
+    </div>
+    <div class="rc-ts"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span class="rc-ts-t">ทำรายการเมื่อ: <span id="rcTs">—</span></span></div>
+    <div class="rc-ft">
+      <button class="btn-pr" onclick="window.print()"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>พิมพ์ / บันทึก PDF</button>
+      <button class="btn-cr" id="closeRc">ปิดหน้าต่างนี้</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL -->
+<div class="overlay" id="ov-cancel">
+  <div class="popup">
+    <div class="can-top">
+      <div><div class="can-ht">ยกเลิกการจอง</div><div class="can-hs">แสดงเฉพาะห้องที่คุณจองไว้ล่วงหน้า</div></div>
+      <button class="can-x" id="closeCancel"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="can-notice">
+      <div class="cn-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>กรุณายกเลิก <strong>ก่อนเวลาใช้ห้องอย่างน้อย 30 นาที</strong></span></div>
+    </div>
+    <div class="can-body">
+      <div id="cancelResults"><div class="can-empty">กำลังโหลดข้อมูล...</div></div>
+    </div>
+    <div class="can-ft">
+      <div class="can-fi" id="canFi">เลือกช่วงเวลาที่ต้องการยกเลิก</div>
+      <button class="btn-can-cl" id="canCl2">ปิดหน้าต่าง</button>
+      <button class="btn-can" id="doCanBtn" disabled>ยืนยันการยกเลิก</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE POPUP -->
+<div class="overlay" id="ov-profile">
+  <div class="popup">
+    <div class="prof-head">
+      <div>
+        <div class="prof-ht">โปรไฟล์ของฉัน</div>
+        <div class="prof-hs">กดที่รูปเพื่อแก้ไขภาพประจำตัว</div>
+      </div>
+      <button class="can-x" onclick="closeOv('ov-profile')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="prof-body">
+      <div class="prof-preview" onclick="document.getElementById('profileFileInput').click()">
+        <img id="profPreviewImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+        <span id="profPreviewIcon">👤</span>
+        <div class="prof-preview-overlay">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          แก้ไข
+        </div>
+      </div>
+      <input type="file" id="profileFileInput" accept="image/*" style="display:none;" onchange="handleProfilePhoto(this)">
+      <div class="prof-name" id="profName">—</div>
+      <div class="prof-id" id="profId">—</div>
+      <button class="prof-upload-btn" id="profSaveBtn" onclick="saveProfilePhoto()">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        บันทึกรูปโปรไฟล์
+      </button>
+      <button class="prof-close-btn" onclick="closeOv('ov-profile')">ยกเลิก</button>
+      <div class="prof-status" id="profStatus"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS OVERLAY -->
+<div class="overlay" id="ov-status">
+  <div class="popup" style="max-width:600px;border-top:4px solid var(--c1);">
+    <div style="background:var(--bg);padding:24px 32px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;position:sticky;top:0;z-index:10;">
+      <div><div style="font-size:18px;font-weight:600;color:var(--ink);">สถานะการจองของฉัน</div><div style="font-size:13px;color:var(--sub);margin-top:4px;">ข้อมูลจากระบบอนุมัติส่วนกลาง</div></div>
+      <button class="can-x" id="closeStatus"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div style="padding:24px 32px;" id="statusResults">
+      <div class="can-empty">กำลังโหลด...</div>
+    </div>
+    <div style="padding:0 32px 24px;">
+      <button onclick="closeOv('ov-status')" style="width:100%;padding:14px;background:var(--bg);color:var(--ink);border:1px solid var(--line);font-family:'Prompt',sans-serif;font-size:14px;font-weight:400;cursor:pointer;">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// สคริปต์ JavaScript ชุดเดิม (ไม่ได้แก้ไขใดๆ)
+var ALL=['09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00'];
+var selSlots=[],bookedSlots=[],cancelData=[],cancelSel={};
+var currentUser=null;
+function pad(n){return n.toString().padStart(2,'0');}
+
+// STATUS — only on auth screen
+google.script.run.withSuccessHandler(function(s){}).withFailureHandler(function(){}).getSystemStatus();
+
+// MIN DATE
+(function(){var p=function(n){return n.toString().padStart(2,'0');};var d=new Date();document.getElementById('date').setAttribute('min',d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()));})();
+
+// ══ AUTH ══
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(function(t,i){t.classList.toggle('active',(i===0&&tab==='login')||(i===1&&tab==='register'));});
+  document.getElementById('panelLogin').classList.toggle('show',tab==='login');
+  document.getElementById('panelRegister').classList.toggle('show',tab==='register');
+  hideAuthMsg('loginMsg');hideAuthMsg('regMsg');
+}
+function showAuthMsg(id,type,txt){
+  var el=document.getElementById(id),ico=el.querySelector('svg'),sp=el.querySelector('span');
+  el.className='auth-msg '+type;sp.textContent=txt;
+  ico.innerHTML=type==='ok'?'<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>':'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+}
+function hideAuthMsg(id){document.getElementById(id).className='auth-msg';}
+
+document.getElementById('btnLogin').addEventListener('click',function(){
+  var sid=document.getElementById('loginId').value.trim();
+  var ph=document.getElementById('loginPhone').value.trim();
+  if(!sid||!ph){showAuthMsg('loginMsg','er','กรุณากรอกข้อมูลให้ครบ');return;}
+  var btn=document.getElementById('btnLogin');
+  btn.disabled=true;btn.textContent='กำลังตรวจสอบ...';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.disabled=false;btn.textContent='เข้าสู่ระบบ';
+      if(r.success){
+        currentUser=r;
+        document.getElementById('ubName').textContent=r.name;
+        document.getElementById('ubId').textContent='รหัสนิสิต: '+r.studentId;
+        document.getElementById('name').value=r.name;
+        document.getElementById('phone').value='';
+        document.getElementById('authScreen').style.display='none';
+        document.getElementById('mainApp').style.display='flex';
+        bindFormEvents();
+        initProfile(r);
+        upd();
+        // Load booking status for form
+        google.script.run.withSuccessHandler(function(res){updateFormStatus(res||[]);}).withFailureHandler(function(){}).findBookingsByStudentIdWithStatus(r.studentId);
+      } else {showAuthMsg('loginMsg','er',r.message);}
+    })
+    .withFailureHandler(function(){btn.disabled=false;btn.textContent='เข้าสู่ระบบ';showAuthMsg('loginMsg','er','เกิดข้อผิดพลาด กรุณาลองใหม่');})
+    .login(sid,ph);
+});
+document.getElementById('loginId').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginPhone').focus();});
+document.getElementById('loginPhone').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('btnLogin').click();});
+
+document.getElementById('btnRegister').addEventListener('click',function(){
+  var sid=document.getElementById('regId').value.trim();
+  var name=document.getElementById('regName').value.trim();
+  var ph=document.getElementById('regPhone').value.trim();
+  if(!sid||!name||!ph){showAuthMsg('regMsg','er','กรุณากรอกข้อมูลให้ครบ');return;}
+  if(ph.length<9){showAuthMsg('regMsg','er','เบอร์โทรต้องมีอย่างน้อย 9 หลัก');return;}
+  var btn=document.getElementById('btnRegister');
+  btn.disabled=true;btn.textContent='กำลังสมัคร...';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.disabled=false;btn.textContent='สมัครสมาชิก';
+      if(r.success){
+        showAuthMsg('regMsg','ok',r.message+' กรุณาเข้าสู่ระบบ');
+        document.getElementById('regId').value='';document.getElementById('regName').value='';document.getElementById('regPhone').value='';
+        setTimeout(function(){switchTab('login');},2000);
+      } else {showAuthMsg('regMsg','er',r.message);}
+    })
+    .withFailureHandler(function(){btn.disabled=false;btn.textContent='สมัครสมาชิก';showAuthMsg('regMsg','er','เกิดข้อผิดพลาด กรุณาลองใหม่');})
+    .register({studentId:sid,name:name,phone:ph});
+});
+
+function doLogout(){
+  currentUser=null;
+  // Reset avatar
+  var img=document.getElementById('ubAvatarImg');
+  var icon=document.getElementById('ubAvatarIcon');
+  img.style.display='none'; img.src='';
+  icon.style.display='block';
+  pendingPhotoBase64=null;
+  document.getElementById('authScreen').style.display='flex';
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('loginId').value='';
+  document.getElementById('loginPhone').value='';
+  hideAuthMsg('loginMsg');
+  doReset();
+}
+
+// ══ OVERLAYS ══
+function openOv(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeOv(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+document.getElementById('closeRc').onclick=function(){closeOv('ov-rc');};
+document.getElementById('ov-rc').onclick=function(e){if(e.target===this)closeOv('ov-rc');};
+document.getElementById('openCancel').onclick=function(){openOv('ov-cancel');loadCancelByUser();};
+document.getElementById('closeCancel').onclick=function(){closeOv('ov-cancel');};
+document.getElementById('canCl2').onclick=function(){closeOv('ov-cancel');};
+document.getElementById('ov-cancel').onclick=function(e){if(e.target===this)closeOv('ov-cancel');};
+
+// ══ BOOKING FORM ══
+function bindFormEvents(){
+  document.querySelectorAll('.rcard').forEach(function(c){
+    c.onclick=function(){
+      document.querySelectorAll('.rcard').forEach(function(x){x.classList.remove('sel');});
+      c.classList.add('sel');selSlots=[];loadSlots();upd();
+    };
+  });
+  document.getElementById('date').onchange=function(){selSlots=[];loadSlots();upd();};
+  document.getElementById('name').oninput=upd;
+  document.getElementById('phone').oninput=upd;
+  document.getElementById('resetBtn').onclick=doReset;
+  document.getElementById('sub').onclick=onSubmit;
+}
+
+function getRoom(){var r=document.querySelector('input[name="room"]:checked');return r?r.value:'';}
+
+function loadSlots(){
+  var room=getRoom(),date=document.getElementById('date').value;
+  if(!room||!date){document.getElementById('slotInfo').textContent='เลือกห้องและวันที่ก่อน';document.getElementById('sgrid').innerHTML='';return;}
+  document.getElementById('slotInfo').innerHTML='<span class="slspin"></span>กำลังตรวจสอบ...';
+  google.script.run.withSuccessHandler(function(bk){bookedSlots=bk||[];renderGrid();}).withFailureHandler(function(){document.getElementById('slotInfo').innerHTML='<span style="color:var(--err)">โหลดไม่ได้</span>';}).getBookedSlots(date,room);
+}
+
+function renderGrid(){
+  var free=ALL.filter(function(s){return bookedSlots.indexOf(s)===-1;});
+  var cnt=selSlots.length,full=cnt>=3;
+  document.getElementById('slotInfo').innerHTML='ว่าง <b>'+free.length+' ช่วง</b> · คลิกเลือก ไม่ต้องติดกัน';
+  var ctr=document.getElementById('scnt');ctr.textContent=cnt+'/3';ctr.className='scnt'+(full?' full':'');
+  var g=document.getElementById('sgrid');g.innerHTML='';
+  ALL.forEach(function(s){
+    var bk=bookedSlots.indexOf(s)!==-1,sl=selSlots.indexOf(s)!==-1,locked=full&&!sl&&!bk;
+    var div=document.createElement('div');
+    div.className='slot'+(bk?' booked':'')+(sl?' sel':'')+(locked?' locked':'');
+    var p=s.split('-');
+    div.innerHTML='<div class="slot-t">'+p[0]+'<br>'+p[1]+'</div><div class="slot-bx">จองแล้ว</div>';
+    if(!bk&&!locked)div.addEventListener('click',function(){toggleSlot(s);});
+    g.appendChild(div);
+  });
+}
+
+function toggleSlot(s){
+  var idx=selSlots.indexOf(s);
+  if(idx!==-1){selSlots.splice(idx,1);}else{if(selSlots.length>=3){showToast('er','เลือกได้สูงสุด 3 ช่วง');return;}selSlots.push(s);}
+  hideClash();renderGrid();upd();
+}
+
+function upd(){
+  var room=getRoom(),date=document.getElementById('date').value,name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim();
+  document.getElementById('sub').disabled=!(room&&date&&selSlots.length>0&&name&&phone);
+  updateSummary(room,date,name,phone);
+}
+
+function updateSummary(room,date,name,phone){
+  // Room
+  var rItem=document.getElementById('spRoom'),rVal=document.getElementById('spRoomVal');
+  if(room){rVal.textContent=room;rVal.className='sp-val';rItem.classList.add('filled');}
+  else{rVal.textContent='ยังไม่ได้เลือก';rVal.className='sp-val empty';rItem.classList.remove('filled');}
+
+  // Date
+  var dItem=document.getElementById('spDate'),dVal=document.getElementById('spDateVal');
+  if(date){var da=date.split('-');dVal.textContent=da[2]+'/'+da[1]+'/'+da[0];dVal.className='sp-val';dItem.classList.add('filled');}
+  else{dVal.textContent='ยังไม่ได้เลือก';dVal.className='sp-val empty';dItem.classList.remove('filled');}
+
+  // Slots
+  var tItem=document.getElementById('spTime');
+  var tVal=document.getElementById('spTimeVal');
+  var chips=document.getElementById('spChips');
+  var cnt=selSlots.length;
+  document.getElementById('spSlotCnt').textContent=cnt;
+  document.getElementById('spHours').textContent=cnt;
+  if(cnt>0){
+    var sorted=selSlots.slice().sort();
+    tVal.textContent=sorted[0].split('-')[0]+' – '+sorted[sorted.length-1].split('-')[1]+' น.';
+    tVal.className='sp-val';tItem.classList.add('filled');
+    chips.innerHTML=sorted.map(function(s){return '<div class="sp-chip">'+s.replace('-',' – ')+'</div>';}).join('');
+  } else {
+    tVal.textContent='ยังไม่ได้เลือก';tVal.className='sp-val empty';tItem.classList.remove('filled');
+    chips.innerHTML='';
+  }
+
+  // Name
+  var nItem=document.getElementById('spName'),nVal=document.getElementById('spNameVal');
+  if(name){nVal.textContent=name;nVal.className='sp-val';nItem.classList.add('filled');}
+  else{nVal.textContent='ยังไม่ได้กรอก';nVal.className='sp-val empty';nItem.classList.remove('filled');}
+
+  // Phone
+  var pItem=document.getElementById('spPhone'),pVal=document.getElementById('spPhoneVal');
+  if(phone){pVal.textContent=phone;pVal.className='sp-val';pItem.classList.add('filled');}
+  else{pVal.textContent='ยังไม่ได้กรอก';pVal.className='sp-val empty';pItem.classList.remove('filled');}
+}
+
+function hideClash(){document.getElementById('clash').classList.remove('show');}
+
+function onSubmit(){
+  hideToast();hideClash();
+  var btn=document.getElementById('sub'),lb=document.getElementById('lb');
+  var sorted=selSlots.slice().sort();
+  var d={room:getRoom(),date:document.getElementById('date').value,startTime:sorted[0].split('-')[0],endTime:sorted[sorted.length-1].split('-')[1],slots:sorted,name:document.getElementById('name').value.trim(),phone:document.getElementById('phone').value.trim(),studentId:currentUser?currentUser.studentId:''};
+  btn.disabled=true;btn.innerHTML='<div style="width:14px;height:14px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .65s linear infinite;display:inline-block;flex-shrink:0"></div>&nbsp;บันทึก...';lb.classList.add('on');
+  var ci=0,dup=false;
+  function next(){
+    if(ci>=sorted.length){
+      if(dup){rBtn(btn,lb);return;}
+      google.script.run.withSuccessHandler(function(r){rBtn(btn,lb);if(r.success){var now=new Date();var da=d.date.split('-');var dd=da[2]+'/'+da[1]+'/'+da[0];document.getElementById('rcId').textContent='NBG-'+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+pad(now.getHours())+pad(now.getMinutes())+pad(now.getSeconds());document.getElementById('rcRoom').textContent=d.room;document.getElementById('rcDate').textContent=dd;document.getElementById('rcTime').textContent=sorted.map(function(s){return s.replace('-',' – ')+' น.';}).join(', ')+' ('+sorted.length+' ชม.)';document.getElementById('rcName').textContent=d.name;document.getElementById('rcPhone').textContent=d.phone;document.getElementById('rcTs').textContent=dd+' '+pad(now.getHours())+':'+pad(now.getMinutes())+' น.';doReset();openOv('ov-rc');}else{showToast('er',r.message);}}).withFailureHandler(function(){rBtn(btn,lb);showToast('er','บันทึกไม่สำเร็จ');}).saveReservation(d);return;
+    }
+    var s=sorted[ci++];var sp=s.split('-');
+    google.script.run.withSuccessHandler(function(isDup){if(isDup&&!dup){dup=true;document.getElementById('clashS').textContent=d.room+' · '+s.replace('-',' – ')+' น. ถูกจองแล้ว';document.getElementById('clash').classList.add('show');showToast('er','ช่วง '+s+' ถูกจองแล้ว');rBtn(btn,lb);}else next();}).withFailureHandler(function(){rBtn(btn,lb);showToast('er','ตรวจสอบไม่ได้');}).checkDuplicateBooking(d.date,d.room,sp[0],sp[1]);
+  }
+  next();
+}
+
+function rBtn(btn,lb){btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:square;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> ยืนยันการจอง';lb.classList.remove('on');upd();}
+
+function doReset(){document.querySelectorAll('.rcard').forEach(function(c){c.classList.remove('sel');});document.getElementById('date').value='';if(currentUser){document.getElementById('name').value=currentUser.name;}else{document.getElementById('name').value='';}document.getElementById('phone').value='';bookedSlots=[];selSlots=[];document.getElementById('sgrid').innerHTML='';document.getElementById('slotInfo').textContent='เลือกห้องและวันที่ก่อน';document.getElementById('scnt').textContent='0/3';hideClash();hideToast();var p=function(n){return n.toString().padStart(2,'0');};var d=new Date();document.getElementById('date').setAttribute('min',d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()));upd();}
+
+function showToast(type,txt){var el=document.getElementById('toast'),ico=document.getElementById('tIco');document.getElementById('tTxt').textContent=txt;el.className='toast '+type;ico.innerHTML=type==='ok'?'<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>':'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';setTimeout(function(){document.getElementById('toast').className='toast';},5000);}
+function hideToast(){document.getElementById('toast').className='toast';}
+
+// ══ CANCEL — filter only future bookings ══
+function loadCancelByUser(){
+  cancelData=[];cancelSel={};
+  document.getElementById('doCanBtn').disabled=true;
+  document.getElementById('canFi').textContent='เลือกช่วงเวลาที่ต้องการยกเลิก';
+  document.getElementById('canFi').className='can-fi';
+  document.getElementById('cancelResults').innerHTML='<div class="can-empty"><span class="slspin"></span> กำลังโหลดข้อมูล...</div>';
+
+  if(!currentUser){document.getElementById('cancelResults').innerHTML='<div class="can-empty">ไม่พบข้อมูลผู้ใช้</div>';return;}
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      var now=new Date();
+      var todayStr=(function(){var p=function(n){return n.toString().padStart(2,'0');};return now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate());})();
+      var nowMin=now.getHours()*60+now.getMinutes();
+      var filtered=(res||[]).filter(function(bk){
+        if(bk.date>todayStr) return true;
+        if(bk.date<todayStr) return false;
+        var endParts=bk.endTime.split(':');
+        var endMin=parseInt(endParts[0])*60+parseInt(endParts[1]||0);
+        return endMin>(nowMin+30);
+      });
+      cancelData=filtered;
+      renderCancelResults(cancelData);
+    })
+    .withFailureHandler(function(){
+      document.getElementById('cancelResults').innerHTML='<div class="can-empty">โหลดข้อมูลไม่ได้ กรุณาลองใหม่</div>';
+    })
+    .findBookingsByStudentId(currentUser.studentId);
+}
+
+// ══ STATUS ══
+document.getElementById('openStatus').addEventListener('click', function(){
+  openOv('ov-status');
+  loadStatusByUser();
+});
+document.getElementById('closeStatus').addEventListener('click', function(){ closeOv('ov-status'); });
+document.getElementById('ov-status').addEventListener('click', function(e){ if(e.target===this)closeOv('ov-status'); });
+
+function loadStatusByUser(){
+  var el=document.getElementById('statusResults');
+  el.innerHTML='<div class="can-empty"><span class="slspin"></span> กำลังโหลด...</div>';
+  if(!currentUser){el.innerHTML='<div class="can-empty">ไม่พบข้อมูลผู้ใช้</div>';return;}
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res||res.length===0){el.innerHTML='<div class="can-empty">ไม่พบข้อมูลการจองของคุณ</div>';return;}
+      var html='';
+      var stMap={pending:'รออนุมัติ',approved:'อนุมัติแล้ว',auto:'อนุมัติอัตโนมัติ',rejected:'ไม่อนุมัติ'};
+      var cMap={pending:'#d97706',approved:'#059669',auto:'#0f172a',rejected:'#dc2626'};
+      var bgMap={pending:'#fffbeb',approved:'#f0fdf4',auto:'#f8fafc',rejected:'#fef2f2'};
+      var bdMap={pending:'#fde68a',approved:'#86efac',auto:'#cbd5e1',rejected:'#fca5a5'};
+      res.forEach(function(bk){
+        var da=bk.date.split('-'),dd=da[2]+'/'+da[1]+'/'+da[0];
+        var as=bk.approvalStatus||'pending';
+        html+='<div style="border:1px solid '+bdMap[as]+';background:var(--white);margin-bottom:16px;">';
+        html+='<div style="background:'+bgMap[as]+';padding:12px 16px;border-bottom:1px solid '+bdMap[as]+';display:flex;align-items:center;justify-content:space-between;">';
+        html+='<span style="font-size:14px;font-weight:600;color:var(--ink);">🏢 '+bk.room+'</span>';
+        html+='<span style="font-size:12px;color:var(--sub);background:var(--white);border:1px solid '+bdMap[as]+';padding:2px 8px;">'+dd+'</span></div>';
+        html+='<div style="padding:16px;">';
+        html+='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">';
+        html+='<span style="font-size:13px;color:var(--sub);">🕐 '+bk.startTime+' – '+bk.endTime+' น. ('+bk.slots.length+' ชม.)</span>';
+        html+='<span style="font-size:12px;font-weight:500;color:'+cMap[as]+';background:'+bgMap[as]+';border:1px solid '+bdMap[as]+';padding:4px 12px;">'+stMap[as]+'</span></div>';
+        if(bk.approvedBy)html+='<div style="font-size:12px;color:var(--dim);">✓ อนุมัติโดย: '+bk.approvedBy+'</div>';
+        if(as==='rejected'){
+          html+='<div style="font-size:12px;color:#dc2626;margin-top:10px;background:#fef2f2;padding:8px 12px;border:1px solid #fca5a5;">⚠️ การจองนี้ถูกยกเลิกเนื่องจากไม่ได้รับการอนุมัติ</div>';
+        }
+        html+='</div></div>';
+      });
+      el.innerHTML=html;
+      updateFormStatus(res);
+      res.filter(function(r){return r.approvalStatus==='rejected';}).forEach(function(r){
+        if(r.rowIndexes&&r.rowIndexes.length>0){
+          google.script.run.withSuccessHandler(function(){}).withFailureHandler(function(){}).cancelBookingRows({rowIndexesToDelete:r.rowIndexes});
+        }
+      });
+    })
+    .withFailureHandler(function(){
+      document.getElementById('statusResults').innerHTML='<div class="can-empty">โหลดไม่ได้ กรุณาลองใหม่</div>';
+    })
+    .findBookingsByStudentIdWithStatus(currentUser.studentId);
+}
+
+function updateFormStatus(res){
+  var el=document.getElementById('formStatusSection');
+  if(!el)return;
+  if(!res||!res.length){el.style.display='none';return;}
+  el.style.display='block';
+  var now=new Date();
+  var todayStr=(function(){var p=function(n){return n.toString().padStart(2,'0');};return now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate());})();
+  var future=res.filter(function(bk){return bk.date>=todayStr;});
+  if(!future.length){el.style.display='none';return;}
+  var stMap={pending:'รออนุมัติ',approved:'อนุมัติแล้ว',auto:'อนุมัติอัตโนมัติ',rejected:'ไม่อนุมัติ'};
+  var inner='<div class="status-section">';
+  future.forEach(function(bk){
+    var da=bk.date.split('-'),dd=da[2]+'/'+da[1]+'/'+da[0];
+    var as=bk.approvalStatus||'pending';
+    inner+='<div class="status-row">'+
+      '<div><div class="st-room">'+bk.room+'</div><div class="st-time">🕐 '+bk.startTime+' – '+bk.endTime+'</div></div>'+
+      '<span class="st-date">'+dd+'</span>'+
+      '<span class="st-badge '+as+'"><span class="st-dot"></span>'+stMap[as]+'</span>'+
+    '</div>';
+  });
+  inner+='</div>';
+  el.innerHTML='<div class="sec"><div class="sec-lbl"><div class="sec-n" style="background:var(--ok);">✓</div>สถานะการจองของฉัน<div class="sec-hr"></div></div>'+inner+'</div>';
+}
+
+function renderCancelResults(results){
+  var el=document.getElementById('cancelResults');
+  if(!results||results.length===0){
+    el.innerHTML='<div class="can-empty">ไม่พบข้อมูลการจองของคุณ</div>';
+    document.getElementById('canFi').textContent='ไม่มีรายการจองที่สามารถยกเลิกได้';
+    return;
+  }
+  var html='<div class="bk-list">';
+  results.forEach(function(bk,gi){
+    var da=bk.date.split('-'),dd=da[2]+'/'+da[1]+'/'+da[0];
+    html+='<div class="bk-card"><div class="bk-hd"><span class="bk-rm">'+bk.room+'</span><span class="bk-dt">'+dd+'</span></div>';
+    html+='<div class="bk-info"><span class="bk-inf"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'+bk.name+'</span><span class="bk-inf"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+bk.startTime+' – '+bk.endTime+' น.</span></div>';
+    html+='<div class="bk-slots"><div class="bk-sl">เลือกช่วงที่ต้องการยกเลิก</div><div class="bk-chips">';
+    bk.slots.forEach(function(s,si){
+      var uid='cb_'+gi+'_'+si,lblId='lbl_'+uid;
+      html+='<label class="slot-cb" id="'+lblId+'" onclick="tglCan(event,'+gi+','+si+',\''+s+'\',\''+lblId+'\')">';
+      html+='<input type="checkbox" id="'+uid+'"><span class="slot-cb-l">'+s.replace('-',' – ')+'</span></label>';
+    });
+    html+='</div></div></div>';
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function tglCan(e,gi,si,slot,lblId){e.preventDefault();var bk=cancelData[gi];if(!bk)return;if(!cancelSel[gi])cancelSel[gi]={gi:gi,slots:[],allSlots:bk.slots,rowIndexes:bk.rowIndexes};var arr=cancelSel[gi].slots,idx=arr.indexOf(slot);var lbl=document.getElementById(lblId),cb=lbl&&lbl.querySelector('input');if(idx!==-1){arr.splice(idx,1);if(lbl)lbl.classList.remove('chk');if(cb)cb.checked=false;}else{arr.push(slot);if(lbl)lbl.classList.add('chk');if(cb)cb.checked=true;}if(arr.length===0)delete cancelSel[gi];var total=Object.values(cancelSel).reduce(function(s,v){return s+v.slots.length;},0);var fi=document.getElementById('canFi');document.getElementById('doCanBtn').disabled=total===0;if(total>0){fi.textContent='เลือก '+total+' ช่วงเวลา · กดยืนยัน';fi.className='can-fi on';}else{fi.textContent='เลือกช่วงเวลาที่ต้องการยกเลิก';fi.className='can-fi';}}
+
+document.getElementById('doCanBtn').onclick=doCancel;
+function doCancel(){
+  var entries=Object.values(cancelSel);if(entries.length===0)return;
+  var toDelete=[];
+  entries.forEach(function(e){var bk=cancelData[e.gi];if(!bk)return;e.slots.forEach(function(slot){var si=bk.slots.indexOf(slot);if(si!==-1&&bk.rowIndexes[si]!=null)toDelete.push(bk.rowIndexes[si]);});});
+  if(toDelete.length===0){alert('ไม่พบแถวที่จะลบ');return;}
+  var btn=document.getElementById('doCanBtn');btn.disabled=true;btn.textContent='กำลังยกเลิก...';
+  google.script.run
+    .withSuccessHandler(function(r){
+      btn.textContent='ยืนยันการยกเลิก';
+      if(r.success){
+        closeOv('ov-cancel');
+        var ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;z-index:999;background:rgba(15,23,42,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;';
+        ov.innerHTML='<div style="background:#fff;border:1px solid #e2e8f0;padding:40px 48px;text-align:center;box-shadow:0 24px 48px rgba(0,0,0,.2);max-width:320px;"><div style="font-size:48px;margin-bottom:16px;">✅</div><div style="font-size:18px;font-weight:600;color:#059669;margin-bottom:8px;font-family:Prompt,sans-serif;">ยกเลิกสำเร็จ!</div><div style="font-size:14px;color:#64748b;font-family:Prompt,sans-serif;">ช่วงเวลาพร้อมให้จองใหม่แล้ว</div></div>';
+        document.body.appendChild(ov);setTimeout(function(){if(ov.parentNode)document.body.removeChild(ov);},2400);
+      }else{alert('เกิดข้อผิดพลาด: '+r.message);btn.disabled=false;}
+    })
+    .withFailureHandler(function(){btn.disabled=false;btn.textContent='ยืนยันการยกเลิก';alert('เกิดข้อผิดพลาด');})
+    .cancelBookingRows({rowIndexesToDelete:toDelete});
+}
+
+// ══ PROFILE PHOTO ══
+var pendingPhotoBase64 = null;
+
+function handleProfilePhoto(input) {
+  var file = input.files[0];
+  if(!file) return;
+  if(file.size > 1000000) {
+    document.getElementById('profStatus').textContent = '⚠️ ขนาดรูปต้องไม่เกิน 1MB';
+    return;
+  }
+  document.getElementById('profStatus').textContent = 'กำลังโหลดรูป...';
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    pendingPhotoBase64 = ev.target.result;
+    var pi = document.getElementById('profPreviewImg');
+    var pe = document.getElementById('profPreviewIcon');
+    pi.src = pendingPhotoBase64;
+    pi.style.display = 'block';
+    pe.style.display = 'none';
+    var img = document.getElementById('ubAvatarImg');
+    var icon = document.getElementById('ubAvatarIcon');
+    img.src = pendingPhotoBase64;
+    img.style.display = 'block';
+    icon.style.display = 'none';
+    document.getElementById('profStatus').textContent = 'เลือกรูปแล้ว กดบันทึกเพื่อยืนยัน';
+  };
+  reader.onerror = function() {
+    document.getElementById('profStatus').textContent = '❌ โหลดรูปไม่ได้ ลองใหม่';
+  };
+  reader.readAsDataURL(file);
+}
+
+function initProfile(user) {
+  document.getElementById('profName').textContent = user.name;
+  document.getElementById('profId').textContent = 'รหัสนิสิต: ' + user.studentId;
+  pendingPhotoBase64 = null;
+  document.getElementById('profStatus').textContent = '';
+
+  if(user.photo && user.photo.length > 10) {
+    setAvatarPhoto(user.photo);
+  } else {
+    var img = document.getElementById('ubAvatarImg');
+    var icon = document.getElementById('ubAvatarIcon');
+    img.style.display='none'; img.src='';
+    icon.style.display='block';
+    var pi = document.getElementById('profPreviewImg');
+    var pe = document.getElementById('profPreviewIcon');
+    pi.style.display='none'; pi.src='';
+    pe.style.display='block';
+  }
+}
+
+function setAvatarPhoto(b64) {
+  var img = document.getElementById('ubAvatarImg');
+  var icon = document.getElementById('ubAvatarIcon');
+  img.src = b64; img.style.display='block'; icon.style.display='none';
+  var pi = document.getElementById('profPreviewImg');
+  var pe = document.getElementById('profPreviewIcon');
+  pi.src = b64; pi.style.display='block'; pe.style.display='none';
+}
+
+function saveProfilePhoto() {
+  if(!pendingPhotoBase64) {
+    document.getElementById('profStatus').textContent = 'กรุณาเลือกรูปก่อน';
+    return;
+  }
+  var btn = document.getElementById('profSaveBtn');
+  btn.disabled = true; btn.textContent = 'กำลังบันทึก...';
+  google.script.run
+    .withSuccessHandler(function(r) {
+      btn.disabled=false;
+      btn.innerHTML='<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> บันทึกรูปโปรไฟล์';
+      if(r.success) {
+        document.getElementById('profStatus').textContent = '✅ บันทึกสำเร็จ!';
+        pendingPhotoBase64 = null;
+        setTimeout(function(){ closeOv('ov-profile'); document.getElementById('profStatus').textContent=''; },1500);
+      } else {
+        document.getElementById('profStatus').textContent = '❌ ' + r.message;
+      }
+    })
+    .withFailureHandler(function(e) {
+      btn.disabled=false;
+      btn.innerHTML='<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> บันทึกรูปโปรไฟล์';
+      document.getElementById('profStatus').textContent = '❌ เกิดข้อผิดพลาด';
+    })
+    .saveProfilePhoto(currentUser.studentId, pendingPhotoBase64);
+}
+</script>
+
+</body>
+</html>
