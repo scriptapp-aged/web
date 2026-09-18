@@ -37,22 +37,45 @@
       background: #0f172a;
       background-image: radial-gradient(circle at 20% 30%, #1e3a8a 0%, transparent 40%),
                         radial-gradient(circle at 80% 80%, #1e40af 0%, transparent 40%);
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      padding:20px;
+      display:flex;
+      flex-direction:row; /* จัดเรียงเป็นแนวนอน ซ้าย-ขวา */
+      align-items:center;
+      justify-content:center;
+      gap: 120px; /* ระยะห่างระหว่างกล่องซ้าย-ขวา */
+      padding:40px;
       min-height:100vh;
     }
-    /* Sharp geometric background elements instead of rounded */
+
+    /* กราฟิกตกแต่งพื้นหลัง */
     .as{position:absolute;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);animation:drift 10s linear infinite;}
     .as1{width:300px;height:300px;top:10%;left:5%;transform:rotate(15deg);}
     .as2{width:200px;height:200px;bottom:15%;right:10%;transform:rotate(-10deg);animation-delay:-3s;}
     @keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-15px) rotate(5deg)}}
 
+    /* ฝั่งข้อมูลผู้พัฒนา (ด้านซ้าย) */
+    .auth-credit{
+      position:relative;z-index:1;
+      padding:0;
+      background:transparent;
+      border:none;
+      width:100%;
+      max-width:400px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:6px;
+      text-align:left;
+    }
+    .ac-by{font-size:12px;color:#60a5fa;letter-spacing:1px;text-transform:uppercase;font-weight:500;margin-bottom:4px;}
+    .ac-name{font-size:36px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:8px;}
+    .ac-detail{font-size:15px;color:rgba(255,255,255,.7);line-height:1.6;}
+
+    /* กล่องเข้าสู่ระบบ (ด้านขวา) */
     .auth-card{
       position:relative;z-index:1;
       background:#fff;border-radius:var(--radius);
       width:100%;max-width:420px;
-      box-shadow:0 20px 40px rgba(0,0,0,.3);
+      box-shadow:0 24px 64px rgba(0,0,0,.4);
       overflow:hidden;
       flex-shrink:0;
       border-top: 4px solid var(--c1);
@@ -101,19 +124,20 @@
     .auth-msg svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;flex-shrink:0;}
     .auth-hint{font-size:13px;color:var(--dim);text-align:center;margin-top:16px;}
 
-    /* Credit bottom of auth screen */
-    .auth-credit{
-      position:relative;z-index:1;margin-top:24px;
-      padding:16px 24px;background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);
-      width:100%;max-width:520px;
-      display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;
+    /* Responsive Auth (หน้าจอมือถือ) */
+    @media (max-width: 900px) {
+      #authScreen {
+        flex-direction: column-reverse; /* มือถือให้แบบฟอร์มอยู่บน ข้อมูลผู้พัฒนาอยู่ล่าง */
+        gap: 40px;
+        padding: 20px;
+      }
+      .auth-credit {
+        align-items: center;
+        text-align: center;
+        max-width: 100%;
+      }
+      .ac-name { font-size: 28px; }
     }
-    .ac-by{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;}
-    .ac-divider{width:1px;height:24px;background:rgba(255,255,255,.2);flex-shrink:0;}
-    .ac-name{font-size:14px;font-weight:500;color:#fff;}
-    .ac-detail{font-size:12px;color:rgba(255,255,255,.6);}
-    .ac-sep{color:rgba(255,255,255,.3);font-size:12px;}
 
     /* ══════════════════════
        MAIN APP
@@ -167,7 +191,7 @@
       min-height:calc(100vh - 64px);
     }
 
-    /* Left panel - Info / Hero (Now professional solid blue) */
+    /* Left panel - Info / Hero */
     .book-left{
       background:var(--c1);
       display:flex;flex-direction:column;
@@ -536,6 +560,15 @@
   <div class="as as1"></div>
   <div class="as as2"></div>
 
+  <!-- ฝั่งซ้าย: ข้อมูลผู้พัฒนา -->
+  <div class="auth-credit">
+    <div class="ac-by">ออกแบบและพัฒนาโดย</div>
+    <div class="ac-name">นายเมธี ใจสุขดี</div>
+    <div class="ac-detail">นิสิตชั้นปีที่ 2 สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
+    <div class="ac-detail">คณะศึกษาศาสตร์และพัฒนศาสตร์ ม.เกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
+  </div>
+
+  <!-- ฝั่งขวา: ฟอร์มเข้าสู่ระบบ -->
   <div class="auth-card">
     <div class="auth-head">
       <div class="auth-logo">
@@ -600,17 +633,6 @@
         <div class="auth-hint">มีบัญชีแล้ว? กดที่ "เข้าสู่ระบบ" ด้านบน</div>
       </div>
     </div>
-  </div>
-
-  <!-- Credit below card — horizontal -->
-  <div class="auth-credit">
-    <div class="ac-by">ออกแบบและพัฒนาโดย</div>
-    <div class="ac-divider"></div>
-    <div class="ac-name">นายเมธี ใจสุขดี</div>
-    <div class="ac-sep">·</div>
-    <div class="ac-detail">นิสิตชั้นปีที่ 2 · สาขาเกษตรและสิ่งแวดล้อมศึกษา</div>
-    <div class="ac-sep">·</div>
-    <div class="ac-detail">คณะศึกษาศาสตร์และพัฒนศาสตร์ · ม.เกษตรศาสตร์ วิทยาเขตกำแพงแสน</div>
   </div>
 </div>
 
@@ -867,7 +889,6 @@
 </div>
 
 <script>
-// สคริปต์ JavaScript ชุดเดิม (ไม่ได้แก้ไขใดๆ)
 var ALL=['09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00'];
 var selSlots=[],bookedSlots=[],cancelData=[],cancelSel={};
 var currentUser=null;
@@ -1082,7 +1103,7 @@ function onSubmit(){
   next();
 }
 
-function rBtn(btn,lb){btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:square;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> ยืนยันการจอง';lb.classList.remove('on');upd();}
+function rBtn(btn,lb){btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.5;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> ยืนยันการจอง';lb.classList.remove('on');upd();}
 
 function doReset(){document.querySelectorAll('.rcard').forEach(function(c){c.classList.remove('sel');});document.getElementById('date').value='';if(currentUser){document.getElementById('name').value=currentUser.name;}else{document.getElementById('name').value='';}document.getElementById('phone').value='';bookedSlots=[];selSlots=[];document.getElementById('sgrid').innerHTML='';document.getElementById('slotInfo').textContent='เลือกห้องและวันที่ก่อน';document.getElementById('scnt').textContent='0/3';hideClash();hideToast();var p=function(n){return n.toString().padStart(2,'0');};var d=new Date();document.getElementById('date').setAttribute('min',d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()));upd();}
 
