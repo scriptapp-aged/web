@@ -1,1 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
 
+  <!-- FONT: เปลี่ยนมาใช้ Prompt เพื่อความ Modern & Clean -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ku-green: #006633;
+      --ku-dark: #064e3b;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --bg: #f1f5f9;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(0, 102, 51, 0.15);
+    }
+
+    /* บังคับเหลี่ยมมุมฉากทั้งหมด (Sharp Edges) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+      border-radius: 0 !important; 
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 40px 20px;
+      /* พื้นหลังตาราง Grid สไตล์ Minimalist */
+      background-image: 
+        linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header-box {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-left: 8px solid var(--ku-green);
+      padding: 50px 40px;
+      margin-bottom: 40px;
+      box-shadow: 4px 4px 0px rgba(0, 102, 51, 0.05);
+    }
+
+    .header-box h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .header-box p {
+      color: var(--text-sub);
+      font-weight: 400;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+
+    /* SECTION TITLES */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin: 60px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--glass-border);
+    }
+
+    /* BENTO GRID LAYOUT */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    /* CARD STYLING */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.03);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    /* เอฟเฟกต์โฮเวอร์แบบกล่องแข็ง (Solid hover) */
+    .card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0px rgba(0, 102, 51, 0.15);
+      border-color: var(--ku-green);
+    }
+
+    .president-card {
+      grid-column: 1 / -1;
+      max-width: 400px;
+      margin: 0 auto;
+      border-top: 4px solid var(--ku-green);
+      box-shadow: 6px 6px 0px rgba(0, 102, 51, 0.2);
+    }
+
+    .president-card:hover {
+      box-shadow: 10px 10px 0px rgba(0, 102, 51, 0.3);
+    }
+
+    /* PHOTO */
+    .photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #e2e8f0;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(15%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .card:hover .photo img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    /* TEXT */
+    .name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .position {
+      display: inline-flex;
+      background: var(--text-main);
+      color: #ffffff;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    .president-card .position,
+    .advisor-position {
+      background: var(--ku-green);
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 80px;
+      padding: 30px;
+      background: var(--text-main);
+      color: #ffffff;
+      text-align: center;
+      font-weight: 300;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .header-box {
+        padding: 30px 20px;
+      }
+      .header-box h1 {
+        font-size: 2rem;
+      }
+      .president-card {
+        grid-column: auto;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header-box">
+      <h1>แผนผังชุมนุมฟาร์มนิสิต ปีการศึกษา 2569<br>ปีการศึกษา 2569</h1>
+      <p>STUDENT FARM CLUB</p>
+    </div>
+
+    <!-- อาจารย์ที่ปรึกษา -->
+    <div class="section-title">อาจารย์ที่ปรึกษา</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="photo">
+          <img src="12.jpg" alt="ผศ.ดร.นิรันดร์ ยิ่งยวด">
+        </div>
+        <div class="name">ผศ.ดร.นิรันดร์ ยิ่งยวด</div>
+        <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="web.jpg" alt="อ.ดร.อรวรรณ บุญทัน">
+        </div>
+        <div class="name">อ.ดร.อรวรรณ บุญทัน</div>
+        <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+      </div>
+    </div>
+
+    <!-- ประธานชุมนุม -->
+    <div class="section-title">ประธานชุมนุม</div>
+    <div class="grid-container">
+      <div class="card president-card">
+        <div class="photo">
+          <img src="IMG_9089.jpg" alt="นายศุภเสกย์ นิลเทพา">
+        </div>
+        <div class="name">นายศุภเสกย์ นิลเทพา</div>
+        <div class="position">ประธานชุมนุม</div>
+      </div>
+    </div>
+
+    <!-- คณะกรรมการฝ่ายบริหาร -->
+    <div class="section-title">คณะกรรมการฝ่ายบริหาร</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="photo">
+          <img src="images/member1.jpg" alt="นายกนกพล แซ่แต้">
+        </div>
+        <div class="name">นายกนกพล แซ่แต้</div>
+        <div class="position">รองประธานชุมนุมคนที่ 1</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member2.jpg" alt="นายธีระพล สมพงษ์">
+        </div>
+        <div class="name">นายธีระพล สมพงษ์</div>
+        <div class="position">รองประธานชุมนุมคนที่ 2</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member3.jpg" alt="นางสาวทรายขวัญ วาปีโท">
+        </div>
+        <div class="name">นางสาวทรายขวัญ วาปีโท</div>
+        <div class="position">เลขานุการ</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="เมธี.PNG" alt="นายเมธี ใจสุขดี">
+        </div>
+        <div class="name">นายเมธี ใจสุขดี</div>
+        <div class="position">เหรัญญิก</div>
+      </div>
+    </div>
+
+    <!-- กรรมการ -->
+    <div class="section-title">กรรมการ</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="photo">
+          <img src="images/member5.jpg" alt="นางสาวพสุชล สิรินธรานนท์">
+        </div>
+        <div class="name">นางสาวพสุชล สิรินธรานนท์</div>
+        <div class="position">ประธานโครงการผัก</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member6.jpg" alt="นายอนุรักษ์ ผสมทรัพย์">
+        </div>
+        <div class="name">นายอนุรักษ์ ผสมทรัพย์</div>
+        <div class="position">ประธานโครงการ Bakery</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member7.jpg" alt="นางสาวยุภารัตน์ โจมคำ">
+        </div>
+        <div class="name">นางสาวยุภารัตน์ โจมคำ</div>
+        <div class="position">ประธานโครงการไฮโดรฯ</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member8.jpg" alt="นางสาวกัลยาพร ดีทองอ่อน">
+        </div>
+        <div class="name">นางสาวกัลยาพร ดีทองอ่อน</div>
+        <div class="position">ประธานโครงการไม้ดอก</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member9.jpg" alt="นางสาวกันยาพร พันธุเดช">
+        </div>
+        <div class="name">นางสาวกันยาพร พันธุเดช</div>
+        <div class="position">กรรมการฝ่ายโสตฯ</div>
+      </div>
+
+      <div class="card">
+        <div class="photo">
+          <img src="images/member10.jpg" alt="นางสาวกิตยากร พิจิตร">
+        </div>
+        <div class="name">นางสาวกิตยากร พิจิตร</div>
+        <div class="position">ประธานโครงการแคคตัส</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
+  </div>
+
+</body>
+</html>
