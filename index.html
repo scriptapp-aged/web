@@ -689,6 +689,141 @@
         }
 
         /* ========================= */
+        /* ✨ ORDER SHIRT BANNER */
+        /* ========================= */
+        .order-banner-wrap{
+            max-width:1250px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            animation: fadeInUp 1.2s 0.8s both;
+        }
+
+        .order-banner{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--text-dark), #1e293b);
+            padding: 30px 40px;
+            color: #ffffff;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+            position: relative;
+            overflow: hidden;
+            border-left: 6px solid var(--primary-neon);
+        }
+
+        .order-banner::before{
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,255,136,0.15) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .order-banner-content{
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .order-banner-icon{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height: 90px;
+            font-size: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(0,255,136,0.1);
+            animation: floatSmooth 5s ease-in-out infinite;
+        }
+
+        .order-banner-icon i {
+            background: linear-gradient(135deg, var(--primary-neon), var(--ku-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 8px 12px rgba(0, 255, 136, 0.4));
+        }
+
+        @keyframes floatSmooth {
+            0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+
+        .order-banner-text{
+            text-align: left;
+        }
+
+        .order-banner-text h2{
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .order-banner-text p{
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .order-banner-btn{
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-neon);
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.3s;
+            border: 2px solid var(--primary-neon);
+        }
+
+        .order-banner-btn i{
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        .order-banner-btn:hover{
+            background: transparent;
+            color: var(--primary-neon);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .order-banner-btn:hover i{
+            transform: translateX(5px);
+        }
+
+        @media(max-width:768px){
+            .order-banner{
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .order-banner-content{
+                flex-direction: column;
+                gap: 15px;
+            }
+            .order-banner-text{
+                text-align: center;
+            }
+        }
+
+        /* ========================= */
         /* ✨ CHECK PROJECT BUTTON */
         /* ========================= */
 
@@ -767,14 +902,22 @@
 
         /* ✨ FOOTER */
         .site-footer {
+            max-width: 1250px;
+            margin: 0 auto 40px auto;
             text-align: center;
-            padding: 40px 20px 30px;
+            padding: 25px 20px;
             font-size: 0.85rem;
             color: #64748b;
             font-weight: 300;
-            margin-top: 20px;
             position: relative;
             z-index: 1;
+
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-bottom: 3px solid var(--ku-green);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            animation: fadeInUp 1s 1.2s both;
         }
 
         .site-footer p {
@@ -824,7 +967,7 @@
                 </div>
 
                 <div class="countdown-date-label">
-                    19 - 30 ตุลาคม 2569 | อย่าลืมอ่านหนังสือกันนะ!!!!
+                    19 ตุลาคม 2569 | อย่าลืมอ่านหนังสือกันนะ!!!!
                 </div>
 
                 <div class="countdown-grid">
