@@ -207,8 +207,8 @@
         }
 
         .countdown-section{
-            margin-top:30px;
-            margin-bottom: 30px;
+            margin-top:40px;
+            margin-bottom: 40px;
 
             display:flex;
             flex-direction:column;
@@ -219,27 +219,27 @@
         }
 
         .countdown-project-label{
-            font-size:1rem;
+            font-size:1.2rem;
             font-weight:500;
             color:var(--ku-green);
 
             letter-spacing:1px;
 
-            margin-bottom:5px;
+            margin-bottom:8px;
         }
 
         .countdown-date-label{
-            font-size:0.85rem;
+            font-size:0.95rem;
             color:#64748b;
 
-            margin-bottom:15px;
+            margin-bottom:20px;
 
             font-weight:300;
         }
 
         .countdown-grid{
             display:flex;
-            gap:12px;
+            gap:15px;
             justify-content:center;
         }
 
@@ -249,9 +249,9 @@
             border-bottom:
                 3px solid var(--ku-green);
 
-            padding:12px;
+            padding:15px;
 
-            min-width:75px;
+            min-width:90px;
 
             backdrop-filter:blur(5px);
 
@@ -262,7 +262,7 @@
         .countdown-num{
             display:block;
 
-            font-size:1.8rem;
+            font-size:2.2rem;
             font-weight:700;
 
             color:var(--text-dark);
@@ -273,13 +273,13 @@
         .countdown-unit{
             display:block;
 
-            font-size:0.65rem;
+            font-size:0.75rem;
 
             color:#94a3b8;
 
             text-transform:uppercase;
 
-            margin-top:4px;
+            margin-top:6px;
 
             letter-spacing:1px;
         }
@@ -689,141 +689,6 @@
         }
 
         /* ========================= */
-        /* ✨ ORDER SHIRT BANNER */
-        /* ========================= */
-        .order-banner-wrap{
-            max-width:1250px;
-            margin: 0 auto 60px auto;
-            padding: 0 20px;
-            animation: fadeInUp 1.2s 0.8s both;
-        }
-
-        .order-banner{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, var(--text-dark), #1e293b);
-            padding: 30px 40px;
-            color: #ffffff;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-            position: relative;
-            overflow: hidden;
-            border-left: 6px solid var(--primary-neon);
-        }
-
-        .order-banner::before{
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -5%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0,255,136,0.15) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .order-banner-content{
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .order-banner-icon{
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 90px;
-            height: 90px;
-            font-size: 3rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            box-shadow: 
-                0 15px 35px rgba(0,0,0,0.2),
-                inset 0 0 20px rgba(0,255,136,0.1);
-            animation: floatSmooth 5s ease-in-out infinite;
-        }
-
-        .order-banner-icon i {
-            background: linear-gradient(135deg, var(--primary-neon), var(--ku-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 8px 12px rgba(0, 255, 136, 0.4));
-        }
-
-        @keyframes floatSmooth {
-            0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .order-banner-text{
-            text-align: left;
-        }
-
-        .order-banner-text h2{
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-
-        .order-banner-text p{
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .order-banner-btn{
-            position: relative;
-            z-index: 1;
-            display: inline-flex;
-            align-items: center;
-            background: var(--primary-neon);
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 14px 32px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: 0.3s;
-            border: 2px solid var(--primary-neon);
-        }
-
-        .order-banner-btn i{
-            margin-left: 10px;
-            transition: 0.3s;
-        }
-
-        .order-banner-btn:hover{
-            background: transparent;
-            color: var(--primary-neon);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .order-banner-btn:hover i{
-            transform: translateX(5px);
-        }
-
-        @media(max-width:768px){
-            .order-banner{
-                flex-direction: column;
-                text-align: center;
-                padding: 30px 20px;
-                gap: 20px;
-            }
-            .order-banner-content{
-                flex-direction: column;
-                gap: 15px;
-            }
-            .order-banner-text{
-                text-align: center;
-            }
-        }
-
-        /* ========================= */
         /* ✨ CHECK PROJECT BUTTON */
         /* ========================= */
 
@@ -898,6 +763,27 @@
             color:#64748b;
             margin-top:2px;
             font-weight:300;
+        }
+
+        /* ✨ FOOTER */
+        .site-footer {
+            text-align: center;
+            padding: 40px 20px 30px;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 300;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .site-footer p {
+            margin: 4px 0;
+        }
+
+        .dev-credit {
+            color: var(--ku-green);
+            font-weight: 500;
         }
 
     </style>
@@ -1085,7 +971,7 @@
 
         </a>
 
-        <a href="exam-schedule.html"
+        <a href="https://script.google.com/macros/s/AKfycby3_tu5BXdHo1VlDkvAnPFwmZS21YvL8kZp0WKcfgMAWO-cDJTiDxaDF8P7B-xSHGhD/exec"
            class="mini-card">
 
             <div class="ku86-new-badge">
@@ -1136,6 +1022,11 @@
         </a>
 
     </div>
+
+    <footer class="site-footer">
+        <p>©2026 ชุมนุมฟาร์มนิสิต คณะศึกษาศาสตร์และพัฒนศาสตร์ มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน</p>
+        <p class="dev-credit">พัฒนาระบบโดย นายเมธี ใจสุขดี</p>
+    </footer>
 
     <script>
         function startCountdown(){
