@@ -196,7 +196,7 @@
         }
 
         /* ========================= */
-        /* ✨ 57th AG-ED BANNER (PURPLE THEME) */
+        /* ✨ 57th AG-ED BANNER (ANIMATED PURPLE GRADIENT) */
         /* ========================= */
         .ag-ed-banner-wrap {
             margin-top: 20px;
@@ -218,8 +218,11 @@
             max-width: 900px;
             padding: 40px 30px;
             
-            /* พื้นหลังสีม่วงไล่ระดับ (Purple Gradient) */
-            background: linear-gradient(135deg, #3b0764 0%, #6b21a8 50%, #9333ea 100%);
+            /* เพิ่มสีให้หลากหลายขึ้นสำหรับไล่ระดับ และตั้งค่าขนาดพื้นหลังให้กว้างเพื่อทำแอนิเมชัน */
+            background: linear-gradient(135deg, #3b0764, #6b21a8, #9333ea, #6b21a8, #3b0764);
+            background-size: 300% 300%;
+            animation: gradientFlow 6s ease infinite;
+            
             border: 2px solid #c084fc;
             text-decoration: none;
             transition: 0.4s cubic-bezier(0.2,1,0.2,1);
@@ -230,6 +233,13 @@
                 inset 0 0 20px rgba(192, 132, 252, 0.15);
             z-index: 1;
             font-family: 'Prompt', sans-serif;
+        }
+
+        /* แอนิเมชันขยับพื้นหลังสีม่วง */
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* เอฟเฟกต์เหลือบแสงตอน Hover (โทนสว่าง) */
@@ -629,7 +639,7 @@
 
             </div>
 
-            <!-- แบนเนอร์ 57 th Ag-Ed (ปรับเป็นกราฟิกไล่สีม่วง) -->
+            <!-- แบนเนอร์ 57 th Ag-Ed (ปรับเป็นกราฟิกไล่สีม่วงเคลื่อนไหว) -->
             <div class="ag-ed-banner-wrap">
                 <a href="#" class="ag-ed-banner-btn">
                     <div class="ag-ed-banner-title">
