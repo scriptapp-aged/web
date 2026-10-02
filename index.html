@@ -7,6 +7,7 @@
     <title>KU KPS | ชุมนุมฟาร์มนิสิต</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -282,6 +283,68 @@
             margin-top:6px;
 
             letter-spacing:1px;
+        }
+
+        /* ========================= */
+        /* ✨ AG-ED BANNER BUTTON */
+        /* ========================= */
+        .ag-ed-banner-wrap {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+            animation: fadeInUp 1.2s 0.6s both;
+        }
+
+        .ag-ed-banner-btn {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 900px;
+            padding: 35px 40px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 102, 51, 0.2);
+            border-bottom: 4px solid var(--ku-green);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: 0.4s cubic-bezier(0.2,1,0.2,1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            font-family: 'Prompt', sans-serif;
+            border-radius: 0;
+        }
+
+        .ag-ed-banner-btn:hover {
+            transform: translateY(-8px) scale(1.01);
+            background: #ffffff;
+            border-color: var(--ku-green);
+            box-shadow: 0 25px 50px rgba(0,102,51,0.1);
+        }
+
+        .ag-ed-banner-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--ku-green);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .ag-ed-banner-sub {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        @media(max-width:768px) {
+            .ag-ed-banner-title { font-size: 1.4rem; }
+            .ag-ed-banner-sub { font-size: 0.85rem; }
+            .ag-ed-banner-btn { padding: 25px 20px; }
         }
 
         /* ========================= */
@@ -994,6 +1057,18 @@
 
                 </div>
 
+            </div>
+
+            <!-- แบนเนอร์ 57 th Ag-Ed -->
+            <div class="ag-ed-banner-wrap">
+                <a href="#" class="ag-ed-banner-btn">
+                    <div class="ag-ed-banner-title">
+                        57 th Ag-Ed กลมเกลียว กล้าแกร่ง
+                    </div>
+                    <div class="ag-ed-banner-sub">
+                        วันเสาร์ที่ 7 พฤศจิกายน 2569 ณ อาคารศูนย์มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน
+                    </div>
+                </a>
             </div>
 
         </div>
