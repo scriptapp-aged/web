@@ -196,7 +196,7 @@
         }
 
         /* ========================= */
-        /* ✨ 57th AG-ED BANNER (OUTSTANDING) */
+        /* ✨ 57th AG-ED BANNER (PURPLE THEME) */
         /* ========================= */
         .ag-ed-banner-wrap {
             margin-top: 20px;
@@ -218,26 +218,26 @@
             max-width: 900px;
             padding: 40px 30px;
             
-            /* พื้นหลังสีเข้มดุดัน ตัดกับสีนีออน */
-            background: linear-gradient(135deg, #0f172a 0%, #003319 100%);
-            border: 2px solid var(--primary-neon);
+            /* พื้นหลังสีม่วงไล่ระดับ (Purple Gradient) */
+            background: linear-gradient(135deg, #3b0764 0%, #6b21a8 50%, #9333ea 100%);
+            border: 2px solid #c084fc;
             text-decoration: none;
             transition: 0.4s cubic-bezier(0.2,1,0.2,1);
             
-            /* แสงเงาสะท้อนแบบนีออน */
+            /* แสงเงาสะท้อนแบบสีม่วง */
             box-shadow: 
-                0 20px 40px rgba(0, 255, 136, 0.15), 
-                inset 0 0 20px rgba(0, 255, 136, 0.1);
+                0 20px 40px rgba(147, 51, 234, 0.2), 
+                inset 0 0 20px rgba(192, 132, 252, 0.15);
             z-index: 1;
             font-family: 'Prompt', sans-serif;
         }
 
-        /* เอฟเฟกต์เหลือบแสงตอน Hover */
+        /* เอฟเฟกต์เหลือบแสงตอน Hover (โทนสว่าง) */
         .ag-ed-banner-btn::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(0,255,136,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(243, 232, 255, 0.25), transparent);
             transform: translateX(-100%);
             transition: 0.8s;
             z-index: -1;
@@ -250,24 +250,24 @@
         .ag-ed-banner-btn:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 
-                0 30px 60px rgba(0, 255, 136, 0.25), 
-                inset 0 0 30px rgba(0, 255, 136, 0.2);
+                0 30px 60px rgba(147, 51, 234, 0.35), 
+                inset 0 0 30px rgba(192, 132, 252, 0.3);
             border-color: #ffffff;
         }
 
         .ag-ed-banner-title {
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--primary-neon);
+            color: #ffffff;
             margin-bottom: 12px;
             letter-spacing: 1px;
             text-align: center;
-            text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            text-shadow: 0 0 15px rgba(216, 180, 254, 0.6);
         }
 
         .ag-ed-banner-sub {
             font-size: 1.1rem;
-            color: #e2e8f0;
+            color: #f3e8ff;
             font-weight: 300;
             text-align: center;
             letter-spacing: 0.5px;
@@ -629,7 +629,7 @@
 
             </div>
 
-            <!-- แบนเนอร์ 57 th Ag-Ed (โดดเด่นสะดุดตา) -->
+            <!-- แบนเนอร์ 57 th Ag-Ed (ปรับเป็นกราฟิกไล่สีม่วง) -->
             <div class="ag-ed-banner-wrap">
                 <a href="#" class="ag-ed-banner-btn">
                     <div class="ag-ed-banner-title">
@@ -706,7 +706,7 @@
 
     </div>
 
-    <!-- ปุ่มตรวจสอบการเลือกโครงการ (สไตล์ธรรมดา) -->
+    <!-- ปุ่มตรวจสอบการเลือกโครงการ (สไตล์ธรรมดาเดิม) -->
     <div class="check-project-wrap">
 
         <a href="https://script.google.com/macros/s/AKfycbyEHy1WcjXy-JSmdio4EqbUjDv-KIBfPB7JfayGtRgg2SX0gdRT68_uRpRoUZ5eRs7EoA/exec"
