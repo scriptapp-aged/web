@@ -286,7 +286,7 @@
         }
 
         /* ========================= */
-        /* ✨ IMAGE SHOWCASE FRAME (FIXED RECTANGLE) */
+        /* ✨ IMAGE SHOWCASE FRAME (ADAPTIVE) */
         /* ========================= */
         .image-showcase-wrap {
             max-width: 1250px;
@@ -297,11 +297,14 @@
 
         .image-showcase-frame {
             width: 100%;
-            height: 450px; /* บังคับความสูงให้เป็นสี่เหลี่ยมผืนผ้าแนวยาว */
+            height: auto; /* ปล่อยความสูงเป็นอัตโนมัติตามรูปภาพ */
+            min-height: 250px;
+            
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(226, 232, 240, 0.8);
             border-bottom: 3px solid var(--ku-green);
+            padding: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
@@ -312,8 +315,8 @@
 
         .image-showcase-frame img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* ครอบรูปให้เต็มกรอบโดยไม่เสียสัดส่วน */
+            height: auto; /* แสดงรูปภาพเต็มใบตามสัดส่วนจริง */
+            object-fit: contain; /* ไม่มีการครอปภาพ */
             display: block;
         }
 
@@ -332,12 +335,6 @@
             font-size: 2rem;
             margin-bottom: 10px;
             color: #cbd5e1;
-        }
-
-        @media(max-width: 768px) {
-            .image-showcase-frame {
-                height: 250px; /* ปรับขนาดสี่เหลี่ยมผืนผ้าให้พอดีจอโทรศัพท์ */
-            }
         }
 
         /* ========================= */
@@ -705,17 +702,17 @@
 
     </header>
 
-    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์ (สี่เหลี่ยมผืนผ้า) ✨ -->
+    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์แบบปรับขนาดได้เอง (Adaptive Size) ✨ -->
     <div class="image-showcase-wrap">
         <div class="image-showcase-frame">
-            <!-- ข้อความ Placehoder (หากใส่รูปภาพแล้ว ลบข้อความส่วนนี้ออกได้) -->
+            <!-- ข้อความ Placehoder จะหายไปเองถ้ารูปทับ หรือจะลบโค้ดส่วนนี้ออกก็ได้ -->
             <div class="image-placeholder-text">
                 <i class="fa-regular fa-image"></i>
-                พื้นที่สำหรับใส่รูปภาพแบนเนอร์ (สี่เหลี่ยมผืนผ้า)
+                พื้นที่แสดงรูปภาพ
             </div>
             
-            <!-- แท็กรูปภาพ: นำลิงก์รูปภาพมาใส่ที่ src="" -->
-            <img src="" alt="">
+            <!-- นำชื่อไฟล์ หรือ URL ของรูปภาพมาใส่ตรง src="" ด้านล่างนี้ -->
+            <img src="ระบบตารางสอบ.png" alt="ระบบตารางสอบ">
         </div>
     </div>
 
