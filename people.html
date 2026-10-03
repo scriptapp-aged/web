@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>คณะกรรมการฟาร์ม ปีการศึกษา 2569</title>
 
-  <!-- FONT: เปลี่ยนมาใช้ Prompt เพื่อความ Modern & Clean -->
+  <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -19,7 +19,7 @@
       --glass-border: rgba(0, 102, 51, 0.15);
     }
 
-    /* บังคับเหลี่ยมมุมฉากทั้งหมด (Sharp Edges) */
+    /* บังคับเหลี่ยมมุมฉากทั้งหมด */
     * {
       margin: 0;
       padding: 0;
@@ -32,7 +32,6 @@
       background-color: var(--bg);
       color: var(--text-main);
       padding: 40px 20px;
-      /* พื้นหลังตาราง Grid สไตล์ Minimalist */
       background-image: 
         linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
@@ -89,7 +88,7 @@
       background: var(--glass-border);
     }
 
-    /* BENTO GRID LAYOUT */
+    /* BENTO GRID */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -109,7 +108,6 @@
       position: relative;
     }
 
-    /* เอฟเฟกต์โฮเวอร์แบบกล่องแข็ง (Solid hover) */
     .card:hover {
       transform: translate(-4px, -4px);
       box-shadow: 8px 8px 0px rgba(0, 102, 51, 0.15);
@@ -156,7 +154,21 @@
       font-size: 1.25rem;
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 8px;
+      margin-bottom: 4px;
+    }
+
+    .year {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-sub);
+      margin-bottom: 15px;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .position {
@@ -167,12 +179,152 @@
       font-size: 0.85rem;
       font-weight: 400;
       align-self: flex-start;
-      margin-top: auto;
     }
 
     .president-card .position,
     .advisor-position {
       background: var(--ku-green);
+    }
+
+    /* CONTACT BUTTON */
+    .btn-contact {
+      background: transparent;
+      border: 1px solid var(--ku-green);
+      color: var(--ku-green);
+      padding: 8px 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-contact:hover {
+      background: var(--ku-green);
+      color: white;
+      box-shadow: 3px 3px 0px rgba(0, 102, 51, 0.2);
+      transform: translate(-2px, -2px);
+    }
+
+    /* =========================================
+       MODAL (POPUP) STYLES
+       ========================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      width: 90%;
+      max-width: 450px;
+      padding: 40px;
+      box-shadow: 10px 10px 0px rgba(0, 102, 51, 0.8);
+      border: 2px solid var(--text-main);
+      transform: translateY(30px);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #ef4444;
+    }
+
+    .modal-header {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    #modalName {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    #modalPosition {
+      font-size: 1rem;
+      color: var(--ku-green);
+      font-weight: 500;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .contact-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: white;
+      background: var(--text-main);
+      padding: 16px;
+    }
+
+    .icon-green { background: #16a34a; }
+    .icon-blue { background: #2563eb; }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-label {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-value {
+      font-size: 1rem;
+      color: var(--text-main);
+      font-weight: 500;
     }
 
     /* FOOTER */
@@ -188,16 +340,10 @@
     }
 
     @media (max-width: 768px) {
-      .header-box {
-        padding: 30px 20px;
-      }
-      .header-box h1 {
-        font-size: 2rem;
-      }
-      .president-card {
-        grid-column: auto;
-        max-width: 100%;
-      }
+      .header-box { padding: 30px 20px; }
+      .header-box h1 { font-size: 2rem; }
+      .president-card { grid-column: auto; max-width: 100%; }
+      .modal-content { padding: 30px 20px; }
     }
   </style>
 </head>
@@ -219,16 +365,28 @@
         <div class="photo">
           <img src="cc (2).png" alt="ผู้ช่วยศาสตราจารย์ ดร.นิรันดร์ ยิ่งยวด">
         </div>
-        <div class="name">ผู้ช่วยศาสตราจารย์ ดร.นิรันดร์ ยิ่งยวด</div>
-        <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+        <div class="name">ผศ. ดร.นิรันดร์ ยิ่งยวด</div>
+        
+        <div class="card-footer">
+          <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+          <button class="btn-contact" onclick="openContactModal('ผศ. ดร.นิรันดร์ ยิ่งยวด', 'อาจารย์ที่ปรึกษา', '09X-XXX-XXXX', 'aj.niran', 'Niran Y.')">
+            💬 ข้อมูลติดต่อ
+          </button>
+        </div>
       </div>
 
       <div class="card">
         <div class="photo">
           <img src="1.png" alt="อาจารย์ ดร.อรวรรณ บุญทัน">
         </div>
-        <div class="name">อาจารย์ ดร.อรวรรณ บุญทัน</div>
-        <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+        <div class="name">อ. ดร.อรวรรณ บุญทัน</div>
+        
+        <div class="card-footer">
+          <div class="position advisor-position">อาจารย์ที่ปรึกษา</div>
+          <button class="btn-contact" onclick="openContactModal('อ. ดร.อรวรรณ บุญทัน', 'อาจารย์ที่ปรึกษา', '08X-XXX-XXXX', 'aj.orawan', 'Orawan B.')">
+            💬 ข้อมูลติดต่อ
+          </button>
+        </div>
       </div>
     </div>
 
@@ -240,104 +398,205 @@
           <img src="IMG_2757.JPG" alt="นายศุภเสกย์ นิลเทพา">
         </div>
         <div class="name">นายศุภเสกย์ นิลเทพา</div>
-        <div class="position">ประธานชุมนุม</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        
+        <div class="card-footer">
+          <div class="position">ประธานชุมนุม</div>
+          <!-- สังเกตที่ onclick() เป็นการส่งข้อมูลเข้า Popup -->
+          <button class="btn-contact" onclick="openContactModal('นายศุภเสกย์ นิลเทพา', 'ประธานชุมนุม', '081-234-5678', 'supasek.line', 'Supasek Niltapa')">
+            💬 ข้อมูลติดต่อ
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- คณะกรรมการฝ่ายบริหาร -->
     <div class="section-title">คณะกรรมการฝ่ายบริหาร</div>
     <div class="grid-container">
+      
       <div class="card">
-        <div class="photo">
-          <img src="IMG_7072.JPG" alt="นายกนกพล แซ่แต้">
-        </div>
+        <div class="photo"><img src="IMG_7072.JPG" alt="นายกนกพล แซ่แต้"></div>
         <div class="name">นายกนกพล แซ่แต้</div>
-        <div class="position">รองประธานชุมนุมคนที่ 1</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">รองประธานชุมนุมคนที่ 1</div>
+          <button class="btn-contact" onclick="openContactModal('นายกนกพล แซ่แต้', 'รองประธานชุมนุมคนที่ 1', '082-XXX-XXXX', 'kanokpol.k', 'Kanokpol Saetae')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="" alt="รองประธานชุมนุมคนที่ 2">
-        </div>
+        <div class="photo"><img src="" alt="ว่าง"></div>
         <div class="name">-ว่าง-</div>
-        <div class="position">รองประธานชุมนุมคนที่ 2</div>
+        <div class="card-footer">
+          <div class="position">รองประธานชุมนุมคนที่ 2</div>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="ทรายขวัญ.png" alt="นางสาวทรายขวัญ วาปีโท">
-        </div>
+        <div class="photo"><img src="ทรายขวัญ.png" alt="นางสาวทรายขวัญ วาปีโท"></div>
         <div class="name">นางสาวทรายขวัญ วาปีโท</div>
-        <div class="position">เลขานุการ</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">เลขานุการ</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวทรายขวัญ วาปีโท', 'เลขานุการ', '083-XXX-XXXX', 'saikhwan.v', 'Saikhwan Wapeetho')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="เมธี.PNG" alt="นายเมธี ใจสุขดี">
-        </div>
+        <div class="photo"><img src="เมธี.PNG" alt="นายเมธี ใจสุขดี"></div>
         <div class="name">นายเมธี ใจสุขดี</div>
-        <div class="position">เหรัญญิก</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">เหรัญญิก</div>
+          <button class="btn-contact" onclick="openContactModal('นายเมธี ใจสุขดี', 'เหรัญญิก', '084-XXX-XXXX', 'methee.j', 'Methee Jaisukdee')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
     </div>
 
     <!-- กรรมการ -->
     <div class="section-title">กรรมการ</div>
     <div class="grid-container">
+      
       <div class="card">
-        <div class="photo">
-          <img src="โก๋เองเผื่อจำไม่ได้.JPG" alt="นางสาวพสุชล สิรินธรานนท์">
-        </div>
+        <div class="photo"><img src="โก๋เองเผื่อจำไม่ได้.JPG" alt="นางสาวพสุชล สิรินธรานนท์"></div>
         <div class="name">นางสาวพสุชล สิรินธรานนท์</div>
-        <div class="position">ประธานโครงการผัก</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการผัก</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวพสุชล สิรินธรานนท์', 'ประธานโครงการผัก', '085-XXX-XXXX', 'pasuchon', 'Pasuchon Sirintaranon')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="อนุรักษ์.jpg" alt="นายอนุรักษ์ ผสมทรัพย์">
-        </div>
+        <div class="photo"><img src="อนุรักษ์.jpg" alt="นายอนุรักษ์ ผสมทรัพย์"></div>
         <div class="name">นายอนุรักษ์ ผสมทรัพย์</div>
-        <div class="position">ประธานโครงการ Bakery</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการ Bakery</div>
+          <button class="btn-contact" onclick="openContactModal('นายอนุรักษ์ ผสมทรัพย์', 'ประธานโครงการ Bakery', '086-XXX-XXXX', 'anurak.m', 'Anurak Pasomsup')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="ยุภารัตน์.jpg" alt="นางสาวยุภารัตน์ โจมคำ">
-        </div>
+        <div class="photo"><img src="ยุภารัตน์.jpg" alt="นางสาวยุภารัตน์ โจมคำ"></div>
         <div class="name">นางสาวยุภารัตน์ โจมคำ</div>
-        <div class="position">ประธานโครงการไฮโดรโปนิกส์</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการไฮโดรโปนิกส์</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวยุภารัตน์ โจมคำ', 'ประธานโครงการไฮโดรโปนิกส์', '087-XXX-XXXX', 'yuparat.j', 'Yuparat Jomkam')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="กัลยาพร.PNG" alt="นางสาวกัลยาพร ดีทองอ่อน">
-        </div>
+        <div class="photo"><img src="กัลยาพร.PNG" alt="นางสาวกัลยาพร ดีทองอ่อน"></div>
         <div class="name">นางสาวกัลยาพร ดีทองอ่อน</div>
-        <div class="position">ประธานโครงการไม้ดอก</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการไม้ดอก</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวกัลยาพร ดีทองอ่อน', 'ประธานโครงการไม้ดอก', '088-XXX-XXXX', 'kanlayaporn', 'Kanlayaporn Deethong-on')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="กันยาพร.jpg" alt="นางสาวกันยาพร พันธุเดช">
-        </div>
+        <div class="photo"><img src="กันยาพร.jpg" alt="นางสาวกันยาพร พันธุเดช"></div>
         <div class="name">นางสาวกันยาพร พันธุเดช</div>
-        <div class="position">ประธานโครงการเห็ด</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการเห็ด</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวกันยาพร พันธุเดช', 'ประธานโครงการเห็ด', '089-XXX-XXXX', 'kanyaporn', 'Kanyaporn Pantudej')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="photo">
-          <img src="กิตยากร.JPG" alt="นางสาวกิตยากร พิจิตร">
-        </div>
+        <div class="photo"><img src="กิตยากร.JPG" alt="นางสาวกิตยากร พิจิตร"></div>
         <div class="name">นางสาวกิตยากร พิจิตร</div>
-        <div class="position">ประธานโครงการแคคตัส</div>
+        <div class="year">นิสิตชั้นปีที่ 3</div>
+        <div class="card-footer">
+          <div class="position">ประธานโครงการแคคตัส</div>
+          <button class="btn-contact" onclick="openContactModal('นางสาวกิตยากร พิจิตร', 'ประธานโครงการแคคตัส', '090-XXX-XXXX', 'kittayakorn', 'Kittayakorn Pichit')">💬 ข้อมูลติดต่อ</button>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
     KU KPS • ชุมนุมฟาร์มนิสิต • ปีการศึกษา 2569
   </div>
+
+
+  <!-- =========================================
+       MODAL (POPUP) STRUCTURE
+       ========================================= -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeContactModal()">&times;</button>
+      
+      <div class="modal-header">
+        <div id="modalName">ชื่อ - นามสกุล</div>
+        <div id="modalPosition">ตำแหน่ง</div>
+      </div>
+
+      <!-- เบอร์โทรศัพท์ -->
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-info">
+          <span class="contact-label">Telephone</span>
+          <span class="contact-value" id="modalPhone">-</span>
+        </div>
+      </div>
+
+      <!-- LINE -->
+      <div class="contact-item">
+        <div class="contact-icon icon-green">💬</div>
+        <div class="contact-info">
+          <span class="contact-label">Line ID</span>
+          <span class="contact-value" id="modalLine">-</span>
+        </div>
+      </div>
+
+      <!-- Facebook -->
+      <div class="contact-item">
+        <div class="contact-icon icon-blue">FB</div>
+        <div class="contact-info">
+          <span class="contact-label">Facebook</span>
+          <span class="contact-value" id="modalFacebook">-</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================
+       JAVASCRIPT FOR MODAL
+       ========================================= -->
+  <script>
+    // ฟังก์ชันเปิด Popup และใส่ข้อมูล
+    function openContactModal(name, position, phone, line, facebook) {
+      document.getElementById('modalName').innerText = name;
+      document.getElementById('modalPosition').innerText = position;
+      document.getElementById('modalPhone').innerText = phone;
+      document.getElementById('modalLine').innerText = line;
+      document.getElementById('modalFacebook').innerText = facebook;
+      
+      // แสดง Popup
+      document.getElementById('contactModal').classList.add('active');
+    }
+
+    // ฟังก์ชันปิด Popup
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('active');
+    }
+
+    // ปิด Popup เมื่อคลิกพื้นที่ว่างด้านนอกกรอบ
+    window.onclick = function(event) {
+      const modal = document.getElementById('contactModal');
+      if (event.target == modal) {
+        closeContactModal();
+      }
+    }
+  </script>
 
 </body>
 </html>
