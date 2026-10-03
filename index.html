@@ -218,7 +218,6 @@
             max-width: 800px;
             padding: 30px 25px;
             
-            /* พื้นหลังสีเขียว/กรมท่าไล่ระดับแบบระบบ */
             background: linear-gradient(135deg, #0f172a, #004d26, #006633, #004d26, #0f172a);
             background-size: 300% 300%;
             animation: gradientFlow 6s ease infinite;
@@ -227,7 +226,6 @@
             text-decoration: none;
             transition: 0.4s cubic-bezier(0.2,1,0.2,1);
             
-            /* แสงเงาสะท้อนแบบสีเขียวนีออน */
             box-shadow: 
                 0 15px 35px rgba(0, 255, 136, 0.15), 
                 inset 0 0 15px rgba(0, 255, 136, 0.1);
@@ -235,14 +233,12 @@
             font-family: 'Prompt', sans-serif;
         }
 
-        /* แอนิเมชันขยับพื้นหลัง */
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* เอฟเฟกต์เหลือบแสงตอน Hover (โทนสว่าง) */
         .ag-ed-banner-btn::before {
             content: '';
             position: absolute;
@@ -287,6 +283,57 @@
             .ag-ed-banner-title { font-size: 1.4rem; }
             .ag-ed-banner-sub { font-size: 0.85rem; }
             .ag-ed-banner-btn { padding: 25px 20px; }
+        }
+
+        /* ========================= */
+        /* ✨ IMAGE SHOWCASE FRAME */
+        /* ========================= */
+        .image-showcase-wrap {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeInUp 1.2s 0.7s both;
+        }
+
+        .image-showcase-frame {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-bottom: 3px solid var(--ku-green);
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-showcase-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-placeholder-text {
+            position: absolute;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .image-placeholder-text i {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #cbd5e1;
         }
 
         /* ========================= */
@@ -400,7 +447,6 @@
             max-width: 480px;
             padding:18px 30px;
             
-            /* สไตล์เดิมแบบ Glassmorphism สว่าง */
             background: linear-gradient(135deg, rgba(0,255,136,0.10), rgba(0,102,51,0.08));
             border: 1px solid rgba(0,255,136,0.25);
             text-decoration:none;
@@ -639,7 +685,7 @@
 
             </div>
 
-            <!-- แบนเนอร์ 57 th Ag-Ed (โทนสีเดียวกับระบบและปรับขนาดลง) -->
+            <!-- แบนเนอร์ 57 th Ag-Ed -->
             <div class="ag-ed-banner-wrap">
                 <a href="#" class="ag-ed-banner-btn">
                     <div class="ag-ed-banner-title">
@@ -654,6 +700,20 @@
         </div>
 
     </header>
+
+    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์ (แก้ไขตรงแท็ก img src="..." ได้เลย) ✨ -->
+    <div class="image-showcase-wrap">
+        <div class="image-showcase-frame">
+            <!-- ข้อความ Placehoder (หากใส่รูปภาพแล้ว ลบข้อความส่วนนี้ออกได้) -->
+            <div class="image-placeholder-text">
+                <i class="fa-regular fa-image"></i>
+                พื้นที่สำหรับใส่รูปภาพแบนเนอร์ (แนวนอน)
+            </div>
+            
+            <!-- แท็กรูปภาพ: นำลิงก์รูปภาพมาใส่ที่ src -->
+            <img src="" alt="">
+        </div>
+    </div>
 
     <div class="main-portal">
 
@@ -716,7 +776,7 @@
 
     </div>
 
-    <!-- ปุ่มตรวจสอบการเลือกโครงการ (สไตล์ธรรมดาเดิม) -->
+    <!-- ปุ่มตรวจสอบการเลือกโครงการ -->
     <div class="check-project-wrap">
 
         <a href="https://script.google.com/macros/s/AKfycbyEHy1WcjXy-JSmdio4EqbUjDv-KIBfPB7JfayGtRgg2SX0gdRT68_uRpRoUZ5eRs7EoA/exec"
