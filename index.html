@@ -286,25 +286,22 @@
         }
 
         /* ========================= */
-        /* ✨ IMAGE SHOWCASE FRAME (ADAPTIVE) */
+        /* ✨ IMAGE SHOWCASE FRAME (COMPACT RECTANGLE) */
         /* ========================= */
         .image-showcase-wrap {
-            max-width: 1250px;
-            margin: 40px auto;
+            max-width: 800px; /* ลดความกว้างสูงสุดลงให้กรอบดูเล็กกะทัดรัดขึ้น */
+            margin: 30px auto 50px auto;
             padding: 0 20px;
             animation: fadeInUp 1.2s 0.7s both;
         }
 
         .image-showcase-frame {
             width: 100%;
-            height: auto; /* ปล่อยความสูงเป็นอัตโนมัติตามรูปภาพ */
-            min-height: 250px;
-            
+            aspect-ratio: 16 / 9; /* รักษาสัดส่วนสี่เหลี่ยมผืนผ้าแนวยาวให้พอดีกับภาพ */
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(226, 232, 240, 0.8);
             border-bottom: 3px solid var(--ku-green);
-            padding: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
@@ -315,8 +312,8 @@
 
         .image-showcase-frame img {
             width: 100%;
-            height: auto; /* แสดงรูปภาพเต็มใบตามสัดส่วนจริง */
-            object-fit: contain; /* ไม่มีการครอปภาพ */
+            height: 100%;
+            object-fit: cover; /* ครอบรูปให้เต็มพื้นที่โดยไม่เสียสัดส่วน */
             display: block;
         }
 
@@ -702,10 +699,10 @@
 
     </header>
 
-    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์แบบปรับขนาดได้เอง (Adaptive Size) ✨ -->
+    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์ (สัดส่วนสี่เหลี่ยมผืนผ้า กะทัดรัดขึ้น) ✨ -->
     <div class="image-showcase-wrap">
         <div class="image-showcase-frame">
-            <!-- ข้อความ Placehoder จะหายไปเองถ้ารูปทับ หรือจะลบโค้ดส่วนนี้ออกก็ได้ -->
+            <!-- ข้อความ Placehoder -->
             <div class="image-placeholder-text">
                 <i class="fa-regular fa-image"></i>
                 พื้นที่แสดงรูปภาพ
