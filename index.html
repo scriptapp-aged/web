@@ -196,7 +196,7 @@
         }
 
         /* ========================= */
-        /* ✨ 57th AG-ED BANNER (SYSTEM TONE - SMALLER) */
+        /* ✨ 57th AG-ED BANNER */
         /* ========================= */
         .ag-ed-banner-wrap {
             margin-top: 20px;
@@ -286,10 +286,10 @@
         }
 
         /* ========================= */
-        /* ✨ IMAGE SHOWCASE FRAME (COMPACT RECTANGLE) */
+        /* ✨ IMAGE SHOWCASE FRAME (EXACT FIT) */
         /* ========================= */
         .image-showcase-wrap {
-            max-width: 800px; /* ลดความกว้างสูงสุดลงให้กรอบดูเล็กกะทัดรัดขึ้น */
+            max-width: 800px;
             margin: 30px auto 50px auto;
             padding: 0 20px;
             animation: fadeInUp 1.2s 0.7s both;
@@ -297,41 +297,20 @@
 
         .image-showcase-frame {
             width: 100%;
-            aspect-ratio: 16 / 9; /* รักษาสัดส่วนสี่เหลี่ยมผืนผ้าแนวยาวให้พอดีกับภาพ */
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
+            height: auto; /* ปล่อยให้ความสูงแปรผันตามสัดส่วนภาพอัตโนมัติ */
+            background: #ffffff;
             border: 1px solid rgba(226, 232, 240, 0.8);
             border-bottom: 3px solid var(--ku-green);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
             overflow: hidden;
+            display: block;
         }
 
         .image-showcase-frame img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* ครอบรูปให้เต็มพื้นที่โดยไม่เสียสัดส่วน */
-            display: block;
-        }
-
-        .image-placeholder-text {
-            position: absolute;
-            color: #94a3b8;
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .image-placeholder-text i {
-            display: block;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #cbd5e1;
+            height: auto;
+            display: block; /* ลบช่องว่างส่วนเกินด้านล่างของรูปภาพ */
         }
 
         /* ========================= */
@@ -422,7 +401,7 @@
         }
 
         /* ========================= */
-        /* ✨ CHECK PROJECT BUTTON (NORMAL) */
+        /* ✨ CHECK PROJECT BUTTON */
         /* ========================= */
 
         .check-project-wrap{
@@ -699,16 +678,9 @@
 
     </header>
 
-    <!-- ✨ กรอบสำหรับใส่รูปภาพไฮไลต์ (สัดส่วนสี่เหลี่ยมผืนผ้า กะทัดรัดขึ้น) ✨ -->
+    <!-- ✨ กรอบรูปภาพที่ปรับแก้ให้พอดีขอบ ✨ -->
     <div class="image-showcase-wrap">
         <div class="image-showcase-frame">
-            <!-- ข้อความ Placehoder -->
-            <div class="image-placeholder-text">
-                <i class="fa-regular fa-image"></i>
-                พื้นที่แสดงรูปภาพ
-            </div>
-            
-            <!-- นำชื่อไฟล์ หรือ URL ของรูปภาพมาใส่ตรง src="" ด้านล่างนี้ -->
             <img src="ระบบตารางสอบ.png" alt="ระบบตารางสอบ">
         </div>
     </div>
