@@ -7,338 +7,340 @@
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts: Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome สำหรับไอคอน -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Prompt', sans-serif; }
-        .tech-card {
-            background: #ffffff;
+        .bento-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
-        }
-        .gradient-glow {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #06b6d4 100%);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            border-radius: 1.75rem;
         }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 min-h-screen selection:bg-indigo-500 selection:text-white flex flex-col justify-between">
+<body class="bg-gradient-to-br from-slate-50 via-purple-50/30 to-indigo-50/40 text-slate-900 min-h-screen py-10 px-4 sm:px-6 relative selection:bg-purple-600 selection:text-white">
 
-    <!-- Top Navigation / Header Banner (Full-Width Immersive) -->
-    <header class="w-full gradient-glow text-white py-12 px-6 md:px-16 shadow-xl relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent)] pointer-events-none"></div>
+    <!-- Container หลักแบบ Bento Grid -->
+    <div class="max-w-5xl mx-auto space-y-6">
         
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
-            <div class="space-y-3 text-center lg:text-left">
-                <span class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-indigo-100 text-xs font-semibold backdrop-blur-md">
-                    <i class="fa-solid fa-graduation-cap"></i> ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์
+        <!-- Hero Header Bento -->
+        <div class="bento-card p-8 md:p-12 text-center relative overflow-hidden bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 text-white border-0 shadow-xl">
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-3">
+                <span class="text-xs uppercase tracking-widest text-purple-200 font-medium bg-white/10 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md inline-block">
+                    ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์
                 </span>
-                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">
-                    "57 th Ag-Ed กลมเกลียว กล้าแกร่ง"
+                
+                <h1 class="text-lg md:text-xl font-light tracking-wide text-purple-200 pt-1">
+                    ระบบจองเสื้อ
                 </h1>
-                <p class="text-indigo-100/90 text-xs md:text-sm font-light flex items-center justify-center lg:justify-start gap-2 pt-1">
-                    <i class="fa-regular fa-calendar-days text-cyan-300"></i> วันเสาร์ที่ 7 พฤศจิกายน 2569 ณ อาคารศูนย์มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน
+                
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                    "57 th Ag-Ed กลมเกลียว กล้าแกร่ง"
+                </h2>
+                
+                <p class="text-purple-200/80 text-xs md:text-sm font-light pt-2">
+                    วันเสาร์ที่ 7 พฤศจิกายน 2569 ณ อาคารศูนย์มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน
                 </p>
             </div>
+        </div>
 
-            <!-- ⏳ Countdown Widget -->
-            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl shadow-lg">
-                <div class="text-[11px] text-cyan-200 font-semibold mb-2 text-center uppercase tracking-wider">
-                    <i class="fa-regular fa-clock"></i> ปิดรับจองในอีก
+        <!-- ⏳ ส่วนนับถอยหลัง Bento -->
+        <div class="bento-card p-6 md:p-8 bg-slate-900 text-white border-0 shadow-xl">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="text-center lg:text-left space-y-1">
+                    <span class="inline-flex items-center gap-1.5 bg-purple-500/20 text-purple-300 text-xs font-medium px-3.5 py-1 rounded-full border border-purple-500/30">
+                        <i class="fa-regular fa-clock"></i> สามารถสั่งจองได้ถึง
+                    </span>
+                    <h3 class="text-lg md:text-xl font-semibold tracking-tight pt-1">30 พฤศจิกายน 2569 • 23:59 น.</h3>
+                    <p class="text-xs text-slate-400">กรุณาตรวจสอบไซส์และชำระเงินก่อนหมดเวลา</p>
                 </div>
+
                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center">
-                    <div class="bg-black/20 px-3 py-2 rounded-xl border border-white/10">
-                        <span id="days" class="text-xl font-extrabold block text-white tracking-tight">00</span>
-                        <span class="text-[9px] text-indigo-200 uppercase">วัน</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="days" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
+                        <span class="text-[10px] text-purple-300 uppercase tracking-wider">วัน</span>
                     </div>
-                    <div class="bg-black/20 px-3 py-2 rounded-xl border border-white/10">
-                        <span id="hours" class="text-xl font-extrabold block text-white tracking-tight">00</span>
-                        <span class="text-[9px] text-indigo-200 uppercase">ชม.</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="hours" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
+                        <span class="text-[10px] text-purple-300 uppercase tracking-wider">ชม.</span>
                     </div>
-                    <div class="bg-black/20 px-3 py-2 rounded-xl border border-white/10">
-                        <span id="minutes" class="text-xl font-extrabold block text-white tracking-tight">00</span>
-                        <span class="text-[9px] text-indigo-200 uppercase">นาที</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="minutes" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
+                        <span class="text-[10px] text-purple-300 uppercase tracking-wider">นาที</span>
                     </div>
-                    <div class="bg-black/20 px-3 py-2 rounded-xl border border-white/10">
-                        <span id="seconds" class="text-xl font-extrabold block text-white tracking-tight">00</span>
-                        <span class="text-[9px] text-indigo-200 uppercase">วินาที</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="seconds" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
+                        <span class="text-[10px] text-purple-300 uppercase tracking-wider">วินาที</span>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
 
-    <!-- Main Content Layout (Full-Width Container max-w-7xl) -->
-    <main class="max-w-7xl w-full mx-auto p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
-        
-        <!-- Left Column: Shirt Mockup & Size Table -->
-        <div class="lg:col-span-5 space-y-6">
-            <!-- Shirt Preview Card -->
-            <div class="tech-card p-6 rounded-3xl space-y-4">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs border border-indigo-100">
-                            <i class="fa-solid fa-shirt"></i>
-                        </span>
-                        ภาพตัวอย่างแบบเสื้อ
-                    </h3>
-                    <span class="text-[10px] bg-emerald-50 text-emerald-600 border border-emerald-200 px-3 py-1 rounded-full font-semibold">เปิดจองแล้ว</span>
-                </div>
-                <div class="w-full h-80 md:h-[380px] bg-slate-50 border border-slate-100 rounded-2xl overflow-hidden flex items-center justify-center relative group">
-                    <img src="https://lh3.googleusercontent.com/d/1M9ucUHZYDWaX5eanhyW59CuMRvl8Qten" alt="แบบเสื้อ 57 th Ag-Ed" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
-                </div>
-            </div>
-
-            <!-- Size Chart Reference Card -->
-            <div class="tech-card p-6 rounded-3xl space-y-4">
-                <div class="text-xs font-semibold text-indigo-900 bg-indigo-50 border border-indigo-100 py-2.5 px-4 rounded-xl text-center">
-                    <i class="fa-solid fa-ruler-combined text-indigo-600"></i> ตารางขนาดรอบอกและยาวของเสื้อ (หน่วย: นิ้ว)
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs font-medium">
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">2XS</span>อก 34 | ยาว 25</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">XS</span>อก 36 | ยาว 26</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">S</span>อก 38 | ยาว 27</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">M</span>อก 40 | ยาว 28</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">L</span>อก 42 | ยาว 29</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">XL</span>อก 44 | ยาว 30</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">2XL</span>อก 46 | ยาว 31</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">3XL</span>อก 48 | ยาว 32</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">4XL</span>อก 50 | ยาว 33</div>
-                    <div class="bg-slate-50 border border-slate-100 p-2.5 rounded-xl"><span class="font-bold block text-indigo-600">5XL</span>อก 52 | ยาว 34</div>
-                </div>
+        <!-- ตัวอย่างแบบเสื้อ (Mockup Area) -->
+        <div class="bento-card p-6 md:p-8 space-y-4">
+            <label class="block text-sm font-semibold text-slate-800 flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm shadow-xs">
+                    <i class="fa-solid fa-shirt"></i>
+                </span>
+                ภาพตัวอย่างแบบเสื้อ
+            </label>
+            <div class="w-full h-80 md:h-[400px] bg-slate-100/80 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center group relative">
+                <img src="https://lh3.googleusercontent.com/d/1M9ucUHZYDWaX5eanhyW59CuMRvl8Qten" alt="แบบเสื้อ 57 th Ag-Ed" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
             </div>
         </div>
 
-        <!-- Right Column: Order Form -->
-        <div class="lg:col-span-7">
-            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-6">
+        <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-6">
+            
+            <!-- ส่วนที่ 1: ข้อมูลผู้สั่งจอง -->
+            <div class="bento-card p-6 md:p-8 space-y-5">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                    <span class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-purple-500/20">1</span>
+                    ข้อมูลผู้สั่งจอง
+                </h3>
                 
-                <!-- ส่วนที่ 1: ข้อมูลผู้สั่งจอง -->
-                <div class="tech-card p-6 md:p-8 rounded-3xl space-y-5">
-                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-indigo-500/20">1</span>
-                        ข้อมูลผู้สั่งจอง
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">อีเมล (Email) <span class="text-rose-500">*</span></label>
-                            <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 text-sm transition">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ <span class="text-rose-500">*</span></label>
-                            <input type="tel" id="phone" required placeholder="0812345678" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 text-sm transition">
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">อีเมล (Email) <span class="text-rose-500">*</span></label>
+                        <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-4 focus:ring-purple-500/10 text-sm transition">
                     </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">เบอร์โทรศัพท์ <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="phone" required placeholder="0812345678" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-4 focus:ring-purple-500/10 text-sm transition">
+                    </div>
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล <span class="text-rose-500">*</span></label>
-                            <input type="text" id="fullname" required placeholder="นายเกษตร สิ่งแวดล้อม" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 text-sm transition">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">ชื่อ - นามสกุล <span class="text-rose-500">*</span></label>
+                        <input type="text" id="fullname" required placeholder="นายเกษตร สิ่งแวดล้อม" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-4 focus:ring-purple-500/10 text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">รุ่น Ag-Ed <span class="text-rose-500">*</span></label>
+                        <input type="text" id="kuGeneration" required placeholder="เช่น 86,59" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-600 focus:bg-white focus:ring-4 focus:ring-purple-500/10 text-sm transition">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 👕 ส่วนที่ 2: เลือกไซส์และจำนวนเสื้อ -->
+            <div class="bento-card p-6 md:p-8 space-y-6">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                    <span class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-purple-500/20">2</span>
+                    เลือกไซส์และจำนวนเสื้อ
+                </h3>
+
+                <!-- 1. รูปภาพตารางไซส์เสื้อ -->
+                <div class="space-y-2">
+                    <div class="w-full aspect-square max-w-xs mx-auto bg-slate-100/80 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-xs">
+                        <img src="https://lh3.googleusercontent.com/d/1ZuDljFynhS1RWdRLtInIkwBNI_0uQ4Do" alt="ตารางไซส์เสื้อ" class="w-full h-full object-cover rounded-xl">
+                    </div>
+                </div>
+
+                <!-- 2. ตารางขนาดเสื้อ (หน่วยเป็นนิ้ว) -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-center gap-2 bg-purple-50 border border-purple-100 py-2.5 px-4 rounded-2xl text-purple-900 text-xs font-semibold">
+                        <i class="fa-solid fa-ruler-combined text-purple-600"></i> ตารางขนาดรอบอกและยาวของเสื้อ (หน่วย: นิ้ว)
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center text-xs">
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">2XS</span>อก 34 | ยาว 25</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">XS</span>อก 36 | ยาว 26</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">S</span>อก 38 | ยาว 27</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">M</span>อก 40 | ยาว 28</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">L</span>อก 42 | ยาว 29</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">XL</span>อก 44 | ยาว 30</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">2XL</span>อก 46 | ยาว 31</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">3XL</span>อก 48 | ยาว 32</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">4XL</span>อก 50 | ยาว 33</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-purple-900">5XL</span>อก 52 | ยาว 34</div>
+                    </div>
+                </div>
+
+                <!-- กลุ่มไซส์มาตรฐาน (250.-) -->
+                <div class="space-y-3">
+                    <span class="inline-block text-xs font-semibold text-purple-900 bg-purple-50 px-3.5 py-1.5 rounded-xl border border-purple-100">✨ ไซส์มาตรฐาน (ราคา 250 บาท)</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ 2XS</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 34)</span></div>
+                            <input type="number" min="0" value="0" data-size="2XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">รุ่น Ag-Ed <span class="text-rose-500">*</span></label>
-                            <input type="text" id="kuGeneration" required placeholder="เช่น 86,59" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 text-sm transition">
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ XS</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 36)</span></div>
+                            <input type="number" min="0" value="0" data-size="XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ S</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 38)</span></div>
+                            <input type="number" min="0" value="0" data-size="S" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ M</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 40)</span></div>
+                            <input type="number" min="0" value="0" data-size="M" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ L</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 42)</span></div>
+                            <input type="number" min="0" value="0" data-size="L" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ XL</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 44)</span></div>
+                            <input type="number" min="0" value="0" data-size="XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ 2XL</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 46)</span></div>
+                            <input type="number" min="0" value="0" data-size="2XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-purple-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-purple-700 transition">ไซส์ 3XL</span><span class="text-[11px] text-purple-600 block font-light">250.- (อก 48)</span></div>
+                            <input type="number" min="0" value="0" data-size="3XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
 
-                <!-- 👕 ส่วนที่ 2: เลือกไซส์และจำนวนเสื้อ -->
-                <div class="tech-card p-6 md:p-8 rounded-3xl space-y-6">
-                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-indigo-500/20">2</span>
-                        เลือกไซส์และจำนวนเสื้อ
-                    </h3>
-
-                    <!-- รูปภาพตารางไซส์ -->
-                    <div class="space-y-2">
-                        <div class="w-full aspect-square max-w-xs mx-auto bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-xs">
-                            <img src="https://lh3.googleusercontent.com/d/1ZuDljFynhS1RWdRLtInIkwBNI_0uQ4Do" alt="ตารางไซส์เสื้อ" class="w-full h-full object-cover rounded-xl">
+                <!-- กลุ่มไซส์พิเศษ (300.-) -->
+                <div class="space-y-3 pt-2">
+                    <span class="inline-block text-xs font-semibold text-indigo-900 bg-indigo-50 px-3.5 py-1.5 rounded-xl border border-indigo-100">⭐ ไซส์พิเศษ (ราคา 300 บาท)</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-indigo-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-indigo-700 transition">ไซส์ 4XL</span><span class="text-xs text-indigo-600 block font-light">300.- (อก 50, ยาว 33)</span></div>
+                            <input type="number" min="0" value="0" data-size="4XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none shadow-inner">
                         </div>
-                    </div>
-
-                    <!-- กลุ่มไซส์มาตรฐาน (250.-) -->
-                    <div class="space-y-3">
-                        <span class="inline-block text-xs font-bold text-indigo-900 bg-indigo-50 px-3.5 py-1.5 rounded-xl border border-indigo-100">✨ ไซส์มาตรฐาน (ราคา 250 บาท)</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ 2XS</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 34)</span></div>
-                                <input type="number" min="0" value="0" data-size="2XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ XS</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 36)</span></div>
-                                <input type="number" min="0" value="0" data-size="XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ S</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 38)</span></div>
-                                <input type="number" min="0" value="0" data-size="S" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ M</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 40)</span></div>
-                                <input type="number" min="0" value="0" data-size="M" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ L</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 42)</span></div>
-                                <input type="number" min="0" value="0" data-size="L" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ XL</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 44)</span></div>
-                                <input type="number" min="0" value="0" data-size="XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ 2XL</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 46)</span></div>
-                                <input type="number" min="0" value="0" data-size="2XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-indigo-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ 3XL</span><span class="text-[11px] text-indigo-600 block font-medium">250.- (อก 48)</span></div>
-                                <input type="number" min="0" value="0" data-size="3XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-bold focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- กลุ่มไซส์พิเศษ (300.-) -->
-                    <div class="space-y-3 pt-2">
-                        <span class="inline-block text-xs font-bold text-purple-900 bg-purple-50 px-3.5 py-1.5 rounded-xl border border-purple-100">⭐ ไซส์พิเศษ (ราคา 300 บาท)</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-purple-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ 4XL</span><span class="text-xs text-purple-600 block font-medium">300.- (อก 50, ยาว 33)</span></div>
-                                <input type="number" min="0" value="0" data-size="4XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-bold focus:border-purple-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div class="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-purple-500 transition">
-                                <div><span class="font-bold text-slate-900 text-sm">ไซส์ 5XL</span><span class="text-xs text-purple-600 block font-medium">300.- (อก 52, ยาว 34)</span></div>
-                                <input type="number" min="0" value="0" data-size="5XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-bold focus:border-purple-600 focus:outline-none shadow-2xs">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ช่องระบุไซส์พิเศษอื่นๆ -->
-                    <div class="p-5 bg-gradient-to-r from-indigo-50/60 to-purple-50/60 border border-indigo-100 rounded-2xl space-y-3">
-                        <label class="block font-bold text-xs text-indigo-950 uppercase tracking-wide">💡 ระบุไซส์พิเศษอื่นๆ เพิ่มเติม (ราคา 300 บาท / ตัว)</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div class="sm:col-span-2">
-                                <input type="text" id="specialSizeName" placeholder="ระบุรายละเอียด เช่น อก 54 ยาว 35 นิ้ว" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 text-sm focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
-                            <div>
-                                <input type="number" min="0" value="0" id="specialSizeQty" data-price="300" onchange="calculateTotal()" placeholder="จำนวน" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-center text-slate-900 font-bold text-sm focus:border-indigo-600 focus:outline-none shadow-2xs">
-                            </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-indigo-400 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-indigo-700 transition">ไซส์ 5XL</span><span class="text-xs text-indigo-600 block font-light">300.- (อก 52, ยาว 34)</span></div>
+                            <input type="number" min="0" value="0" data-size="5XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
 
-                <!-- ส่วนที่ 3: วิธีการรับเสื้อ -->
-                <div class="tech-card p-6 md:p-8 rounded-3xl space-y-4">
-                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-indigo-500/20">3</span>
-                        วิธีการรับเสื้อ
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                        <label class="flex items-start p-4 border border-slate-200 bg-slate-50/50 rounded-2xl cursor-pointer hover:border-indigo-500 transition has-checked:border-indigo-600 has-checked:bg-indigo-50/30">
-                            <input type="radio" name="receiveMethod" value="pickup" checked onchange="toggleShippingForm()" class="mt-1 mr-3.5 accent-indigo-600 w-4 h-4">
-                            <div>
-                                <span class="font-bold text-slate-900 text-sm block">รับด้วยตนเอง</span>
-                                <span class="text-xs text-slate-500">วันงานคืนสู่เหย้าชาว AG - ED (7 พ.ย. 69) <strong class="text-indigo-600 font-bold">ฟรี</strong></span>
-                            </div>
-                        </label>
-                        <label class="flex items-start p-4 border border-slate-200 bg-slate-50/50 rounded-2xl cursor-pointer hover:border-indigo-500 transition has-checked:border-indigo-600 has-checked:bg-indigo-50/30">
-                            <input type="radio" name="receiveMethod" value="shipping" onchange="toggleShippingForm()" class="mt-1 mr-3.5 accent-indigo-600 w-4 h-4">
-                            <div>
-                                <span class="font-bold text-slate-900 text-sm block">จัดส่งไปรษณีย์</span>
-                                <span class="text-xs text-slate-500">บวกเพิ่มค่าจัดส่ง <strong class="text-indigo-600 font-bold">50 บาท</strong></span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- ส่วนที่ 4: ที่อยู่จัดส่ง -->
-                <div id="shippingAddressSection" class="hidden opacity-0 transform -translate-y-2 transition-all duration-300 ease-out space-y-4 p-6 bg-indigo-50/40 border border-indigo-200 rounded-3xl">
-                    <h4 class="font-bold text-indigo-950 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-truck-fast text-indigo-600"></i> กรอกที่อยู่สำหรับจัดส่งไปรษณีย์ 
-                        <span class="text-rose-500 text-xs font-normal">(กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง)</span>
-                    </h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อผู้รับ <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipName" placeholder="นายสมชาย ใจดี" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ผู้รับ <span class="text-rose-500">*</span></label>
-                            <input type="tel" id="shipPhone" placeholder="0812345678" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
+                <!-- ช่องระบุไซส์พิเศษอื่นๆ -->
+                <div class="p-5 bg-gradient-to-r from-purple-50/60 to-indigo-50/60 border border-purple-100 rounded-2xl space-y-3">
+                    <label class="block font-semibold text-xs text-purple-950 uppercase tracking-wide">💡 ระบุไซส์พิเศษอื่นๆ เพิ่มเติม (ราคา 300 บาท / ตัว)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">บ้านเลขที่ / ซอย / ถนน <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipAddress" placeholder="123/4 ซ.พหลโยธิน 1 ถ.พหลโยธิน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
+                            <input type="text" id="specialSizeName" placeholder="ระบุรายละเอียด เช่น อก 54 ยาว 35 นิ้ว" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 text-sm focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">หมู่ที่ <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipMoo" placeholder="เช่น 2 หรือ -" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">ตำบล / แขวง <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipTambon" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">อำเภอ / เขต <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipAmphoe" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">จังหวัด <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipProvince" placeholder="เช่น นครปฐม" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสไปรษณีย์ <span class="text-rose-500">*</span></label>
-                            <input type="text" id="shipZipcode" placeholder="73140" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 shadow-2xs">
+                            <input type="number" min="0" value="0" id="specialSizeQty" data-price="300" onchange="calculateTotal()" placeholder="จำนวน" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-center text-slate-900 font-semibold text-sm focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- ส่วนที่ 5: ช่องทางการชำระเงิน -->
-                <div class="tech-card p-6 md:p-8 rounded-3xl space-y-5">
-                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shadow-md shadow-indigo-500/20">4</span>
-                        ช่องทางการชำระเงิน
-                    </h3>
-                    
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-2 shadow-2xs">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-3.5 py-1.5 rounded-xl border border-indigo-100 flex items-center gap-1.5">
-                                <i class="fa-solid fa-building-columns text-indigo-600"></i> ธนาคารไทยพาณิชย์ (SCB)
-                            </span>
-                            <button type="button" id="copyBtn" onclick="copyAccount()" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs px-4 py-2 rounded-xl transition font-semibold shadow-sm flex items-center gap-1.5 cursor-pointer">
-                                <i class="fa-regular fa-copy"></i> <span>คัดลอกเลขบัญชี</span>
-                            </button>
+            <!-- ส่วนที่ 3: วิธีการรับเสื้อ -->
+            <div class="bento-card p-6 md:p-8 space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                    <span class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-purple-500/20">3</span>
+                    วิธีการรับเสื้อ
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <label class="flex items-start p-4 border border-slate-200 bg-slate-50/60 rounded-2xl cursor-pointer hover:border-purple-500 transition has-checked:border-purple-600 has-checked:bg-purple-50/30 has-checked:ring-2 has-checked:ring-purple-500/10">
+                        <input type="radio" name="receiveMethod" value="pickup" checked onchange="toggleShippingForm()" class="mt-1 mr-3.5 text-purple-600 focus:ring-0 w-4 h-4">
+                        <div class="space-y-0.5">
+                            <span class="font-semibold text-slate-900 text-sm block">รับด้วยตนเอง</span>
+                            <span class="text-xs text-slate-500">วันงานคืนสู่เหย้าชาว AG - ED (7 พ.ย. 69) <strong class="text-purple-600 font-semibold">ฟรี</strong></span>
                         </div>
-                        <div class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-wider pt-1" id="accountNumber">769-292231-9</div>
-                        <p class="text-xs text-slate-500 leading-relaxed pt-1">ชื่อบัญชี: นายนิรันดร์ ยิ่งยวด , นางสาวอิสรีย์ ทรัพย์นุ้ย , นางสาวอรวรรณ บุญทัน</p>
-                    </div>
+                    </label>
+                    <label class="flex items-start p-4 border border-slate-200 bg-slate-50/60 rounded-2xl cursor-pointer hover:border-purple-500 transition has-checked:border-purple-600 has-checked:bg-purple-50/30 has-checked:ring-2 has-checked:ring-purple-500/10">
+                        <input type="radio" name="receiveMethod" value="shipping" onchange="toggleShippingForm()" class="mt-1 mr-3.5 text-purple-600 focus:ring-0 w-4 h-4">
+                        <div class="space-y-0.5">
+                            <span class="font-semibold text-slate-900 text-sm block">จัดส่งไปรษณีย์</span>
+                            <span class="text-xs text-slate-500">บวกเพิ่มค่าจัดส่ง <strong class="text-purple-600 font-semibold">50 บาท</strong></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
 
-                    <div class="flex justify-between items-center py-4 px-5 bg-indigo-50/50 border border-indigo-100 rounded-2xl shadow-2xs">
-                        <span class="font-bold text-slate-700 text-sm">ยอดชำระสุทธิรวม:</span>
-                        <span id="grandTotal" class="text-2xl md:text-3xl font-extrabold text-indigo-600">0 บาท</span>
+            <!-- ส่วนที่ 4: ที่อยู่จัดส่ง -->
+            <div id="shippingAddressSection" class="hidden opacity-0 transform -translate-y-2 transition-all duration-300 ease-out space-y-4 p-6 bg-purple-50/50 border border-purple-200 rounded-3xl">
+                <h4 class="font-semibold text-purple-950 text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-truck-fast text-purple-600"></i> กรอกที่อยู่สำหรับจัดส่งไปรษณีย์ 
+                    <span class="text-rose-500 text-xs font-normal">(กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง)</span>
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อผู้รับ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipName" placeholder="นายสมชาย ใจดี" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
                     </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-sm font-bold text-slate-700">แนบหลักฐานการชำระเงิน (สลิปโอนเงิน) <span class="text-rose-500">*</span></label>
-                        <input type="file" id="slipFile" accept="image/*" required class="w-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer text-slate-600 shadow-2xs">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">เบอร์โทรศัพท์ผู้รับ <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="shipPhone" placeholder="0812345678" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">บ้านเลขที่ / ซอย / ถนน <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipAddress" placeholder="123/4 ซ.พหลโยธิน 1 ถ.พหลโยธิน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">หมู่ที่ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipMoo" placeholder="เช่น 2 หรือ -" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ตำบล / แขวง <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipTambon" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">อำเภอ / เขต <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipAmphoe" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">จังหวัด <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipProvince" placeholder="เช่น นครปฐม" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสไปรษณีย์ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipZipcode" placeholder="73140" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-500/20 shadow-2xs">
                     </div>
                 </div>
+            </div>
 
-                <!-- ปุ่มส่งฟอร์ม -->
-                <button type="submit" id="submitBtn" class="w-full gradient-glow hover:opacity-95 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-indigo-500/25 transition-all duration-200 transform active:scale-[0.99] text-base md:text-lg tracking-wide cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-paper-plane"></i> ยืนยันการสั่งจองเสื้อ
-                </button>
-            </form>
+            <!-- ส่วนที่ 5: ช่องทางการชำระเงิน -->
+            <div class="bento-card p-6 md:p-8 space-y-5">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-purple-500/20">4</span>
+                    ช่องทางการชำระเงิน
+                </h3>
+                
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-2 shadow-2xs">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-purple-700 bg-purple-100 px-3.5 py-1.5 rounded-xl border border-purple-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-building-columns text-purple-600"></i> ธนาคารไทยพาณิชย์ (SCB)
+                        </span>
+                        <button type="button" id="copyBtn" onclick="copyAccount()" class="bg-purple-600 hover:bg-purple-700 active:scale-95 text-white text-xs px-4 py-2 rounded-xl transition font-medium shadow-sm flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-regular fa-copy"></i> <span>คัดลอกเลขบัญชี</span>
+                        </button>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-bold text-slate-900 tracking-wider pt-1" id="accountNumber">769-292231-9</div>
+                    <p class="text-xs text-slate-500 leading-relaxed pt-1">ชื่อบัญชี: นายนิรันดร์ ยิ่งยวด , นางสาวอิสรีย์ ทรัพย์นุ้ย , นางสาวอรวรรณ บุญทัน</p>
+                </div>
+
+                <div class="flex justify-between items-center py-4 px-5 bg-purple-50/60 border border-purple-200 rounded-2xl shadow-2xs">
+                    <span class="font-semibold text-slate-700 text-sm">ยอดชำระสุทธิรวม:</span>
+                    <span id="grandTotal" class="text-2xl md:text-3xl font-bold text-purple-600">0 บาท</span>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700">แนบหลักฐานการชำระเงิน (สลิปโอนเงิน) <span class="text-rose-500">*</span></label>
+                    <input type="file" id="slipFile" accept="image/*" required class="w-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 cursor-pointer text-slate-600 shadow-2xs">
+                </div>
+            </div>
+
+            <!-- ปุ่มส่งฟอร์ม -->
+            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg shadow-purple-500/25 transition-all duration-200 transform active:scale-[0.99] text-base md:text-lg tracking-wide cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i> ยืนยันการสั่งจองเสื้อ
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="text-center border-t border-slate-200 pt-6 mt-10 text-xs text-slate-400 space-y-1">
+            <p>© 2026 ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์</p>
+            <p class="font-medium text-purple-600">พัฒนาระบบโดย นายเมธี ใจสุขดี นิสิตชั้นปีที่ 3 สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
         </div>
-    </main>
-
-    <!-- Full-Width Footer -->
-    <footer class="w-full border-t border-slate-200 bg-white py-8 px-6 text-center text-xs text-slate-500 space-y-1 mt-12">
-        <p>© 2026 ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์</p>
-        <p class="font-semibold text-indigo-600">พัฒนาระบบโดย นายเมธี ใจสุขดี นิสิตชั้นปีที่ 3 สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
-    </footer>
+    </div>
 
     <!-- Modal Popup แจ้งเตือนทำรายการสำเร็จ -->
     <div id="successModal" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity duration-300 opacity-0">
-        <div class="bg-white border border-slate-100 max-w-md w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl relative transform transition-all duration-300 scale-90 translate-y-4 opacity-0" id="modalContent">
+        <div class="bento-card bg-white max-w-md w-full p-8 text-center space-y-6 shadow-2xl relative transform transition-all duration-300 scale-90 translate-y-4 opacity-0" id="modalContent">
             
             <!-- ไอคอนเครื่องหมายถูกสีเขียว -->
             <div class="relative w-20 h-20 mx-auto">
@@ -355,7 +357,7 @@
                 </p>
             </div>
 
-            <button type="button" onclick="closeSuccessModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-200 text-sm tracking-wide shadow-md shadow-indigo-500/20 active:scale-95 cursor-pointer">
+            <button type="button" onclick="closeSuccessModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3.5 px-4 rounded-2xl transition-all duration-200 text-sm tracking-wide shadow-md shadow-purple-500/20 active:scale-95 cursor-pointer">
                 ตกลง / ปิดหน้าต่าง
             </button>
         </div>
@@ -381,7 +383,7 @@
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "<div class='col-span-4 bg-rose-500/20 p-3 text-center text-rose-200 font-bold rounded-xl text-xs'>🔴 ปิดรับการสั่งจองแล้ว</div>";
+                document.getElementById("countdown").innerHTML = "<div class='col-span-4 bg-rose-500/20 border border-rose-500/30 p-3 text-center text-rose-300 font-medium rounded-2xl text-xs'>🔴 ปิดรับการสั่งจองแล้ว</div>";
                 document.getElementById("submitBtn").disabled = true;
                 document.getElementById("submitBtn").classList.add("opacity-50", "cursor-not-allowed");
                 document.getElementById("submitBtn").innerText = "ปิดรับการสั่งจองแล้ว";
@@ -433,13 +435,13 @@
             navigator.clipboard.writeText("7692922319");
             let btn = document.getElementById('copyBtn');
             btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>คัดลอกสำเร็จ</span>`;
-            btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+            btn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
             btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
 
             setTimeout(() => {
                 btn.innerHTML = `<i class="fa-regular fa-copy"></i> <span>คัดลอกเลขบัญชี</span>`;
                 btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
-                btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                btn.classList.add('bg-purple-600', 'hover:bg-purple-700');
             }, 2000);
         }
 
