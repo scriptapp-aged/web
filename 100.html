@@ -13,38 +13,38 @@
     <style>
         body { font-family: 'Prompt', sans-serif; }
         .bento-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(203, 213, 225, 0.6);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(203, 213, 225, 0.8);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
             border-radius: 1.75rem;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-teal-50/30 text-slate-900 min-h-screen py-10 px-4 sm:px-6 relative selection:bg-emerald-600 selection:text-white">
+<body class="bg-gradient-to-br from-slate-100 via-emerald-50/40 to-teal-50/50 text-slate-900 min-h-screen py-10 px-4 sm:px-6 relative selection:bg-emerald-600 selection:text-white">
 
     <!-- Container หลักแบบ Bento Grid -->
     <div class="max-w-5xl mx-auto space-y-6">
         
         <!-- Hero Header Bento -->
-        <div class="bento-card p-8 md:p-12 text-center relative overflow-hidden bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 text-white border-0 shadow-xl">
+        <div class="bento-card p-8 md:p-12 text-center relative overflow-hidden bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white border-0 shadow-xl">
             <div class="absolute -right-16 -top-16 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="relative z-10 space-y-3">
-                <span class="text-xs uppercase tracking-widest text-emerald-200 font-medium bg-white/10 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md inline-block">
+                <span class="text-xs uppercase tracking-widest text-emerald-300 font-semibold bg-white/15 px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-md inline-block">
                     ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์
                 </span>
                 
-                <h1 class="text-lg md:text-xl font-light tracking-wide text-emerald-200 pt-1">
+                <h1 class="text-sm md:text-base font-medium tracking-wide text-emerald-200 pt-1">
                     ระบบจองเสื้อ
                 </h1>
                 
-                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white drop-shadow-sm">
                     "57 th Ag-Ed กลมเกลียว กล้าแกร่ง"
                 </h2>
                 
-                <p class="text-emerald-100/80 text-xs md:text-sm font-light pt-2">
+                <p class="text-slate-200 text-xs md:text-sm font-light pt-2">
                     วันเสาร์ที่ 7 พฤศจิกายน 2569 ณ อาคารศูนย์มหาวิทยาลัยเกษตรศาสตร์ วิทยาเขตกำแพงแสน
                 </p>
             </div>
@@ -54,29 +54,29 @@
         <div class="bento-card p-6 md:p-8 bg-slate-900 text-white border-0 shadow-xl">
             <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
                 <div class="text-center lg:text-left space-y-1">
-                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-xs font-medium px-3.5 py-1 rounded-full border border-emerald-500/30">
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-3.5 py-1 rounded-full border border-emerald-500/30">
                         <i class="fa-regular fa-clock"></i> สามารถสั่งจองได้ถึง
                     </span>
-                    <h3 class="text-lg md:text-xl font-semibold tracking-tight pt-1">30 พฤศจิกายน 2569 • 23:59 น.</h3>
-                    <p class="text-xs text-slate-400">กรุณาตรวจสอบไซส์และชำระเงินก่อนหมดเวลา</p>
+                    <h3 class="text-lg md:text-xl font-semibold tracking-tight pt-1 text-white">30 พฤศจิกายน 2569 • 23:59 น.</h3>
+                    <p class="text-xs text-slate-300">กรุณาตรวจสอบไซส์และชำระเงินก่อนหมดเวลา</p>
                 </div>
 
                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center">
-                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
-                        <span id="days" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
-                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider">วัน</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="days" class="text-xl md:text-2xl font-bold block tracking-tight text-white">00</span>
+                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider font-medium">วัน</span>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
-                        <span id="hours" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
-                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider">ชม.</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="hours" class="text-xl md:text-2xl font-bold block tracking-tight text-white">00</span>
+                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider font-medium">ชม.</span>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
-                        <span id="minutes" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
-                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider">นาที</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="minutes" class="text-xl md:text-2xl font-bold block tracking-tight text-white">00</span>
+                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider font-medium">นาที</span>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md border border-white/10 px-3.5 py-3 rounded-2xl min-w-[68px]">
-                        <span id="seconds" class="text-xl md:text-2xl font-bold block tracking-tight">00</span>
-                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider">วินาที</span>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-3 rounded-2xl min-w-[68px]">
+                        <span id="seconds" class="text-xl md:text-2xl font-bold block tracking-tight text-white">00</span>
+                        <span class="text-[10px] text-emerald-300 uppercase tracking-wider font-medium">วินาที</span>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 </span>
                 ภาพตัวอย่างแบบเสื้อ
             </label>
-            <div class="w-full h-80 md:h-[400px] bg-slate-100/80 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center group relative">
+            <div class="w-full h-80 md:h-[400px] bg-slate-100 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center group relative">
                 <img src="https://lh3.googleusercontent.com/d/1M9ucUHZYDWaX5eanhyW59CuMRvl8Qten" alt="แบบเสื้อ 57 th Ag-Ed" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
             </div>
         </div>
@@ -99,130 +99,130 @@
             
             <!-- ส่วนที่ 1: ข้อมูลผู้สั่งจอง -->
             <div class="bento-card p-6 md:p-8 space-y-5">
-                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-200">
                     <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-emerald-500/20">1</span>
                     ข้อมูลผู้สั่งจอง
                 </h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">อีเมล (Email) <span class="text-rose-500">*</span></label>
-                        <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">อีเมล (Email) <span class="text-rose-500">*</span></label>
+                        <input type="email" id="email" required placeholder="name@example.com" class="w-full bg-white border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">เบอร์โทรศัพท์ <span class="text-rose-500">*</span></label>
-                        <input type="tel" id="phone" required placeholder="0812345678" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">เบอร์โทรศัพท์ <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="phone" required placeholder="0812345678" class="w-full bg-white border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="md:col-span-2">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">ชื่อ - นามสกุล <span class="text-rose-500">*</span></label>
-                        <input type="text" id="fullname" required placeholder="นายเกษตร สิ่งแวดล้อม" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อ - นามสกุล <span class="text-rose-500">*</span></label>
+                        <input type="text" id="fullname" required placeholder="นายเกษตร สิ่งแวดล้อม" class="w-full bg-white border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">รุ่น Ag-Ed <span class="text-rose-500">*</span></label>
-                        <input type="text" id="kuGeneration" required placeholder="เช่น 86,59" class="w-full bg-slate-50/80 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">รุ่น Ag-Ed <span class="text-rose-500">*</span></label>
+                        <input type="text" id="kuGeneration" required placeholder="เช่น 86,59" class="w-full bg-white border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/10 text-sm transition">
                     </div>
                 </div>
             </div>
 
             <!-- 👕 ส่วนที่ 2: เลือกไซส์และจำนวนเสื้อ -->
             <div class="bento-card p-6 md:p-8 space-y-6">
-                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-200">
                     <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-emerald-500/20">2</span>
                     เลือกไซส์และจำนวนเสื้อ
                 </h3>
 
                 <!-- 1. รูปภาพตารางไซส์เสื้อ -->
                 <div class="space-y-2">
-                    <div class="w-full aspect-square max-w-xs mx-auto bg-slate-100/80 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-xs">
+                    <div class="w-full aspect-square max-w-xs mx-auto bg-white border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center p-2 shadow-xs">
                         <img src="https://lh3.googleusercontent.com/d/1ZuDljFynhS1RWdRLtInIkwBNI_0uQ4Do" alt="ตารางไซส์เสื้อ" class="w-full h-full object-cover rounded-xl">
                     </div>
                 </div>
 
                 <!-- 2. ตารางขนาดเสื้อ (หน่วยเป็นนิ้ว) -->
                 <div class="space-y-3">
-                    <div class="flex items-center justify-center gap-2 bg-emerald-50 border border-emerald-100 py-2.5 px-4 rounded-2xl text-emerald-900 text-xs font-semibold">
-                        <i class="fa-solid fa-ruler-combined text-emerald-600"></i> ตารางขนาดรอบอกและยาวของเสื้อ (หน่วย: นิ้ว)
+                    <div class="flex items-center justify-center gap-2 bg-emerald-50 border border-emerald-200 py-2.5 px-4 rounded-2xl text-emerald-950 text-xs font-semibold">
+                        <i class="fa-solid fa-ruler-combined text-emerald-700"></i> ตารางขนาดรอบอกและยาวของเสื้อ (หน่วย: นิ้ว)
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center text-xs">
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">2XS</span>อก 34 | ยาว 25</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">XS</span>อก 36 | ยาว 26</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">S</span>อก 38 | ยาว 27</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">M</span>อก 40 | ยาว 28</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">L</span>อก 42 | ยาว 29</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">XL</span>อก 44 | ยาว 30</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">2XL</span>อก 46 | ยาว 31</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">3XL</span>อก 48 | ยาว 32</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">4XL</span>อก 50 | ยาว 33</div>
-                        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-900">5XL</span>อก 52 | ยาว 34</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">2XS</span>อก 34 | ยาว 25</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">XS</span>อก 36 | ยาว 26</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">S</span>อก 38 | ยาว 27</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">M</span>อก 40 | ยาว 28</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">L</span>อก 42 | ยาว 29</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">XL</span>อก 44 | ยาว 30</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">2XL</span>อก 46 | ยาว 31</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">3XL</span>อก 48 | ยาว 32</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">4XL</span>อก 50 | ยาว 33</div>
+                        <div class="bg-white border border-slate-200 p-2.5 rounded-xl"><span class="font-bold block text-emerald-800">5XL</span>อก 52 | ยาว 34</div>
                     </div>
                 </div>
 
                 <!-- กลุ่มไซส์มาตรฐาน (250.-) -->
                 <div class="space-y-3">
-                    <span class="inline-block text-xs font-semibold text-emerald-900 bg-emerald-50 px-3.5 py-1.5 rounded-xl border border-emerald-100">✨ ไซส์มาตรฐาน (ราคา 250 บาท)</span>
+                    <span class="inline-block text-xs font-semibold text-emerald-950 bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-200">✨ ไซส์มาตรฐาน (ราคา 250 บาท)</span>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 2XS</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 34)</span></div>
-                            <input type="number" min="0" value="0" data-size="2XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 2XS</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 34)</span></div>
+                            <input type="number" min="0" value="0" data-size="2XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ XS</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 36)</span></div>
-                            <input type="number" min="0" value="0" data-size="XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ XS</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 36)</span></div>
+                            <input type="number" min="0" value="0" data-size="XS" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ S</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 38)</span></div>
-                            <input type="number" min="0" value="0" data-size="S" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ S</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 38)</span></div>
+                            <input type="number" min="0" value="0" data-size="S" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ M</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 40)</span></div>
-                            <input type="number" min="0" value="0" data-size="M" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ M</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 40)</span></div>
+                            <input type="number" min="0" value="0" data-size="M" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ L</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 42)</span></div>
-                            <input type="number" min="0" value="0" data-size="L" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ L</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 42)</span></div>
+                            <input type="number" min="0" value="0" data-size="L" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ XL</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 44)</span></div>
-                            <input type="number" min="0" value="0" data-size="XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ XL</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 44)</span></div>
+                            <input type="number" min="0" value="0" data-size="XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 2XL</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 46)</span></div>
-                            <input type="number" min="0" value="0" data-size="2XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 2XL</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 46)</span></div>
+                            <input type="number" min="0" value="0" data-size="2XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 3XL</span><span class="text-[11px] text-emerald-600 block font-light">250.- (อก 48)</span></div>
-                            <input type="number" min="0" value="0" data-size="3XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-white border border-slate-200 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between hover:border-emerald-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-emerald-700 transition">ไซส์ 3XL</span><span class="text-[11px] text-emerald-700 block font-medium">250.- (อก 48)</span></div>
+                            <input type="number" min="0" value="0" data-size="3XL" data-price="250" onchange="calculateTotal()" class="size-qty w-16 bg-slate-50 border border-slate-300 rounded-xl py-2 text-center text-slate-900 font-semibold focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
 
                 <!-- กลุ่มไซส์พิเศษ (300.-) -->
                 <div class="space-y-3 pt-2">
-                    <span class="inline-block text-xs font-semibold text-teal-900 bg-teal-50 px-3.5 py-1.5 rounded-xl border border-teal-100">⭐ ไซส์พิเศษ (ราคา 300 บาท)</span>
+                    <span class="inline-block text-xs font-semibold text-teal-950 bg-teal-100 px-3.5 py-1.5 rounded-xl border border-teal-200">⭐ ไซส์พิเศษ (ราคา 300 บาท)</span>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-teal-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-teal-700 transition">ไซส์ 4XL</span><span class="text-xs text-teal-600 block font-light">300.- (อก 50, ยาว 33)</span></div>
-                            <input type="number" min="0" value="0" data-size="4XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-teal-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-teal-700 transition">ไซส์ 4XL</span><span class="text-xs text-teal-700 block font-medium">300.- (อก 50, ยาว 33)</span></div>
+                            <input type="number" min="0" value="0" data-size="4XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-slate-50 border border-slate-300 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 focus:outline-none shadow-inner">
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-teal-400 transition group shadow-2xs">
-                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-teal-700 transition">ไซส์ 5XL</span><span class="text-xs text-teal-600 block font-light">300.- (อก 52, ยาว 34)</span></div>
-                            <input type="number" min="0" value="0" data-size="5XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-white border border-slate-200 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 focus:outline-none shadow-inner">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:border-teal-500 transition group shadow-2xs">
+                            <div><span class="font-semibold text-slate-900 text-sm group-hover:text-teal-700 transition">ไซส์ 5XL</span><span class="text-xs text-teal-700 block font-medium">300.- (อก 52, ยาว 34)</span></div>
+                            <input type="number" min="0" value="0" data-size="5XL" data-price="300" onchange="calculateTotal()" class="size-qty w-20 bg-slate-50 border border-slate-300 rounded-xl py-2.5 text-center text-slate-900 font-semibold focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
 
                 <!-- ช่องระบุไซส์พิเศษอื่นๆ -->
-                <div class="p-5 bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border border-emerald-100 rounded-2xl space-y-3">
+                <div class="p-5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl space-y-3">
                     <label class="block font-semibold text-xs text-emerald-950 uppercase tracking-wide">💡 ระบุไซส์พิเศษอื่นๆ เพิ่มเติม (ราคา 300 บาท / ตัว)</label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="sm:col-span-2">
-                            <input type="text" id="specialSizeName" placeholder="ระบุรายละเอียด เช่น อก 54 ยาว 35 นิ้ว" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                            <input type="text" id="specialSizeName" placeholder="ระบุรายละเอียด เช่น อก 54 ยาว 35 นิ้ว" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
                         <div>
-                            <input type="number" min="0" value="0" id="specialSizeQty" data-price="300" onchange="calculateTotal()" placeholder="จำนวน" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-center text-slate-900 font-semibold text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
+                            <input type="number" min="0" value="0" id="specialSizeQty" data-price="300" onchange="calculateTotal()" placeholder="จำนวน" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-center text-slate-900 font-semibold text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none shadow-inner">
                         </div>
                     </div>
                 </div>
@@ -230,66 +230,66 @@
 
             <!-- ส่วนที่ 3: วิธีการรับเสื้อ -->
             <div class="bento-card p-6 md:p-8 space-y-4">
-                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-3 pb-4 border-b border-slate-200">
                     <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold shadow-md shadow-emerald-500/20">3</span>
                     วิธีการรับเสื้อ
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <label class="flex items-start p-4 border border-slate-200 bg-slate-50/60 rounded-2xl cursor-pointer hover:border-emerald-500 transition has-checked:border-emerald-600 has-checked:bg-emerald-50/30 has-checked:ring-2 has-checked:ring-emerald-500/10">
+                    <label class="flex items-start p-4 border border-slate-200 bg-white rounded-2xl cursor-pointer hover:border-emerald-500 transition has-checked:border-emerald-600 has-checked:bg-emerald-50/50 has-checked:ring-2 has-checked:ring-emerald-500/10">
                         <input type="radio" name="receiveMethod" value="pickup" checked onchange="toggleShippingForm()" class="mt-1 mr-3.5 text-emerald-600 focus:ring-0 w-4 h-4">
                         <div class="space-y-0.5">
                             <span class="font-semibold text-slate-900 text-sm block">รับด้วยตนเอง</span>
-                            <span class="text-xs text-slate-500">วันงานคืนสู่เหย้าชาว AG - ED (7 พ.ย. 69) <strong class="text-emerald-600 font-semibold">ฟรี</strong></span>
+                            <span class="text-xs text-slate-600">วันงานคืนสู่เหย้าชาว AG - ED (7 พ.ย. 69) <strong class="text-emerald-700 font-semibold">ฟรี</strong></span>
                         </div>
                     </label>
-                    <label class="flex items-start p-4 border border-slate-200 bg-slate-50/60 rounded-2xl cursor-pointer hover:border-emerald-500 transition has-checked:border-emerald-600 has-checked:bg-emerald-50/30 has-checked:ring-2 has-checked:ring-emerald-500/10">
+                    <label class="flex items-start p-4 border border-slate-200 bg-white rounded-2xl cursor-pointer hover:border-emerald-500 transition has-checked:border-emerald-600 has-checked:bg-emerald-50/50 has-checked:ring-2 has-checked:ring-emerald-500/10">
                         <input type="radio" name="receiveMethod" value="shipping" onchange="toggleShippingForm()" class="mt-1 mr-3.5 text-emerald-600 focus:ring-0 w-4 h-4">
                         <div class="space-y-0.5">
                             <span class="font-semibold text-slate-900 text-sm block">จัดส่งไปรษณีย์</span>
-                            <span class="text-xs text-slate-500">บวกเพิ่มค่าจัดส่ง <strong class="text-emerald-600 font-semibold">50 บาท</strong></span>
+                            <span class="text-xs text-slate-600">บวกเพิ่มค่าจัดส่ง <strong class="text-emerald-700 font-semibold">50 บาท</strong></span>
                         </div>
                     </label>
                 </div>
             </div>
 
             <!-- ส่วนที่ 4: ที่อยู่จัดส่ง -->
-            <div id="shippingAddressSection" class="hidden opacity-0 transform -translate-y-2 transition-all duration-300 ease-out space-y-4 p-6 bg-emerald-50/50 border border-emerald-200 rounded-3xl">
+            <div id="shippingAddressSection" class="hidden opacity-0 transform -translate-y-2 transition-all duration-300 ease-out space-y-4 p-6 bg-emerald-50/70 border border-emerald-200 rounded-3xl">
                 <h4 class="font-semibold text-emerald-950 text-sm flex items-center gap-2">
                     <i class="fa-solid fa-truck-fast text-emerald-600"></i> กรอกที่อยู่สำหรับจัดส่งไปรษณีย์ 
-                    <span class="text-rose-500 text-xs font-normal">(กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง)</span>
+                    <span class="text-rose-600 text-xs font-normal">(กรุณากรอกข้อมูลให้ครบถ้วนทุกช่อง)</span>
                 </h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อผู้รับ <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipName" placeholder="นายสมชาย ใจดี" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อผู้รับ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipName" placeholder="นายสมชาย ใจดี" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">เบอร์โทรศัพท์ผู้รับ <span class="text-rose-500">*</span></label>
-                        <input type="tel" id="shipPhone" placeholder="0812345678" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ผู้รับ <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="shipPhone" placeholder="0812345678" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div class="sm:col-span-2">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">บ้านเลขที่ / ซอย / ถนน <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipAddress" placeholder="123/4 ซ.พหลโยธิน 1 ถ.พหลโยธิน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">บ้านเลขที่ / ซอย / ถนน <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipAddress" placeholder="123/4 ซ.พหลโยธิน 1 ถ.พหลโยธิน" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">หมู่ที่ <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipMoo" placeholder="เช่น 2 หรือ -" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">หมู่ที่ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipMoo" placeholder="เช่น 2 หรือ -" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">ตำบล / แขวง <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipTambon" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">ตำบล / แขวง <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipTambon" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">อำเภอ / เขต <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipAmphoe" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">อำเภอ / เขต <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipAmphoe" placeholder="เช่น กำแพงแสน" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">จังหวัด <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipProvince" placeholder="เช่น นครปฐม" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">จังหวัด <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipProvince" placeholder="เช่น นครปฐม" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสไปรษณีย์ <span class="text-rose-500">*</span></label>
-                        <input type="text" id="shipZipcode" placeholder="73140" class="ship-field w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสไปรษณีย์ <span class="text-rose-500">*</span></label>
+                        <input type="text" id="shipZipcode" placeholder="73140" class="ship-field w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs">
                     </div>
                 </div>
             </div>
@@ -301,27 +301,27 @@
                     ช่องทางการชำระเงิน
                 </h3>
                 
-                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-2 shadow-2xs">
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-2 shadow-2xs">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-emerald-700 bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-200 flex items-center gap-1.5">
-                            <i class="fa-solid fa-building-columns text-emerald-600"></i> ธนาคารไทยพาณิชย์ (SCB)
+                        <span class="text-xs font-semibold text-emerald-800 bg-emerald-100 px-3.5 py-1.5 rounded-xl border border-emerald-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-building-columns text-emerald-700"></i> ธนาคารไทยพาณิชย์ (SCB)
                         </span>
                         <button type="button" id="copyBtn" onclick="copyAccount()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs px-4 py-2 rounded-xl transition font-medium shadow-sm flex items-center gap-1.5 cursor-pointer">
                             <i class="fa-regular fa-copy"></i> <span>คัดลอกเลขบัญชี</span>
                         </button>
                     </div>
                     <div class="text-2xl md:text-3xl font-bold text-slate-900 tracking-wider pt-1" id="accountNumber">769-292231-9</div>
-                    <p class="text-xs text-slate-500 leading-relaxed pt-1">ชื่อบัญชี: นายนิรันดร์ ยิ่งยวด , นางสาวอิสรีย์ ทรัพย์นุ้ย , นางสาวอรวรรณ บุญทัน</p>
+                    <p class="text-xs text-slate-600 leading-relaxed pt-1">ชื่อบัญชี: นายนิรันดร์ ยิ่งยวด , นางสาวอิสรีย์ ทรัพย์นุ้ย , นางสาวอรวรรณ บุญทัน</p>
                 </div>
 
-                <div class="flex justify-between items-center py-4 px-5 bg-emerald-50/60 border border-emerald-200 rounded-2xl shadow-2xs">
-                    <span class="font-semibold text-slate-700 text-sm">ยอดชำระสุทธิรวม:</span>
-                    <span id="grandTotal" class="text-2xl md:text-3xl font-bold text-emerald-600">0 บาท</span>
+                <div class="flex justify-between items-center py-4 px-5 bg-emerald-50 border border-emerald-200 rounded-2xl shadow-2xs">
+                    <span class="font-semibold text-slate-800 text-sm">ยอดชำระสุทธิรวม:</span>
+                    <span id="grandTotal" class="text-2xl md:text-3xl font-bold text-emerald-700">0 บาท</span>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-slate-700">แนบหลักฐานการชำระเงิน (สลิปโอนเงิน) <span class="text-rose-500">*</span></label>
-                    <input type="file" id="slipFile" accept="image/*" required class="w-full border border-slate-200 bg-slate-50 px-4 py-3 text-sm rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer text-slate-600 shadow-2xs">
+                    <label class="block text-sm font-semibold text-slate-800">แนบหลักฐานการชำระเงิน (สลิปโอนเงิน) <span class="text-rose-500">*</span></label>
+                    <input type="file" id="slipFile" accept="image/*" required class="w-full border border-slate-300 bg-white px-4 py-3 text-sm rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer text-slate-700 shadow-2xs">
                 </div>
             </div>
 
@@ -332,9 +332,9 @@
         </form>
 
         <!-- Footer -->
-        <div class="text-center border-t border-slate-200 pt-6 mt-10 text-xs text-slate-400 space-y-1">
+        <div class="text-center border-t border-slate-200 pt-6 mt-10 text-xs text-slate-500 space-y-1">
             <p>© 2026 ภาควิชาการพัฒนาทรัพยากรมนุษย์และชุมชน มหาวิทยาลัยเกษตรศาสตร์</p>
-            <p class="font-medium text-emerald-600">พัฒนาระบบโดย นายเมธี ใจสุขดี นิสิตชั้นปีที่ 3 สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
+            <p class="font-medium text-emerald-700">พัฒนาระบบโดย นายเมธี ใจสุขดี นิสิตชั้นปีที่ 3 สาขาเกษตรและสิ่งแวดล้อมศึกษา</p>
         </div>
     </div>
 
@@ -352,7 +352,7 @@
 
             <div class="space-y-2">
                 <h3 class="text-2xl font-bold text-slate-900 tracking-wide">ทำรายการสำเร็จ</h3>
-                <p class="text-sm text-slate-500 leading-relaxed font-light">
+                <p class="text-sm text-slate-600 leading-relaxed font-light">
                     เจ้าหน้าที่อยู่ระหว่างการตรวจสอบและรอยืนยันคำสั่งซื้อผ่านทาง Email ของท่าน
                 </p>
             </div>
@@ -490,7 +490,7 @@
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     fullname: document.getElementById('fullname').value,
-                    kuGeneration: document.getElementById('kuGeneration').value,
+                    kuGeneration:,
                     sizesSummary: sizesSummary.join(', '),
                     totalAmount: document.getElementById('grandTotal').innerText,
                     receiveMethod: isShipping ? 'จัดส่งไปรษณีย์ (+50.-)' : 'รับด้วยตนเอง (7 พ.ย. 69)',
